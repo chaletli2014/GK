@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/config/system.properties=UTF-8
+encoding//WebContent/css/custom.css=UTF-8
+encoding//WebContent/css/fonts/linecons/css/linecons-codes.css=gbk
+encoding//WebContent/css/xenon-core.css=UTF-8
+encoding//WebContent/jsp/common/categoryDiv.jsp=UTF-8
+encoding//WebContent/jsp/common/footer.jsp=UTF-8
+encoding//WebContent/jsp/common/settings_pane.jsp=UTF-8
+encoding//WebContent/jsp/common/sidebar.jsp=UTF-8
+encoding//src/com/goodsquick/webservice/HelloService.java=UTF-8
+encoding/<project>=UTF-8

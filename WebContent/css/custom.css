@@ -1,0 +1,71 @@
+/**
+ *
+ * Apply your custom CSS here
+ *
+*/
+
+body {	
+}
+
+a {
+}
+
+.login_bg{
+	background:url(../images/black_bg_login.jpg) top center no-repeat; 
+	background-size:cover;
+}
+#user_login{
+	
+}
+#user_main{
+	
+}
+#loading_div{
+	position:absolute;
+	_position:absolute;
+	top:50%;
+	left:50%;
+	width:200px;
+	height:120px;
+	overflow:hidden;
+	background:url(../images/loading.gif) no-repeat;
+	z-index:10000;
+	padding-left:50px;
+	padding-top:10px;
+	font-weight: bolder;
+}
+#hide_div{
+	width:90%;
+	height:100%;
+	background-color: #aaa;
+	position: absolute;
+	z-index:999;
+	-moz-opacity: 0.7; 
+	opacity:.70; 
+	filter: alpha(opacity=70);
+	display: none;
+}
+
+.categoryTree_top_div{
+	width:40%;
+	display: list-item;
+}
+
+.dialog-iframe-category{
+	height:400px;
+}
+.iframe-body{
+	background:#ffffff;
+}
+.page-container .iframe-content, .iframe-panel{
+	padding-top:0px;
+}
+ul.table_action_list{
+	padding-left:0px;
+	margin-left:0px;
+	list-style: none;
+}
+ul.table_action_list li{
+	margin-top: 2px;
+	margin-bottom:2px;
+}

@@ -1,0 +1,63 @@
+.login_top_left{
+	background: url(../images/black_bg_login_t_1.jpg);
+	width:265px;
+	height:119px;
+}
+.login_top_center{
+	background: url(../images/black_bg_login_t_2.gif);
+	width:382px;
+	height:119px;
+}
+.login_top_right{
+	background: url(../images/black_bg_login_t_3.gif);
+	width:253px;
+	height:119px;
+}
+
+.login_center_left{
+	background: url(../images/black_bg_login_c_1.gif);
+	width:265px;
+	height:284px;
+}
+.login_center_center{
+	background: url(../images/black_bg_login_c_2.gif);
+	width:382px;
+	height:212px;
+}
+.login_center_right{
+	background: url(../images/black_bg_login_c_3.gif);
+	width:253px;
+	height:284px;
+}
+
+.login_bottom_left{
+	background: url(../images/black_bg_login_b_1.gif);
+	width:265px;
+	height:140px;
+}
+.login_bottom_center{
+	background: url(../images/black_bg_login_b_2.gif);
+	width:382px;
+	height:140px;
+}
+.login_bottom_right{
+	background: url(../images/black_bg_login_b_3.gif);
+	width:253px;
+	height:140px;
+}
+
+.login_center_btn_left{
+	background: url(../images/black_bg_login_c_2-07.gif);
+	width:127px;
+	height:72px;
+}
+.login_center_btn_right{
+	background: url(../images/black_bg_login_c_2-10.gif);
+	width:78px;
+	height:72px;
+}
+.login_center_btn_bottom{
+	background: url(../images/black_bg_login_c_2-11.gif);
+	width:177px;
+	height:32px;
+}
