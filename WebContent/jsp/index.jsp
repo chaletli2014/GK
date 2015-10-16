@@ -7,14 +7,13 @@
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>
 	<div class="page-container">
-		<!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-		<!-- Add "fixed" class to make the sidebar fixed always to the browser viewport. -->
-		<!-- Adding class "toggle-others" will keep only one menu item open at a time. -->
-		<!-- Adding class "collapsed" collapse sidebar root elements and show only icons. -->
-		<jsp:include page="common/sidebar.jsp" flush="true">
+		<jsp:include page="common/main-nav.jsp" flush="true">
         	<jsp:param name="basePath" value="<%=basePath%>"/>
         </jsp:include>
 		<div class="main-content">
+			<jsp:include page="common/sidebar.jsp" flush="true">
+	        	<jsp:param name="basePath" value="<%=basePath%>"/>
+	        </jsp:include>
 			<!-- User Info, Notifications and Menu Bar -->
 			<h3>物库科技，引领未来，一切尽在你掌握&hellip;</h3>
 			<%@include file="common/footer.jsp" %>

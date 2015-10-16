@@ -15,6 +15,9 @@
         	<jsp:param name="basePath" value="<%=basePath%>"/>
         </jsp:include>
 		<div class="main-content">
+			<jsp:include page="common/main-nav.jsp" flush="true">
+	        	<jsp:param name="basePath" value="<%=basePath%>"/>
+	        </jsp:include>
 			<!-- User Info, Notifications and Menu Bar -->
 			<h3>物库科技，引领未来，一切尽在你掌握&hellip;</h3>
 			<%@include file="common/footer.jsp" %>

@@ -19,12 +19,15 @@ $(document).ready(function(){
 <body class="page-body">
 	<div class="page-container">
 		<div class="main-content">
-			<div class="page-title">
+			<div class="page-title" style="background: #2c2e2f;color:white;font-weight: bold;">
+				<div class="title-env">
+					<img src="<%=basePath%>images/logo-blue.png" width="100" height="40" alt="" style="cursor: pointer;">
+				</div>
 				<div class="title-env">
 					<h1 class="title">用户注册</h1>
 				</div>
 			</div>
-			<div class="panel panel-default">
+			<div class="panel panel-default" style="width:70%;margin:auto auto;">
 				<div class="panel-body">
 					<form role="form" class="form-horizontal" action="doRegisterUser" method="post" id="userprofile_form">
 						<div class="form-group">

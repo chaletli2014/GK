@@ -31,10 +31,9 @@ public class MessageController {
     public ModelAndView myMessage(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
         try {
-			List<GoodsRelatedRequest> messagelist = messageService.getMessageList();
+        	List<GoodsRelatedRequest> messagelist = messageService.getMessageList();
 			
 			view.addObject("messagelist", messagelist);
-			view.addObject("opened", ",system,");
 			view.addObject("actived", ",myMessage,");
 			
 			Object errorMessage = request.getSession().getAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);

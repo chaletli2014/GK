@@ -19,7 +19,7 @@
 			<!-- logo -->
 			<div class="logo">
 				<a href="<%=request.getParameter("basePath") %>index" class="logo-expanded">
-					<img src="<%=request.getParameter("basePath")%>images/logo@2x.png" alt="" />
+					<img src="<%=request.getParameter("basePath")%>images/logo-white.png" alt="" width="80px" height="30px"/>
 				</a>
 			</div>
 			<!-- This will toggle the mobile menu and will be visible only on mobile devices -->
@@ -33,11 +33,6 @@
 				</a>
 			</div>
 			<!-- This will open the popup with user profile settings, you can use for any purpose, just be creative -->
-			<div class="settings-icon" style="margin-left:10px;" title="注销用户">
-				<a href="<%=request.getParameter("basePath")%>logout">
-					<img src="<%=request.getParameter("basePath")%>images/logout.png"/>
-				</a>
-			</div>
 			<div class="settings-icon" title="编辑用户">
 				<a href="#" data-toggle="settings-pane" data-animate="true">
 					<i class="linecons-cog"></i>
@@ -51,6 +46,7 @@
 					<span>首页</span>
 				</a>
 			</li>
+			<%if( "admin".equalsIgnoreCase(webUser.getLoginName()) ) {%>
 			<li <% if( opened.indexOf("system")>-1 ){ %>class="active opened"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-cog"></i>
@@ -60,7 +56,6 @@
 					<%}%>
 				</a>
 				<ul>
-					<%if( "admin".equalsIgnoreCase(webUser.getLoginName()) ) {%>
 					<li <% if( actived.indexOf(",userlist,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>userlist">
 							<span class="title">用户管理</span>
@@ -103,49 +98,37 @@
 							<span class="title">配置项管理</span>
 						</a>
 					</li>
-					<%} %>
-					<li <% if( actived.indexOf(",myMessage,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>myMessage">
-							<span class="title">我的消息</span>
-							<%if(0 != webUser.getMessageNum()){%>
-							<span class="badge badge-secondary pull-right"><%=webUser.getMessageNum()%></span>
-							<%}%>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",myReport,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>myReport">
-							<span class="title">我的报表</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<%
-				if( "on".equalsIgnoreCase(webUser.getHasHouse())  ){
-			%>
-			<li <% if( opened.indexOf(",estate,")>-1 ){ %>class="opened"<%} %>>
-				<a href="layout-variants.html">
-					<i class="linecons-database"></i>
-					<span class="title">商品信息管理</span>
-				</a>
-				<ul>
-					<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>ordinaryhouse">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">不动产列表</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",houseSP,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>myHouseSP">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">我的服务商</span>
-						</a>
-					</li>
 				</ul>
 			</li>
 			<%} %>
-			<%
-				if( "on".equalsIgnoreCase(webUser.getHasService())  ){
-			%>
+			<li <% if( opened.indexOf(",estate,")>-1 ){ %>class="active"<%} %>>
+				<a href="<%=request.getParameter("basePath")%>ordinaryhouse">
+					<i class="linecons-database"></i>
+					<span class="title">物库管理</span>
+				</a>
+			</li>
+			<li <% if( opened.indexOf(",,")>-1 ){ %>class="active"<%} %>>
+				<a href="<%=request.getParameter("basePath")%>myHouseSP">
+					<i class="linecons-globe"></i>
+					<span class="title">物链管理</span>
+				</a>
+			</li>
+			<li <% if( actived.indexOf(",myMessage,")>-1 ){ %>class="active"<%} %>>
+				<a href="<%=request.getParameter("basePath")%>myMessage">
+					<i class="linecons-mail"></i>
+					<span class="title">消息管理</span>
+					<%if(0 != webUser.getMessageNum()){%>
+					<span class="badge badge-secondary pull-right"><%=webUser.getMessageNum()%></span>
+					<%}%>
+				</a>
+			</li>
+			<li <% if( actived.indexOf(",myReport,")>-1 ){ %>class="active"<%} %>>
+				<a href="<%=request.getParameter("basePath")%>myReport">
+					<i class="linecons-mail"></i>
+					<span class="title">数据服务</span>
+				</a>
+			</li>
+			<%--
 			<li <% if( opened.indexOf(",service,")>-1 ){ %>class="opened"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-note"></i>
@@ -159,7 +142,7 @@
 					</li>
 				</ul>
 			</li>
-			<%} %>
+			 --%>
 		</ul>
 	</div>
 </div>

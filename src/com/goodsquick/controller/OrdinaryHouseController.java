@@ -1,5 +1,6 @@
 package com.goodsquick.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,38 @@ public class OrdinaryHouseController {
         
         view.setViewName("ep/ordinaryhouse");
         return view;
+    }
+    
+    @RequestMapping("/newProductPre")
+    public ModelAndView newProductPre(HttpServletRequest request){
+    	ModelAndView view = new ModelAndView();
+		view.addObject("opened", ",estate,resident,");
+		view.addObject("actived", ",ordinaryhouse,");
+    	view.setViewName("ep/ordinaryhouse_popadd_pre");
+    	return view;
+    }
+    
+    @RequestMapping("/newProductPreOne")
+    public ModelAndView newProductPre1(HttpServletRequest request){
+    	ModelAndView view = new ModelAndView();
+    	view.addObject("opened", ",estate,resident,");
+    	view.addObject("actived", ",ordinaryhouse,");
+    	String viewName = "ep/ordinaryhouse_popadd_pre_1";
+    	
+    	List<GoodsDictionary> goodsCategory = new ArrayList<GoodsDictionary>();
+    	try {
+    		String productType = request.getParameter("type");
+    		if( StringUtils.endsWith(productType, "2") ){
+    			viewName = "ep/ordinaryhouse_popadd_pre_2";
+    		}
+			goodsCategory = dictionaryService.getDictionaryByType(productType);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	view.addObject("goodsCategory", goodsCategory);
+    	
+    	view.setViewName(viewName);
+    	return view;
     }
     
     @RequestMapping("/ordinaryHousedevice")

@@ -8,6 +8,7 @@ body {
 }
 
 a {
+	cursor: pointer;
 }
 
 .login_bg{
@@ -68,4 +69,19 @@ ul.table_action_list{
 ul.table_action_list li{
 	margin-top: 2px;
 	margin-bottom:2px;
+}
+div.product_select_pre{
+	width:48%;
+	display: block;
+	height:100%;
+	background-image:url(../images/bgw.png);
+}
+div.product_select_pre a.product_link{
+	display: block;
+	padding:80px;
+	color:#999;
+	border: 1px dashed #999;
+	height:100%;
+	font-size: 14px;
+	font-weight: bold;
 }

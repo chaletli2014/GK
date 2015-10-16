@@ -53,6 +53,9 @@ $(document).ready(function(){
         	<jsp:param name="actived" value="${actived}"/>
         </jsp:include>
 		<div class="main-content">
+			<jsp:include page="../common/main-nav.jsp" flush="true">
+	        	<jsp:param name="basePath" value="<%=basePath%>"/>
+	        </jsp:include>
 			<div class="page-title">
 				<div class="title-env">
 					<h1 class="title">用户编辑</h1>

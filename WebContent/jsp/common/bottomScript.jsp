@@ -22,6 +22,7 @@
 <script src="<%=request.getParameter("basePath")%>js/jquery-ui/jquery-ui.min.js"></script>
 <script src="<%=request.getParameter("basePath")%>js/selectboxit/jquery.selectBoxIt.min.js"></script>
 <script src="<%=request.getParameter("basePath")%>js/tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="<%=request.getParameter("basePath")%>js/formwizard/jquery.bootstrap.wizard.min.js"></script>
 <script src="<%=request.getParameter("basePath")%>js/typeahead.bundle.js"></script>
 <script src="<%=request.getParameter("basePath")%>js/handlebars.min.js"></script>
 <script src="<%=request.getParameter("basePath")%>js/multiselect/js/jquery.multi-select.js"></script>

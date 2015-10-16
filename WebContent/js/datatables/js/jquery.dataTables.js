@@ -10912,7 +10912,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "显示 _TOTAL_中的_START_ 到 _END_ 条记录",
 	
 	
 			/**
