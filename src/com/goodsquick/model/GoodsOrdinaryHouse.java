@@ -18,6 +18,16 @@ public class GoodsOrdinaryHouse {
 	private String buildingName;
 	
 	/**
+	 * 省份
+	 */
+	private String province;
+	
+	/**
+	 * 城市
+	 */
+	private String city;
+	
+	/**
 	 * 目前状况
 	 */
 	private String buildingStatus;
@@ -468,6 +478,18 @@ public class GoodsOrdinaryHouse {
 	}
 	public void setHouseDevices(List<GoodsHouseDevice> houseDevices) {
 		this.houseDevices = houseDevices;
+	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
 	}
 	
 }

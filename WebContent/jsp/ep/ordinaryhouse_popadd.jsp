@@ -30,32 +30,57 @@
 					<div class="tab-pane active" id="tab1">
 						<div class="modal-body">
 							<div class="content">
+								<div class="label label-warning">注意：以下内容为必填项，若为空，无法完成注册</div>
 								<div class="panel-body">
 									<div class="form-group">
-										<label class="col-sm-2 control-label" for="field-1">分类</label>
+										<label class="col-sm-2 control-label" for="field-1">产品名称</label>
 										<div class="col-sm-6">
-											<c:if test="${fn:length(dtList) > 0}">
+											<input type="text" class="form-control" id="buildingName" name="buildingName" data-validate="required" data-message-required="名称不能为空">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="field-1">所在地域</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<span class="input-group-addon">省份</span>
 												<script type="text/javascript">
 													jQuery(document).ready(function($)
 													{
-														$("#dictionaryType").selectBoxIt().on('open', function()
+														$("#province").selectBoxIt().on('open', function()
 														{
 															$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
 														});
 													});
 												</script>
-												<select class="form-control" id="dictionaryType" name="dictionaryType">
-													<c:forEach items="${dtList}" var="dt">
-														<option value="${dt.dtCode}">${dt.dtName}</option>
-													</c:forEach>
+												<select class="form-control" id="province" name="province">
+													<option value="">请选择</option>
+													<option value="上海">上海</option>
+													<option value="北京">北京</option>
+													<option value="深圳">深圳</option>
 												</select>
-											</c:if>
+												<span class="input-group-addon">城市</span>
+												<script type="text/javascript">
+													jQuery(document).ready(function($)
+													{
+														$("#city").selectBoxIt().on('open', function()
+														{
+															$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
+														});
+													});
+												</script>
+												<select class="form-control" id="city" name="city">
+													<option value="">请选择</option>
+													<option value="上海">上海</option>
+													<option value="北京">北京</option>
+													<option value="深圳">深圳</option>
+												</select>
+											</div>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-2 control-label" for="field-1">产品名称</label>
-										<div class="col-sm-6">
-											<input type="text" class="form-control" id="dicName" name="dicName" data-validate="required" data-message-required="名称不能为空" onblur="checkValues()">
+										<label class="col-sm-2 control-label" for="location">坐落位置</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="location" name="location" value="${orHouse.location}">
 										</div>
 									</div>
 								</div>
@@ -83,7 +108,7 @@
 							<a href="#"><i class="entypo-left-open"></i>上一步</a>
 						</li>
 						<li class="next">
-							<a href="#">下一步<i class="entypo-right-open"></i></a>
+							<a href="#" id="newProductNext">下一步<i class="entypo-right-open"></i></a>
 						</li>
 					</ul>
 				</div>

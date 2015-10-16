@@ -10,4 +10,19 @@ jQuery(document).ready(function($){
 	    
 	    window.location.href=fullPath+"/newProductPreOne?type="+this.title;
 	});
+	
+	$("#finishWizard").click(function(){
+		if(!$("#buildingName") || $("#buildingName").val() == ''){
+			jAlert("产品名称必填，否则无法完成注册","注意");
+			return false;
+		}if(!$("#province") || $("#province").val() == '' || !$("#city") || $("#city").val() == ''){
+			jAlert("产品所在地域必填，否则无法完成注册","注意");
+			return false;
+		}if(!$("#location") || $("#location").val() == ''){
+			jAlert("坐落位置必填，否则无法完成注册","注意");
+			return false;
+		}else{
+			$("#addordinaryhouse_form").submit();
+		}
+	});
 });

@@ -3,52 +3,9 @@
 	<div class="panel-body">
 		<div class="col-md-12">
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="field-1">所在地域</label>
-				<div class="col-sm-8">
-					<div class="input-group">
-						<span class="input-group-addon">省份</span>
-						<script type="text/javascript">
-							jQuery(document).ready(function($)
-							{
-								$("#province").selectBoxIt().on('open', function()
-								{
-									$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
-								});
-							});
-						</script>
-						<select class="form-control" id="province" name="province">
-							<option key="上海">上海</option>
-							<option key="北京">北京</option>
-							<option key="深圳">深圳</option>
-						</select>
-						<span class="input-group-addon">城市</span>
-						<script type="text/javascript">
-							jQuery(document).ready(function($)
-							{
-								$("#city").selectBoxIt().on('open', function()
-								{
-									$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
-								});
-							});
-						</script>
-						<select class="form-control" id="city" name="city">
-							<option key="上海">上海</option>
-							<option key="北京">北京</option>
-							<option key="深圳">深圳</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
 				<label class="col-sm-2 control-label" for="company">开发公司</label>
 				<div class="col-sm-8">
 					<input type="text" class="form-control" id="company" name="company" value="${orHouse.company}">
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label" for="location">坐落位置</label>
-				<div class="col-sm-8">
-					<input type="text" class="form-control" id="location" name="location" value="${orHouse.location}">
 				</div>
 			</div>
 			<div class="form-group">

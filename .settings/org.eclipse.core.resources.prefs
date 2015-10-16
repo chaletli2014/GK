@@ -7,5 +7,7 @@ encoding//WebContent/jsp/common/categoryDiv.jsp=UTF-8
 encoding//WebContent/jsp/common/footer.jsp=UTF-8
 encoding//WebContent/jsp/common/settings_pane.jsp=UTF-8
 encoding//WebContent/jsp/common/sidebar.jsp=UTF-8
+encoding//WebContent/jsp/ep/ordinaryhouse_param_detail.jsp=UTF-8
+encoding//WebContent/jsp/ep/ordinaryhouse_popadd.jsp=UTF-8
 encoding//src/com/goodsquick/webservice/HelloService.java=UTF-8
 encoding/<project>=UTF-8

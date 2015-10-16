@@ -1,3 +1,5 @@
+
+
 function showProductCategorys(projectPath){
 	jQuery('#productCategoryDiv').modal('show', {backdrop: 'fade'});
 	jQuery('#categoryFrame').attr("src",projectPath+"categoryiframe");
@@ -11,4 +13,7 @@ function checkMessage(errorMessage){
 	if( errorMessage && errorMessage != '' ){
 		jAlert(errorMessage,"提醒");
 	}
+}
+function showPopDiv(divName){
+	jQuery('#'+divName).modal('show', {backdrop: 'static'});
 }

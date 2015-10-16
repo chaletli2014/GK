@@ -14,6 +14,8 @@ public class OrdinaryHouseRowMapper implements RowMapper<GoodsOrdinaryHouse>{
     	dbGoodsOrHouse.setId(rs.getInt("id"));
     	dbGoodsOrHouse.setHouseCode(rs.getString("house_code"));
     	dbGoodsOrHouse.setBuildingName(rs.getString("building_name"));
+    	dbGoodsOrHouse.setProvince(rs.getString("province"));
+    	dbGoodsOrHouse.setCity(rs.getString("city"));
     	dbGoodsOrHouse.setBuildingStatus(rs.getString("building_status"));
     	dbGoodsOrHouse.setCompany(rs.getString("company"));
     	dbGoodsOrHouse.setContacterName(rs.getString("contacter_name"));

@@ -66,7 +66,7 @@
 											</select>
 										</div>
 										<div style="height:30%;text-align: center;">
-											<a href="<%=basePath%>newProductPre">
+											<a href="javascript:void(0)" onclick="showPopDiv('editDiv')">
 												<button class="btn btn-purple btn-icon btn-icon-standalone">
 													<i class="fa-cog"></i>
 													<span>新增产品</span>
