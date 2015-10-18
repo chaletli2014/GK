@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -101,6 +102,25 @@ public class DictionaryController {
 			gd.setTypeCode(request.getParameter("dictionaryType"));
 			gd.setDicDesc(request.getParameter("dicDesc"));
 			dictionaryService.saveDictionary(gd);
+		} catch (Exception e) {
+			logger.error("fail to add the dictionary,",e);
+		}
+		
+		return "redirect:dictionary";
+	}
+	
+	@RequestMapping("/deletedictionary")
+	public String deletedictionary(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("sys/adddictionary");
+		
+		try {
+			String dicId = request.getParameter("dicId");
+			GoodsDictionary dic = new GoodsDictionary();
+			dic.setId(dicId);
+			if( StringUtils.isNotBlank(dicId) ){
+				dictionaryService.deleteDictionary(dic);
+			}
 		} catch (Exception e) {
 			logger.error("fail to add the dictionary,",e);
 		}

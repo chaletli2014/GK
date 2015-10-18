@@ -20,8 +20,10 @@ import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
+import com.goodsquick.model.GoodsServiceDetail;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
+import com.goodsquick.service.GoodsServiceService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.service.RelationshipPropertyService;
 import com.goodsquick.utils.GoodsQuickAttributes;
@@ -43,6 +45,10 @@ public class OrdinaryHouseController {
 	@Autowired
 	@Qualifier("dictionaryService")
 	private DictionaryService dictionaryService;
+	
+	@Autowired
+	@Qualifier("goodsServiceService")
+	private GoodsServiceService goodsServiceService;
 
     @RequestMapping("/ordinaryhouse")
     public ModelAndView ordinaryhouse(HttpServletRequest request){
@@ -51,8 +57,11 @@ public class OrdinaryHouseController {
         	WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
         	
         	List<GoodsOrdinaryHouse> orHouses = ordinaryHouseService.getOrdinaryHouseByUserCode(currentUser.getLoginName()); 
-        	
         	view.addObject("orHouses", orHouses);
+        	
+        	List<GoodsServiceDetail> serviceDetails = goodsServiceService.getGoodsServiceDetailsByUserCode(currentUser.getLoginName());
+    		view.addObject("serviceDetails", serviceDetails);
+    		
         	view.addObject("opened", ",estate,resident,");
 			view.addObject("actived", ",ordinaryhouse,");
 		} catch (Exception e) {
@@ -72,6 +81,22 @@ public class OrdinaryHouseController {
     	return view;
     }
     
+    @RequestMapping("/newServicePre")
+    public ModelAndView newServicePre(HttpServletRequest request){
+    	ModelAndView view = new ModelAndView();
+    	view.addObject("opened", ",estate,resident,");
+    	view.addObject("actived", ",ordinaryhouse,");
+    	view.setViewName("ep/service_popadd");
+    	
+    	try{
+    		List<GoodsDictionary> serviceCodes = dictionaryService.getDictionaryByType("serviceRange");
+    		view.addObject("serviceCodes", serviceCodes);
+    	}catch(Exception e){
+    		
+    	}
+    	return view;
+    }
+    
     @RequestMapping("/newProductPreOne")
     public ModelAndView newProductPre1(HttpServletRequest request){
     	ModelAndView view = new ModelAndView();
@@ -81,15 +106,18 @@ public class OrdinaryHouseController {
     	
     	List<GoodsDictionary> goodsCategory = new ArrayList<GoodsDictionary>();
     	try {
+    		List<GoodsDictionary> serviceCodes = dictionaryService.getDictionaryByType("serviceRange");
+    		view.addObject("serviceCodes", serviceCodes);
+    		
     		String productType = request.getParameter("type");
     		if( StringUtils.endsWith(productType, "2") ){
     			viewName = "ep/ordinaryhouse_popadd_pre_2";
     		}
 			goodsCategory = dictionaryService.getDictionaryByType(productType);
+			view.addObject("goodsCategory", goodsCategory);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	view.addObject("goodsCategory", goodsCategory);
     	
     	view.setViewName(viewName);
     	return view;

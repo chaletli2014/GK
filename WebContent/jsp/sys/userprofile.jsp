@@ -108,45 +108,13 @@ $(document).ready(function(){
 								<input type="text" class="form-control" id="telephone" placeholder="请输入手机号码" name="telephone" value="${userprofile.telephone}" autocomplete="off">
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="hasHouse">是否拥有不动产</label>
-							<div class="col-sm-4">
-								<input type="checkbox" class="iswitch iswitch-secondary" name="hasHouse" <c:if test="${userprofile.hasHouse=='on'}">checked</c:if> >
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="hasService">是否提供服务</label>
-							<div class="col-sm-4">
-								<input type="checkbox" class="iswitch iswitch-secondary" name="hasService" <c:if test="${userprofile.hasService=='on'}">checked</c:if>>
-							</div>
-						</div>
-						<%--
-						<div class="form-group">
-							<label class="col-sm-2 control-label" for="field-1">用户类型</label>
-							<div class="col-sm-10">
-								<script type="text/javascript">
-									jQuery(document).ready(function($){
-										$("#level").selectBoxIt().on('open', function(){
-											$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
-										});
-									});
-								</script>
-								<select class="form-control" id="level" name="level">
-									<option value="1">产品库使用者</option>
-									<option value="2">物品库使用者</option>
-									<option value="3">流通库使用者</option>
-									<option value="4">服务库使用者</option>
-								</select>
-							</div>
-						</div>
-						 --%>
 					</form>
 					<div style="text-align: center;margin-top:20px;">
 						<button class="btn btn-success btn-icon" onclick="submitForm()">
 							<i class="fa-check"></i>
 							<span>提交</span>
 						</button>
-						<a href="<%=basePath%>userlist">
+						<a href="<%=basePath%>index">
 							<button class="btn btn-info btn-icon btn-icon-standalone">
 								<i class="fa-retweet"></i>
 								<span>返回</span>
@@ -155,10 +123,6 @@ $(document).ready(function(){
 					</div>
 				</div>
 			</div>
-			<!-- Main Footer -->
-			<!-- Choose between footer styles: "footer-type-1" or "footer-type-2" -->
-			<!-- Add class "sticky" to  always stick the footer to the end of page (if page contents is small) -->
-			<!-- Or class "fixed" to  always fix the footer to the end of page -->
 			<%@include file="../common/footer.jsp" %>
 		</div>
     </div>

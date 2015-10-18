@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goodsquick.model.Category;
 import com.goodsquick.model.GoodsRole;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.SystemManagerService;
@@ -245,12 +244,6 @@ public class UserController {
         	userInfo.setName(request.getParameter("name"));
         	userInfo.setPassword(GoodsQuickMD5Utils.MD5(password));
         	userInfo.setTelephone(request.getParameter("telephone"));
-        	
-        	String hasHouse = request.getParameter("hasHouse");
-        	userInfo.setHasHouse(StringUtils.isEmpty(hasHouse)?GoodsQuickAttributes.GOODS_STATUS_OFF:hasHouse);
-        	
-        	String hasService = request.getParameter("hasService");
-        	userInfo.setHasService(StringUtils.isEmpty(hasService)?GoodsQuickAttributes.GOODS_STATUS_OFF:hasService);
         	
         	webUserService.addUserInfo(userInfo);
         	

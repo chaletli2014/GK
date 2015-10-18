@@ -25,4 +25,19 @@ jQuery(document).ready(function($){
 			$("#addordinaryhouse_form").submit();
 		}
 	});
+	
+	$("#servicefinishWizard").click(function(){
+		if(!$("#serviceName") || $("#serviceName").val() == ''){
+			jAlert("产品名称必填，否则无法完成注册","注意");
+			return false;
+		}if(!$("#serviceRangeCode") || $("#serviceRangeCode").val() == ''){
+			jAlert("服务范围必填，否则无法完成注册","注意");
+			return false;
+		}if(!$("#price") || $("#price").val() == ''){
+			jAlert("服务价格必填，否则无法完成注册","注意");
+			return false;
+		}else{
+			$("#addservice_form").submit();
+		}
+	});
 });

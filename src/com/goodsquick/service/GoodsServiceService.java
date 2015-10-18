@@ -22,6 +22,7 @@ public interface GoodsServiceService {
 	 * @throws Exception
 	 */
 	public List<GoodsServiceDetail> getGoodsServiceDetailsByProviderCode(String providerCode) throws Exception;
+	public List<GoodsServiceDetail> getGoodsServiceDetailsByUserCode(String userCode) throws Exception;
 	public void saveOrUpdateGoodsServiceDetail(GoodsServiceDetail serviceDetail, WebUserInfo currentUser) throws Exception;
 	public void deleteGoodsServiceDetail(int serviceDetailId) throws Exception;
 	public GoodsServiceDetail getGoodsServiceDetailById(int serviceDetailId) throws Exception;

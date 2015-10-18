@@ -94,8 +94,8 @@ public class ServiceController {
     @RequestMapping("/saveorupdateservice")
     public String saveorupdateservice(HttpServletRequest request){
     	try {
-    		GoodsServiceProvider goodsService = new GoodsServiceProvider();
-    		populateServiceInfo(goodsService, request);
+    		GoodsServiceDetail serviceDetail = new GoodsServiceDetail();
+    		populateServiceDetail(serviceDetail, request);
     		
     		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
         	
@@ -105,11 +105,11 @@ public class ServiceController {
         		return "redirect:servicelist";
         	}
     		
-    		goodsServiceService.saveOrUpdateGoodsServiceProvider(goodsService, currentUser);
+    		goodsServiceService.saveOrUpdateGoodsServiceDetail(serviceDetail, currentUser);
     	} catch (Exception e) {
     		logger.error("fail to save or update goods service,",e);
     	}
-    	return "redirect:serviceprovider";
+    	return "redirect:ordinaryhouse";
     }
     
     /**
@@ -176,35 +176,65 @@ public class ServiceController {
     	return view;
     }
     
-    @RequestMapping("/saveorupdateservicedetail")
-    public String saveorupdateservicedetail(HttpServletRequest request){
-    	try {
-    		GoodsServiceDetail serviceDetail = new GoodsServiceDetail();
-    		populateServiceDetail(serviceDetail, request);
-    		
-    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-        	
-        	if( null == currentUser ){
-        		logger.error("fail to add or update ordinary house, can not get the current user.");
-        		request.getSession().setAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE, GoodsQuickAttributes.MESSAGE_NO_LOGIN_USER);
-        		return "redirect:servicelist";
-        	}
-        	
-        	String productCategory = categoryService.getCategoryCodeByName(serviceDetail.getCategoryName());
-        	serviceDetail.setProductCategory(productCategory);
-    		
-        	Object sessionProviderCode = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE);
-        	if( null != sessionProviderCode ){
-        		serviceDetail.setProviderCode(String.valueOf(sessionProviderCode));
-        		goodsServiceService.saveOrUpdateGoodsServiceDetail(serviceDetail, currentUser);
-        	}else{
-        		
-        	}
-    	} catch (Exception e) {
-    		logger.error("fail to save or update goods service,",e);
-    	}
-    	return "redirect:servicedetails";
-    }
+//    @RequestMapping("/saveorupdateservicedetail")
+//    public String saveorupdateservicedetail(HttpServletRequest request){
+//    	try {
+//    		GoodsServiceDetail serviceDetail = new GoodsServiceDetail();
+//    		populateServiceDetail(serviceDetail, request);
+//    		
+//    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+//        	
+//        	if( null == currentUser ){
+//        		logger.error("fail to add or update ordinary house, can not get the current user.");
+//        		request.getSession().setAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE, GoodsQuickAttributes.MESSAGE_NO_LOGIN_USER);
+//        		return "redirect:servicelist";
+//        	}
+//        	
+//        	String productCategory = categoryService.getCategoryCodeByName(serviceDetail.getCategoryName());
+//        	serviceDetail.setProductCategory(productCategory);
+//    		
+//        	Object sessionProviderCode = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE);
+//        	if( null != sessionProviderCode ){
+//        		serviceDetail.setProviderCode(String.valueOf(sessionProviderCode));
+//        		goodsServiceService.saveOrUpdateGoodsServiceDetail(serviceDetail, currentUser);
+//        	}else{
+//        		
+//        	}
+//    	} catch (Exception e) {
+//    		logger.error("fail to save or update goods service,",e);
+//    	}
+//    	return "redirect:servicedetails";
+//    }
+    
+//    @RequestMapping("/saveorupdateservice")
+//    public String saveorupdateservice(HttpServletRequest request){
+//    	try {
+//    		GoodsServiceDetail serviceDetail = new GoodsServiceDetail();
+//    		populateServiceDetail(serviceDetail, request);
+//    		
+//    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+//    		
+//    		if( null == currentUser ){
+//    			logger.error("fail to add or update ordinary house, can not get the current user.");
+//    			request.getSession().setAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE, GoodsQuickAttributes.MESSAGE_NO_LOGIN_USER);
+//    			return "redirect:servicelist";
+//    		}
+//    		
+//    		String productCategory = categoryService.getCategoryCodeByName(serviceDetail.getCategoryName());
+//    		serviceDetail.setProductCategory(productCategory);
+//    		
+//    		Object sessionProviderCode = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE);
+//    		if( null != sessionProviderCode ){
+//    			serviceDetail.setProviderCode(String.valueOf(sessionProviderCode));
+//    			goodsServiceService.saveOrUpdateGoodsServiceDetail(serviceDetail, currentUser);
+//    		}else{
+//    			
+//    		}
+//    	} catch (Exception e) {
+//    		logger.error("fail to save or update goods service,",e);
+//    	}
+//    	return "redirect:servicedetails";
+//    }
     
     /**
 	 * 服务商的客户列表
@@ -387,9 +417,9 @@ public class ServiceController {
     		serviceDetail.setId(Integer.valueOf(serviceDetailId));
     	}
     	
-    	serviceDetail.setCategoryName(request.getParameter("categoryName"));
-    	serviceDetail.setProductCategory(request.getParameter("productCategory"));
-    	serviceDetail.setServiceCode(request.getParameter("serviceCode"));
+    	serviceDetail.setServiceName(request.getParameter("serviceName"));
+    	serviceDetail.setServiceRangeCode(request.getParameter("serviceRangeCode"));
+    	serviceDetail.setServiceRangeName(request.getParameter("serviceRangeName"));
     	serviceDetail.setPrice(Double.valueOf(request.getParameter("price")));
     	serviceDetail.setServiceContent(request.getParameter("serviceContent"));
     }

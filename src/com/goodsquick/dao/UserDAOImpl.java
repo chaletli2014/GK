@@ -48,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void addUserInfo(WebUserInfo userInfo) throws Exception {
-		String sql = "insert into tbl_web_userinfo(id,name,login_name,password,telephone,level,createdate,updatedate,last_login_time,status,has_house,has_service) values(null,?,?,?,?,?,now(),now(),now(),'1',?,?)";
+		String sql = "insert into tbl_web_userinfo(id,name,login_name,password,telephone,level,createdate,updatedate,last_login_time,status,has_house,has_service) values(null,?,?,?,?,?,now(),now(),now(),'1','on','on')";
         dataBean.getJdbcTemplate().update(sql, new Object[] { userInfo.getName(), userInfo.getLoginName(), userInfo.getPassword(), userInfo.getTelephone(), userInfo.getLevel(), userInfo.getHasHouse(), userInfo.getHasService() });
 	}
 	

@@ -69,7 +69,7 @@
 											</select>
 										</div>
 										<div style="height:30%;text-align: center;">
-											<a href="<%=basePath%>newProductPre">
+											<a href="javascript:void(0)" onclick="showPopDiv('newServiceDiv')">
 												<button class="btn btn-purple btn-icon btn-icon-standalone">
 													<i class="fa-cog"></i>
 													<span>新增产品</span>
@@ -86,7 +86,7 @@
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>
-	<%@include file="ordinaryhouse_popadd.jsp" %>
+	<%@include file="service_popadd.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

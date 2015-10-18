@@ -13,11 +13,9 @@ public class GoodsServiceDetailRowMapper implements RowMapper<GoodsServiceDetail
 	public GoodsServiceDetail mapRow(ResultSet rs, int arg1) throws SQLException {
 		GoodsServiceDetail goodsService = new GoodsServiceDetail();
 		goodsService.setId(rs.getInt("id"));
-		goodsService.setProviderCode(rs.getString("provider_code"));
-		goodsService.setProductCategory(rs.getString("product_category"));
-		goodsService.setCategoryName(rs.getString("category_name"));
-		goodsService.setServiceCode(rs.getString("service_code"));
 		goodsService.setServiceName(rs.getString("service_name"));
+		goodsService.setServiceRangeCode(rs.getString("service_range_code"));
+		goodsService.setServiceRangeName(rs.getString("service_range_name"));
 		goodsService.setPrice(rs.getDouble("price"));
 		goodsService.setServiceContent(rs.getString("service_content"));
 		goodsService.setCreateUser(rs.getString("create_user"));

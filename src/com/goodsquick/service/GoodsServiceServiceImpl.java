@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.goodsquick.dao.GoodsServiceDAO;
@@ -90,6 +91,19 @@ public class GoodsServiceServiceImpl implements GoodsServiceService {
             logger.error("fail to get the goods service,",e);
             return Collections.emptyList();
         }
+	}
+	
+	@Override
+	public List<GoodsServiceDetail> getGoodsServiceDetailsByUserCode(
+			String userCode) throws Exception {
+		try{
+			return goodsServiceDAO.getGoodsServiceDetailsByUserCode(userCode);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get the goods service,",e);
+			return Collections.emptyList();
+		}
 	}
 
 	@Override

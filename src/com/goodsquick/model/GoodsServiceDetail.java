@@ -10,30 +10,17 @@ public class GoodsServiceDetail {
 
 	private int id;
 	
-	/**
-	 * 服务商编码
-	 */
-	private String providerCode;
-	
-	/**
-	 * 商品分类
-	 */
-	private String productCategory;
-	
-	/**
-	 * 商品分类名称
-	 */
-	private String categoryName;
+	private String serviceName;
 	
 	/**
 	 * 服务范围编码
 	 */
-	private String serviceCode;
+	private String serviceRangeCode;
 	
 	/**
 	 * 服务范围名称
 	 */
-	private String serviceName;
+	private String serviceRangeName;
 	
 	/**
 	 * 服务价格
@@ -108,30 +95,6 @@ public class GoodsServiceDetail {
 		this.status = status;
 	}
 
-	public String getProviderCode() {
-		return providerCode;
-	}
-
-	public void setProviderCode(String providerCode) {
-		this.providerCode = providerCode;
-	}
-
-	public String getProductCategory() {
-		return productCategory;
-	}
-
-	public void setProductCategory(String productCategory) {
-		this.productCategory = productCategory;
-	}
-
-	public String getServiceCode() {
-		return serviceCode;
-	}
-
-	public void setServiceCode(String serviceCode) {
-		this.serviceCode = serviceCode;
-	}
-
 	public double getPrice() {
 		return price;
 	}
@@ -140,19 +103,27 @@ public class GoodsServiceDetail {
 		this.price = price;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
 	public String getServiceName() {
 		return serviceName;
 	}
 
 	public void setServiceName(String serviceName) {
 		this.serviceName = serviceName;
+	}
+
+	public String getServiceRangeCode() {
+		return serviceRangeCode;
+	}
+
+	public void setServiceRangeCode(String serviceRangeCode) {
+		this.serviceRangeCode = serviceRangeCode;
+	}
+
+	public String getServiceRangeName() {
+		return serviceRangeName;
+	}
+
+	public void setServiceRangeName(String serviceRangeName) {
+		this.serviceRangeName = serviceRangeName;
 	}
 }

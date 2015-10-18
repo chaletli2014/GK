@@ -93,29 +93,40 @@ public class GoodsServiceDAOImpl extends BaseDAOImpl implements GoodsServiceDAO 
 	public List<GoodsServiceDetail> getGoodsServiceDetailsByProviderCode(
 			String providerCode) throws Exception {
 		List<GoodsServiceDetail> serviceDetailList = new ArrayList<GoodsServiceDetail>();
-        StringBuffer sql = new StringBuffer("select gsd.*,tc.category_name,gd.dic_name as service_name ");
+        StringBuffer sql = new StringBuffer("select gsd.*,tc.category_name,gd.dic_name as service_range_name ");
         sql.append(" from tbl_goods_service_detail gsd,  tbl_category tc, tbl_goods_dictionary gd ");
         sql.append(" where gsd.provider_code = ? and gsd.status = '1' ");
         sql.append(" and gsd.product_category = tc.category_code ");
-        sql.append(" and gsd.service_code = gd.dic_code ");
+        sql.append(" and gsd.service_range_code = gd.dic_code ");
         serviceDetailList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{providerCode}, new GoodsServiceDetailRowMapper());
         return serviceDetailList;
+	}
+	
+	@Override
+	public List<GoodsServiceDetail> getGoodsServiceDetailsByUserCode(
+			String userCode) throws Exception {
+		List<GoodsServiceDetail> serviceDetailList = new ArrayList<GoodsServiceDetail>();
+		StringBuffer sql = new StringBuffer("select gsd.*,gd.dic_name as service_range_name ");
+		sql.append(" from tbl_goods_service_detail gsd, tbl_goods_dictionary gd ");
+		sql.append(" where gsd.create_user = ? and gsd.status = '1' ");
+		sql.append(" and gsd.service_range_code = gd.dic_code ");
+		serviceDetailList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{userCode}, new GoodsServiceDetailRowMapper());
+		return serviceDetailList;
 	}
 
 	@Override
 	public void saveGoodsServiceDetail(GoodsServiceDetail serviceDetail,
 			WebUserInfo currentUser) throws Exception {
 		StringBuilder sql = new StringBuilder("insert into tbl_goods_service_detail(id");
-        sql.append(",provider_code,product_category,service_code,price,service_content ");
+        sql.append(",service_name,service_range_code,price,service_content ");
         sql.append(",createdate,create_user,updatedate,update_user,status)");
 		sql.append("values(null");
-		sql.append(",?,?,?,?,?");
+		sql.append(",?,?,?,?");
 		sql.append(",now(),?,now(),?,'1')");
 
 		List<Object> params = new ArrayList<Object>();
-		params.add(serviceDetail.getProviderCode());
-		params.add(serviceDetail.getProductCategory());
-		params.add(serviceDetail.getServiceCode());
+		params.add(serviceDetail.getServiceName());
+		params.add(serviceDetail.getServiceRangeCode());
 		params.add(serviceDetail.getPrice());
 		params.add(serviceDetail.getServiceContent());
 		params.add(currentUser.getLoginName());
@@ -150,11 +161,11 @@ public class GoodsServiceDAOImpl extends BaseDAOImpl implements GoodsServiceDAO 
 	@Override
 	public GoodsServiceDetail getGoodsServiceDetailById(int serviceId)
 			throws Exception {
-		StringBuffer sql = new StringBuffer("select gsd.*,tc.category_name,gd.dic_name as service_name ");
+		StringBuffer sql = new StringBuffer("select gsd.*,tc.category_name,gd.dic_name as service_range_name ");
         sql.append(" from tbl_goods_service_detail gsd,  tbl_category tc, tbl_goods_dictionary gd ");
         sql.append(" where gsd.id = ? and gsd.status = '1' ");
         sql.append(" and gsd.product_category = tc.category_code ");
-        sql.append(" and gsd.service_code = gd.dic_code ");
+        sql.append(" and gsd.service_range_code = gd.dic_code ");
         return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{serviceId}, new GoodsServiceDetailRowMapper());
 	}
 

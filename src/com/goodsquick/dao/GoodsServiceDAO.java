@@ -19,6 +19,7 @@ public interface GoodsServiceDAO {
 	public String getMaxCode() throws Exception;
 	
 	public List<GoodsServiceDetail> getGoodsServiceDetailsByProviderCode(String providerCode) throws Exception;
+	public List<GoodsServiceDetail> getGoodsServiceDetailsByUserCode(String userCode) throws Exception;
 	public void saveGoodsServiceDetail(GoodsServiceDetail serviceDetail, WebUserInfo currentUser) throws Exception;
 	public void updateGoodsServiceDetail(GoodsServiceDetail serviceDetail, WebUserInfo currentUser) throws Exception;
 	public void deleteGoodsServiceDetail(int serviceId) throws Exception;

@@ -51,7 +51,17 @@ jQuery(document).ready(function($){
 					<script type="text/javascript">
 					jQuery(document).ready(function($)
 					{
-						$("#example-2").dataTable({
+						$("#houseTable").dataTable({
+							dom: "t" + "<'row'<'col-xs-6'i><'col-xs-6'p>>",
+							aoColumns: [
+								null,
+								null,
+								null,
+								null,
+								null
+							],
+						});
+						$("#serviceDetailTable").dataTable({
 							dom: "t" + "<'row'<'col-xs-6'i><'col-xs-6'p>>",
 							aoColumns: [
 								null,
@@ -67,24 +77,18 @@ jQuery(document).ready(function($){
 					<c:if test="${fn:length(orHouses) == 0 }">
 						<div>
 							<span>您还没有添加任何产品,赶紧添加吧！</span>
-							<a href="<%=basePath%>newProductPre">
-								<button class="btn btn-purple btn-icon btn-icon-standalone">
-									<i class="fa-cog"></i>
-									<span>新增产品</span>
-								</button>
-							</a>
 						</div>
 					</c:if>
+					<div>
+						<a href="<%=basePath%>newProductPre">
+							<button class="btn btn-purple btn-icon btn-icon-standalone">
+								<i class="fa-cog"></i>
+								<span>新增产品</span>
+							</button>
+						</a>
+					</div>
 					<c:if test="${fn:length(orHouses) > 0 }">
-						<div>
-							<a href="<%=basePath%>newProductPre">
-								<button class="btn btn-purple btn-icon btn-icon-standalone">
-									<i class="fa-cog"></i>
-									<span>新增产品</span>
-								</button>
-							</a>
-						</div>
-						<table class="table table-bordered table-striped" id="example-2">
+						<table class="table table-bordered table-striped" id="houseTable">
 							<thead>
 								<tr>
 									<th>项目名称</th>
@@ -121,6 +125,38 @@ jQuery(document).ready(function($){
 												<li>
 													<a href="<%=basePath%>houseSP?orHouseId=${orHouse.id}" class="btn btn-info btn-sm btn-icon icon-left">
 														服务商维护
+													</a>
+												</li>
+											</ul>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</c:if>
+					<c:if test="${fn:length(serviceDetails) > 0 }">
+						<table class="table table-bordered table-striped" id="serviceDetailTable">
+							<thead>
+								<tr>
+									<th>服务名称</th>
+									<th>服务范围</th>
+									<th>服务价格</th>
+									<th>服务简介</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody class="middle-align">
+								<c:forEach items="${serviceDetails}" var="serviceDetail">
+									<tr>
+										<td >${serviceDetail.serviceName}</td>
+										<td >${serviceDetail.serviceRangeName}</td>
+										<td >${serviceDetail.price}</td>
+										<td >${serviceDetail.serviceContent}</td>
+										<td>
+											<ul class="table_action_list">
+												<li>
+													<a href="#" class="btn btn-danger btn-sm btn-icon icon-left">
+														删除
 													</a>
 												</li>
 											</ul>

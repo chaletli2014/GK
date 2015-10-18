@@ -30,6 +30,13 @@ function checkMessage(){
 		return false;
 	}
 }
+function deleteDic(dicId){
+	jConfirm("是否确定删除该数据？","提醒",function(r) {
+    	if(r){
+    		window.location.href="<%=basePath%>deletedictionary?dicId="+dicId;
+    	}
+	});
+}
 </script>
 <style>
 #editDiv .modal-body .content div.panel-body div{
@@ -115,7 +122,7 @@ function checkMessage(){
 											<a href="#" class="btn btn-secondary btn-sm btn-icon icon-left">
 												编辑
 											</a>
-											<a href="#" class="btn btn-danger btn-sm btn-icon icon-left">
+											<a href="javascript:void(0)" onclick="deleteDic('${d.id}')" class="btn btn-danger btn-sm btn-icon icon-left">
 												删除
 											</a>
 										</td>
