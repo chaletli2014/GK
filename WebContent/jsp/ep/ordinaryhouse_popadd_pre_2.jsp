@@ -4,6 +4,7 @@
 <%@include file="../common/header.jsp"%>
 <script type="text/javascript" src="<%=basePath%>/js/goodsquick/ordinaryhouse_pre.js"></script>
 <body class="page-body">
+	<input type="hidden" id="basePath" value="<%=basePath%>">
 	<jsp:include page="../common/settings_pane.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

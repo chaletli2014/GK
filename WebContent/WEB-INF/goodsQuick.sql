@@ -387,3 +387,21 @@ ROW_FORMAT=COMPACT
 
 alter table tbl_goods_ordinary_house add index IDX_HOUSE_CODE(house_code);
 alter table tbl_goods_house_device add index IDX_HOUSE_CODE_DEVICE_TYPE(house_code,device_type);
+
+--普通消息表
+CREATE TABLE tbl_goods_message (
+id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+source_user			varchar(200)	comment '消息发送者',
+target_user			varchar(200)	comment '消息接收者',
+message_content		varchar(2000)   comment '消息内容',
+create_user  		varchar(20),
+createdate			datetime,
+update_user			varchar(20),
+updatedate			datetime,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;

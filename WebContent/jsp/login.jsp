@@ -6,7 +6,7 @@
 <%@include file="common/header.jsp"%>
 <body style="background: #000;">
 	<div>
-		<img src="<%=basePath%>images/logo-blue.png" width="180" height="60" alt="" style="cursor: pointer;">
+		<img src="<%=basePath%>images/logo-new.png"  alt="" style="cursor: pointer;">
 	</div>
 	<table id="__01" border="0" cellpadding="0" cellspacing="0" style="margin:auto auto;">
 	<tr>

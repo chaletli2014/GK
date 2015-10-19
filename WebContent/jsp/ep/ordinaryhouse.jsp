@@ -119,14 +119,16 @@ jQuery(document).ready(function($){
 												</li>
 												<li>
 													<a href="<%=basePath%>ordinaryHousedevice?orHouseId=${orHouse.id}" class="btn btn-info btn-sm btn-icon icon-left">
-														设备列表
+														设施/设备列表
 													</a>
 												</li>
+												<%--
 												<li>
 													<a href="<%=basePath%>houseSP?orHouseId=${orHouse.id}" class="btn btn-info btn-sm btn-icon icon-left">
 														服务商维护
 													</a>
 												</li>
+												 --%>
 											</ul>
 										</td>
 									</tr>

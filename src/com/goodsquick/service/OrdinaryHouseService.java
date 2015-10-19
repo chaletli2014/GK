@@ -19,4 +19,6 @@ public interface OrdinaryHouseService {
 	
 	public void saveOrUpdateHouseDevice(GoodsHouseDevice houseDevice, GoodsOrdinaryHouse ordinaryHouse, WebUserInfo currentUser) throws Exception;
 	public List<GoodsHouseDevice> getAllHouseDeviceByUser(GoodsOrdinaryHouse ordinaryHouse, WebUserInfo currentUser) throws Exception;
+	
+	public GoodsOrdinaryHouse getGoodsOrdinaryHouseByName(String houseName) throws Exception;
 }

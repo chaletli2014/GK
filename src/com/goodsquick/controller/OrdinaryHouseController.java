@@ -18,12 +18,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
+import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.GoodsServiceDetail;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
 import com.goodsquick.service.GoodsServiceService;
+import com.goodsquick.service.MessageService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.service.RelationshipPropertyService;
 import com.goodsquick.utils.GoodsQuickAttributes;
@@ -49,6 +51,10 @@ public class OrdinaryHouseController {
 	@Autowired
 	@Qualifier("goodsServiceService")
 	private GoodsServiceService goodsServiceService;
+	
+	@Autowired
+	@Qualifier("messageService")
+	private MessageService messageService;
 
     @RequestMapping("/ordinaryhouse")
     public ModelAndView ordinaryhouse(HttpServletRequest request){
@@ -319,6 +325,66 @@ public class OrdinaryHouseController {
     		result.put("result", "Y");
     	} catch (Exception e) {
     		logger.error("ordinaryHousedevice: 保存服务商信息失败",e);
+    		result.put("result", "N");
+    		result.put("message", e.getMessage());
+    	}
+    	
+    	return result;
+    }
+    
+    @RequestMapping("/checkBuildingName")
+    @ResponseBody
+    public Map<String,Object> checkBuildingName(HttpServletRequest request){
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	try {
+    		String houseName = request.getParameter("houseName");
+    		GoodsOrdinaryHouse house = ordinaryHouseService.getGoodsOrdinaryHouseByName(houseName);
+    		if( null != house ){
+    			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    			
+    			if( currentUser.getLoginName().equalsIgnoreCase(house.getCreateUser()) ){
+    				result.put("result", "own");
+    			}else{
+    				String messageContent = GoodsQuickAttributes.MESSAGE_REQUEST_HOUSE;
+    	    		messageContent = messageContent.replace("{0}", currentUser.getLoginName());
+    	    		messageContent = messageContent.replace("{1}", houseName);
+    				GoodsMessage message = messageService.getMessageByHouseName(currentUser.getLoginName(), messageContent);
+    				if( null != message ){
+    					result.put("result", "sent");
+    				}else{
+    					result.put("result", "Y");
+    					result.put("obj", house);
+    				}
+    			}
+    		}else{
+    			result.put("result", "N");
+    		}
+    	} catch (Exception e) {
+    		logger.error("checkBuildingName: 根据不动产名称获取不动产信息失败",e);
+    		result.put("result", "E");
+    		result.put("message", e.getMessage());
+    	}
+    	
+    	return result;
+    }
+    
+    @RequestMapping("/sendRequestToBuildingName")
+    @ResponseBody
+    public Map<String,String> sendRequestToBuildingName(HttpServletRequest request){
+    	Map<String,String> result = new HashMap<String,String>();
+    	try {
+    		String houseOwner = request.getParameter("houseOwner");
+    		String houseName = request.getParameter("houseName");
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		
+    		String messageContent = GoodsQuickAttributes.MESSAGE_REQUEST_HOUSE;
+    		messageContent = messageContent.replace("{0}", currentUser.getLoginName());
+    		messageContent = messageContent.replace("{1}", houseName);
+    		
+    		messageService.createNewMessage(currentUser.getLoginName(), houseOwner, messageContent);
+    		result.put("result", "Y");
+    	} catch (Exception e) {
+    		logger.error("sendRequestToBuildingName: 申请不动产用户失败",e);
     		result.put("result", "N");
     		result.put("message", e.getMessage());
     	}

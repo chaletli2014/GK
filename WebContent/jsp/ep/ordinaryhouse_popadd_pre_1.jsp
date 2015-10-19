@@ -4,6 +4,7 @@
 <%@include file="../common/header.jsp"%>
 <script type="text/javascript" src="<%=basePath%>/js/goodsquick/ordinaryhouse_pre.js"></script>
 <body class="page-body">
+	<input type="hidden" id="basePath" value="<%=basePath%>">
 	<jsp:include page="../common/settings_pane.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>
@@ -66,7 +67,7 @@
 											</select>
 										</div>
 										<div style="height:30%;text-align: center;">
-											<a href="javascript:void(0)" onclick="showPopDiv('editDiv')">
+											<a href="javascript:void(0)" onclick="showPopDiv('newHouseDiv')">
 												<button class="btn btn-purple btn-icon btn-icon-standalone">
 													<i class="fa-cog"></i>
 													<span>新增产品</span>

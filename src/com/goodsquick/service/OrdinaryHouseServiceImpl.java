@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -171,11 +172,23 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 			String userCode) throws Exception {
 		try{
 			return ordinaryHouseDAO.getAllHouseRelationshipByUserCode(userCode);
-		} catch(EmptyResultDataAccessException erd){
+		} catch(IncorrectResultSizeDataAccessException erd){
             return Collections.emptyList();
         } catch(Exception e){
             logger.error(String.format("fail to get all the house relationship by user code %s,", userCode),e);
             return Collections.emptyList();
         }
+	}
+
+	@Override
+	public GoodsOrdinaryHouse getGoodsOrdinaryHouseByName(String houseName)
+			throws Exception {
+		try{
+			return ordinaryHouseDAO.getGoodsOrdinaryHouseByName(houseName);
+		}catch( EmptyResultDataAccessException e){
+			return null;
+		}catch(IncorrectResultSizeDataAccessException erd){
+			throw new Exception("数据冲突，存在多个相同的名称");
+		}
 	}
 }

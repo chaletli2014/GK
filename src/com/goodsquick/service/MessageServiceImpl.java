@@ -18,6 +18,7 @@ import com.goodsquick.dao.MessageDAO;
 import com.goodsquick.dao.OrdinaryHouseDAO;
 import com.goodsquick.dao.RelationshipPropertyDAO;
 import com.goodsquick.model.GoodsConfiguration;
+import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelatedRequest;
 import com.goodsquick.model.GoodsRelationshipProperty;
@@ -147,6 +148,22 @@ public class MessageServiceImpl implements MessageService {
 	public void updateCustomer2SP(int messageId, WebUserInfo currentUser)
 			throws Exception {
 		goodsServiceDAO.updateCustomer2SP(messageId, currentUser);
+	}
+
+	@Override
+	public void createNewMessage(String sourceUser, String targetUser,
+			String content) throws Exception {
+		messageDAO.createNewMessage(sourceUser, targetUser, content);
+	}
+
+	@Override
+	public GoodsMessage getMessageByHouseName(String sourceUser, String content)
+			throws Exception {
+		try{
+			return messageDAO.getMessageByHouseName(sourceUser, content);
+		}catch(EmptyResultDataAccessException e){
+			return null;
+		}
 	}
 	
 	

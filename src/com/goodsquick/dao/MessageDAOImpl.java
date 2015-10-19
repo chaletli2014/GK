@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.goodsquick.mapper.GoodsMessageRowMapper;
 import com.goodsquick.mapper.GoodsRelatedRequestRowMapper;
+import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsRelatedRequest;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.DataBean;
@@ -57,5 +59,30 @@ public class MessageDAOImpl implements MessageDAO {
         sql.append(" where sr.id = ? and oh.building_name = sr.customer_name and sr.sp_code = gs.code");
         sql.append(" and sr.service_type = gd.dic_code and gd.type_code='serviceTypes'");
 		return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{messageId},new GoodsRelatedRequestRowMapper());
+	}
+
+	@Override
+	public void createNewMessage(String sourceUser, String targetUser,
+			String content) throws Exception {
+		List<String> params = new ArrayList<String>(5);
+		StringBuilder insertSQL = new StringBuilder(200);
+		insertSQL.append(" insert into tbl_goods_message( source_user,target_user,message_content,create_user,createdate,update_user,updatedate )");
+		insertSQL.append(" values (?,?,?,?,now(),?,now() )");
+		
+		params.add(sourceUser);
+		params.add(targetUser);
+		params.add(content);
+		params.add(sourceUser);
+		params.add(sourceUser);
+		
+		dataBean.getJdbcTemplate().update(insertSQL.toString(), params.toArray());
+	}
+
+	@Override
+	public GoodsMessage getMessageByHouseName(String sourceUser, String content)
+			throws Exception {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select * from tbl_goods_message where source_user = ? and message_content = ? ");
+		return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{sourceUser,content},new GoodsMessageRowMapper());
 	}
 }

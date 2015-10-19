@@ -1,5 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div class="modal fade" id="editDiv">
+<div class="modal fade" id="newHouseDiv">
 	<div class="modal-dialog" style="width:70%">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -9,16 +9,19 @@
 			<div id="rootwizard" class="form-wizard">
 				<ul class="tabs">
 					<li class="active">
-						<a href="#tab1" data-toggle="tab">定义产品名称</a>
+						<a href="#tab1" data-toggle="tab">基本信息</a>
 					</li>
 					<li>
-						<a href="#tab2" data-toggle="tab">填写基本参数</a>
+						<a href="#tab2" data-toggle="tab">主要参数</a>
 					</li>
 					<li>
-						<a href="#tab3" data-toggle="tab">填写详细参数</a>
+						<a href="#tab3" data-toggle="tab">详细参数</a>
 					</li>
 					<li>
-						<a href="#tab4" data-toggle="tab">关联设备</a>
+						<a href="#tab4" data-toggle="tab">关联组件</a>
+					</li>
+					<li>
+						<a href="#tab5" data-toggle="tab">资料库</a>
 					</li>
 				</ul>
 				<div class="progress-indicator">
@@ -99,6 +102,11 @@
 					</div>
 					<div class="tab-pane" id="tab4">
 						<jsp:include page="ordinaryhouse_param_device.jsp" flush="true">
+				        	<jsp:param name="basePath" value="<%=basePath%>"/>
+				        </jsp:include>
+					</div>
+					<div class="tab-pane" id="tab5">
+						<jsp:include page="ordinaryhouse_param_source.jsp" flush="true">
 				        	<jsp:param name="basePath" value="<%=basePath%>"/>
 				        </jsp:include>
 					</div>

@@ -44,4 +44,10 @@ public class GoodsQuickAttributes {
     public static final String GOODS_STATUS_ON = "on";
     public static final String GOODS_STATUS_OFF = "off";
     
+    /**
+     * {0}申请成为{1}的用户
+     * 该消息模板用于新增或者申请成为不动产的使用者
+     */
+    public static final String MESSAGE_REQUEST_HOUSE = "{0}申请成为{1}的用户";
+    
 }

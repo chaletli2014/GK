@@ -2,6 +2,7 @@ package com.goodsquick.dao;
 
 import java.util.List;
 
+import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsRelatedRequest;
 import com.goodsquick.model.WebUserInfo;
 
@@ -10,4 +11,7 @@ public interface MessageDAO {
 	public void handleMessage(int messageId, String status, WebUserInfo currentUser) throws Exception;
 	
 	public GoodsRelatedRequest getMessageById(int messageId) throws Exception;
+	
+	public void createNewMessage(String sourceUser, String targetUser, String content) throws Exception;
+	public GoodsMessage getMessageByHouseName(String sourceUser, String content) throws Exception;
 }
