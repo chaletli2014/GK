@@ -101,7 +101,7 @@ jQuery(document).ready(function($){
 							<tbody class="middle-align">
 								<c:forEach items="${orHouses}" var="orHouse">
 									<tr>
-										<td >${orHouse.buildingName}</td>
+										<td ><a class="houseNameLink" tabindex="${orHouse.id}" href="javascript:void(0)">${orHouse.buildingName}</a></td>
 										<td >${orHouse.company}</td>
 										<td >${orHouse.propertyName}</td>
 										<td >${orHouse.location}</td>
@@ -173,6 +173,7 @@ jQuery(document).ready(function($){
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>
+	<%@include file="ordinaryhouse_popshow.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

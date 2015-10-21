@@ -368,6 +368,28 @@ public class OrdinaryHouseController {
     	return result;
     }
     
+    @RequestMapping("/getHouseDetails")
+    @ResponseBody
+    public Map<String,Object> getHouseDetails(HttpServletRequest request){
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	try {
+    		String houseId = request.getParameter("houseId");
+    		GoodsOrdinaryHouse house = ordinaryHouseService.getGoodsOrdinaryHouseById(Integer.parseInt(houseId));
+    		if( null != house ){
+    			result.put("result", "Y");
+    			result.put("obj", house);
+    		}else{
+    			result.put("result", "N");
+    		}
+    	} catch (Exception e) {
+    		logger.error("checkBuildingName: 根据ID获取不动产信息失败",e);
+    		result.put("result", "E");
+    		result.put("message", e.getMessage());
+    	}
+    	
+    	return result;
+    }
+    
     @RequestMapping("/sendRequestToBuildingName")
     @ResponseBody
     public Map<String,String> sendRequestToBuildingName(HttpServletRequest request){

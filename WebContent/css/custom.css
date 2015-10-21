@@ -85,3 +85,38 @@ div.product_select_pre a.product_link{
 	font-size: 14px;
 	font-weight: bold;
 }
+
+div.detail_show_title{
+	float:left;
+	width: 100px;
+}
+div.showDetailDiv .form-group{
+	display:table;
+	content:"  ";
+	width: 100%;
+}
+.show_table{
+	background: #ccc;
+  	border-spacing: 1px;
+  	width: 100%;
+  	border-top-width: 0px;
+  	border-right-width: 0px;
+  	border-bottom-width: 0px;
+  	border-left-width: 0px;
+  	display: table;
+  	border-collapse: separate;
+  	border-color: gray;
+  	color: #666;
+}
+.show_table td{
+  padding: 6px 15px;
+  background: #fff;
+}
+.show_table td.show_tdTitle{
+  text-align: right;
+  width: 110px;
+  background: #F5FAFE;
+  font-size: 12px;
+  display: table-cell;
+  vertical-align: inherit;
+}

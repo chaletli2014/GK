@@ -44,6 +44,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>css/jquery.alerts.css">
 
 	<script type="text/javascript">
+	var basePath = "<%=basePath%>";
 	function submitLogin(){
 		$("#loginForm").submit();
 	}
