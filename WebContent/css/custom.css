@@ -120,3 +120,30 @@ div.showDetailDiv .form-group{
   display: table-cell;
   vertical-align: inherit;
 }
+
+.sp_list{
+	padding:0px;
+}
+.sp_list_item{
+	margin: 0 10px;
+  	margin-bottom: 30px;
+  	width: 180px;
+  	border: 10px solid #f1f1f1;
+  	float: left;
+  	display: list-item;
+  	list-style: none;
+}
+.sp_title{
+	color: #fff;
+  	padding: 20px;
+  	background: #2c2e2f;
+  	display: block;
+}
+.sp_detail{
+	font-size: 14px;
+	height: 60px;
+	padding: 10px 0px;
+}
+.sp_actions{
+	text-align: center;
+}

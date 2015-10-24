@@ -51,36 +51,88 @@
 						</div>
 						</a>
 						<div class="panel-body">
-							<table class="table table-bordered table-striped" id="">
-								<thead>
-									<tr>
-										<th>品牌商</th>
-										<th>设计商</th>
-										<th>制造商</th>
-										<th>检测认证商</th>
-										<th>渠道商</th>
-										<th>物流商</th>
-										<th>所有人</th>
-										<th>托管人</th>
-										<th>市场监管人</th>
-										<th>回收处理商</th>
-									</tr>
-								</thead>
-								<tbody class="middle-align">
-									<tr>
-										<td title="${house.brandName}">&nbsp;${house.brandName}</td>
-										<td title="${house.designName}">&nbsp;${house.designName}</td>
-										<td title="${house.manufacturerName}">&nbsp;${house.manufacturerName}</td>
-										<td title="${house.certificationName}">&nbsp;${house.certificationName}</td>
-										<td title="${house.channelName}">&nbsp;${house.channelName}</td>
-										<td title="${house.logisticsName}">&nbsp;${house.logisticsName}</td>
-										<td title="${house.ownerName}">&nbsp;${house.ownerName}</td>
-										<td title="${house.trusteeshipName}">&nbsp;${house.trusteeshipName}</td>
-										<td title="${house.supervisionName}">&nbsp;${house.supervisionName}</td>
-										<td title="${house.recyclingName}">&nbsp;${house.recyclingName}</td>
-									</tr>
-								</tbody>
-							</table>
+							<ul class="sp_list">
+								<li class="sp_list_item">
+									<div class="sp_title">品牌商</div>
+									<div class="sp_detail">&nbsp;${house.brandName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">设计商</div>
+									<div class="sp_detail">&nbsp;${house.designName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">制造商</div>
+									<div class="sp_detail">&nbsp;${house.manufacturerName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">检测认证商</div>
+									<div class="sp_detail">&nbsp;${house.certificationName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">渠道商</div>
+									<div class="sp_detail">&nbsp;${house.channelName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">物流商</div>
+									<div class="sp_detail">&nbsp;${house.logisticsName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">所有人</div>
+									<div class="sp_detail">&nbsp;${house.ownerName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">托管人</div>
+									<div class="sp_detail">&nbsp;${house.trusteeshipName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">市场监管人</div>
+									<div class="sp_detail">&nbsp;${house.supervisionName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+								<li class="sp_list_item">
+									<div class="sp_title">回收处理商</div>
+									<div class="sp_detail">&nbsp;${house.recyclingName}</div>
+									<div class="sp_actions">
+										<a><button class="btn btn-red">删除</button></a>
+										<a><button class="btn btn-orange">更换</button></a>
+									</div>
+								</li>
+							</ul>
 						</div>
 					</div>
 					</c:forEach>
