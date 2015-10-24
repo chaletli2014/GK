@@ -3,7 +3,6 @@
 	<div class="col-md-12">
 		<div class="tab-content">
 			<div class="tab-pane active" id="basicinfo">
-				
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="contacterName">主要联系人</label>
 					<div class="col-sm-2">
@@ -22,35 +21,6 @@
 					<label class="col-sm-2 control-label" for="propertyName">物业名称</label>
 					<div class="col-sm-8">
 						<input type="text" class="form-control" id="propertyName" name="propertyName" value="${orHouse.propertyName}">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label" for="field-1">物业类型</label>
-					<div class="col-sm-9">
-						<label class="cbr-inline">
-							<input type="radio" name="propertyType" class="cbr" value="zz" checked>住宅										
-						</label>
-						<label class="cbr-inline">
-							<input type="radio" name="propertyType" class="cbr" value="xzl">写字楼
-						</label>
-						<label class="cbr-inline">
-							<input type="radio" name="propertyType" class="cbr" value="sc">商场
-						</label>
-						<label class="cbr-inline">
-							<input type="radio" name="propertyType" class="cbr" value="tcc">停车场
-						</label>
-						<label class="cbr-inline">
-							<input type="radio" name="propertyType" class="cbr" value="jd">酒店
-						</label>
-						<label class="cbr-inline">
-							<input type="radio" name="propertyType" class="cbr" value="djc">度假村
-						</label>
-						<label class="cbr-inline">
-							<input type="radio" name="propertyType" class="cbr" value="other">其他
-						</label>
-						<label class="cbr-inline">
-							<input type="text" class="form-control" id="propertytypeO" name="propertytypeO" value="">
-						</label>
 					</div>
 				</div>
 				<div class="form-group">

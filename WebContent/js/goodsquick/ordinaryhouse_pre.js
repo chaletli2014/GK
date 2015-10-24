@@ -130,4 +130,90 @@ jQuery(document).ready(function($){
 			}
 		});
 	});
+	
+	$("#goodsCategory").change(function(){
+		var selectedCategory = this.value;
+		$("#childGoodsCategory option[value!='']").remove();
+		
+		if( selectedCategory != null && selectedCategory != ''){
+			jQuery.ajax({
+				url: basePath+"getcategorybypcode",
+				data:{
+					parentCode : selectedCategory
+				}
+				,success: function(response){
+					var categoryList = response.categoryList;
+					var childSelection = "";
+					
+					$.each(categoryList,function(n,value) {
+						childSelection = childSelection + "<option value='"+value.code+"'>"+value.name+"</option>";
+					});
+					
+					$("#childGoodsCategory").append(childSelection);
+					
+					$("#childGoodsCategory").selectBoxIt().data("selectBoxIt");
+					var selectBox = $("#childGoodsCategory").data("selectBox-selectBoxIt");
+					selectBox.refresh();
+				}
+			});
+		}
+		
+		$("#childGoodsCategory").selectBoxIt().data("selectBoxIt");
+		var selectBox = $("#childGoodsCategory").data("selectBox-selectBoxIt");
+		selectBox.refresh();
+	});
+	
+	$("#addNewHouseLink").click(function(){
+		var childCategory = $("#childGoodsCategory").val();
+		if( childCategory == null || childCategory == '' ){
+			jAlert("请选择一个子分类，才能新增产品","错误");
+		}else{
+			showPopDiv('newHouseDiv');
+		}
+	});
+	
+	$("#addNewServiceLink").click(function(){
+		var serviceCategory = $("#serviceCategory").val();
+		if( serviceCategory == null || serviceCategory == '' ){
+			jAlert("请选择一个非实物分类，才能新增产品","错误");
+		}else{
+			showPopDiv('newServiceDiv');
+		}
+	});
+	
+	var i = 1,
+	$example_dropzone_filetable = $("#example-dropzone-filetable"),
+	example_dropzone = $("#advancedDropzone").dropzone({
+		url: basePath+"uploadSourceFile",
+		addedfile: function(file){
+			if(i == 1){
+				$example_dropzone_filetable.find('tbody').html('');
+			}
+			var size = parseInt(file.size/1024, 10);
+			size = size < 1024 ? (size + " KB") : (parseInt(size/1024, 10) + " MB");
+			
+			var	$el = $('<tr>\
+				<td class="text-center">'+(i++)+'</td>\
+				<td>'+file.name+'</td>\
+				<td><div class="progress progress-striped"><div class="progress-bar progress-bar-warning"></div></div></td>\
+				<td>'+size+'</td>\
+				<td>上传中......</td>\
+			</tr>');
+			$example_dropzone_filetable.find('tbody').append($el);
+			file.fileEntryTd = $el;
+			file.progressBar = $el.find('.progress-bar');
+		},
+		uploadprogress: function(file, progress, bytesSent){
+			file.progressBar.width(progress + '%');
+		},
+		success: function(file){
+			file.fileEntryTd.find('td:last').html('<span class="text-success">上传成功</span>');
+			file.progressBar.removeClass('progress-bar-warning').addClass('progress-bar-success');
+		},
+		error: function(file){
+			file.fileEntryTd.find('td:last').html('<span class="text-danger">上传失败</span>');
+			file.progressBar.removeClass('progress-bar-warning').addClass('progress-bar-red');
+		}
+	});
+	$("#advancedDropzone").css({minHeight: 200});
 });

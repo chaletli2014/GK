@@ -56,13 +56,13 @@
 											<script type="text/javascript">
 												jQuery(document).ready(function($)
 												{
-													$("#goodsCategory").selectBoxIt().on('open', function()
+													$("#serviceCategory").selectBoxIt().on('open', function()
 													{
 														$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
 													});
 												});
 											</script>
-											<select class="form-control" id="goodsCategory" name="goodsCategory">
+											<select class="form-control" id="serviceCategory" name="serviceCategory">
 												<option value="">请选择非实物分类</option>
 												<c:forEach items="${goodsCategory}" var="gc">
 													<option value="${gc.dicCode}">${gc.dicName}</option>
@@ -70,7 +70,7 @@
 											</select>
 										</div>
 										<div style="height:30%;text-align: center;">
-											<a href="javascript:void(0)" onclick="showPopDiv('newServiceDiv')">
+											<a href="javascript:void(0)" id="addNewServiceLink">
 												<button class="btn btn-purple btn-icon btn-icon-standalone">
 													<i class="fa-cog"></i>
 													<span>新增产品</span>

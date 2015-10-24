@@ -1,7 +1,9 @@
 package com.goodsquick.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.Category;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.utils.ExcelUtils;
@@ -69,4 +73,11 @@ public class UploadFileController {
         request.getSession().setAttribute(GoodsQuickAttributes.MESSAGE_AREA_ID, "uploadHouse_div");
         return "redirect:uploadSource";
     }
+
+	@ResponseBody
+	@RequestMapping("/uploadSourceFile")
+	public Map<String, Object> uploadSourceFile(HttpServletRequest request){
+		Map<String, Object> categoryMap = new HashMap<String, Object>();
+		return categoryMap;
+	}
 }

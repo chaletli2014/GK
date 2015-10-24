@@ -27,6 +27,15 @@ public class CategoryDAOImpl implements CategoryDAO{
         topCategoryList = dataBean.getJdbcTemplate().query(sql, new Object[]{parentId}, new CategoryRowMapper());
         return topCategoryList;
 	}
+	
+	@Override
+	public List<Category> getChildCategoryByParentCode(String parentCode)
+			throws Exception {
+		List<Category> topCategoryList = new ArrayList<Category>();
+		String sql = "select child.* from tbl_category child, tbl_category parent where child.parentId = parent.id and parent.category_code = ? ";
+		topCategoryList = dataBean.getJdbcTemplate().query(sql, new Object[]{parentCode}, new CategoryRowMapper());
+		return topCategoryList;
+	}
 
 	@Override
 	public Category getCategoryInfoById(int categoryId) throws Exception {

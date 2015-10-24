@@ -123,6 +123,24 @@ public class CategoryController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("/getcategorybypcode")
+	public Map<String, List<Category>> getcategorybypcode(HttpServletRequest request){
+		Map<String, List<Category>> categoryMap = new HashMap<String, List<Category>>();
+		
+		List<Category> childCategory = new ArrayList<Category>();
+		try {
+			String parentCode = request.getParameter("parentCode");
+			childCategory = categoryService.getChildCategoryByParentCode(parentCode);
+		} catch (Exception e) {
+			logger.error("fail to get the child category,",e);
+		}
+		
+		categoryMap.put("categoryList", childCategory);
+		
+		return categoryMap;
+	}
+	
+	@ResponseBody
 	@RequestMapping("/categorylist")
 	public List<CategoryJsonObj> categorylist(HttpServletRequest request){
 		

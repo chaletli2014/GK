@@ -36,6 +36,19 @@ public class CategoryServiceImpl implements CategoryService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public List<Category> getChildCategoryByParentCode(String parentCode)
+			throws Exception {
+		try{
+			return categoryDAO.getChildCategoryByParentCode(parentCode);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get the top category,",e);
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	public Category getCategoryInfoById(int categoryId) throws Exception {

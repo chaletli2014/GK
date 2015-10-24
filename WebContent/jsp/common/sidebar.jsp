@@ -72,12 +72,12 @@
 							<span class="title">权限管理</span>
 						</a>
 					</li>
+					 --%>
 					<li <% if( actived.indexOf(",category,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>category">
 							<span class="title">分类管理</span>
 						</a>
 					</li>
-					 --%>
 					<li <% if( actived.indexOf(",dictionarytype,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>dictionarytype">
 							<span class="title">数据字典分类管理</span>
@@ -101,13 +101,13 @@
 				</ul>
 			</li>
 			<%} %>
-			<li <% if( opened.indexOf(",estate,")>-1 ){ %>class="active"<%} %>>
+			<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
 				<a href="<%=request.getParameter("basePath")%>ordinaryhouse">
 					<i class="linecons-database"></i>
 					<span class="title">物库管理</span>
 				</a>
 			</li>
-			<li <% if( opened.indexOf(",,")>-1 ){ %>class="active"<%} %>>
+			<li <% if( actived.indexOf(",myHouseSP,")>-1 ){ %>class="active"<%} %>>
 				<a href="<%=request.getParameter("basePath")%>myHouseSP">
 					<i class="linecons-globe"></i>
 					<span class="title">物链管理</span>

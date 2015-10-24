@@ -101,14 +101,10 @@
 				        </jsp:include>
 					</div>
 					<div class="tab-pane" id="tab4">
-						<jsp:include page="ordinaryhouse_param_device.jsp" flush="true">
-				        	<jsp:param name="basePath" value="<%=basePath%>"/>
-				        </jsp:include>
+						<%@include file="ordinaryhouse_param_device.jsp" %>
 					</div>
 					<div class="tab-pane" id="tab5">
-						<jsp:include page="ordinaryhouse_param_source.jsp" flush="true">
-				        	<jsp:param name="basePath" value="<%=basePath%>"/>
-				        </jsp:include>
+						<%@include file="ordinaryhouse_param_source.jsp" %>
 					</div>
 					<!-- Tabs Pager -->
 					<ul class="pager wizard">

@@ -115,6 +115,9 @@ public class OrdinaryHouseController {
     		List<GoodsDictionary> serviceCodes = dictionaryService.getDictionaryByType("serviceRange");
     		view.addObject("serviceCodes", serviceCodes);
     		
+    		List<GoodsDictionary> goodsDics = dictionaryService.getDictionaryByType(GoodsQuickAttributes.DICTIONRY_TYPE_DEVICE);
+    		view.addObject("goodsDics", goodsDics);
+    		
     		String productType = request.getParameter("type");
     		if( StringUtils.endsWith(productType, "2") ){
     			viewName = "ep/ordinaryhouse_popadd_pre_2";

@@ -49,25 +49,30 @@
 										<div style="text-align: center;font-weight: bold;font-size: 14px;padding:4px;height:30%">
 											<span>实物产品注册</span>
 										</div>
-										<div style="margin:14px 0px;height:30%">
+										<div style="margin:14px 0px;height:30px">
 											<script type="text/javascript">
 												jQuery(document).ready(function($)
 												{
-													$("#goodsCategory").selectBoxIt().on('open', function()
+													$(".goodsCategory").selectBoxIt().on('open', function()
 													{
 														$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
 													});
 												});
 											</script>
-											<select class="form-control" id="goodsCategory" name="goodsCategory">
+											<select class="form-control goodsCategory" id="goodsCategory" name="goodsCategory">
 												<option value="">请选择实物分类</option>
 												<c:forEach items="${goodsCategory}" var="gc">
-													<option value="${gc.dicCode}">${gc.dicName}</option>
+													<option value="${gc.dicCode}" title="${gc.dicName}">${gc.dicName}</option>
 												</c:forEach>
 											</select>
 										</div>
+										<div style="margin:14px 0px;height:30px">
+											<select class="form-control goodsCategory" id="childGoodsCategory" name="childGoodsCategory" style="margin-top:10px;">
+												<option value="">请选择下一级分类</option>
+											</select>
+										</div>
 										<div style="height:30%;text-align: center;">
-											<a href="javascript:void(0)" onclick="showPopDiv('newHouseDiv')">
+											<a href="javascript:void(0)" id="addNewHouseLink">
 												<button class="btn btn-purple btn-icon btn-icon-standalone">
 													<i class="fa-cog"></i>
 													<span>新增产品</span>
@@ -88,6 +93,8 @@
 		</div>
 	</div>
 	<%@include file="ordinaryhouse_popadd.jsp" %>
+	<link rel="stylesheet" href="<%=basePath%>js/dropzone/css/dropzone.css">
+	<script src="<%=basePath%>js/dropzone/dropzone.min.js"></script>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>
