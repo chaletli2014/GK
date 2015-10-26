@@ -2,6 +2,7 @@ package com.goodsquick.dao;
 
 import java.util.List;
 
+import com.goodsquick.model.GoodsCompanyInfo;
 import com.goodsquick.model.WebUserInfo;
 
 /**
@@ -65,4 +66,12 @@ public interface UserDAO {
 	 * @throws Exception
 	 */
 	public int getMessageNumByLoginName(String loginName) throws Exception;
+	
+	/**
+	 * 根据用户ID查询公司信息
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	public GoodsCompanyInfo getCompanyInfoByUserID(int userId) throws Exception;
 }

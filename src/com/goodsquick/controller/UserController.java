@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,6 +76,26 @@ public class UserController {
     	}
 		
 		return result;
+    }
+    
+    @RequestMapping("checkCompanyInfo")
+    @ResponseBody
+    public Map<String,String> checkCompanyInfo(HttpServletRequest request){
+    	Map<String, String> result = new HashMap<String, String>();
+    	try{
+    		
+    		WebUserInfo currentUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    		if( currentUser.getCompany() == null || "".equalsIgnoreCase(currentUser.getCompany().getCompanyName()) ){
+    			result.put("result", "N");
+    		}else{
+    			result.put("result", "Y");
+    		}
+    	}catch(Exception e){
+    		logger.error(String.format("fail to check account,%s",e.getMessage()),e);
+    		result.put("result", "N");
+    	}
+    	
+    	return result;
     }
     
     @RequestMapping("/saveOrUpdateprofile")
@@ -147,8 +168,14 @@ public class UserController {
     public ModelAndView editprofile(HttpServletRequest request){
     	ModelAndView view = new ModelAndView();
     	try {
+    		WebUserInfo userprofile = new WebUserInfo();
+    		
     		String userId = request.getParameter("userId");
-    		WebUserInfo userprofile = webUserService.getUserProfileById(userId);
+    		if( null == userId || "".equalsIgnoreCase(userId) ){
+    			userprofile = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    		}else{
+    			userprofile = webUserService.getUserProfileById(userId);
+    		}
     		
     		view.addObject("userprofile", userprofile);
     		view.addObject("opened", ",system,");

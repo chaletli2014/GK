@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.goodsquick.mapper.GoodsCompanyInfoRowMapper;
 import com.goodsquick.mapper.WebUserInfoRowMapper;
+import com.goodsquick.model.GoodsCompanyInfo;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.DataBean;
 
@@ -41,8 +43,8 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public WebUserInfo getUserProfileById(String userId) throws Exception {
 		WebUserInfo userInfo = new WebUserInfo();
-        String sql = "select * from tbl_web_userinfo where id = ? ";
-        userInfo = dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{userId}, new WebUserInfoRowMapper());
+        String userSql = "select * from tbl_web_userinfo where id = ? ";
+        userInfo = dataBean.getJdbcTemplate().queryForObject(userSql, new Object[]{userId}, new WebUserInfoRowMapper());
         return userInfo;
 	}
 
@@ -81,5 +83,11 @@ public class UserDAOImpl implements UserDAO {
 		sql.append(" and oh.create_user = ? ");
 		sql.append(" and sr.status = '1' ");
         return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{loginName}, Integer.class);
+	}
+
+	@Override
+	public GoodsCompanyInfo getCompanyInfoByUserID(int userId) throws Exception {
+		String companySql = "select c.* from tbl_goods_company c, tbl_goods_company_user cu where cu.user_id=? and cu.company_id = c.id";
+		return dataBean.getJdbcTemplate().queryForObject(companySql, new Object[]{userId}, new GoodsCompanyInfoRowMapper());
 	}
 }

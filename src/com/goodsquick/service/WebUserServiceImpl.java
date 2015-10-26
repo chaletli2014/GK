@@ -33,7 +33,11 @@ public class WebUserServiceImpl implements WebUserService {
     public WebUserInfo getWebUser(String username, String password) throws Exception {
         try{
         	WebUserInfo userInfo = userDAO.getWebUser(username, GoodsQuickMD5Utils.MD5(password));
-        	
+        	if( null != userInfo ){
+				try{
+					userInfo.setCompany(userDAO.getCompanyInfoByUserID(userInfo.getId()));
+				}catch(EmptyResultDataAccessException dae){}
+			}
         	/**
         	 * 加载消息个数
         	 */
@@ -77,7 +81,13 @@ public class WebUserServiceImpl implements WebUserService {
 	@Override
 	public WebUserInfo getUserProfileById(String userId) throws Exception {
 		try{
-            return userDAO.getUserProfileById(userId);
+			WebUserInfo userInfo = userDAO.getUserProfileById(userId);
+			if( null != userInfo ){
+				try{
+					userInfo.setCompany(userDAO.getCompanyInfoByUserID(userInfo.getId()));
+				}catch(EmptyResultDataAccessException dae){}
+			}
+            return userInfo;
         } catch(EmptyResultDataAccessException erd){
             logger.info("there is no web user found.");
             return new WebUserInfo();
@@ -106,7 +116,15 @@ public class WebUserServiceImpl implements WebUserService {
 	public WebUserInfo getUserProfileByLoginName(String loginName)
 			throws Exception {
 		try{
-            return userDAO.getUserProfileByLoginName(loginName);
+			WebUserInfo userInfo = userDAO.getUserProfileByLoginName(loginName);
+			
+			if( null != userInfo ){
+				try{
+					userInfo.setCompany(userDAO.getCompanyInfoByUserID(userInfo.getId()));
+				}catch(EmptyResultDataAccessException dae){}
+			}
+			
+            return userInfo;
         } catch(EmptyResultDataAccessException erd){
             logger.info("there is no web user found.");
             return new WebUserInfo();

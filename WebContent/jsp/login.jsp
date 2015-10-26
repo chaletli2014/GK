@@ -4,50 +4,51 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE HTML>
 <%@include file="common/header.jsp"%>
-<body style="background: #000;">
-	<div>
-		<img src="<%=basePath%>images/logo-new.png"  alt="" style="cursor: pointer;">
+<body style="background: #F4F4F4;">
+	<div class="login_logo">
+		<img src="<%=basePath%>images/login_logo2.png"  alt="" style="cursor: pointer;">
 	</div>
-	<table id="__01" border="0" cellpadding="0" cellspacing="0" style="margin:auto auto;">
-	<tr>
-		<td class="login_top_left"></td>
-		<td colspan="4"  class="login_top_center"></td>
-		<td  class="login_top_right"></td>
-	</tr>
-	<tr>
-		<td rowspan="3" class="login_center_left"></td>
-		<td colspan="4" class="login_center_center">
-		<form action="dologin" name="loginForm" id="loginForm" method="post">
-			<div style="margin-top:97px;margin-left:160px">
-				<input type="text" name="web_username" style="width:194px;height:20px;"/>
-			</div>
-			<div style="margin-top:24px;margin-left:160px">
-				<input type="password" name="web_password" style="width:194px;height:20px;"/>
-			</div>
-		</form>
-		</td>
-		<td rowspan="3" class="login_center_right"></td>
-	</tr>
-	<tr>
-		<td rowspan="2" class="login_center_btn_left"></td>
-		<td>
-			<img src="<%=basePath%>images/black_bg_login_loginbtn.gif" width="85" height="40" alt="" style="cursor: pointer;" onclick="submitLogin()"></td>
-		<td>
-			<img src="<%=basePath%>images/black_bg_login_register.jpg" width="92" height="40" alt="" style="cursor: pointer;" onclick="registerUser()"></td>
-		<td rowspan="2" class="login_center_btn_right"></td>
-	</tr>
-	<tr>
-		<td colspan="2" class="login_center_btn_bottom">
+	<div class="login_logo_center">
+		<img src="<%=basePath%>images/login_logo1.png"  alt="">
+	</div>
+	<div class="login_messageDiv">
 		<c:if test="${web_login_message != ''}">
 			<span style="margin-top:40px;color:red;" id="web_login_message">${web_login_message}</span>
 	    </c:if>
-		</td>
-	</tr>
-	<tr>
-		<td class="login_bottom_left" ></td>
-		<td colspan="4" class="login_bottom_center"></td>
-		<td class="login_bottom_right"></td>
-	</tr>
-</table>
+	</div>
+	<div class="login_form">
+		<div class="login_form_title">物库管理台</div>
+		<form action="dologin" name="loginForm" id="loginForm" method="post">
+			<div style="padding:10px 30px;">
+				<input type="text" name="web_username" style="width:194px;height:20px;padding:12px;color:#A7C0BF;background: #DDE3EC;" placeholder="账号 /电子邮箱"/>
+			</div>
+			<div style="padding:10px 30px;">
+				<input type="password" name="web_password" style="width:194px;height:20px;padding:12px;background: #DDE3EC;" placeholder="密码"/>
+			</div>
+			<div style="padding:10px 30px;">
+				<input type="checkbox" name="rememberMe"><span style="color:#A7C0BF">记住登录状态</span>
+				<a class="login_register_link" onclick="registerUser()">注册账号</a>
+			</div>
+			<div style="text-align: center;">
+				<img id="login_btn" src="<%=basePath%>images/login_button.png"  alt="" onclick="submitLogin()" style="cursor: pointer;">
+			</div>
+		</form>
+	</div>
+	<div class="login_footer1">
+		<div class="login_footer_wechat">关注我们</div>
+		<div class="login_footer_weibo">&nbsp;</div>
+		<div class="login_footer_info">
+			<ul>
+				<li>上海物库网络科技有限公司</li>
+				<li>地址：上海市普陀区西康路1255号普陀科技大厦101室(200040)</li>
+				<li>电话：+86 21 6209 5281</li>
+				<li>邮箱：contact@goodsquick.com</li>
+			</ul>
+		</div>
+	</div>
+	<div class="login_footer2">
+		<div>2015 © GoodsQuick Technologies. All Rights Reserved.</div>
+		<div>沪ICP备14035318号-2</div>
+	</div>
 </body>
 </HTML>

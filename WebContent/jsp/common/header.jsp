@@ -46,6 +46,7 @@
 	<script type="text/javascript">
 	var basePath = "<%=basePath%>";
 	function submitLogin(){
+		$("#login_btn").attr('src', basePath+"images/login_button_2.png");
 		$("#loginForm").submit();
 	}
 	function registerUser(){

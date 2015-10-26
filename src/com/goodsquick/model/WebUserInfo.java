@@ -18,6 +18,8 @@ public class WebUserInfo {
     private Date updatedate;
     private Date lastLoginDate;
     
+    private GoodsCompanyInfo company;
+    
 	public int getId() {
         return id;
     }
@@ -95,5 +97,11 @@ public class WebUserInfo {
 	}
 	public void setMessageNum(int messageNum) {
 		this.messageNum = messageNum;
+	}
+	public GoodsCompanyInfo getCompany() {
+		return company;
+	}
+	public void setCompany(GoodsCompanyInfo company) {
+		this.company = company;
 	}
 }

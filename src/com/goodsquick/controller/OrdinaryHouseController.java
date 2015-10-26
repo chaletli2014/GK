@@ -297,7 +297,7 @@ public class OrdinaryHouseController {
     		
     		List<GoodsRelationshipProperty> houses = ordinaryHouseService.getAllHouseRelationshipByUserCode(currentUser.getLoginName());
 			view.addObject("houses", houses);
-    		view.addObject("opened", ",estate,resident,");
+    		view.addObject("opened", ",serviceCustomer,");
     		view.addObject("actived", ",myHouseSP,");
     		Object errorMessage = request.getSession().getAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);
     		if( null != errorMessage ){

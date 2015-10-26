@@ -2,41 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../common/header.jsp"%>
-<script type="text/javascript">
-function deleteCustomer(spCustomerId){
-	jConfirm("确定要删除关联客户吗？一旦删除，客户将消失","提醒",function(r){
-		if( r ){
-			window.location.href = "<%=basePath%>deleteSPCustomer?spCustomerId="+spCustomerId;
-		}
-	});
-}
-function relateCustomer(spCustomerId){
-	jConfirm("确定要发申请给该客户进行关联吗？","提醒",function(r){
-		if( r ){
-			jQuery.ajax({
-				url: "<%=basePath%>sendRequesttoCustomer",
-				data:{
-					spCustomerId : spCustomerId
-				}
-				,success: function(response){
-					var result = response.result;
-					var message = response.message;
-					if( result != 'Y' ){
-						if( '' != message ){
-							jAlert(message,"提醒");
-						}else{
-							jAlert("请求发送失败!","提醒");
-						}
-					}else{
-						jAlert("请求发送成功","信息");
-						location.reload();
-					}
-				}
-			});
-		}
-	});
-}
-</script>
+<script type="text/javascript" src="<%=basePath%>/js/goodsquick/serviceCustomer.js"></script>
 <body class="page-body">
 	<jsp:include page="../common/settings_pane.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
@@ -48,6 +14,9 @@ function relateCustomer(spCustomerId){
         	<jsp:param name="opened" value="${opened}"/>
         </jsp:include>
 		<div class="main-content">
+			<jsp:include page="../common/main-nav.jsp" flush="true">
+	        	<jsp:param name="basePath" value="<%=basePath%>"/>
+	        </jsp:include>
 			<div class="page-title">
 				<div class="title-env">
 					<h1 class="title">${serviceProvider.name} 客户列表</h1>
@@ -58,10 +27,10 @@ function relateCustomer(spCustomerId){
 						<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
 					</li>
 					<li>
-						<a href="#" onclick="javascript:void(0)">服务信息管理</a>
+						<a href="#" onclick="javascript:void(0)">物链管理</a>
 					</li>
 					<li>
-						<a href="#" onclick="javascript:void(0)">服务商列表</a>
+						<a href="#" onclick="javascript:void(0)">客户管理</a>
 					</li>
 					<li class="active">
 						<strong>客户列表</strong>
@@ -80,30 +49,22 @@ function relateCustomer(spCustomerId){
 								null,
 								null,
 								null,
-								null,
 								null
 							],
 						});
 					});
 					</script>
 					<div>
-						<a href="<%=basePath%>addserviceCustomer">
+						<a id="addNewServiceCustomer">
 							<button class="btn btn-purple btn-icon btn-icon-standalone">
 								<i class="fa-cog"></i>
 								<span>新增</span>
-							</button>
-						</a>
-						<a href="<%=basePath%>serviceprovider">
-							<button class="btn btn-info btn-icon btn-icon-standalone">
-								<i class="fa-retweet"></i>
-								<span>返回</span>
 							</button>
 						</a>
 					</div>
 					<table class="table table-bordered table-striped" id="example-2">
 						<thead>
 							<tr>
-								<th>服务分类</th>
 								<th>服务范围</th>
 								<th>客户名称</th>
 								<th>状态</th>
@@ -113,7 +74,6 @@ function relateCustomer(spCustomerId){
 						<tbody class="middle-align">
 						<c:forEach items="${serviceCustomers}" var="serviceCustomer">
 							<tr>
-								<td title="${serviceCustomer.categoryName}">${serviceCustomer.categoryName}</td>
 								<td title="${serviceCustomer.serviceTypeName}">${serviceCustomer.serviceTypeName}</td>
 								<td title="${serviceCustomer.customerName}">${serviceCustomer.customerName}</td>
 								<td>${serviceCustomer.status}</td>

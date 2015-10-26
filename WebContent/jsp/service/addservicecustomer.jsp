@@ -29,10 +29,10 @@ function submitForm(){
 						<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
 					</li>
 					<li>
-						<a href="#" onclick="javascript:void(0)">服务信息管理</a>
+						<a href="#" onclick="javascript:void(0)">物链管理</a>
 					</li>
 					<li>
-						<a href="#" onclick="javascript:void(0)">服务商列表</a>
+						<a href="#" onclick="javascript:void(0)">客户管理</a>
 					</li>
 					<li class="active">
 						<strong>新增客户</strong>
@@ -47,16 +47,6 @@ function submitForm(){
 				<div class="col-md-12">
 					<div class="tab-content">
 						<div class="tab-pane active" id="home-1">
-							<div class="form-group">
-								<label class="col-sm-2 control-label" for="categoryName">服务分类</label>
-								<div class="col-sm-4">
-									<input type="hidden" id="productCategory" name="productCategory"/>
-									<div class="input-group">
-										<input type="text" class="form-control" id="categoryName" name="categoryName" value="${spCustomer.categoryName}" readonly="readonly"/>
-										<span class="input-group-addon" onclick="showProductCategorys('<%=basePath%>')" style="cursor: pointer;"><i class="fa-keyboard-o"></i></span>
-									</div>
-								</div>
-							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label" for="serviceCode">服务范围</label>
 								<div class="col-sm-4">
@@ -96,7 +86,7 @@ function submitForm(){
 						<i class="fa-check"></i>
 						<span>提交</span>
 					</button>
-					<a href="<%=basePath%>serviceprovider">
+					<a href="<%=basePath%>serviceCustomer">
 						<button class="btn btn-info btn-icon">
 							<i class="fa-retweet"></i>
 							<span>返回</span>

@@ -269,8 +269,8 @@ public class ServiceController {
         		view.addObject("serviceProvider", sp);
         	}
         	
-        	view.addObject("opened", ",service,");
-			view.addObject("actived", ",serviceprovider,");
+        	view.addObject("opened", ",serviceCustomer,");
+			view.addObject("actived", ",serviceCustomer,");
 		} catch (Exception e) {
 			
 		}
@@ -310,8 +310,8 @@ public class ServiceController {
     		List<GoodsDictionary> serviceTypes = dictionaryService.getDictionaryByType("serviceTypes");
     		view.addObject("serviceTypes", serviceTypes);
 			
-			view.addObject("opened", ",service,");
-			view.addObject("actived", ",serviceprovider,");
+			view.addObject("opened", ",serviceCustomer,");
+			view.addObject("actived", ",serviceCustomer,");
 		} catch (Exception e) {
 			
 		}

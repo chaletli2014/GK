@@ -107,11 +107,25 @@
 					<span class="title">物库管理</span>
 				</a>
 			</li>
-			<li <% if( actived.indexOf(",myHouseSP,")>-1 ){ %>class="active"<%} %>>
-				<a href="<%=request.getParameter("basePath")%>myHouseSP">
+			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened"<%} %>>
+				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-globe"></i>
 					<span class="title">物链管理</span>
 				</a>
+				<ul>
+					<li <% if( actived.indexOf(",myHouseSP,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>myHouseSP">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">服务商管理</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",serviceCustomer,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>serviceCustomer">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">客户管理</span>
+						</a>
+					</li>
+				</ul>
 			</li>
 			<li <% if( actived.indexOf(",myMessage,")>-1 ){ %>class="active"<%} %>>
 				<a href="<%=request.getParameter("basePath")%>myMessage">

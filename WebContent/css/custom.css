@@ -147,3 +147,87 @@ div.showDetailDiv .form-group{
 .sp_actions{
 	text-align: center;
 }
+
+/**
+*login
+*/
+.login_logo{
+	padding: 10px 100px;
+	border-bottom: #D6DDDF solid 1px;
+}
+.login_logo_center{
+	text-align: center;
+	padding:30px;
+}
+.login_messageDiv{
+	height: 20px;
+	text-align: center;
+}
+.login_form{
+	background: #29363A;
+  	width: 300px;
+  	height: 240px;
+  	margin: auto auto;
+	
+}
+.login_form_title{
+	color: #A7C0BF;
+	padding:10px;
+	text-align: center;
+	font-size: 14px;
+}
+.login_register_link{
+	color:#C06221;
+	float:right;
+	margin-top: 4px;
+	text-decoration: underline;
+	font-weight: bold;
+}
+.login_register_link:hover{
+	color:#FFFFFF;
+}
+.login_footer1{
+	margin-top: 20px;
+  	border-top: 1px solid #aaa;
+  	padding: 10px 0px;
+}
+.login_footer1 .login_footer_wechat{
+	background-image: url(../images/login_wechat.png);
+	width: 75px;
+  	height: 100px;
+  	background-repeat: no-repeat;
+  	background-position: bottom;
+  	margin-left: 340px;
+  	float: left;
+  	font-size: 14px;
+}
+.login_footer1 .login_footer_weibo{
+	background-image: url(../images/login_weibo.png);
+	width: 75px;
+  	height: 100px;
+  	background-repeat: no-repeat;
+  	background-position: bottom;
+  	margin-left: 40px;
+  	float: left;
+}
+.login_footer1 .login_footer_info{
+  	height: 100px;
+  	float: right;
+  	margin-right: 200px;
+}
+.login_footer1 .login_footer_info ul li{
+	list-style: none;
+	margin: 4px;
+}
+.login_footer1 .login_footer_info ul>:first-child{
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+.login_footer2{
+	background: #29363A;
+	height: 50px;
+	color: #DFDFDF;
+	margin-top: 100px;
+	padding:10px;
+	text-align: center;
+}

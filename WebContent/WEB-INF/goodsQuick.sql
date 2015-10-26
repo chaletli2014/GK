@@ -100,26 +100,6 @@ AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT
 ;
 
---用户信息表
-CREATE TABLE tbl_web_userinfo (
-id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
-name  			varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
-login_name  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-password  		varchar(64) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-telephone  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
-level  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
-createdate  		datetime 		NULL DEFAULT NULL ,
-updatedate  		datetime 		NULL DEFAULT NULL ,
-last_login_time  	datetime 		NULL DEFAULT NULL ,
-status  			varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
-PRIMARY KEY (id)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=0
-ROW_FORMAT=COMPACT
-;
-
 --普通住宅表
 CREATE TABLE tbl_goods_ordinary_house (
 id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -394,6 +374,63 @@ id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
 source_user			varchar(200)	comment '消息发送者',
 target_user			varchar(200)	comment '消息接收者',
 message_content		varchar(2000)   comment '消息内容',
+create_user  		varchar(20),
+createdate			datetime,
+update_user			varchar(20),
+updatedate			datetime,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+--用户信息表
+CREATE TABLE tbl_web_userinfo (
+id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+name  				varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '真实姓名',
+login_name  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL comment '登录名',
+password  			varchar(64) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL comment '登录密码',
+telephone  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '联系电话',
+level  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+createdate  		datetime 		NULL DEFAULT NULL ,
+updatedate  		datetime 		NULL DEFAULT NULL ,
+last_login_time  	datetime 		NULL DEFAULT NULL ,
+status  			varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+--公司信息表
+CREATE TABLE tbl_goods_company (
+id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+industry			varchar(200)	comment '公司行业',
+company_name		varchar(200)	comment '公司名称',
+company_province	varchar(200)   comment '公司所在省份',
+company_city		varchar(200)   comment '公司所在城市',
+company_email		varchar(200)   comment '公司邮箱',
+create_user  		varchar(20),
+createdate			datetime,
+update_user			varchar(20),
+updatedate			datetime,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+--公司用户信息表
+CREATE TABLE tbl_goods_company_user (
+id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+company_id			varchar(200)	comment '公司ID',
+user_id				varchar(200)	comment '用户ID',
 create_user  		varchar(20),
 createdate			datetime,
 update_user			varchar(20),
