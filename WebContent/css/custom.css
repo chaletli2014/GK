@@ -190,6 +190,10 @@ div.showDetailDiv .form-group{
 	margin-top: 20px;
   	border-top: 1px solid #aaa;
   	padding: 10px 0px;
+  	background: #F4F4F4;
+}
+.login_footer1 div{
+	background: #F4F4F4;
 }
 .login_footer1 .login_footer_wechat{
 	background-image: url(../images/login_wechat.png);
@@ -197,7 +201,7 @@ div.showDetailDiv .form-group{
   	height: 100px;
   	background-repeat: no-repeat;
   	background-position: bottom;
-  	margin-left: 340px;
+  	margin-left: 280px;
   	float: left;
   	font-size: 14px;
 }
@@ -230,4 +234,41 @@ div.showDetailDiv .form-group{
 	margin-top: 100px;
 	padding:10px;
 	text-align: center;
+}
+.register_left{
+	float: left;
+	width: 50%;
+	background: url(../images/register_left.png) center center no-repeat;
+	background-size:300px 240px;
+	height: 440px;
+}
+.register_right{
+	float: left;
+	width: 340px;
+	background:#29363A;
+	border: 3px solid #aaa;
+	height: 440px;
+	margin:10px;
+	margin-left:30px;
+	color:#F4F4F4;
+}
+.register_right form{
+	margin-left:80px;
+	color: #aaa;
+}
+.register_right form div{
+	padding:4px 0px;
+}
+.register_right form input{
+	width:194px;
+	height:30px;
+	line-height:30px;
+	padding:8px;
+	color:#C3C2C2;
+	background: #FFFFFF;
+}
+.register_right form .register_form_title{
+	margin-top: 20px;
+	font-size: 14px;
+	font-weight: bold;
 }

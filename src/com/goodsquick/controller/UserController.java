@@ -257,7 +257,7 @@ public class UserController {
     @RequestMapping("/registerUser")
     public ModelAndView registerUser(HttpServletRequest request){
     	ModelAndView view = new ModelAndView();
-    	view.setViewName("sys/registerUser");
+    	view.setViewName("registerUser");
     	return view;
     }
     
