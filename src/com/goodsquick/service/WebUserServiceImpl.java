@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.goodsquick.dao.UserDAO;
+import com.goodsquick.model.GoodsCompanyInfo;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.GoodsQuickMD5Utils;
 import com.goodsquick.utils.QueryInfo;
@@ -98,8 +99,8 @@ public class WebUserServiceImpl implements WebUserService {
 	}
 
 	@Override
-	public void addUserInfo(WebUserInfo userInfo) throws Exception {
-		userDAO.addUserInfo(userInfo);
+	public int addUserInfo(WebUserInfo userInfo) throws Exception {
+		return userDAO.addUserInfo(userInfo);
 	}
 	
 	@Override
@@ -132,5 +133,30 @@ public class WebUserServiceImpl implements WebUserService {
             logger.error("fail to get the web user info by loginName - " + loginName,e);
             return new WebUserInfo();
         }
+	}
+
+	@Override
+	public void registerUserCompanyInfo(WebUserInfo userInfo,
+			GoodsCompanyInfo companyInfo) throws Exception {
+		int userId = userDAO.addUserInfo(userInfo);
+		int companyId = userDAO.addCompanyInfo(companyInfo);
+		userDAO.insertCompanyUserRelationship(companyId, userId, userInfo.getLoginName());
+	}
+
+	@Override
+	public int addCompanyInfo(GoodsCompanyInfo companyInfo) throws Exception {
+		return userDAO.addCompanyInfo(companyInfo);
+	}
+
+	@Override
+	public void updateCompanyInfo(GoodsCompanyInfo companyInfo)
+			throws Exception {
+		userDAO.updateCompanyInfo(companyInfo);
+	}
+
+	@Override
+	public void registUser2Company(int userId, int companyId, String loginName)
+			throws Exception {
+		userDAO.insertCompanyUserRelationship(companyId, userId, loginName);
 	}
 }

@@ -32,10 +32,18 @@ public interface UserDAO {
 	/**
 	 * 新增用户信息
 	 * @param userInfo userInfo
-	 * @return WebUserInfo WebUserInfo
+	 * @return int 用户主键ID
 	 * @throws Exception Exception
 	 */
-	public void addUserInfo(WebUserInfo userInfo) throws Exception;
+	public int addUserInfo(WebUserInfo userInfo) throws Exception;
+	
+	/**
+	 * 新增用户信息
+	 * @param companyInfo companyInfo
+	 * @return int 公司主键ID
+	 * @throws Exception Exception
+	 */
+	public int addCompanyInfo(GoodsCompanyInfo companyInfo) throws Exception;
 	
 	/**
 	 * 更新用户信息
@@ -43,6 +51,13 @@ public interface UserDAO {
 	 * @throws Exception Exception
 	 */
 	public void updateUserInfo(WebUserInfo userInfo) throws Exception;
+	
+	/**
+	 * 更新用户信息
+	 * @param companyInfo companyInfo
+	 * @throws Exception Exception
+	 */
+	public void updateCompanyInfo(GoodsCompanyInfo companyInfo) throws Exception;
 	
 	/**
 	 * 注销用户
@@ -74,4 +89,6 @@ public interface UserDAO {
 	 * @throws Exception
 	 */
 	public GoodsCompanyInfo getCompanyInfoByUserID(int userId) throws Exception;
+	
+	public void insertCompanyUserRelationship(int companyId, int userId, String loginName) throws Exception;
 }

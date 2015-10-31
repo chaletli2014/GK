@@ -2,6 +2,7 @@ package com.goodsquick.service;
 
 import java.util.List;
 
+import com.goodsquick.model.GoodsCompanyInfo;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.QueryInfo;
 
@@ -41,7 +42,7 @@ public interface WebUserService {
 	 * @param userInfo userInfo
 	 * @throws Exception Exception
 	 */
-	public void addUserInfo(WebUserInfo userInfo) throws Exception;
+	public int addUserInfo(WebUserInfo userInfo) throws Exception;
 	
 	/**
 	 * 更新用户信息
@@ -49,6 +50,20 @@ public interface WebUserService {
 	 * @throws Exception Exception
 	 */
 	public void updateUserInfo(WebUserInfo userInfo) throws Exception;
+	
+	/**
+	 * 新增用户信息
+	 * @param companyInfo companyInfo
+	 * @throws Exception Exception
+	 */
+	public int addCompanyInfo(GoodsCompanyInfo companyInfo) throws Exception;
+	
+	/**
+	 * 更新用户信息
+	 * @param companyInfo companyInfo
+	 * @throws Exception Exception
+	 */
+	public void updateCompanyInfo(GoodsCompanyInfo companyInfo) throws Exception;
 	
 	/**
 	 * 注销用户
@@ -64,4 +79,8 @@ public interface WebUserService {
 	 * @throws Exception
 	 */
 	public WebUserInfo getUserProfileByLoginName(String loginName) throws Exception;
+	
+	public void registerUserCompanyInfo(WebUserInfo userInfo, GoodsCompanyInfo companyInfo) throws Exception;
+	
+	public void registUser2Company(int userId, int companyId, String loginName) throws Exception;
 }

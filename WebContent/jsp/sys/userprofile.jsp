@@ -78,6 +78,7 @@ $(document).ready(function(){
 				<div class="panel-body">
 					<form role="form" class="form-horizontal" action="saveOrUpdateprofile" method="post" id="userprofile_form">
 						<input type="hidden" id="userId" name="userId" value="${userprofile.id}"/>
+						<input type="hidden" id="companyId" name="companyId" value="${userprofile.company.id}"/>
 						<div class="row">
 							<div class="col-md-12">
 								<ul class="nav nav-tabs nav-tabs-justified">
@@ -131,19 +132,13 @@ $(document).ready(function(){
 										<div class="form-group">
 											<label class="col-sm-2 control-label" for="companyName">公司名称</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="companyName" placeholder="请输入公司名称" name="companyName">
+												<input type="text" class="form-control" id="companyName" placeholder="请输入公司名称" name="companyName" value="${userprofile.company.companyName}">
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-2 control-label" for="companyTel">联系电话</label>
+											<label class="col-sm-2 control-label" for="companyEmail">公司邮箱</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" id="companyTel" placeholder="请输入联系电话" name="companyTel">
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-sm-2 control-label" for="newPassword">公司简介</label>
-											<div class="col-sm-10">
-												<input type="password" class="form-control" id="companyInfo" placeholder="" name="companyInfo">
+												<input type="text" class="form-control" id="companyEmail" placeholder="请输入公司邮箱" name="companyEmail" value="${userprofile.company.companyEmail}">
 											</div>
 										</div>
 									</div>

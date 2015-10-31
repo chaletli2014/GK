@@ -15,7 +15,7 @@ public class GoodsCompanyInfoRowMapper implements RowMapper<GoodsCompanyInfo>{
         company.setCompanyEmail(rs.getString("company_email"));
         company.setCompanyProvince(rs.getString("company_province"));
         company.setCompanyCity(rs.getString("company_city"));
-        company.setId(rs.getInt("company_id"));
+        company.setId(rs.getInt("id"));
         
         return company;
     }

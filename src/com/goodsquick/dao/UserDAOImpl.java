@@ -1,5 +1,6 @@
 package com.goodsquick.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import com.goodsquick.mapper.WebUserInfoRowMapper;
 import com.goodsquick.model.GoodsCompanyInfo;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.DataBean;
+import com.goodsquick.utils.GoodsJDBCTemplate;
 
 /**
  * @author Chalet
@@ -49,18 +51,56 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void addUserInfo(WebUserInfo userInfo) throws Exception {
-		StringBuilder sql = new StringBuilder(200);
+	public int addUserInfo(WebUserInfo userInfo) throws Exception {
+		final StringBuilder sql = new StringBuilder(200);
 		sql.append(" insert into tbl_web_userinfo( ");
 		sql.append(" id,name,login_name,password,telephone,level,createdate,updatedate,last_login_time,status,has_house,has_service) ");
 		sql.append(" values(null,?,?,?,?,?,now(),now(),now(),'1','on','on') ");
-        dataBean.getJdbcTemplate().update(sql.toString(), new Object[] { userInfo.getName(), userInfo.getLoginName(), userInfo.getPassword(), userInfo.getTelephone(), userInfo.getLevel()});
+		List<String> params = new ArrayList<String>();
+		params.add(userInfo.getName());
+		params.add(userInfo.getLoginName());
+        params.add(userInfo.getPassword());
+        params.add(userInfo.getTelephone());
+        params.add(userInfo.getLevel());
+		return GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
 	}
 	
 	@Override
 	public void updateUserInfo(WebUserInfo userInfo) throws Exception {
 		String sql = "update tbl_web_userinfo set name=?, login_name=?, password=?, level=?, has_house=?, has_service=? where id=?";
 		dataBean.getJdbcTemplate().update(sql, new Object[] { userInfo.getName(), userInfo.getLoginName(), userInfo.getPassword(), userInfo.getLevel(), userInfo.getHasHouse(), userInfo.getHasService(), userInfo.getId() });
+	}
+	
+	@Override
+	public int addCompanyInfo(GoodsCompanyInfo companyInfo) throws Exception {
+		final StringBuilder sql = new StringBuilder(200);
+		sql.append(" insert into tbl_goods_company( ");
+		sql.append(" id,industry,company_name,company_province,company_city,company_email,createdate,updatedate,create_user,update_user) ");
+		sql.append(" values(null,?,?,?,?,?,now(),now(),?,?) ");
+		List<String> params = new ArrayList<String>();
+		params.add(companyInfo.getIndustry());
+		params.add(companyInfo.getCompanyName());
+		params.add(companyInfo.getCompanyProvince());
+		params.add(companyInfo.getCompanyCity());
+		params.add(companyInfo.getCompanyEmail());
+		params.add(companyInfo.getCreateUser());
+		params.add(companyInfo.getUpdateUser());
+		return GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
+	}
+	
+	@Override
+	public void updateCompanyInfo(GoodsCompanyInfo companyInfo) throws Exception {
+		StringBuilder sql = new StringBuilder(210);
+		sql.append(" update tbl_goods_company ");
+		sql.append(" set company_name=?, ");
+		sql.append(" company_email=?, ");
+		sql.append(" updatedate=now(), ");
+		sql.append(" update_user=? ");
+		sql.append(" where id=? ");
+		dataBean.getJdbcTemplate().update(sql.toString(), new Object[] { companyInfo.getCompanyName()
+			, companyInfo.getCompanyEmail()
+			, companyInfo.getUpdateUser()
+			, companyInfo.getId()});
 	}
 	
 	@Override
@@ -92,5 +132,20 @@ public class UserDAOImpl implements UserDAO {
 	public GoodsCompanyInfo getCompanyInfoByUserID(int userId) throws Exception {
 		String companySql = "select c.* from tbl_goods_company c, tbl_goods_company_user cu where cu.user_id=? and cu.company_id = c.id";
 		return dataBean.getJdbcTemplate().queryForObject(companySql, new Object[]{userId}, new GoodsCompanyInfoRowMapper());
+	}
+
+	@Override
+	public void insertCompanyUserRelationship(int companyId, int userId, String loginName)
+			throws Exception {
+		final StringBuilder sql = new StringBuilder(200);
+		sql.append(" insert into tbl_goods_company_user( ");
+		sql.append(" id,company_id,user_id,createdate,updatedate,create_user,update_user) ");
+		sql.append(" values(null,?,?,now(),now(),?,?) ");
+		List<String> params = new ArrayList<String>();
+		params.add(String.valueOf(companyId));
+		params.add(String.valueOf(userId));
+		params.add(loginName);
+		params.add(loginName);
+		GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
 	}
 }

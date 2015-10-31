@@ -16,7 +16,7 @@
 			<form role="form" class="form-horizontal" action="doRegisterUser" method="post" id="register_form">
 				<div class="register_form_title">企业用户注册</div>
 				<div>
-					<select style="height:24px;">
+					<select style="height:24px;" name="industry" id="industry">
 						<option>请选择行业分类</option>
 						<option>不动产</option>
 					</select>
@@ -25,11 +25,11 @@
 					<input type="text" name="companyName" id="companyName" placeholder="企业名称 *"/>
 				</div>
 				<div>
-					<select style="height:24px;">
+					<select style="height:24px;" name="companyProvince">
 						<option>请选择省份</option>
 						<option>上海</option>
 					</select>
-					<select style="height:24px;margin-left:6px;">
+					<select style="height:24px;margin-left:6px;" name="companyCity">
 						<option>请选择城市</option>
 						<option>上海</option>
 					</select>

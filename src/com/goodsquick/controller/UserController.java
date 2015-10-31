@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.GoodsCompanyInfo;
 import com.goodsquick.model.GoodsRole;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.SystemManagerService;
@@ -102,13 +104,14 @@ public class UserController {
     public String saveprofile(HttpServletRequest request){
         try {
         	String userId = request.getParameter("userId");
+        	String companyId = request.getParameter("companyId");
         	String loginName = request.getParameter("login_name");
         	String realName = request.getParameter("realName");
         	String oldPassword = request.getParameter("password");
         	String newPassword = request.getParameter("newPassword");
         	String telephone = request.getParameter("telephone");
-        	String hasHouse = request.getParameter("hasHouse");
-        	String hasService = request.getParameter("hasService");
+        	String companyName = request.getParameter("companyName");
+        	String companyEmail = request.getParameter("companyEmail");
         	
         	if( null != userId && !"".equalsIgnoreCase(userId) ){
         		
@@ -119,11 +122,22 @@ public class UserController {
         		if( StringUtils.isNotBlank(newPassword) ){
         			userprofile.setPassword(GoodsQuickMD5Utils.MD5(newPassword));
         		}
-        		userprofile.setHasHouse(StringUtils.isEmpty(hasHouse)?GoodsQuickAttributes.GOODS_STATUS_OFF:hasHouse);
-        		userprofile.setHasService(StringUtils.isEmpty(hasService)?GoodsQuickAttributes.GOODS_STATUS_OFF:hasService);
         		userprofile.setTelephone(telephone);
         		
             	webUserService.updateUserInfo(userprofile);
+            	
+            	GoodsCompanyInfo companyInfo = new GoodsCompanyInfo();
+            	companyInfo.setCompanyName(companyName);
+            	companyInfo.setCompanyEmail(companyEmail);
+            	companyInfo.setUpdateUser(loginName);
+            	if( StringUtils.isBlank(companyId) ){
+            		companyInfo.setCreateUser(loginName);
+            		int companyId_i = webUserService.addCompanyInfo(companyInfo);
+            		webUserService.registUser2Company(Integer.parseInt(userId), companyId_i, loginName);
+            	}else{
+            		companyInfo.setId(Integer.parseInt(companyId));
+            		webUserService.updateCompanyInfo(companyInfo);
+            	}
         	}else{
             	String level = request.getParameter("level");
             	
@@ -137,17 +151,22 @@ public class UserController {
         		}
             	userprofile.setLevel(level);
             	userprofile.setTelephone(telephone);
-            	userprofile.setHasHouse(StringUtils.isEmpty(hasHouse)?GoodsQuickAttributes.GOODS_STATUS_OFF:hasHouse);
-        		userprofile.setHasService(StringUtils.isEmpty(hasService)?GoodsQuickAttributes.GOODS_STATUS_OFF:hasService);
+            	userprofile.setHasHouse(GoodsQuickAttributes.GOODS_STATUS_ON);
+        		userprofile.setHasService(GoodsQuickAttributes.GOODS_STATUS_ON);
             	
-            	webUserService.addUserInfo(userprofile);
+        		userId = String.valueOf(webUserService.addUserInfo(userprofile));
         	}
+        	
+        	WebUserInfo userprofile = webUserService.getUserProfileById(userId);
+        	
+        	UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userprofile, null);
+        	SecurityContextHolder.getContext().setAuthentication(auth);
         	
 		} catch (Exception e) {
 			logger.error(String.format("fail to add or update userprofile,%s",e.getMessage()),e);
 		}
         
-        return "redirect:userlist";
+        return "redirect:index";
     }
 
     @RequestMapping("/addprofile")
@@ -264,22 +283,33 @@ public class UserController {
     @RequestMapping("/doRegisterUser")
     public String doRegisterUser(HttpServletRequest request){
     	try {
+    		String industry = request.getParameter("industry");
+    		String companyName = request.getParameter("companyName");
+    		String companyProvince = request.getParameter("companyProvince");
+    		String companyCity = request.getParameter("companyCity");
+    		String companyEmail = request.getParameter("companyEmail");
+    		
+    		GoodsCompanyInfo newCompany = new GoodsCompanyInfo();
+    		newCompany.setIndustry(industry);
+    		newCompany.setCompanyName(companyName);
+    		newCompany.setCompanyProvince(companyProvince);
+    		newCompany.setCompanyCity(companyCity);
+    		newCompany.setCompanyEmail(companyEmail);
+    		newCompany.setCreateUser(request.getParameter("loginName"));
+    		newCompany.setUpdateUser(request.getParameter("loginName"));
+    		
+    		WebUserInfo userInfo = new WebUserInfo();
         	String password = request.getParameter("password");
-        	
-        	WebUserInfo userInfo = new WebUserInfo();
-        	userInfo.setLoginName(request.getParameter("login_name"));
-        	userInfo.setName(request.getParameter("name"));
+        	userInfo.setLoginName(request.getParameter("loginName"));
+        	userInfo.setName(request.getParameter("realName"));
         	userInfo.setPassword(GoodsQuickMD5Utils.MD5(password));
         	userInfo.setTelephone(request.getParameter("telephone"));
         	
-        	webUserService.addUserInfo(userInfo);
-        	
-        	WebUserInfo webUser = webUserService.getUserProfileByLoginName(request.getParameter("login_name"));
-        	request.getSession(true).setAttribute(GoodsQuickAttributes.WEB_LOGIN_USER, webUser);
+        	webUserService.registerUserCompanyInfo(userInfo, newCompany);
     	} catch (Exception e) {
     		logger.error(String.format("fail to register user,%s",e.getMessage()),e);
     	}
     	
-    	return "redirect:index";
+    	return "redirect:login";
     }
 }
