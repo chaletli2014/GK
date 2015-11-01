@@ -16,6 +16,7 @@ public class GoodsHouseRalationshipRowMapper implements RowMapper<GoodsRelations
 	@Override
 	public GoodsRelationshipProperty mapRow(ResultSet rs, int arg1) throws SQLException {
 		GoodsRelationshipProperty relationshipProperty = new GoodsRelationshipProperty();
+		relationshipProperty.setId(rs.getInt("id"));
 		relationshipProperty.setHouseName(rs.getString("house_name"));
 		relationshipProperty.setBrandName(rs.getString("brand_name"));
 		relationshipProperty.setBrandCode(rs.getString("brand_code"));

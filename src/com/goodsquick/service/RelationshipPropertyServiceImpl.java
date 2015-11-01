@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.goodsquick.dao.GoodsConfigurationDAO;
 import com.goodsquick.dao.RelationshipPropertyDAO;
+import com.goodsquick.model.GoodsConfiguration;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.WebUserInfo;
 
@@ -21,6 +23,10 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 	@Qualifier("relationshipPropertyDAO")
 	private RelationshipPropertyDAO relationshipPropertyDAO;
 	
+	@Autowired
+	@Qualifier("goodsConfigurationDAO")
+	private GoodsConfigurationDAO goodsConfigurationDAO;
+	
 	@Override
 	public GoodsRelationshipProperty getRelationshipProperty(
 			String sourceTable, int sourceId) {
@@ -32,6 +38,18 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
             logger.error(String.format("fail to get the relationship property by sourceTable %s and sourceId %s,",sourceTable,sourceId),e);
             return null;
         }
+	}
+	
+	@Override
+	public GoodsRelationshipProperty getRelationshipProperty(int relationShipId) {
+		try{
+			return relationshipPropertyDAO.getRelationshipProperty(relationShipId);
+		} catch(EmptyResultDataAccessException erd){
+			return null;
+		} catch(Exception e){
+			logger.error(String.format("fail to get the relationship property by Id %s,",relationShipId),e);
+			return null;
+		}
 	}
 
 	@Override
@@ -48,6 +66,26 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 			relationshipProperty.setUpdateDate(new Date());
 			relationshipPropertyDAO.updateRelationshipProperty(relationshipProperty);
 		}
+	}
+
+	@Override
+	public void updateRelationshipProperty(String type, int relationShipId,
+			String propertyColumn, String propertyValue, WebUserInfo userInfo) throws Exception {
+		
+		GoodsRelationshipProperty relationShip = relationshipPropertyDAO.getRelationshipProperty(relationShipId);
+		if( null != relationShip ){
+			GoodsConfiguration config = goodsConfigurationDAO.getConfigByCode(propertyColumn);
+			String spCodeColumn = config.getConfigValue();
+			String spNameColumn = spCodeColumn.substring(0,spCodeColumn.indexOf('_'))+"_name";
+			String updateCodeValue = "";
+			String updateNameValue = "";
+			if( "2".equalsIgnoreCase(type) ){
+				updateNameValue = propertyValue;
+			}
+			relationshipPropertyDAO.updateRelationshipProperty(spCodeColumn, updateCodeValue, relationShipId);
+			relationshipPropertyDAO.updateRelationshipProperty(spNameColumn, updateNameValue, relationShipId);
+		}
+		
 	}
 
 }

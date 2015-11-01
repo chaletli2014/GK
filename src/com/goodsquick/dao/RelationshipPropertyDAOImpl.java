@@ -24,6 +24,12 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		String sql = "select * from tbl_goods_relationship_property where source_table = ? and source_id = ? ";
         return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{sourceTable,sourceId}, new GoodsRelationshipPropertyRowMapper());
 	}
+	
+	@Override
+	public GoodsRelationshipProperty getRelationshipProperty(int relationShipId) {
+		String sql = "select * from tbl_goods_relationship_property where id = ?";
+		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{relationShipId}, new GoodsRelationshipPropertyRowMapper());
+	}
 
 	@Override
 	public int saveRelationshipProperty(final GoodsRelationshipProperty relationshipProperty)
@@ -136,6 +142,21 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		params.add(relationshipProperty.getUpdateUser());
 		params.add(relationshipProperty.getSourceTable());
 		params.add(relationshipProperty.getSourceId());
+		
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
+	}
+
+	@Override
+	public void updateRelationshipProperty(String columnName, String columnValue, int relationShipId)
+			throws Exception {
+		StringBuilder sql = new StringBuilder(150);
+		sql.append("update tbl_goods_relationship_property ");
+        sql.append("set ").append(columnName).append(" = ?");
+		sql.append("where id = ? ");
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(columnValue);
+		params.add(relationShipId);
 		
 		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
 	}

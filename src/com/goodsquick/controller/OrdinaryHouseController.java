@@ -312,6 +312,43 @@ public class OrdinaryHouseController {
     	return view;
     }
     
+    @RequestMapping("/updateRelationShip")
+    public String updateRelationShip(HttpServletRequest request){
+    	try {
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		
+    		String type = request.getParameter("type");
+    		int relationShipId = Integer.parseInt(request.getParameter("relationShipId"));
+    		String propertyColumn = request.getParameter("propertyColumn");
+    		String propertyValue = request.getParameter("propertyValue");
+    		relationshipPropertyService.updateRelationshipProperty(type, relationShipId, propertyColumn, propertyValue, currentUser);
+    	} catch (Exception e) {
+    		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
+    	}
+    	
+    	return "redirect:myHouseSP";
+    }
+    
+    @RequestMapping("/updateRelationShipAjax")
+    @ResponseBody
+    public Map<String,String> updateRelationShipAjax(HttpServletRequest request){
+    	Map<String,String> result = new HashMap<String,String>();
+    	try {
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		
+    		String type = request.getParameter("type");
+    		int relationShipId = Integer.parseInt(request.getParameter("relationShipId"));
+    		String propertyColumn = request.getParameter("propertyColumn");
+    		String propertyValue = request.getParameter("propertyValue");
+    		relationshipPropertyService.updateRelationshipProperty(type, relationShipId, propertyColumn, propertyValue, currentUser);
+    		result.put("result", "Y");
+    	} catch (Exception e) {
+    		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
+    	}
+    	
+    	return result;
+    }
+    
     @RequestMapping("/savehouseSP")
     @ResponseBody
     public Map<String,String> savehouseSP(HttpServletRequest request){

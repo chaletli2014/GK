@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../common/header.jsp"%>
+<script type="text/javascript" src="<%=basePath%>/js/goodsquick/myHouseSP.js"></script>
 <body class="page-body">
 	<jsp:include page="../common/settings_pane.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
@@ -26,10 +27,10 @@
 						<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
 					</li>
 					<li>
-						<a href="#" onclick="javascript:void(0)">商品信息管理</a>
+						<a href="#" onclick="javascript:void(0)">物链管理</a>
 					</li>
 					<li class="active">
-						<strong>我的服务商</strong>
+						<strong>服务商管理</strong>
 					</li>
 					</ol>
 				</div>
@@ -43,7 +44,7 @@
 						<div class="panel panel-color panel-success <c:if test="${status.first!=true}">collapsed</c:if>"><!-- Add class "collapsed" to minimize the panel -->
 						<a href="#" data-toggle="panel">
 						<div class="panel-heading" style="padding:10px 20px;">
-							<h3 class="panel-title">${house.houseName} 服务商列表</h3>
+							<h3 class="panel-title"><b>${house.houseName}</b>的服务商列表</h3>
 							<div class="panel-options">
 								<span class="collapse-icon">&ndash;</span>
 								<span class="expand-icon">+</span>
@@ -56,80 +57,80 @@
 									<div class="sp_title">品牌商</div>
 									<div class="sp_detail">&nbsp;${house.brandName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_brandService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_brandService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">设计商</div>
 									<div class="sp_detail">&nbsp;${house.designName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_designService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_designService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">制造商</div>
 									<div class="sp_detail">&nbsp;${house.manufacturerName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_manufacturer" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_manufacturer" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">检测认证商</div>
 									<div class="sp_detail">&nbsp;${house.certificationName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_certificationService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_certificationService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">渠道商</div>
 									<div class="sp_detail">&nbsp;${house.channelName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_channelService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_channelService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">物流商</div>
 									<div class="sp_detail">&nbsp;${house.logisticsName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_logisticsService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_logisticsService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">所有人</div>
 									<div class="sp_detail">&nbsp;${house.ownerName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_ownerService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_ownerService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">托管人</div>
 									<div class="sp_detail">&nbsp;${house.trusteeshipName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_trusteeshipService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_trusteeshipService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">市场监管人</div>
 									<div class="sp_detail">&nbsp;${house.supervisionName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_supervisionService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_supervisionService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 								<li class="sp_list_item">
 									<div class="sp_title">回收处理商</div>
 									<div class="sp_detail">&nbsp;${house.recyclingName}</div>
 									<div class="sp_actions">
-										<a><button class="btn btn-red">删除</button></a>
-										<a><button class="btn btn-orange">更换</button></a>
+										<a id="${house.id}_recyclingService" class="relation_delete"><button class="btn btn-red">删除</button></a>
+										<a id="${house.id}_recyclingService" class="relation_update"><button class="btn btn-orange">更换</button></a>
 									</div>
 								</li>
 							</ul>
