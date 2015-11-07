@@ -13,9 +13,9 @@ public class GoodsSPCustomerRowMapper implements RowMapper<GoodsSPCustomer>{
 	public GoodsSPCustomer mapRow(ResultSet rs, int arg1) throws SQLException {
 		GoodsSPCustomer goodsService = new GoodsSPCustomer();
 		goodsService.setId(rs.getInt("id"));
-		goodsService.setSpCode(rs.getString("sp_code"));
-		goodsService.setCategoryCode(rs.getString("category_code"));
-		goodsService.setCategoryName(rs.getString("category_name"));
+//		goodsService.setSpCode(rs.getString("sp_code"));
+//		goodsService.setCategoryCode(rs.getString("category_code"));
+//		goodsService.setCategoryName(rs.getString("category_name"));
 		goodsService.setServiceTypeCode(rs.getString("service_type"));
 		goodsService.setServiceTypeName(rs.getString("service_type_name"));
 		goodsService.setCustomerCode(rs.getString("customer_code"));

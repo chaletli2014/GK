@@ -1,6 +1,7 @@
 package com.goodsquick.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.goodsquick.dao.GoodsConfigurationDAO;
 import com.goodsquick.dao.RelationshipPropertyDAO;
 import com.goodsquick.model.GoodsConfiguration;
+import com.goodsquick.model.GoodsHouseModuleSP;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.WebUserInfo;
 
@@ -86,6 +88,29 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 			relationshipPropertyDAO.updateRelationshipProperty(spNameColumn, updateNameValue, relationShipId);
 		}
 		
+	}
+
+	@Override
+	public void saveSPModule(GoodsHouseModuleSP houseModule) {
+		relationshipPropertyDAO.saveSPModule(houseModule);
+	}
+
+	@Override
+	public void removeSPModule(GoodsHouseModuleSP houseModule) {
+		relationshipPropertyDAO.removeSPModule(houseModule);
+	}
+
+	@Override
+	public List<GoodsHouseModuleSP> getSPModuleByHouseCodeAndType(String houseCode,
+			String moduleType) {
+		try{
+			return relationshipPropertyDAO.getSPModuleByHouseCodeAndType(houseCode,moduleType);
+		} catch(EmptyResultDataAccessException erd){
+			return null;
+		} catch(Exception e){
+			logger.error(String.format("fail to get the house module,"),e);
+			return null;
+		}
 	}
 
 }

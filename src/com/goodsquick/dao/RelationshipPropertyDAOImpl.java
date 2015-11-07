@@ -12,8 +12,12 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.goodsquick.mapper.GoodsHouseModuleSPRowMapper;
 import com.goodsquick.mapper.GoodsRelationshipPropertyRowMapper;
+import com.goodsquick.model.GoodsHouseModuleSP;
 import com.goodsquick.model.GoodsRelationshipProperty;
+import com.goodsquick.utils.GoodsJDBCTemplate;
+import com.goodsquick.utils.GoodsQuickUtils;
 
 @Repository("relationshipPropertyDAO")
 public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements RelationshipPropertyDAO {
@@ -161,4 +165,31 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
 	}
 
+	@Override
+	public void saveSPModule(GoodsHouseModuleSP houseModule) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("insert into tbl_goods_house_module_sp(id,house_code,module_sp_type,module_sp_value");
+        sql.append(",create_date,create_user,update_date,update_user,status) ");
+		sql.append("values(null,?,?,?,now(),?,now(),?,'1')");
+		
+		List<String> params = new ArrayList<String>();
+		params.add(houseModule.getHouseCode());
+		params.add(houseModule.getModuleSPType());
+		params.add(houseModule.getModuleSPValue());
+		params.add(houseModule.getCreateUser());
+		params.add(houseModule.getUpdateUser());
+		GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
+	}
+
+	@Override
+	public void removeSPModule(GoodsHouseModuleSP houseModule) {
+		dataBean.getJdbcTemplate().update("update tbl_goods_house_module_sp set status = '0' where id = ? ",houseModule.getId());
+	}
+
+	@Override
+	public List<GoodsHouseModuleSP> getSPModuleByHouseCodeAndType(
+			String houseCode, String moduleType) {
+		String sql = "select * from tbl_goods_house_module_sp where house_code = ? and house_sp_type = ? ";
+		return dataBean.getJdbcTemplate().query(sql, new Object[]{houseCode,moduleType}, new GoodsHouseModuleSPRowMapper());
+	}
 }

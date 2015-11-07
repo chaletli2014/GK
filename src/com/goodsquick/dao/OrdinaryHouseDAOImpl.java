@@ -40,6 +40,13 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 	}
 	
 	@Override
+	public GoodsOrdinaryHouse getOrdinaryHouseByRepositoryCode(String repositoryCode)
+			throws Exception{
+		String sql = "select * from tbl_goods_ordinary_house_owned where repository_code = ? and status = '1' ";
+		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{repositoryCode}, new OrdinaryHouseRowMapper());
+	}
+	
+	@Override
 	public String getMaxHouseCode()	throws Exception {
 		String sql = "select max(house_code) from tbl_goods_ordinary_house";
 		return dataBean.getJdbcTemplate().queryForObject(sql, String.class);

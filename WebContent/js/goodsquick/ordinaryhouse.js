@@ -9,6 +9,7 @@ jQuery(document).ready(function($){
 			,success: function(response){
 				var result = response.result;
 				var obj = response.obj;
+				var deviceList = response.deviceList;
 				if( result == 'Y' ){
 					$("#show_buildingName").html(obj.buildingName);
 					$("#show_province").html(obj.province);
@@ -26,6 +27,8 @@ jQuery(document).ready(function($){
 					$("#show_checkinMonth").html(obj.checkinMonth+" 月");
 					$("#show_checkinDate").html(obj.checkinDate+" 日");
 					$("#show_floorSpace").html(obj.floorSpace);
+					
+					
 					
 					jQuery('#showHouseDiv').modal('show', {backdrop: 'static'});
 				}else if( result == 'N' ){

@@ -47,6 +47,19 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public GoodsOrdinaryHouse getOrdinaryHouseByRepositoryCode(String repositoryCode)
+			throws Exception {
+		try{
+			return ordinaryHouseDAO.getOrdinaryHouseByRepositoryCode(repositoryCode);
+		} catch(EmptyResultDataAccessException erd){
+			return null;
+		} catch(Exception e){
+			logger.error("fail to get the ordinary house by repository code,",e);
+			return null;
+		}
+	}
 
 	@Override
 	@Transactional

@@ -68,7 +68,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="<%=request.getParameter("basePath")%>addCustomerizedRoom">
+					<a href="javascript:void(0)" id="nav_newrepository">
 						<i class="fa-plus"></i>
 						新增自定义库
 					</a>

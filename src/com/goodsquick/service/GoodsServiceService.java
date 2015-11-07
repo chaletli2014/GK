@@ -28,6 +28,7 @@ public interface GoodsServiceService {
 	public GoodsServiceDetail getGoodsServiceDetailById(int serviceDetailId) throws Exception;
 	
 	public List<GoodsSPCustomer> getGoodsSPCustomerByProviderCode(String providerCode) throws Exception;
+	public List<GoodsSPCustomer> getGoodsSPCustomerByCreateUser(String loginName) throws Exception;
 	public GoodsSPCustomer getGoodsSPCustomerBySPCustomerId(int serviceCustomerId) throws Exception;
 	public void saveSPCustomer(GoodsSPCustomer spCustomer, WebUserInfo currentUser) throws Exception;
 	public void deleteSPCustomer(GoodsSPCustomer spCustomer, WebUserInfo currentUser) throws Exception;

@@ -252,22 +252,22 @@ public class ServiceController {
         		request.getSession().setAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE, GoodsQuickAttributes.MESSAGE_NO_LOGIN_USER);
         	}
         	
-        	String providerCode = request.getParameter("providerCode");
-        	if( ( null == providerCode || "".equalsIgnoreCase(providerCode) )
-        			&& null != request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE)){
-        		providerCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE);
-        	}else{
-        		request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE, providerCode);
-        	}
+//        	String providerCode = request.getParameter("providerCode");
+//        	if( ( null == providerCode || "".equalsIgnoreCase(providerCode) )
+//        			&& null != request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE)){
+//        		providerCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE);
+//        	}else{
+//        		request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE, providerCode);
+//        	}
         	
-        	if( null == providerCode || "".equalsIgnoreCase(providerCode) ){
-        		view.addObject(GoodsQuickAttributes.WEB_ERROR_MESSAGE, GoodsQuickAttributes.MESSAGE_NO_PROVIDER);
-        	}else{
-        		GoodsServiceProvider sp = goodsServiceService.getGoodsServiceProviderByCode(providerCode);
-        		List<GoodsSPCustomer> spCustomers = goodsServiceService.getGoodsSPCustomerByProviderCode(providerCode);
+//        	if( null == providerCode || "".equalsIgnoreCase(providerCode) ){
+//        		view.addObject(GoodsQuickAttributes.WEB_ERROR_MESSAGE, GoodsQuickAttributes.MESSAGE_NO_PROVIDER);
+//        	}else{
+//        		GoodsServiceProvider sp = goodsServiceService.getGoodsServiceProviderByCode(providerCode);
+        		List<GoodsSPCustomer> spCustomers = goodsServiceService.getGoodsSPCustomerByCreateUser(currentUser.getLoginName());
         		view.addObject("serviceCustomers", spCustomers);
-        		view.addObject("serviceProvider", sp);
-        	}
+//        		view.addObject("serviceProvider", sp);
+//        	}
         	
         	view.addObject("opened", ",serviceCustomer,");
 			view.addObject("actived", ",serviceCustomer,");
@@ -327,18 +327,18 @@ public class ServiceController {
 	@RequestMapping("/saveSPCustomer")
 	public String saveSPCustomer(HttpServletRequest request){
 		try {
-			String spCode = request.getParameter("spCode");
-			String productCategory = request.getParameter("productCategory");
+//			String spCode = request.getParameter("spCode");
+//			String productCategory = request.getParameter("productCategory");
 			String serviceTypeCode = request.getParameter("serviceTypeCode");
 			String customerName = request.getParameter("customerName");
-			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE,spCode);
+//			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_PROVIDER_CODE,spCode);
 			
 			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
 			
 			GoodsSPCustomer spCustomer = new GoodsSPCustomer();
-			spCustomer.setSpCode(spCode);
-			String categoryCode = categoryService.getCategoryCodeByName(productCategory);
-			spCustomer.setCategoryCode(categoryCode);
+//			spCustomer.setSpCode(spCode);
+//			String categoryCode = categoryService.getCategoryCodeByName(productCategory);
+//			spCustomer.setCategoryCode(categoryCode);
 			spCustomer.setServiceTypeCode(serviceTypeCode);
 			spCustomer.setCustomerName(customerName);
 			spCustomer.setStatus("1");

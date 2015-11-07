@@ -61,9 +61,9 @@ public class OrdinaryHouseController {
         ModelAndView view = new ModelAndView();
         try {
         	WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-        	
-        	List<GoodsOrdinaryHouse> orHouses = ordinaryHouseService.getOrdinaryHouseByUserCode(currentUser.getLoginName()); 
-        	view.addObject("orHouses", orHouses);
+        	String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        	GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
+        	view.addObject("orHouse", orHouse);
         	
         	List<GoodsServiceDetail> serviceDetails = goodsServiceService.getGoodsServiceDetailsByUserCode(currentUser.getLoginName());
     		view.addObject("serviceDetails", serviceDetails);
@@ -329,6 +329,30 @@ public class OrdinaryHouseController {
     	return "redirect:myHouseSP";
     }
     
+    @RequestMapping("/houseSPManagement")
+    public ModelAndView houseSPManagement(HttpServletRequest request){
+    	ModelAndView view = new ModelAndView();
+    	try {
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		String type = request.getParameter("type");
+    		
+    		List<GoodsRelationshipProperty> houses = ordinaryHouseService.getAllHouseRelationshipByUserCode(currentUser.getLoginName());
+			view.addObject("houses", houses);
+    		view.addObject("opened", ",serviceCustomer,");
+    		view.addObject("actived", ","+type+",");
+    		Object errorMessage = request.getSession().getAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);
+    		if( null != errorMessage ){
+    			view.addObject(GoodsQuickAttributes.WEB_ERROR_MESSAGE_HIDDEN, (String)errorMessage);
+    			request.getSession().removeAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);
+    		}
+    	} catch (Exception e) {
+    		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
+    	}
+    	
+    	view.setViewName("ep/houseSPManagement");
+    	return view;
+    }
+    
     @RequestMapping("/updateRelationShipAjax")
     @ResponseBody
     public Map<String,String> updateRelationShipAjax(HttpServletRequest request){
@@ -415,9 +439,14 @@ public class OrdinaryHouseController {
     	try {
     		String houseId = request.getParameter("houseId");
     		GoodsOrdinaryHouse house = ordinaryHouseService.getGoodsOrdinaryHouseById(Integer.parseInt(houseId));
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		
+    		List<GoodsHouseDevice> deviceList = ordinaryHouseService.getAllHouseDeviceByUser(house, currentUser);
+    		
     		if( null != house ){
     			result.put("result", "Y");
     			result.put("obj", house);
+    			result.put("deviceList", deviceList);
     		}else{
     			result.put("result", "N");
     		}

@@ -719,7 +719,7 @@ body {
   background: #f8f8f8;
   margin: -30px;
   margin-bottom: 30px;
-  padding: 20px 0;
+  padding: 10px 0;
   -webkit-box-shadow: 0 1px 0 rgba(0,1,1,.08), inset 0 1px 0 #ededed;
   -moz-box-shadow: 0 1px 0 rgba(0,1,1,.08), inset 0 1px 0 #ededed;
   box-shadow: 0 1px 0 rgba(0,1,1,.08), inset 0 1px 0 #ededed;
@@ -5135,8 +5135,9 @@ blockquote small {
 .blockquote {
   position: relative;
   padding: 20px 30px;
-  background: #fff;
+  background: url(../images/note_bg.png) ;
   border: 1px solid #dddddd;
+  padding-left:60px;
 }
 .blockquote:before {
   content: '';

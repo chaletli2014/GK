@@ -10,6 +10,7 @@ import com.goodsquick.model.WebUserInfo;
 public interface OrdinaryHouseDAO {
 
 	public List<GoodsOrdinaryHouse> getOrdinaryHouseByUserCode(String userCode) throws Exception;
+	public GoodsOrdinaryHouse getOrdinaryHouseByRepositoryCode(String repositoryCode) throws Exception;
 	public int saveOrdinaryHouse(GoodsOrdinaryHouse ordinaryHouse) throws Exception;
 	public void updateOrdinaryHouse(GoodsOrdinaryHouse ordinaryHouse) throws Exception;
 	public void deleteOrdinaryHouse(int ordinaryHouseId) throws Exception;

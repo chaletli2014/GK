@@ -25,12 +25,21 @@ public class MessageDAOImpl implements MessageDAO {
 	public List<GoodsRelatedRequest> getMessageList(String loginName) throws Exception {
 		List<GoodsRelatedRequest> messageList = new ArrayList<GoodsRelatedRequest>();
 		StringBuilder sql = new StringBuilder();
-		sql.append(" select sr.id,sr.sp_customer_id,sr.customer_name,sr.sp_code,gs.name as sp_name");
+		sql.append(" select sr.id,sr.sp_customer_id,sr.customer_name,sr.sp_code, gc.company_name as sp_name ");
 		sql.append(" ,sr.status,sr.service_type as service_type_code, gd.dic_name as service_type_name  ");
 		sql.append(" ,sr.createdate,sr.updatedate,sr.create_user,sr.update_user  ");
-        sql.append(" from tbl_goods_ordinary_house oh, tbl_goods_sp_request sr, tbl_goods_service gs, tbl_goods_dictionary gd ");
-        sql.append(" where oh.create_user = ? and oh.building_name = sr.customer_name and sr.sp_code = gs.code");
-        sql.append(" and sr.service_type = gd.dic_code and gd.type_code='serviceTypes' order by sr.createdate desc");
+        sql.append(" from tbl_goods_ordinary_house oh ");
+        sql.append(" , tbl_goods_sp_request sr ");
+        sql.append(" , tbl_goods_dictionary gd ");
+        sql.append(" , tbl_web_userinfo user ");
+        sql.append(" , tbl_goods_company_user gcu ");
+        sql.append(" , tbl_goods_company gc ");
+        sql.append(" where oh.create_user = ? and oh.building_name = sr.customer_name ");
+        sql.append(" and sr.service_type = gd.dic_code and gd.type_code='serviceTypes' ");
+        sql.append(" and sr.create_user = user.login_name ");
+        sql.append(" and user.id = gcu.user_id ");
+        sql.append(" and gcu.company_id = gc.id ");
+        sql.append(" order by sr.createdate desc ");
         messageList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{loginName}, new GoodsRelatedRequestRowMapper());
         return messageList;
 	}

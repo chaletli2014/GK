@@ -1,3 +1,4 @@
+<%@include file="add_repository_div.jsp" %>
 <!-- Bottom Scripts -->
 <script src="<%=request.getParameter("basePath")%>js/bootstrap.min.js"></script>
 <script src="<%=request.getParameter("basePath")%>js/TweenMax.min.js"></script>

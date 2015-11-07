@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 
-import com.goodsquick.model.UserInfo;
-
-
 
 /**
  * The authentication success handler returns <code>roles</code> and <code>warehouses</code> as JSON for user to choose.
@@ -27,7 +24,6 @@ public class AuthenticationSuccessHandler implements org.springframework.securit
 	@Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        UserInfo user = (UserInfo)authentication.getPrincipal();
     }
 
 }

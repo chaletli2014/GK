@@ -51,3 +51,7 @@ function relateCustomer(spCustomerId){
 		}
 	});
 }
+
+function recallRequest(spCustomerId){
+	
+}

@@ -186,6 +186,23 @@ public class GoodsServiceDAOImpl extends BaseDAOImpl implements GoodsServiceDAO 
         serviceDetailList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{providerCode}, new GoodsSPCustomerRowMapper());
         return serviceDetailList;
 	}
+	
+	@Override
+	public List<GoodsSPCustomer> getGoodsSPCustomerByCreateUser(
+			String loginName) throws Exception {
+		List<GoodsSPCustomer> serviceDetailList = new ArrayList<GoodsSPCustomer>();
+		StringBuffer sql = new StringBuffer(600);
+		sql.append("select gsc.id, gsc.sp_code, gsc.service_type");
+		sql.append(" ,gsc.customer_code, gsc.customer_name, gd2.dic_name as status");
+		sql.append(" ,gsc.create_user,gsc.createdate,gsc.update_user,gsc.updatedate ");
+		sql.append(" ,gd1.dic_name as service_type_name");
+		sql.append(" from tbl_goods_sp_customer gsc ");
+		sql.append(" left join tbl_goods_dictionary gd1 on gsc.service_type = gd1.dic_code and gd1.type_code='serviceTypes' ");
+		sql.append(" left join tbl_goods_dictionary gd2 on gsc.status = gd2.dic_code and gd2.type_code='sp_customer_status' ");
+		sql.append(" where gsc.create_user = ? and gsc.status != '0' ");
+		serviceDetailList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{loginName}, new GoodsSPCustomerRowMapper());
+		return serviceDetailList;
+	}
 
 	@Override
 	public GoodsServiceProvider getGoodsServiceProviderByCode(String spCode)
@@ -198,13 +215,12 @@ public class GoodsServiceDAOImpl extends BaseDAOImpl implements GoodsServiceDAO 
 	public GoodsSPCustomer getGoodsSPCustomerBySPCustomerId(
 			int serviceCustomerId) throws Exception {
 		StringBuffer sql = new StringBuffer(600);
-        sql.append("select gsc.id, gsc.sp_code, gsc.category_code, gsc.service_type");
+        sql.append("select gsc.id, gsc.service_type");
         sql.append(" ,gsc.customer_code, gsc.customer_name, gd2.dic_name as status");
         sql.append(" ,gsc.create_user,gsc.createdate,gsc.update_user,gsc.updatedate ");
-        sql.append(" ,tc.category_name,gd1.dic_name as service_type_name");
-        sql.append(" from tbl_goods_sp_customer gsc,  tbl_category tc, tbl_goods_dictionary gd1, tbl_goods_dictionary gd2 ");
+        sql.append(" ,gd1.dic_name as service_type_name");
+        sql.append(" from tbl_goods_sp_customer gsc, tbl_goods_dictionary gd1, tbl_goods_dictionary gd2 ");
         sql.append(" where gsc.id = ? and gsc.status != '0' ");
-        sql.append(" and gsc.category_code = tc.category_code ");
         sql.append(" and gsc.service_type = gd1.dic_code and gd1.type_code='serviceTypes' ");
         sql.append(" and gsc.status = gd2.dic_code and gd2.type_code='sp_customer_status' ");
         return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{serviceCustomerId}, new GoodsSPCustomerRowMapper());

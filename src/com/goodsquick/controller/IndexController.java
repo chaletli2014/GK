@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.WebUserInfo;
+import com.goodsquick.utils.GoodsQuickAttributes;
 
 @Controller
 public class IndexController {
@@ -26,6 +27,12 @@ public class IndexController {
         		viewName = "serviceIndex";
         	}
         }
+        
+        Object repositoryCode = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        if( null == repositoryCode ){
+        	request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, currentUser.getLoginName()+"_primary");
+        }
+        
         view.setViewName(viewName);
         return view;
     }

@@ -10,6 +10,7 @@ import com.goodsquick.model.WebUserInfo;
 public interface OrdinaryHouseService {
 
 	public List<GoodsOrdinaryHouse> getOrdinaryHouseByUserCode(String userCode) throws Exception;
+	public GoodsOrdinaryHouse getOrdinaryHouseByRepositoryCode(String repositoryCode) throws Exception;
 	public List<GoodsRelationshipProperty> getAllHouseRelationshipByUserCode(String userCode) throws Exception;
 	public void saveOrUpdateOrdinaryHouse(GoodsRelationshipProperty relationshipProperty, GoodsOrdinaryHouse ordinaryHouse, WebUserInfo currentUser) throws Exception;
 	public void deleteOrdinaryHouse(int ordinaryHouseId) throws Exception;

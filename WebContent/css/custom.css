@@ -126,12 +126,14 @@ div.showDetailDiv .form-group{
 }
 .sp_list_item{
 	margin: 0 10px;
-  	margin-bottom: 30px;
-  	width: 180px;
+  	margin-bottom: 10px;
+  	width: 280px;
   	border: 10px solid #f1f1f1;
   	float: left;
   	display: list-item;
   	list-style: none;
+  	text-align: center;
+  	cursor: pointer;
 }
 .sp_title{
 	color: #fff;
@@ -141,7 +143,7 @@ div.showDetailDiv .form-group{
 }
 .sp_detail{
 	font-size: 14px;
-	height: 60px;
+	height: 20px;
 	padding: 10px 0px;
 }
 .sp_actions{

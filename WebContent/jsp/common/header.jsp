@@ -24,7 +24,7 @@
     <script type="text/javascript" src="<%=basePath%>js/jquery.ztree.excheck-3.5.js"></script>
     <script type="text/javascript" src="<%=basePath%>js/jquery.ztree.exedit-3.5.js"></script>
     <script type="text/javascript" src="<%=basePath%>/js/jquery.alerts.js"></script>
-    <script type="text/javascript" src="<%=basePath%>/js/goodsquick.js"></script>
+    <script type="text/javascript" src="<%=basePath%>/js/goodsquick/goodsquick.js"></script>
     <script type="text/javascript" src="<%=basePath%>/js/highcharts.js"></script>
     <script type="text/javascript" src="<%=basePath%>/js/report/report.js"></script>
     <script type="text/javascript" src="<%=basePath%>/js/report/drilldown.js"></script>

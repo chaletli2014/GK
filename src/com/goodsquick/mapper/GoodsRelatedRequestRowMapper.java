@@ -13,9 +13,9 @@ public class GoodsRelatedRequestRowMapper implements RowMapper<GoodsRelatedReque
 	public GoodsRelatedRequest mapRow(ResultSet rs, int arg1) throws SQLException {
 		GoodsRelatedRequest dbGoodsRelatedRequest = new GoodsRelatedRequest();
 		dbGoodsRelatedRequest.setId(rs.getInt("id"));
-		dbGoodsRelatedRequest.setSpCustomerId(rs.getInt("sp_customer_id"));
+//		dbGoodsRelatedRequest.setSpCustomerId(rs.getInt("sp_customer_id"));
 		dbGoodsRelatedRequest.setOrHouseName(rs.getString("customer_name"));
-		dbGoodsRelatedRequest.setSpCode(rs.getString("sp_code"));
+//		dbGoodsRelatedRequest.setSpCode(rs.getString("sp_code"));
 		dbGoodsRelatedRequest.setSpName(rs.getString("sp_name"));
 		dbGoodsRelatedRequest.setStatus(rs.getString("status"));
 		dbGoodsRelatedRequest.setServiceTypeCode(rs.getString("service_type_code"));

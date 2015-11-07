@@ -142,6 +142,19 @@ public class GoodsServiceServiceImpl implements GoodsServiceService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public List<GoodsSPCustomer> getGoodsSPCustomerByCreateUser(
+			String loginName) throws Exception {
+		try{
+			return goodsServiceDAO.getGoodsSPCustomerByCreateUser(loginName);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get the service customer,",e);
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	public GoodsServiceProvider getGoodsServiceProviderByCode(String spCode)

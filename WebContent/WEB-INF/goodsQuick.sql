@@ -442,3 +442,130 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT
 ;
+
+/**
+ * 不动产服务商和组件商关系表
+ */
+CREATE TABLE tbl_goods_house_module_sp (
+id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+house_code				varchar(20),
+module_sp_type  		varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+module_sp_value  		varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+create_date  			datetime 		NULL DEFAULT NULL ,
+create_user  			varchar(20) 	NULL DEFAULT NULL ,
+update_date  			datetime 		NULL DEFAULT NULL ,
+update_user  			varchar(20) 	NULL DEFAULT NULL ,
+status  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+/**
+ * 资品库表
+ */
+CREATE TABLE tbl_goods_repository (
+id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+repository_name			varchar(20)		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+repository_code  		varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+repository_desc  		varchar(255) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+repository_type  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+create_date  			datetime 		NULL DEFAULT NULL ,
+create_user  			varchar(20) 	NULL DEFAULT NULL ,
+update_date  			datetime 		NULL DEFAULT NULL ,
+update_user  			varchar(20) 	NULL DEFAULT NULL ,
+status  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+/**
+ * 资品库用户表
+ */
+CREATE TABLE tbl_goods_repository_user (
+id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+repository_code			varchar(20)		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+user_code  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+priv  					varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+create_date  			datetime 		NULL DEFAULT NULL ,
+create_user  			varchar(20) 	NULL DEFAULT NULL ,
+update_date  			datetime 		NULL DEFAULT NULL ,
+update_user  			varchar(20) 	NULL DEFAULT NULL ,
+status  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+alter table tbl_goods_ordinary_house add column repository_code varchar(20) not null default '' comment '所属资品库';
+
+--普通住宅表
+CREATE TABLE tbl_goods_ordinary_house_owned (
+id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+house_code				varchar(20),
+building_name  			varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+building_status  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL ,
+company  					varchar(128) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL ,
+contacter_name  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+contacter_position		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+contacter_telephone  		varchar(20) 	NULL DEFAULT NULL ,
+property_name  			varchar(128) 	NULL DEFAULT NULL comment '物业名称',
+location  				varchar(128) 	NULL DEFAULT NULL ,
+project_position_e  		varchar(128) 	NULL DEFAULT NULL ,
+project_position_w  		varchar(128) 	NULL DEFAULT NULL ,
+project_position_s  		varchar(128) 	NULL DEFAULT NULL ,
+project_position_n  		varchar(128) 	NULL DEFAULT NULL ,
+property_type  			varchar(20) 	NULL DEFAULT NULL comment '物业类型',
+property_type_o  			varchar(20) 	NULL DEFAULT NULL comment '物业类型其他',
+start_year  				int 	NULL DEFAULT 0 ,
+start_month  				int 	NULL DEFAULT 0 ,
+start_date  				int 	NULL DEFAULT 0 ,
+`province`  			varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+`city`  				varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+`county`  				varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+checkin_year  			int 	NULL DEFAULT 0 ,
+checkin_month  			int 	NULL DEFAULT 0 ,
+checkin_date  			int 	NULL DEFAULT 0 ,
+floor_space  				int 	NULL DEFAULT 0 comment '占地面积',
+building_number  			int 	NULL DEFAULT 0 comment '建筑总栋数',
+has_lift_number  			int 	NULL DEFAULT 0 comment '有电梯栋数',
+non_lift_number  			int 	NULL DEFAULT 0 comment '无电梯栋数',
+lobby_number  			int 	NULL DEFAULT 0 comment '大堂数量',
+lift_lobby_number  		int 	NULL DEFAULT 0 comment '电梯大堂个数',
+non_lift_lobby_number 	int 	NULL DEFAULT 0 comment '无电梯大堂个数',
+owner_households 			int 	NULL DEFAULT 0 comment '业主总户数',
+tenant_households 		int 	NULL DEFAULT 0 comment '租户总户数',
+delivery_households 		int 	NULL DEFAULT 0 comment '已经交房户数',
+non_delivery_households 	int 	NULL DEFAULT 0 comment '未交房户数',
+covered_area 				int 	NULL DEFAULT 0 comment '总建筑面积',
+period 					int 	NULL DEFAULT 0 comment '开发期数',
+west_east_length 			int 	NULL DEFAULT 0 comment '周界长度-东西',
+south_north_length 		int 	NULL DEFAULT 0 comment '周界长度-南北',
+plan_sideway_num 			int 	NULL DEFAULT 0 comment '规划出入口数量 - 人行',
+plan_carway_num 			int 	NULL DEFAULT 0 comment '规划出入口数量 - 车行',
+actual_sideway_num 		int 	NULL DEFAULT 0 comment '实际出入口数量 - 人行',
+actual_carway_num 		int 	NULL DEFAULT 0 comment '实际出入口数量 - 车行',
+create_date  				datetime 		NULL DEFAULT NULL ,
+create_user  				varchar(20) 	NULL DEFAULT NULL ,
+update_date  				datetime 		NULL DEFAULT NULL ,
+update_user  				varchar(20) 	NULL DEFAULT NULL ,
+last_login_time  			datetime 		NULL DEFAULT NULL ,
+status  					varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+repository_code				varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;

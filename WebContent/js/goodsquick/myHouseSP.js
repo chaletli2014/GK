@@ -17,7 +17,9 @@ jQuery(document).ready(function($){
 		jPrompt("请输入要绑定的服务商名称","","更换服务商",function(value) {
 			if( value == '' ){
 				jAlert("更新的服务商名称不能为空","错误");
-			}else{
+			} else if( value == null){
+				
+			} else {
 				jQuery.ajax({
 					url: basePath+"updateRelationShipAjax",
 					data:{
