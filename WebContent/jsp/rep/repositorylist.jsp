@@ -95,20 +95,20 @@ function checkMessage(){
 							</tr>
 						</thead>
 						<tbody class="middle-align">
-							<c:if test="${fn:length(allRepository) > 0}">
-								<c:forEach items="${allRepository}" var="repo">
+							<c:if test="${fn:length(repositoryList) > 0}">
+								<c:forEach items="${repositoryList}" var="repo">
 									<tr>
-										<td>${repo.name}</td>
-										<td>${repo.typeDesc}</td>
-										<td>${repo.desc}</td>
+										<td>${repo.repositoryName}</td>
+										<td>${repo.repositoryType}</td>
+										<td>${repo.repositoryDesc}</td>
 										<td>
-											<a id="${priv.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyPrivilege">
+											<a id="${repo.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyPrivilege">
 												编辑
 											</a>
-											<a id="${priv.id}" class="btn btn-danger btn-sm btn-icon icon-left deletePrivilege">
+											<a id="${repo.id}" class="btn btn-primary btn-sm btn-icon icon-left deletePrivilege">
 												用户列表
 											</a>
-											<a id="${priv.id}" class="btn btn-danger btn-sm btn-icon icon-left deletePrivilege">
+											<a id="${repo.id}" class="btn btn-danger btn-sm btn-icon icon-left deletePrivilege">
 												注销
 											</a>
 										</td>

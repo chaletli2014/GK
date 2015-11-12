@@ -22,6 +22,7 @@ import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.DataBean;
+import com.goodsquick.utils.GoodsJDBCTemplate;
 
 @Repository("ordinaryHouseDAO")
 public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
@@ -54,82 +55,90 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 
 	@Override
 	public int saveOrdinaryHouse(final GoodsOrdinaryHouse ordinaryHouse) throws Exception {
-		KeyHolder keyHolder = new GeneratedKeyHolder();
+		final StringBuilder sourceSQL = new StringBuilder();
+		final StringBuilder ownedSQL = new StringBuilder();
+		final StringBuilder commonSQL = new StringBuilder();
+		sourceSQL.append("insert into tbl_goods_ordinary_house( ");
+		ownedSQL.append("insert into tbl_goods_ordinary_house_owned( ");
 		
-		final StringBuilder sql = new StringBuilder();
-		sql.append("insert into tbl_goods_ordinary_house(id,house_code,building_name,building_status,company ");
-        sql.append(",contacter_name,contacter_position,contacter_telephone,property_name,location");
-        sql.append(",project_position_e,project_position_w,project_position_s,project_position_n");
-        sql.append(",property_type,property_type_o");
-        sql.append(",start_year,start_month,start_date,checkin_year,checkin_month,checkin_date");
-        sql.append(",floor_space,building_number,has_lift_number,non_lift_number,lobby_number,lift_lobby_number,non_lift_lobby_number");
-        sql.append(",owner_households,tenant_households,delivery_households,non_delivery_households");
-        sql.append(",covered_area,period,west_east_length,south_north_length");
-        sql.append(",plan_sideway_num,plan_carway_num,actual_sideway_num,actual_carway_num");
-        sql.append(",create_date,create_user,update_date,update_user,last_login_time,status )");
-		sql.append("values(null,?,?,?,?");
-		sql.append(",?,?,?,?,?");
-		sql.append(",?,?,?,?");
-		sql.append(",?,?");
-		sql.append(",?,?,?,?,?,?");
-		sql.append(",?,?,?,?,?,?,?");
-		sql.append(",?,?,?,?");
-		sql.append(",?,?,?,?");
-		sql.append(",?,?,?,?");
-		sql.append(",now(),?,now(),?,now(),'1')");
+		commonSQL.append("id,house_code,building_name,building_status,company,contacter_name,contacter_position,contacter_telephone,property_name,location");
+		commonSQL.append(",project_position_e,project_position_w,project_position_s,project_position_n");
+		commonSQL.append(",property_type,property_type_o");
+		commonSQL.append(",start_year,start_month,start_date,checkin_year,checkin_month,checkin_date");
+		commonSQL.append(",floor_space,building_number,has_lift_number,non_lift_number,lobby_number,lift_lobby_number,non_lift_lobby_number");
+        commonSQL.append(",owner_households,tenant_households,delivery_households,non_delivery_households");
+        commonSQL.append(",covered_area,period,west_east_length,south_north_length");
+        commonSQL.append(",plan_sideway_num,plan_carway_num,actual_sideway_num,actual_carway_num");
+        commonSQL.append(",create_date,create_user,update_date,update_user,last_login_time,status");
+        
+        sourceSQL.append(commonSQL).append(") ");
+		ownedSQL.append(commonSQL).append(",repository_code) ");
+        
+		final StringBuilder valueSQL = new StringBuilder();
+		valueSQL.append("values(null,?,?,?,?");
+		valueSQL.append(",?,?,?,?,?");
+		valueSQL.append(",?,?,?,?");
+		valueSQL.append(",?,?");
+		valueSQL.append(",?,?,?,?,?,?");
+		valueSQL.append(",?,?,?,?,?,?,?");
+		valueSQL.append(",?,?,?,?");
+		valueSQL.append(",?,?,?,?");
+		valueSQL.append(",?,?,?,?");
+		valueSQL.append(",now(),?,now(),?,now(),'1'");
 		
-		dataBean.getJdbcTemplate().update(new PreparedStatementCreator(){
-            @Override
-            public PreparedStatement createPreparedStatement(
-                    Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(sql.toString(),Statement.RETURN_GENERATED_KEYS);
-                int i = 1;
-                ps.setString(i++, ordinaryHouse.getHouseCode());
-                ps.setString(i++, ordinaryHouse.getBuildingName());
-                ps.setString(i++, ordinaryHouse.getBuildingStatus());
-                ps.setString(i++, ordinaryHouse.getCompany());
-                ps.setString(i++, ordinaryHouse.getContacterName());
-                ps.setString(i++, ordinaryHouse.getContacterPosition());
-                ps.setString(i++, ordinaryHouse.getContacterTelephone());
-                ps.setString(i++, ordinaryHouse.getPropertyName());
-                ps.setString(i++, ordinaryHouse.getLocation());
-                ps.setString(i++, ordinaryHouse.getProjectPositionE());
-                ps.setString(i++, ordinaryHouse.getProjectPositionW());
-                ps.setString(i++, ordinaryHouse.getProjectPositionS());
-                ps.setString(i++, ordinaryHouse.getProjectPositionN());
-                ps.setString(i++, ordinaryHouse.getPropertyType());
-                ps.setString(i++, ordinaryHouse.getPropertytypeO());
-                ps.setInt(i++, ordinaryHouse.getStartYear());
-                ps.setInt(i++, ordinaryHouse.getStartMonth());
-                ps.setInt(i++, ordinaryHouse.getStartDate());
-                ps.setInt(i++, ordinaryHouse.getCheckinYear());
-                ps.setInt(i++, ordinaryHouse.getCheckinMonth());
-                ps.setInt(i++, ordinaryHouse.getCheckinDate());
-                ps.setDouble(i++, ordinaryHouse.getFloorSpace());
-                ps.setInt(i++, ordinaryHouse.getBuildingNumber());
-                ps.setInt(i++, ordinaryHouse.getHasLiftNumber());
-                ps.setInt(i++, ordinaryHouse.getNonLiftNumber());
-                ps.setInt(i++, ordinaryHouse.getLobbyNumber());
-                ps.setInt(i++, ordinaryHouse.getLiftLobbyNumber());
-                ps.setInt(i++, ordinaryHouse.getNonLiftLobbyNumber());
-                ps.setInt(i++, ordinaryHouse.getOwnerHouseholds());
-                ps.setInt(i++, ordinaryHouse.getTenantHouseholds());
-                ps.setInt(i++, ordinaryHouse.getDeliveryHouseholds());
-                ps.setInt(i++, ordinaryHouse.getNonDeliveryHouseholds());
-                ps.setInt(i++, ordinaryHouse.getCoveredArea());
-                ps.setInt(i++, ordinaryHouse.getPeriod());
-                ps.setInt(i++, ordinaryHouse.getWestEastLength());
-                ps.setInt(i++, ordinaryHouse.getSouthNorthLength());
-                ps.setInt(i++, ordinaryHouse.getPlanSidewayNum());
-                ps.setInt(i++, ordinaryHouse.getPlanCarwayNum());
-                ps.setInt(i++, ordinaryHouse.getActualSidewayNum());
-                ps.setInt(i++, ordinaryHouse.getActualCarwayNum());
-                ps.setString(i++, ordinaryHouse.getCreateUser());
-                ps.setString(i++, ordinaryHouse.getUpdateUser());
-                return ps;
-            }
-        }, keyHolder);
-		return keyHolder.getKey().intValue();
+		sourceSQL.append(valueSQL).append(")");
+		ownedSQL.append(valueSQL).append(",?)");
+		
+		List<String> params = new ArrayList<String>();
+		params.add(ordinaryHouse.getHouseCode());
+		params.add(ordinaryHouse.getBuildingName());
+		params.add(ordinaryHouse.getBuildingStatus());
+		params.add(ordinaryHouse.getCompany());
+		params.add(ordinaryHouse.getContacterName());
+		params.add(ordinaryHouse.getContacterPosition());
+		params.add(ordinaryHouse.getContacterTelephone());
+		params.add(ordinaryHouse.getPropertyName());
+		params.add(ordinaryHouse.getLocation());
+		params.add(ordinaryHouse.getProjectPositionE());
+		params.add(ordinaryHouse.getProjectPositionW());
+		params.add(ordinaryHouse.getProjectPositionS());
+		params.add(ordinaryHouse.getProjectPositionN());
+		params.add(ordinaryHouse.getPropertyType());
+		params.add(ordinaryHouse.getPropertytypeO());
+		params.add(String.valueOf(ordinaryHouse.getStartYear()));
+		params.add(String.valueOf(ordinaryHouse.getStartMonth()));
+		params.add(String.valueOf(ordinaryHouse.getStartDate()));
+		params.add(String.valueOf(ordinaryHouse.getCheckinYear()));
+		params.add(String.valueOf(ordinaryHouse.getCheckinMonth()));
+		params.add(String.valueOf(ordinaryHouse.getCheckinDate()));
+		params.add(String.valueOf(ordinaryHouse.getFloorSpace()));
+		params.add(String.valueOf(ordinaryHouse.getBuildingNumber()));
+		params.add(String.valueOf(ordinaryHouse.getHasLiftNumber()));
+		params.add(String.valueOf(ordinaryHouse.getNonLiftNumber()));
+		params.add(String.valueOf(ordinaryHouse.getLobbyNumber()));
+		params.add(String.valueOf(ordinaryHouse.getLiftLobbyNumber()));
+		params.add(String.valueOf(ordinaryHouse.getNonLiftLobbyNumber()));
+		params.add(String.valueOf(ordinaryHouse.getOwnerHouseholds()));
+		params.add(String.valueOf(ordinaryHouse.getTenantHouseholds()));
+		params.add(String.valueOf(ordinaryHouse.getDeliveryHouseholds()));
+		params.add(String.valueOf(ordinaryHouse.getNonDeliveryHouseholds()));
+		params.add(String.valueOf(ordinaryHouse.getCoveredArea()));
+		params.add(String.valueOf(ordinaryHouse.getPeriod()));
+		params.add(String.valueOf(ordinaryHouse.getWestEastLength()));
+		params.add(String.valueOf(ordinaryHouse.getSouthNorthLength()));
+		params.add(String.valueOf(ordinaryHouse.getPlanSidewayNum()));
+		params.add(String.valueOf(ordinaryHouse.getPlanCarwayNum()));
+		params.add(String.valueOf(ordinaryHouse.getActualSidewayNum()));
+		params.add(String.valueOf(ordinaryHouse.getActualCarwayNum()));
+		params.add(ordinaryHouse.getCreateUser());
+		params.add(ordinaryHouse.getUpdateUser());
+		
+		int sourceId = GoodsJDBCTemplate.executeSQL(dataBean, sourceSQL, params);
+		
+		params.add(ordinaryHouse.getRepositoryCode());
+		GoodsJDBCTemplate.executeSQL(dataBean, ownedSQL, params);
+		
+		return sourceId;
 	}
 
 	@Override
@@ -206,6 +215,13 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 			throws Exception {
         String sql = "select * from tbl_goods_ordinary_house where id = ?";
         return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{ordinaryHouseId}, new OrdinaryHouseRowMapper());
+	}
+	
+	@Override
+	public GoodsOrdinaryHouse getOwnedGoodsOrdinaryHouseById(int ordinaryHouseId)
+			throws Exception {
+		String sql = "select * from tbl_goods_ordinary_house_owned where id = ?";
+		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{ordinaryHouseId}, new OrdinaryHouseRowMapper());
 	}
 
 	@Override
@@ -385,6 +401,13 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 			throws Exception {
 		String sql = "select * from tbl_goods_ordinary_house where building_name = ?";
         return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{houseName}, new OrdinaryHouseRowMapper());
+	}
+	
+	@Override
+	public GoodsOrdinaryHouse getOwnedGoodsOrdinaryHouseByName(String houseName)
+			throws Exception {
+		String sql = "select * from tbl_goods_ordinary_house_owned where building_name = ?";
+		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{houseName}, new OrdinaryHouseRowMapper());
 	}
 
 	@Override

@@ -109,6 +109,12 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 			throws Exception {
 		return ordinaryHouseDAO.getGoodsOrdinaryHouseById(ordinaryHouseId);
 	}
+	
+	@Override
+	public GoodsOrdinaryHouse getOwnedGoodsOrdinaryHouseById(int ordinaryHouseId)
+			throws Exception {
+		return ordinaryHouseDAO.getOwnedGoodsOrdinaryHouseById(ordinaryHouseId);
+	}
 
 	@Override
 	@Transactional

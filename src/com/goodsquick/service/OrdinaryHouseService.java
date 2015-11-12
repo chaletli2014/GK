@@ -15,6 +15,7 @@ public interface OrdinaryHouseService {
 	public void saveOrUpdateOrdinaryHouse(GoodsRelationshipProperty relationshipProperty, GoodsOrdinaryHouse ordinaryHouse, WebUserInfo currentUser) throws Exception;
 	public void deleteOrdinaryHouse(int ordinaryHouseId) throws Exception;
 	public GoodsOrdinaryHouse getGoodsOrdinaryHouseById(int ordinaryHouseId) throws Exception;
+	public GoodsOrdinaryHouse getOwnedGoodsOrdinaryHouseById(int ordinaryHouseId) throws Exception;
 	
 	public void saveOrdinaryHousesFromFile(List<GoodsOrdinaryHouse> houses) throws Exception;
 	

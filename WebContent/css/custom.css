@@ -150,6 +150,10 @@ div.showDetailDiv .form-group{
 	text-align: center;
 }
 
+.houseNameLink{
+	text-decoration: underline;
+}
+
 /**
 *login
 */

@@ -39,4 +39,17 @@ jQuery(document).ready(function($){
 			}
 		});
 	});
+	$("#publicBody").click(function(){
+		jQuery('#houseModuleDiv_body').modal('show', {backdrop: 'static'});
+	});
+	$("#publicInstallation").click(function(){
+		jQuery('#houseModuleDiv_installation').modal('show', {backdrop: 'static'});
+	});
+	$("#publicEquipment").click(function(){
+		jQuery('#houseModuleDiv_equipment').modal('show', {backdrop: 'static'});
+	});
+	$(".module_body_detail").click(function(){
+		$("#rightBody").html("测试");
+	});
+	
 });

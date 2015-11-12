@@ -28,9 +28,14 @@ public class IndexController {
         	}
         }
         
-        Object repositoryCode = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        Object repositoryCode = request.getParameter(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
         if( null == repositoryCode ){
-        	request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, currentUser.getLoginName()+"_primary");
+        	repositoryCode = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        }
+        if( null == repositoryCode ){
+        	request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, currentUser.getLoginName()+"_0");
+        }else{
+        	request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, repositoryCode);
         }
         
         view.setViewName(viewName);

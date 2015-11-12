@@ -15,7 +15,9 @@ public interface OrdinaryHouseDAO {
 	public void updateOrdinaryHouse(GoodsOrdinaryHouse ordinaryHouse) throws Exception;
 	public void deleteOrdinaryHouse(int ordinaryHouseId) throws Exception;
 	public GoodsOrdinaryHouse getGoodsOrdinaryHouseById(int ordinaryHouseId) throws Exception;
+	public GoodsOrdinaryHouse getOwnedGoodsOrdinaryHouseById(int ordinaryHouseId) throws Exception;
 	public GoodsOrdinaryHouse getGoodsOrdinaryHouseByName(String houseName) throws Exception;
+	public GoodsOrdinaryHouse getOwnedGoodsOrdinaryHouseByName(String houseName) throws Exception;
 	
 	public String getMaxHouseCode() throws Exception;
 	

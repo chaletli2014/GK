@@ -9,19 +9,13 @@
 			<div id="rootwizard" class="form-wizard">
 				<ul class="tabs">
 					<li class="active">
-						<a href="#tab1" data-toggle="tab">基本信息</a>
+						<a href="#tab_basic" data-toggle="tab">基本信息</a>
 					</li>
 					<li>
-						<a href="#tab2" data-toggle="tab">主要参数</a>
+						<a href="#tab_main" data-toggle="tab">主要参数</a>
 					</li>
 					<li>
-						<a href="#tab3" data-toggle="tab">详细参数</a>
-					</li>
-					<li>
-						<a href="#tab4" data-toggle="tab">关联组件</a>
-					</li>
-					<li>
-						<a href="#tab5" data-toggle="tab">资料库</a>
+						<a href="#tab_source" data-toggle="tab">资料库</a>
 					</li>
 				</ul>
 				<div class="progress-indicator">
@@ -30,7 +24,7 @@
 				<form role="form" class="form-horizontal" action="saveordinaryhouse" method="post" id="addordinaryhouse_form">
 				<div class="tab-content">
 					<!-- Tabs Content -->
-					<div class="tab-pane active" id="tab1">
+					<div class="tab-pane active" id="tab_basic">
 						<div class="modal-body">
 							<div class="content">
 								<div class="label label-warning">注意：以下内容为必填项，若为空，无法完成注册</div>
@@ -90,20 +84,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="tab-pane" id="tab2">
+					<div class="tab-pane" id="tab_main">
 						<jsp:include page="ordinaryhouse_param_basic.jsp" flush="true">
 				        	<jsp:param name="basePath" value="<%=basePath%>"/>
 				        </jsp:include>
 					</div>
-					<div class="tab-pane" id="tab3">
-						<jsp:include page="ordinaryhouse_param_detail.jsp" flush="true">
-				        	<jsp:param name="basePath" value="<%=basePath%>"/>
-				        </jsp:include>
-					</div>
-					<div class="tab-pane" id="tab4">
-						<%@include file="ordinaryhouse_param_device.jsp" %>
-					</div>
-					<div class="tab-pane" id="tab5">
+					<div class="tab-pane" id="tab_source">
 						<%@include file="ordinaryhouse_param_source.jsp" %>
 					</div>
 					<!-- Tabs Pager -->

@@ -1,10 +1,10 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div class="modal fade showDetailDiv" id="showHouseDiv">
+<div class="modal fade showDetailDiv" id="houseModuleDiv_equipment">
 	<div class="modal-dialog" style="width:70%">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">产品信息</h4>
+				<h4 class="modal-title">公共配套设备</h4>
 			</div>
 			<div id="rootwizard" class="form-wizard">
 				<ul class="tabs">

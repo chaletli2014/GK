@@ -17,6 +17,7 @@ public class GoodsQuickAttributes {
     public static final String WEB_SESSION_PROVIDER_CODE = "providerCode";
     public static final String WEB_SESSION_HOUSE_ID = "orHouseId";
     public static final String WEB_SESSION_REPOSITORY_CODE = "repository_code";
+    public static final String WEB_SESSION_REPOSITORY_LIST = "repository_list";
     
     public static final String MESSAGE_NO_LOGIN_USER = "无法获取当前用户信息，请重新登录";
     public static final String MESSAGE_NO_PROVIDER = "无法获取服务商，请重新登录";

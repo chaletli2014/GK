@@ -232,6 +232,7 @@ public class OrdinaryHouseController {
     @RequestMapping("saveordinaryhouse")
     public String doAddordinaryhouse(HttpServletRequest request){
     	GoodsOrdinaryHouse ordinaryHouse = new GoodsOrdinaryHouse();
+    	ordinaryHouse.setRepositoryCode((String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE));
     	GoodsRelationshipProperty relationshipProperty = new GoodsRelationshipProperty();
     	populateOrdinaryHouseInfo(ordinaryHouse, request);
     	populateRelationshipInfo(relationshipProperty, request);
@@ -438,7 +439,7 @@ public class OrdinaryHouseController {
     	Map<String,Object> result = new HashMap<String,Object>();
     	try {
     		String houseId = request.getParameter("houseId");
-    		GoodsOrdinaryHouse house = ordinaryHouseService.getGoodsOrdinaryHouseById(Integer.parseInt(houseId));
+    		GoodsOrdinaryHouse house = ordinaryHouseService.getOwnedGoodsOrdinaryHouseById(Integer.parseInt(houseId));
     		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
     		
     		List<GoodsHouseDevice> deviceList = ordinaryHouseService.getAllHouseDeviceByUser(house, currentUser);

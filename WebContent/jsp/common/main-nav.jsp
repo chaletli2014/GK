@@ -1,8 +1,18 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.apache.cxf.common.util.CollectionUtils"%>
+<%@page import="com.goodsquick.utils.GoodsQuickAttributes"%>
+<%@page import="com.goodsquick.model.GoodsRepository"%>
 <%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@page import="com.goodsquick.model.WebUserInfo"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	WebUserInfo userInfo = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+	List<GoodsRepository> reposigoryList = new ArrayList<GoodsRepository>();
+	try{
+		reposigoryList = (List<GoodsRepository>)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_LIST);
+	}catch(Exception e){}
 %>
 <nav class="navbar user-info-navbar" role="navigation">
 	<!-- Left links for user info navbar -->
@@ -62,15 +72,26 @@
 					</a>
 				</li>
 				<li>
-					<a href="<%=request.getParameter("basePath")%>index">
+					<a href="<%=request.getParameter("basePath")%>index?<%=GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE%>=<%=userInfo.getLoginName()+"_0"%>">
 						<i class="fa-folder-o"></i>
-						我的产品库 
+						我的资品库
 					</a>
 				</li>
+				<%
+					if( !CollectionUtils.isEmpty(reposigoryList) ){
+						for( GoodsRepository repository : reposigoryList ){
+				%>
+					<li>
+						<a href="<%=request.getParameter("basePath")%>index?<%=GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE%>=<%=repository.getRepositoryCode()%>">
+							<i class="fa-folder-o"></i>
+							<%=repository.getRepositoryName() %>
+						</a>
+					</li>
+				<%}} %>
 				<li>
 					<a href="javascript:void(0)" id="nav_newrepository">
 						<i class="fa-plus"></i>
-						新增自定义库
+						新增资品库
 					</a>
 				</li>
 				<li class="last">

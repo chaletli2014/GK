@@ -197,6 +197,8 @@ public class GoodsOrdinaryHouse {
 	
 	private List<GoodsHouseDevice> houseDevices;
 	
+	private String repositoryCode;
+	
 	public int getId() {
 		return id;
 	}
@@ -490,6 +492,12 @@ public class GoodsOrdinaryHouse {
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+	public String getRepositoryCode() {
+		return repositoryCode;
+	}
+	public void setRepositoryCode(String repositoryCode) {
+		this.repositoryCode = repositoryCode;
 	}
 	
 }

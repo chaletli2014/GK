@@ -111,16 +111,22 @@ jQuery(document).ready(function($){
 						<div style="width:40%;float:right;">
 							<ul class="sp_list">
 								<li class="sp_list_item">
-									<div class="sp_title">公共主体</div>
-									<div class="sp_detail"></div>
+									<a href="javascript:void(0)" id="publicBody">
+										<div class="sp_title">公共主体</div>
+										<div class="sp_detail"></div>
+									</a>
 								</li>
 								<li class="sp_list_item">
-									<div class="sp_title">公共设施</div>
-									<div class="sp_detail"></div>
+									<a href="javascript:void(0)" id="publicInstallation">
+										<div class="sp_title">公共设施</div>
+										<div class="sp_detail"></div>
+									</a>
 								</li>
 								<li class="sp_list_item">
-									<div class="sp_title">公共设备</div>
-									<div class="sp_detail"></div>
+									<a href="javascript:void(0)" id="publicEquipment">
+										<div class="sp_title">公共设备</div>
+										<div class="sp_detail"></div>
+									</a>
 								</li>
 							</ul>
 						</div>
@@ -166,6 +172,9 @@ jQuery(document).ready(function($){
 		</div>
 	</div>
 	<%@include file="ordinaryhouse_popshow.jsp" %>
+	<%@include file="ordinaryhouse_module_body.jsp" %>
+	<%@include file="ordinaryhouse_module_installation.jsp" %>
+	<%@include file="ordinaryhouse_module_equipment.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

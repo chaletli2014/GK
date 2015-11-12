@@ -21,10 +21,8 @@ jQuery(document).ready(function($){
 					if( result != 'Y' ){
 						jAlert("新增资品库错误","提醒");
 					}else{
-						jConfirm("是否直接进入新增资品库？","提醒",function(r){
-							if( r ){
-								window.location.href = basePath+"index?repository_code="+response.repositoryCode;
-							}
+						jAlert("资品库添加成功，点击确定进入新资品库","信息",function(){
+							window.location.href = basePath+"index?repository_code="+response.repositoryCode;
 						});
 						jQuery('.close').click();
 					}
