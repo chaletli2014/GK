@@ -78,7 +78,10 @@ jQuery(document).ready(function($){
 						<div style="width:50%;float:left;">
 							<blockquote class="blockquote blockquote-info" style="height:318px;">
 								<p>
-									<strong>产品信息</strong>
+									<strong>产品信息</strong>&nbsp;&nbsp;
+									<a href="javascript:void(0)" id="editHouseLink">
+										<i class="fa-edit"></i>
+									</a>
 								</p>
 								<p>
 									产品名称：<a class="houseNameLink" tabindex="${orHouse.id}" href="javascript:void(0)" title="点击查看明细">${orHouse.buildingName}</a>
@@ -172,6 +175,7 @@ jQuery(document).ready(function($){
 		</div>
 	</div>
 	<%@include file="ordinaryhouse_popshow.jsp" %>
+	<%@include file="ordinaryhouse_popadd.jsp" %>
 	<%@include file="ordinaryhouse_module_body.jsp" %>
 	<%@include file="ordinaryhouse_module_installation.jsp" %>
 	<%@include file="ordinaryhouse_module_equipment.jsp" %>

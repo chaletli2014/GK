@@ -49,7 +49,42 @@ jQuery(document).ready(function($){
 		jQuery('#houseModuleDiv_equipment').modal('show', {backdrop: 'static'});
 	});
 	$(".module_body_detail").click(function(){
-		$("#rightBody").html("测试");
+		$(".module_detail_cursorTd").removeClass("module_detail_cursorTd");
+//		$(this).parent().css("background","red");
+		$(this).parent().attr("class","module_detail_cursorTd");
+		$("#rightBody").fadeOut();
+		$("#rightBody").fadeIn();
 	});
-	
+	$("#editHouseLink").click(function(){
+		jQuery('#newHouseDiv').modal('show', {backdrop: 'static'});
+	});
+	$("#bodyModuleType").change(function(){
+		jQuery.ajax({
+			url: basePath+"getBodyDetailsByType",
+			data:{
+				moduleType :this.value
+			},
+	        error : function() {
+	        },
+	        success : function(data) {
+	        	$('#moduleBodyDetailTable').find('tbody').html("");
+	        	var trList = data.dataList;
+	        	var tbody = "";
+	        	$.each(trList,function(n,value){
+	        		tbody = tbody + "<tr><td >"+value+"</td><td >"+value+"</td></tr>";
+	        	});
+	        	$('#moduleBodyDetailTable').find('tbody').html(tbody);
+	        }
+	    });
+	});
+	$("#newEquLink").click(function(){
+		$("#equInfo").css("width","50%");
+		$("#newEquDiv").fadeIn();
+	});
+	$("#equ_cancelBtn").click(function(){
+		$("#newEquDiv").fadeOut();
+		setTimeout(function(){
+			$("#equInfo").css("width","80%");
+		}, 300);
+	});
 });

@@ -28,4 +28,6 @@ public interface DictionaryDAO {
 	public void updateDictionaryType(GoodsDictionaryType dictionaryType) throws Exception;
 	
 	public void deleteDictionaryType(GoodsDictionaryType dictionaryType) throws Exception;
+	
+	public GoodsDictionary getDictionaryByCode(String code) throws Exception;
 }

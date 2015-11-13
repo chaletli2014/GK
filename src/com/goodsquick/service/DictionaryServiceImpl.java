@@ -105,4 +105,16 @@ public class DictionaryServiceImpl implements DictionaryService {
 		dictionaryDAO.deleteDictionaryType(dictionaryType);
 	}
 
+	@Override
+	public GoodsDictionary getDictionaryByCode(String code) throws Exception {
+		try{
+			return dictionaryDAO.getDictionaryByCode(code);
+		} catch(EmptyResultDataAccessException erd){
+            return new GoodsDictionary();
+        } catch(Exception e){
+            logger.error("fail to get the dictionary,",e);
+            return new GoodsDictionary();
+        }
+	}
+
 }

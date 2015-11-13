@@ -278,3 +278,11 @@ div.showDetailDiv .form-group{
 	font-size: 14px;
 	font-weight: bold;
 }
+
+.houseSP_brand_bg{
+	background: url(../images/brand.jpg) left top no-repeat;
+	background-size:180px 120px;
+}
+.module_detail_cursorTd{
+	background:url(../images/arrow_blue.png) no-repeat top right;
+}

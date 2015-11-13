@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">新增产品</h4>
+				<h4 class="modal-title">产品编辑</h4>
 			</div>
 			<div id="rootwizard" class="form-wizard">
 				<ul class="tabs">
@@ -32,7 +32,8 @@
 									<div class="form-group">
 										<label class="col-sm-2 control-label" for="field-1">产品名称</label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="buildingName" name="buildingName" data-validate="required" data-message-required="名称不能为空">
+											<input type="text" class="form-control" id="buildingName" name="buildingName" 
+											data-validate="required" data-message-required="名称不能为空" value="${orHouse.buildingName}">
 										</div>
 									</div>
 									<div class="form-group">

@@ -16,9 +16,9 @@ public class GoodsHouseModuleSPRowMapper implements RowMapper<GoodsHouseModuleSP
     	dbGoodsHouseModule.setModuleSPType(rs.getString("module_SP_type"));
     	dbGoodsHouseModule.setModuleSPValue(rs.getString("module_SP_value"));
     	dbGoodsHouseModule.setCreateUser(rs.getString("create_user"));
-    	dbGoodsHouseModule.setCreateDate(rs.getDate("createdate"));
+    	dbGoodsHouseModule.setCreateDate(rs.getDate("create_date"));
     	dbGoodsHouseModule.setUpdateUser(rs.getString("update_user"));
-    	dbGoodsHouseModule.setUpdateDate(rs.getDate("updatedate"));
+    	dbGoodsHouseModule.setUpdateDate(rs.getDate("update_date"));
     	dbGoodsHouseModule.setStatus(rs.getString("status"));
         return dbGoodsHouseModule;
     }

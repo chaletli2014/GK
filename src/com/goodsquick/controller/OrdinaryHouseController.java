@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
+import com.goodsquick.model.GoodsHouseModuleSP;
 import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
@@ -334,13 +335,22 @@ public class OrdinaryHouseController {
     public ModelAndView houseSPManagement(HttpServletRequest request){
     	ModelAndView view = new ModelAndView();
     	try {
-    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-    		String type = request.getParameter("type");
+    		String moduleType = request.getParameter("type");
+    		if( StringUtils.isBlank(moduleType) ){
+    			moduleType = (String)request.getSession().getAttribute("spTypeCode");
+    		}
+    		GoodsDictionary dic = dictionaryService.getDictionaryByCode(moduleType);
     		
-    		List<GoodsRelationshipProperty> houses = ordinaryHouseService.getAllHouseRelationshipByUserCode(currentUser.getLoginName());
-			view.addObject("houses", houses);
+    		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        	GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
+    		List<GoodsHouseModuleSP> houseSPList = new ArrayList<GoodsHouseModuleSP>();
+    		houseSPList = relationshipPropertyService.getSPModuleByHouseCodeAndType(orHouse.getHouseCode(), moduleType);
+    				
+    		view.addObject("houseSPList", houseSPList);
+    		view.addObject("spTypeName", dic.getDicName());
+    		view.addObject("spTypeCode", moduleType);
     		view.addObject("opened", ",serviceCustomer,");
-    		view.addObject("actived", ","+type+",");
+    		view.addObject("actived", ","+moduleType+",");
     		Object errorMessage = request.getSession().getAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);
     		if( null != errorMessage ){
     			view.addObject(GoodsQuickAttributes.WEB_ERROR_MESSAGE_HIDDEN, (String)errorMessage);
@@ -352,6 +362,65 @@ public class OrdinaryHouseController {
     	
     	view.setViewName("ep/houseSPManagement");
     	return view;
+    }
+    
+    @RequestMapping("/addHouseSP")
+    public String addHouseSP(HttpServletRequest request){
+    	try {
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        	GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
+        	
+    		String spTypeCode = request.getParameter("spTypeCode");
+    		String spName = request.getParameter("spName");
+    		
+    		GoodsHouseModuleSP houseModule = new GoodsHouseModuleSP();
+    		houseModule.setHouseCode(orHouse.getHouseCode());
+    		houseModule.setModuleSPType(spTypeCode);
+    		houseModule.setModuleSPValue(spName);
+    		houseModule.setCreateUser(currentUser.getLoginName());
+    		houseModule.setUpdateUser(currentUser.getLoginName());
+    		relationshipPropertyService.saveSPModule(houseModule);
+    		
+    		request.getSession().setAttribute("spTypeCode", spTypeCode);
+    		
+    	} catch (Exception e) {
+    		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
+    	}
+    	
+    	return "redirect:houseSPManagement";
+    }
+    
+    @RequestMapping("/getBodyDetailsByType")
+    @ResponseBody
+    public Map<String,Object> getBodyDetailsByType(HttpServletRequest request){
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	try {
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		
+    		String moduleType = request.getParameter("moduleType");
+    		List<String> dataList = new ArrayList<String>();
+    		if( "mt".equalsIgnoreCase(moduleType) ){
+    			dataList.add("1号门厅");
+    			dataList.add("2号门厅");
+    			dataList.add("3号门厅");
+    			dataList.add("4号门厅");
+    			dataList.add("5号门厅");
+    		}else if( "wq".equalsIgnoreCase(moduleType) ){
+    			dataList.add("1号外墙");
+    			dataList.add("2号外墙");
+    			dataList.add("3号外墙");
+    			dataList.add("4号外墙");
+    		}else if( "wd".equalsIgnoreCase(moduleType) ){
+    			dataList.add("整栋屋顶");
+    		}
+    		result.put("result", "Y");
+    		result.put("dataList", dataList);
+    	} catch (Exception e) {
+    		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
+    	}
+    	
+    	return result;
     }
     
     @RequestMapping("/updateRelationShipAjax")

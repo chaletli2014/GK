@@ -189,7 +189,7 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	@Override
 	public List<GoodsHouseModuleSP> getSPModuleByHouseCodeAndType(
 			String houseCode, String moduleType) {
-		String sql = "select * from tbl_goods_house_module_sp where house_code = ? and house_sp_type = ? ";
+		String sql = "select * from tbl_goods_house_module_sp where house_code = ? and module_sp_type = ? ";
 		return dataBean.getJdbcTemplate().query(sql, new Object[]{houseCode,moduleType}, new GoodsHouseModuleSPRowMapper());
 	}
 }
