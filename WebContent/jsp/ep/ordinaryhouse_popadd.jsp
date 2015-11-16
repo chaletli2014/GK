@@ -22,6 +22,7 @@
 					<span></span>
 				</div>
 				<form role="form" class="form-horizontal" action="saveordinaryhouse" method="post" id="addordinaryhouse_form">
+				<input type="hidden" id="orHouseId" name="orHouseId" value="${orHouse.id}">
 				<div class="tab-content">
 					<!-- Tabs Content -->
 					<div class="tab-pane active" id="tab_basic">

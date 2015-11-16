@@ -92,7 +92,7 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 			ordinaryHouse.setUpdateUser(userInfo.getLoginName());
 			ordinaryHouse.setUpdateDate(new Date());
 			
-			ordinaryHouseDAO.updateOrdinaryHouse(ordinaryHouse);
+			ordinaryHouseDAO.updateOrdinaryHouse("tbl_goods_ordinary_house_owned",ordinaryHouse);
 			relationshipProperty.setSourceId(orHouseId);
 		}
 		

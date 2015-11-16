@@ -142,14 +142,14 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 	}
 
 	@Override
-	public void updateOrdinaryHouse(GoodsOrdinaryHouse ordinaryHouse)
+	public void updateOrdinaryHouse(String updateTable, GoodsOrdinaryHouse ordinaryHouse)
 			throws Exception {
-		StringBuilder sql = new StringBuilder("update tbl_goods_ordinary_house ");
-        sql.append("set building_name = ?, building_status = ?, company = ?");
+		StringBuilder sql = new StringBuilder("update ").append(updateTable);
+        sql.append(" set building_name = ?, building_status = ?, company = ?");
 		sql.append(",contacter_name = ?,contacter_position = ?,contacter_telephone = ?,property_name = ?,location = ?");
         sql.append(",project_position_e = ?,project_position_w = ?,project_position_s = ?,project_position_n = ?");
         sql.append(",property_type = ?,property_type_o = ?");
-        sql.append(",start_year = ?,start_month = ?,start_date = ?,checkin_year = ?,checkin_month = ?,checkin_date = ?");
+        sql.append(",finish_year = ?,finish_month = ?,finish_date = ?,start_year = ?,start_month = ?,start_date = ?,checkin_year = ?,checkin_month = ?,checkin_date = ?");
         sql.append(",floor_space = ?,building_number = ?,has_lift_number = ?,non_lift_number = ?,lobby_number = ?,lift_lobby_number = ?,non_lift_lobby_number = ?");
         sql.append(",owner_households = ?,tenant_households = ?,delivery_households = ?,non_delivery_households = ?");
         sql.append(",covered_area = ?,period = ?,west_east_length = ?,south_north_length = ?");
@@ -172,6 +172,9 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 		params.add(ordinaryHouse.getProjectPositionN());
 		params.add(ordinaryHouse.getPropertyType());
 		params.add(ordinaryHouse.getPropertytypeO());
+		params.add(ordinaryHouse.getFinishYear());
+		params.add(ordinaryHouse.getFinishMonth());
+		params.add(ordinaryHouse.getFinishDate());
 		params.add(ordinaryHouse.getStartYear());
 		params.add(ordinaryHouse.getStartMonth());
 		params.add(ordinaryHouse.getStartDate());
