@@ -569,3 +569,12 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT
 ;
+
+
+alter table tbl_goods_ordinary_house add column finish_year int NULL DEFAULT 0;
+alter table tbl_goods_ordinary_house add column finish_month int NULL DEFAULT 0;
+alter table tbl_goods_ordinary_house add column finish_date int NULL DEFAULT 0;
+
+alter table tbl_goods_ordinary_house_owned add column finish_year int NULL DEFAULT 0;
+alter table tbl_goods_ordinary_house_owned add column finish_month int NULL DEFAULT 0;
+alter table tbl_goods_ordinary_house_owned add column finish_date int NULL DEFAULT 0;

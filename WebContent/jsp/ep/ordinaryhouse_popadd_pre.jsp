@@ -20,7 +20,7 @@
 	        </jsp:include>
 			<div class="page-title">
 				<div class="title-env">
-					<h1 class="title">产品列表</h1>
+					<h1 class="title">资品列表</h1>
 				</div>
 				<div class="breadcrumb-env">
 					<ol class="breadcrumb bc-1">
@@ -31,7 +31,7 @@
 						<a href="#" onclick="javascript:void(0)">物库管理</a>
 					</li>
 					<li class="active">
-						<strong>产品列表</strong>
+						<strong>资品列表</strong>
 					</li>
 					</ol>
 				</div>
@@ -42,14 +42,14 @@
 						<div class="modal-dialog" style="width:70%">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h4 class="modal-title">选择产品类型</h4>
+									<h4 class="modal-title">选择资品类型</h4>
 								</div>
 								<div style="margin:10px;padding:20px;height:300px;">
 									<div style="float:left;" class="product_select_pre">
-										<a class="product_link" title="newProductCategory1">添加实物产品</a>
+										<a class="product_link" title="newProductCategory1">添加实物资品</a>
 									</div>
 									<div style="float:right;" class="product_select_pre">
-										<a class="product_link" title="newProductCategory2">添加非实物产品</a>
+										<a class="product_link" title="newProductCategory2">添加非实物资品</a>
 									</div>
 								</div>
 							</div>

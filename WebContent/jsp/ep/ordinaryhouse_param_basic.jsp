@@ -26,6 +26,19 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label" for="startDate">竣工时间</label>
+				<div class="col-sm-8">
+					<div class="input-group">
+						<input type="text" class="form-control" id="finishYear" name="finishYear" value="${orHouse.finishYear}">
+						<span class="input-group-addon">年</span>
+						<input type="text" class="form-control" id="finishMonth" name="finishMonth" value="${orHouse.finishMonth}">
+						<span class="input-group-addon">月</span>
+						<input type="text" class="form-control" id="finishDate" name="finishDate" value="${orHouse.finishDate}">
+						<span class="input-group-addon">日</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label" for="startDate">开盘时间</label>
 				<div class="col-sm-8">
 					<div class="input-group">

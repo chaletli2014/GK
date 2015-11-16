@@ -2,16 +2,24 @@ package com.goodsquick.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.GoodsRepository;
 import com.goodsquick.model.WebUserInfo;
+import com.goodsquick.service.RepositoryService;
 import com.goodsquick.utils.GoodsQuickAttributes;
 
 @Controller
 public class IndexController {
+	
+    @Autowired
+    @Qualifier("repositoryService")
+    private RepositoryService repositoryService;
 
     @RequestMapping("/index")
     public ModelAndView login(HttpServletRequest request){
@@ -28,15 +36,21 @@ public class IndexController {
         	}
         }
         
-        Object repositoryCode = request.getParameter(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        String repositoryCode = request.getParameter(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
         if( null == repositoryCode ){
-        	repositoryCode = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        	repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
         }
         if( null == repositoryCode ){
-        	request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, currentUser.getLoginName()+"_0");
-        }else{
-        	request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, repositoryCode);
+        	repositoryCode = currentUser.getLoginName()+"_0";
         }
+        request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, repositoryCode);
+        
+        try {
+			GoodsRepository currentRepository = repositoryService.getRepositoryByCode(repositoryCode);
+			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ, currentRepository);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         
         view.setViewName(viewName);
         return view;

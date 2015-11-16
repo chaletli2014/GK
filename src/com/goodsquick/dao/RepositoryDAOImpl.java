@@ -82,4 +82,11 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 		GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
 	}
 
+	@Override
+	public GoodsRepository getRepositoryByCode(String repositoryCode)
+			throws Exception {
+		String sql = "select gr.* from tbl_goods_repository gr where gr.status='1' and gr.repository_code = ? ";
+		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{repositoryCode}, new GoodsRepositoryRowMapper());
+	}
+
 }

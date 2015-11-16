@@ -4,12 +4,12 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">新增服务类产品</h4>
+				<h4 class="modal-title">新增服务类资品</h4>
 			</div>
 			<div id="rootwizard" class="form-wizard">
 				<ul class="tabs">
 					<li class="active">
-						<a href="#tab1" data-toggle="tab">定义产品名称</a>
+						<a href="#tab1" data-toggle="tab">定义资品名称</a>
 					</li>
 					<li>
 						<a href="#tab2" data-toggle="tab">填写基本参数</a>
@@ -27,7 +27,7 @@
 								<div class="label label-warning">注意：以下内容为必填项，若为空，无法完成注册</div>
 								<div class="panel-body">
 									<div class="form-group">
-										<label class="col-sm-2 control-label" for="field-1">产品名称</label>
+										<label class="col-sm-2 control-label" for="field-1">资品名称</label>
 										<div class="col-sm-6">
 											<input type="text" class="form-control" id="serviceName" name="serviceName" data-validate="required" data-message-required="名称不能为空">
 										</div>

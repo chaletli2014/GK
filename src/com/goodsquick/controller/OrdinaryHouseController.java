@@ -575,6 +575,9 @@ public class OrdinaryHouseController {
     	ordinaryHouse.setProjectPositionN(request.getParameter("projectPositionN"));
     	ordinaryHouse.setPropertyType(request.getParameter("propertyType"));
     	ordinaryHouse.setPropertytypeO(request.getParameter("propertytypeO"));
+    	ordinaryHouse.setFinishYear(GoodsQuickUtils.parseIntegerFromString(request.getParameter("finishYear")));
+    	ordinaryHouse.setFinishMonth(GoodsQuickUtils.parseIntegerFromString(request.getParameter("finishMonth")));
+    	ordinaryHouse.setFinishDate(GoodsQuickUtils.parseIntegerFromString(request.getParameter("finishDate")));
     	ordinaryHouse.setStartYear(GoodsQuickUtils.parseIntegerFromString(request.getParameter("startYear")));
     	ordinaryHouse.setStartMonth(GoodsQuickUtils.parseIntegerFromString(request.getParameter("startMonth")));
     	ordinaryHouse.setStartDate(GoodsQuickUtils.parseIntegerFromString(request.getParameter("startDate")));

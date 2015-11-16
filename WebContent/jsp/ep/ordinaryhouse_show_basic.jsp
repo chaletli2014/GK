@@ -24,6 +24,16 @@
 				</td>
 			</tr>
 			<tr>
+				<td class="show_tdTitle">竣工时间</td>
+				<td>
+					<div class="input-group">
+						<div id="show_finishYear" style="display: inline;"></div>
+						<div id="show_finishMonth" style="display: inline;"></div>
+						<div id="show_finishDate" style="display: inline;"></div>
+					</div>
+				</td>
+			</tr>
+			<tr>
 				<td class="show_tdTitle">开盘时间</td>
 				<td>
 					<div class="input-group">

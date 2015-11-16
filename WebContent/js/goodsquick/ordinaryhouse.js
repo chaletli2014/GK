@@ -20,6 +20,9 @@ jQuery(document).ready(function($){
 					$("#show_projectPositionW").html(obj.projectPositionW);
 					$("#show_projectPositionS").html(obj.projectPositionS);
 					$("#show_projectPositionN").html(obj.projectPositionN);
+					$("#show_finishYear").html(obj.finishYear+" 年");
+					$("#show_finishMonth").html(obj.finishMonth+" 月");
+					$("#show_finishDate").html(obj.finishDate+" 日");
 					$("#show_startYear").html(obj.startYear+" 年");
 					$("#show_startMonth").html(obj.startMonth+" 月");
 					$("#show_startDate").html(obj.startDate+" 日");

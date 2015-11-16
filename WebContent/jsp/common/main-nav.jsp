@@ -1,3 +1,4 @@
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.apache.cxf.common.util.CollectionUtils"%>
 <%@page import="com.goodsquick.utils.GoodsQuickAttributes"%>
@@ -5,13 +6,23 @@
 <%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@page import="com.goodsquick.model.WebUserInfo"%>
 <%@page import="java.util.List"%>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	WebUserInfo userInfo = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+	
 	List<GoodsRepository> reposigoryList = new ArrayList<GoodsRepository>();
+	GoodsRepository currentRepository = new GoodsRepository();
+	String repositoryGoodsName = "资品";
 	try{
 		reposigoryList = (List<GoodsRepository>)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_LIST);
+		Object repository = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
+		if( null != repository ){
+			currentRepository = (GoodsRepository)repository;
+			if( "2".equalsIgnoreCase(currentRepository.getRepositoryType()) ){
+				repositoryGoodsName = "货品";
+			}else if( "3".equalsIgnoreCase(currentRepository.getRepositoryType()) ){
+				repositoryGoodsName = "产品";
+			}
+		}
 	}catch(Exception e){}
 %>
 <nav class="navbar user-info-navbar" role="navigation">
@@ -91,7 +102,7 @@
 				<li>
 					<a href="javascript:void(0)" id="nav_newrepository">
 						<i class="fa-plus"></i>
-						新增资品库
+						新增物库
 					</a>
 				</li>
 				<li class="last">

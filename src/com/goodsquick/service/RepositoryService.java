@@ -11,5 +11,6 @@ public interface RepositoryService {
 
 	public List<GoodsRepository> saveOrUpdateRepository(HttpServletRequest request, GoodsRepository goodsRepository) throws Exception;
 	public List<GoodsRepository> getRepositoryByLoginName(String loginName) throws Exception;
+	public GoodsRepository getRepositoryByCode(String repositoryCode) throws Exception;
 	public void updateRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 }

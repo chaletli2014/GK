@@ -71,4 +71,16 @@ public class RepositoryServiceImpl implements RepositoryService {
 
 	}
 
+	@Override
+	public GoodsRepository getRepositoryByCode(String repositoryCode)
+			throws Exception {
+		try{
+			return repositoryDAO.getRepositoryByCode(repositoryCode);
+		} catch(EmptyResultDataAccessException erd){
+            return new GoodsRepository();
+        } catch(Exception e){
+            return new GoodsRepository();
+        }
+	}
+
 }

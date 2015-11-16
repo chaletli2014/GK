@@ -6,7 +6,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function($){
 	if( $("#orHouse").val() == null || $("#orHouse").val() == '' ){
-		jConfirm("您还没有添加任何产品，是否现在添加？","信息",function(r) {
+		jConfirm("您还没有添加任何资品，是否现在添加？","信息",function(r) {
 	    	if(r){
 	    		window.location.href="<%=basePath%>newProductPre";
 	    	}
@@ -38,7 +38,7 @@ jQuery(document).ready(function($){
 						<a href="#" onclick="javascript:void(0)">物库管理</a>
 					</li>
 					<li class="active">
-						<strong>产品信息</strong>
+						<strong>资品信息</strong>
 					</li>
 					</ol>
 				</div>
@@ -63,13 +63,13 @@ jQuery(document).ready(function($){
 					<input type="hidden" id="orHouse" value="${orHouse}"/>
 					<c:if test="${null==orHouse}">
 						<div>
-							<span>您还没有添加任何产品,赶紧添加吧！</span>
+							<span>您还没有添加任何资品,赶紧添加吧！</span>
 						</div>
 						<div>
 							<a href="<%=basePath%>newProductPre">
 								<button class="btn btn-purple btn-icon btn-icon-standalone">
 									<i class="fa-cog"></i>
-									<span>新增产品</span>
+									<span>新增资品</span>
 								</button>
 							</a>
 						</div>
@@ -78,16 +78,16 @@ jQuery(document).ready(function($){
 						<div style="width:50%;float:left;">
 							<blockquote class="blockquote blockquote-info" style="height:318px;">
 								<p>
-									<strong>产品信息</strong>&nbsp;&nbsp;
+									<strong>资品信息</strong>&nbsp;&nbsp;
 									<a href="javascript:void(0)" id="editHouseLink">
 										<i class="fa-edit"></i>
 									</a>
 								</p>
 								<p>
-									产品名称：<a class="houseNameLink" tabindex="${orHouse.id}" href="javascript:void(0)" title="点击查看明细">${orHouse.buildingName}</a>
+									资品名称：<a class="houseNameLink" tabindex="${orHouse.id}" href="javascript:void(0)" title="点击查看明细">${orHouse.buildingName}</a>
 								</p>
 								<p>
-									产品类型：<span>${orHouse.propertyType}</span>
+									资品类型：<span>${orHouse.propertyType}</span>
 								</p>
 								<p>
 									坐落位置：<span>${orHouse.location}</span>
@@ -96,11 +96,11 @@ jQuery(document).ready(function($){
 									所属地域：<span>${orHouse.province} - ${orHouse.city}</span>
 								</p>
 								<p style="display: inline-flex;">
-									开盘时间：
+									竣工时间：
 									<span class="input-group col-sm-9" style="text-align: center;">
-										<span>${orHouse.startYear}</span><span class="input-group-addon">年</span>
-										<span>${orHouse.startYear}</span><span class="input-group-addon">月</span>
-										<span>${orHouse.startDate}</span><span class="input-group-addon">日</span>
+										<span>${orHouse.finishYear}</span><span class="input-group-addon">年</span>
+										<span>${orHouse.finishYear}</span><span class="input-group-addon">月</span>
+										<span>${orHouse.finishDate}</span><span class="input-group-addon">日</span>
 									</span>
 								</p>
 								<p>

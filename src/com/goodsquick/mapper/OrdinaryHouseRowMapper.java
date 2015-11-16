@@ -29,6 +29,9 @@ public class OrdinaryHouseRowMapper implements RowMapper<GoodsOrdinaryHouse>{
     	dbGoodsOrHouse.setProjectPositionN(rs.getString("project_position_n"));
     	dbGoodsOrHouse.setPropertyType(rs.getString("property_type"));
     	dbGoodsOrHouse.setPropertytypeO(rs.getString("property_type_o"));
+    	dbGoodsOrHouse.setFinishYear(rs.getInt("finish_year"));
+    	dbGoodsOrHouse.setFinishMonth(rs.getInt("finish_month"));
+    	dbGoodsOrHouse.setFinishDate(rs.getInt("finish_date"));
     	dbGoodsOrHouse.setStartYear(rs.getInt("start_year"));
     	dbGoodsOrHouse.setStartMonth(rs.getInt("start_month"));
     	dbGoodsOrHouse.setStartDate(rs.getInt("start_date"));

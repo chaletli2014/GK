@@ -93,6 +93,13 @@ public class GoodsOrdinaryHouse {
 	private String propertytypeO;
 	
 	/**
+	 * 竣工时间
+	 */
+	private int finishYear;
+	private int finishMonth;
+	private int finishDate;
+	
+	/**
 	 * 开盘时间
 	 */
 	private int startYear;
@@ -498,6 +505,24 @@ public class GoodsOrdinaryHouse {
 	}
 	public void setRepositoryCode(String repositoryCode) {
 		this.repositoryCode = repositoryCode;
+	}
+	public int getFinishYear() {
+		return finishYear;
+	}
+	public void setFinishYear(int finishYear) {
+		this.finishYear = finishYear;
+	}
+	public int getFinishMonth() {
+		return finishMonth;
+	}
+	public void setFinishMonth(int finishMonth) {
+		this.finishMonth = finishMonth;
+	}
+	public int getFinishDate() {
+		return finishDate;
+	}
+	public void setFinishDate(int finishDate) {
+		this.finishDate = finishDate;
 	}
 	
 }

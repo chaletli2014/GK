@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">产品信息</h4>
+				<h4 class="modal-title">资品信息</h4>
 			</div>
 			<div id="rootwizard" class="form-wizard">
 				<ul class="tabs">
@@ -33,7 +33,7 @@
 											<td id="show_propertyType">&nbsp;</td>
 										</tr>
 										<tr>
-											<td class="show_tdTitle">产品名称</td>
+											<td class="show_tdTitle">资品名称</td>
 											<td id="show_buildingName">&nbsp;</td>
 										</tr>
 										<tr>
