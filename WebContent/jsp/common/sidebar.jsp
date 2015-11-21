@@ -124,6 +124,12 @@
 							<span class="title">组件商管理</span>
 						</a>
 					</li>
+					<li <% if( actived.indexOf(",trusteeshipService,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=trusteeshipService">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">托管人管理</span>
+						</a>
+					</li>
 					<li <% if( actived.indexOf(",brandService,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=brandService">
 							<i class="entypo-flow-parallel"></i>
@@ -164,12 +170,6 @@
 						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=ownerService">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">所有人管理</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",trusteeshipService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=trusteeshipService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">托管人管理</span>
 						</a>
 					</li>
 					<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>

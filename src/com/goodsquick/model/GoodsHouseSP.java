@@ -1,12 +1,15 @@
 package com.goodsquick.model;
 
-public class GoodsHouseModuleSP extends BaseObject{
+public class GoodsHouseSP extends BaseObject{
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 6061165700227655805L;
 	private int id;
 	private String houseCode;
-	private String moduleType;
-	private String moduleSPName;
+	private String moduleSPType;
+	private String moduleSPValue;
 	private String status;
 	private String remark;
 	
@@ -29,23 +32,23 @@ public class GoodsHouseModuleSP extends BaseObject{
 	public void setHouseCode(String houseCode) {
 		this.houseCode = houseCode;
 	}
+	public String getModuleSPType() {
+		return moduleSPType;
+	}
+	public void setModuleSPType(String moduleSPType) {
+		this.moduleSPType = moduleSPType;
+	}
+	public String getModuleSPValue() {
+		return moduleSPValue;
+	}
+	public void setModuleSPValue(String moduleSPValue) {
+		this.moduleSPValue = moduleSPValue;
+	}
 	public String getRemark() {
 		return remark;
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-	public String getModuleType() {
-		return moduleType;
-	}
-	public void setModuleType(String moduleType) {
-		this.moduleType = moduleType;
-	}
-	public String getModuleSPName() {
-		return moduleSPName;
-	}
-	public void setModuleSPName(String moduleSPName) {
-		this.moduleSPName = moduleSPName;
 	}
 	
 }

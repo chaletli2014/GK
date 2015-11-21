@@ -7,17 +7,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.goodsquick.mapper.GoodsHouseModuleSPRowMapper;
+import com.goodsquick.mapper.GoodsHouseSP2ndRowMapper;
+import com.goodsquick.mapper.GoodsHouseSPRowMapper;
 import com.goodsquick.mapper.GoodsRelationshipPropertyRowMapper;
 import com.goodsquick.model.GoodsHouseModuleSP;
+import com.goodsquick.model.GoodsHouseSP;
+import com.goodsquick.model.GoodsHouseSP2nd;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.utils.GoodsJDBCTemplate;
-import com.goodsquick.utils.GoodsQuickUtils;
 
 @Repository("relationshipPropertyDAO")
 public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements RelationshipPropertyDAO {
@@ -166,11 +170,11 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	}
 
 	@Override
-	public void saveSPModule(GoodsHouseModuleSP houseModule) {
+	public void saveSPModule(GoodsHouseSP houseModule) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("insert into tbl_goods_house_module_sp(id,house_code,module_sp_type,module_sp_value");
-        sql.append(",create_date,create_user,update_date,update_user,status) ");
-		sql.append("values(null,?,?,?,now(),?,now(),?,'1')");
+		sql.append("insert into tbl_goods_house_sp(id,house_code,module_sp_type,module_sp_value");
+        sql.append(",create_date,create_user,update_date,update_user,status,remark) ");
+		sql.append("values(null,?,?,?,now(),?,now(),?,'1',?)");
 		
 		List<String> params = new ArrayList<String>();
 		params.add(houseModule.getHouseCode());
@@ -178,18 +182,135 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		params.add(houseModule.getModuleSPValue());
 		params.add(houseModule.getCreateUser());
 		params.add(houseModule.getUpdateUser());
+		params.add(houseModule.getRemark());
 		GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
+	}
+	
+	@Override
+	public void updateSPModule(GoodsHouseSP houseModule) {
+		StringBuilder sql = new StringBuilder(150);
+		sql.append("update tbl_goods_house_sp set module_sp_value = ?, remark = ?, update_date = now(), update_user = ? ");
+		sql.append("where id = ? ");
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(houseModule.getModuleSPValue());
+		params.add(houseModule.getRemark());
+		params.add(houseModule.getUpdateUser());
+		params.add(houseModule.getId());
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
 	}
 
 	@Override
-	public void removeSPModule(GoodsHouseModuleSP houseModule) {
+	public void removeSPModule(GoodsHouseSP houseModule) {
+		dataBean.getJdbcTemplate().update("update tbl_goods_house_sp set status = '0' where id = ? ",houseModule.getId());
+	}
+
+	@Override
+	public List<GoodsHouseSP> getSPModuleByHouseCodeAndType(
+			String houseCode, String moduleType) {
+		String sql = "select * from tbl_goods_house_sp where house_code = ? and module_sp_type = ? ";
+		return dataBean.getJdbcTemplate().query(sql, new Object[]{houseCode,moduleType}, new GoodsHouseSPRowMapper());
+	}
+	
+	@Override
+	public List<GoodsHouseSP2nd> get2ndSPModuleByHouseCodeAndType(
+			String houseCode, String moduleType) {
+		String sql = "select * from tbl_goods_house_sp_2nd where house_code = ? and sp_type = ? ";
+		return dataBean.getJdbcTemplate().query(sql, new Object[]{houseCode,moduleType}, new GoodsHouseSP2ndRowMapper());
+	}
+	
+
+	@Override
+	public void saveSPModule2nd(GoodsHouseSP2nd houseModule) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("insert into tbl_goods_house_sp_2nd(id,house_code,sp_type,module_type,sp_name");
+        sql.append(",create_date,create_user,update_date,update_user,status,remark) ");
+		sql.append("values(null,?,?,?,?,now(),?,now(),?,'1',?)");
+		
+		List<String> params = new ArrayList<String>();
+		params.add(houseModule.getHouseCode());
+		params.add(houseModule.getSpType());
+		params.add(houseModule.getModuleType());
+		params.add(houseModule.getSpName());
+		params.add(houseModule.getCreateUser());
+		params.add(houseModule.getUpdateUser());
+		params.add(houseModule.getRemark());
+		GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
+	}
+	
+
+	@Override
+	public void updateSPModule2nd(GoodsHouseSP2nd houseModule) {
+		StringBuilder sql = new StringBuilder(150);
+		sql.append("update tbl_goods_house_sp_2nd set module_sp_value = ?, remark = ?, update_date = now(), update_user = ? ");
+		sql.append("where id = ? ");
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(houseModule.getRemark());
+		params.add(houseModule.getUpdateUser());
+		params.add(houseModule.getId());
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
+	}
+
+	@Override
+	public void removeSPModule2nd(GoodsHouseSP2nd houseModule) {
+		dataBean.getJdbcTemplate().update("update tbl_goods_house_sp_2nd set status = '0' where id = ? ",houseModule.getId());
+	}
+	
+	@Override
+	public List<GoodsHouseModuleSP> getModuleSPByHouseCodeAndType(
+			String houseCode, String moduleType) {
+		StringBuilder sql = new StringBuilder(100);
+		List<String> params = new ArrayList<String>();
+		
+		sql.append(" select * from tbl_goods_house_module_sp ");
+		sql.append(" where house_code = ? ");
+		
+		params.add(houseCode);
+		
+		if( !StringUtils.isBlank(moduleType) ){
+			sql.append("and module_type = ? ");
+			params.add(moduleType);
+		}
+		return dataBean.getJdbcTemplate().query(sql.toString(), params.toArray(), new GoodsHouseModuleSPRowMapper());
+	}
+	
+
+	@Override
+	public void saveModuleSP(GoodsHouseModuleSP houseModule) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("insert into tbl_goods_house_module_sp(id,house_code,module_type,sp_name");
+        sql.append(",create_date,create_user,update_date,update_user,status,remark) ");
+		sql.append("values(null,?,?,?,now(),?,now(),?,'1',?)");
+		
+		List<String> params = new ArrayList<String>();
+		params.add(houseModule.getHouseCode());
+		params.add(houseModule.getModuleType());
+		params.add(houseModule.getModuleSPName());
+		params.add(houseModule.getCreateUser());
+		params.add(houseModule.getUpdateUser());
+		params.add(houseModule.getRemark());
+		GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
+	}
+	
+
+	@Override
+	public void updateModuleSP(GoodsHouseModuleSP houseModule) {
+		StringBuilder sql = new StringBuilder(150);
+		sql.append("update tbl_goods_house_module_sp set sp_name = ?, remark = ?, update_date = now(), update_user = ? ");
+		sql.append("where id = ? ");
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(houseModule.getModuleSPName());
+		params.add(houseModule.getRemark());
+		params.add(houseModule.getUpdateUser());
+		params.add(houseModule.getId());
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
+	}
+	
+	@Override
+	public void removeModuleSP(GoodsHouseModuleSP houseModule) {
 		dataBean.getJdbcTemplate().update("update tbl_goods_house_module_sp set status = '0' where id = ? ",houseModule.getId());
 	}
 
-	@Override
-	public List<GoodsHouseModuleSP> getSPModuleByHouseCodeAndType(
-			String houseCode, String moduleType) {
-		String sql = "select * from tbl_goods_house_module_sp where house_code = ? and module_sp_type = ? ";
-		return dataBean.getJdbcTemplate().query(sql, new Object[]{houseCode,moduleType}, new GoodsHouseModuleSPRowMapper());
-	}
 }

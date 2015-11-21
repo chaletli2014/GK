@@ -2,19 +2,18 @@ package com.goodsquick.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.jdbc.core.RowMapper;
+import com.goodsquick.model.GoodsHouseSP2nd;
 
-import com.goodsquick.model.GoodsHouseModuleSP;
-
-public class GoodsHouseModuleSPRowMapper implements RowMapper<GoodsHouseModuleSP>{
+public class GoodsHouseSP2ndRowMapper implements RowMapper<GoodsHouseSP2nd>{
     @Override
-    public GoodsHouseModuleSP mapRow(ResultSet rs, int i) throws SQLException {
-    	GoodsHouseModuleSP dbGoodsHouseModule = new GoodsHouseModuleSP();
+    public GoodsHouseSP2nd mapRow(ResultSet rs, int i) throws SQLException {
+    	GoodsHouseSP2nd dbGoodsHouseModule = new GoodsHouseSP2nd();
     	dbGoodsHouseModule.setId(rs.getInt("id"));
     	dbGoodsHouseModule.setHouseCode(rs.getString("house_code"));
+    	dbGoodsHouseModule.setSpType(rs.getString("sp_type"));
     	dbGoodsHouseModule.setModuleType(rs.getString("module_type"));
-    	dbGoodsHouseModule.setModuleSPName(rs.getString("sp_name"));
+    	dbGoodsHouseModule.setSpName(rs.getString("sp_name"));
     	dbGoodsHouseModule.setCreateUser(rs.getString("create_user"));
     	dbGoodsHouseModule.setCreateDate(rs.getDate("create_date"));
     	dbGoodsHouseModule.setUpdateUser(rs.getString("update_user"));

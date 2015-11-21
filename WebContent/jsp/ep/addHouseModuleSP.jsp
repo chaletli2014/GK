@@ -4,17 +4,24 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">新增${spTypeName}</h4>
+				<h4 class="modal-title">${spTypeName}编辑</h4>
 			</div>
-			<form role="form" class="form-horizontal" action="addHouseSP" method="post" id="addordinaryhouse_form">
+			<form role="form" class="form-horizontal" action="saveOrUpdateHouseSP" method="post" id="addordinaryhouse_form">
 			<input type="hidden" name="spTypeCode" value="${spTypeCode}">
+			<input type="hidden" name="houseSPId" value="${houseSP.id}">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="form-group">
-							<label class="col-sm-3 control-label" for="field-1">名称</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" id="spName" name="spName">
+							<label class="col-sm-2 control-label" for="spName">名称</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="spName" name="spName" value="${houseSP.moduleSPValue}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="remark">备注</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="remark" name="remark" value="${houseSP.remark}">
 							</div>
 						</div>
 					</div>

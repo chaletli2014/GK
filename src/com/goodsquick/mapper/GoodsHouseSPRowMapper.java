@@ -5,16 +5,16 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.goodsquick.model.GoodsHouseModuleSP;
+import com.goodsquick.model.GoodsHouseSP;
 
-public class GoodsHouseModuleSPRowMapper implements RowMapper<GoodsHouseModuleSP>{
+public class GoodsHouseSPRowMapper implements RowMapper<GoodsHouseSP>{
     @Override
-    public GoodsHouseModuleSP mapRow(ResultSet rs, int i) throws SQLException {
-    	GoodsHouseModuleSP dbGoodsHouseModule = new GoodsHouseModuleSP();
+    public GoodsHouseSP mapRow(ResultSet rs, int i) throws SQLException {
+    	GoodsHouseSP dbGoodsHouseModule = new GoodsHouseSP();
     	dbGoodsHouseModule.setId(rs.getInt("id"));
     	dbGoodsHouseModule.setHouseCode(rs.getString("house_code"));
-    	dbGoodsHouseModule.setModuleType(rs.getString("module_type"));
-    	dbGoodsHouseModule.setModuleSPName(rs.getString("sp_name"));
+    	dbGoodsHouseModule.setModuleSPType(rs.getString("module_SP_type"));
+    	dbGoodsHouseModule.setModuleSPValue(rs.getString("module_SP_value"));
     	dbGoodsHouseModule.setCreateUser(rs.getString("create_user"));
     	dbGoodsHouseModule.setCreateDate(rs.getDate("create_date"));
     	dbGoodsHouseModule.setUpdateUser(rs.getString("update_user"));

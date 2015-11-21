@@ -40,4 +40,13 @@ jQuery(document).ready(function($){
 			}
 		});
 	});
+	$("#addNewSP").click(function(){
+		jQuery('#new_module_sp_div').modal('show', {backdrop: 'static'});
+	});
+	$("#editSpLink").click(function(){
+		jQuery('#new_module_sp_div').modal('show', {backdrop: 'static'});
+	});
+	$("#newSecondSP").click(function(){
+		jQuery('#new_second_module_sp_div').modal('show', {backdrop: 'static'});
+	});
 });

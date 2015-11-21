@@ -1,13 +1,38 @@
 package com.goodsquick.model;
 
-public class GoodsHouseModuleSP extends BaseObject{
+/**
+ * 二级服务商
+ */
+public class GoodsHouseSP2nd extends BaseObject{
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 6061165700227655805L;
 	private int id;
+	/**
+	 * 不动产编码
+	 */
 	private String houseCode;
+	/**
+	 * 二级服务商分类，如二级托管人
+	 */
+	private String spType;
+	/**
+	 * 托管组件类别，如电梯
+	 */
 	private String moduleType;
-	private String moduleSPName;
+	/**
+	 * 托管人名称
+	 */
+	private String spName;
+	/**
+	 * 状态
+	 */
 	private String status;
+	/**
+	 * 备注
+	 */
 	private String remark;
 	
 	public int getId() {
@@ -41,11 +66,17 @@ public class GoodsHouseModuleSP extends BaseObject{
 	public void setModuleType(String moduleType) {
 		this.moduleType = moduleType;
 	}
-	public String getModuleSPName() {
-		return moduleSPName;
+	public String getSpName() {
+		return spName;
 	}
-	public void setModuleSPName(String moduleSPName) {
-		this.moduleSPName = moduleSPName;
+	public void setSpName(String spName) {
+		this.spName = spName;
+	}
+	public String getSpType() {
+		return spType;
+	}
+	public void setSpType(String spType) {
+		this.spType = spType;
 	}
 	
 }

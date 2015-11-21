@@ -13,6 +13,8 @@ import com.goodsquick.dao.GoodsConfigurationDAO;
 import com.goodsquick.dao.RelationshipPropertyDAO;
 import com.goodsquick.model.GoodsConfiguration;
 import com.goodsquick.model.GoodsHouseModuleSP;
+import com.goodsquick.model.GoodsHouseSP;
+import com.goodsquick.model.GoodsHouseSP2nd;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.WebUserInfo;
 
@@ -91,20 +93,75 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 	}
 
 	@Override
-	public void saveSPModule(GoodsHouseModuleSP houseModule) {
-		relationshipPropertyDAO.saveSPModule(houseModule);
+	public void saveSPModule(GoodsHouseSP houseModule) {
+		if( houseModule.getId() != 0 ){
+			relationshipPropertyDAO.updateSPModule(houseModule);
+		}else{
+			relationshipPropertyDAO.saveSPModule(houseModule);
+		}
 	}
 
 	@Override
-	public void removeSPModule(GoodsHouseModuleSP houseModule) {
+	public void removeSPModule(GoodsHouseSP houseModule) {
 		relationshipPropertyDAO.removeSPModule(houseModule);
 	}
 
 	@Override
-	public List<GoodsHouseModuleSP> getSPModuleByHouseCodeAndType(String houseCode,
+	public List<GoodsHouseSP> getSPModuleByHouseCodeAndType(String houseCode,
 			String moduleType) {
 		try{
 			return relationshipPropertyDAO.getSPModuleByHouseCodeAndType(houseCode,moduleType);
+		} catch(EmptyResultDataAccessException erd){
+			return null;
+		} catch(Exception e){
+			logger.error(String.format("fail to get the house module,"),e);
+			return null;
+		}
+	}
+	
+	@Override
+	public List<GoodsHouseSP2nd> get2ndSPModuleByHouseCodeAndType(String houseCode,
+			String moduleType) {
+		try{
+			return relationshipPropertyDAO.get2ndSPModuleByHouseCodeAndType(houseCode,moduleType);
+		} catch(EmptyResultDataAccessException erd){
+			return null;
+		} catch(Exception e){
+			logger.error(String.format("fail to get the house module,"),e);
+			return null;
+		}
+	}
+
+	@Override
+	public void saveSPModule2nd(GoodsHouseSP2nd houseModule) {
+		relationshipPropertyDAO.saveSPModule2nd(houseModule);
+	}
+
+	@Override
+	public void removeSPModule2nd(GoodsHouseSP2nd houseModule) {
+		relationshipPropertyDAO.removeSPModule2nd(houseModule);
+	}
+	
+
+	@Override
+	public void saveModuleSP(GoodsHouseModuleSP houseModule) {
+		if( houseModule.getId() != 0 ){
+			relationshipPropertyDAO.updateModuleSP(houseModule);
+		}else{
+			relationshipPropertyDAO.saveModuleSP(houseModule);
+		}
+	}
+
+	@Override
+	public void removeModuleSP(GoodsHouseModuleSP houseModule) {
+		relationshipPropertyDAO.removeModuleSP(houseModule);
+	}
+
+	@Override
+	public List<GoodsHouseModuleSP> getModuleSPByHouseCodeAndType(String houseCode,
+			String moduleType) {
+		try{
+			return relationshipPropertyDAO.getModuleSPByHouseCodeAndType(houseCode,moduleType);
 		} catch(EmptyResultDataAccessException erd){
 			return null;
 		} catch(Exception e){

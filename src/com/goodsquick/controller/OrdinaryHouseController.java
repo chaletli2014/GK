@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.cxf.common.util.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,7 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
-import com.goodsquick.model.GoodsHouseModuleSP;
+import com.goodsquick.model.GoodsHouseSP;
+import com.goodsquick.model.GoodsHouseSP2nd;
 import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
@@ -342,11 +344,27 @@ public class OrdinaryHouseController {
     		GoodsDictionary dic = dictionaryService.getDictionaryByCode(moduleType);
     		
     		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+    		List<GoodsHouseSP> houseSPList = new ArrayList<GoodsHouseSP>();
+    		List<GoodsHouseSP2nd> sp2nd = new ArrayList<GoodsHouseSP2nd>();
+    		
         	GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
-    		List<GoodsHouseModuleSP> houseSPList = new ArrayList<GoodsHouseModuleSP>();
-    		houseSPList = relationshipPropertyService.getSPModuleByHouseCodeAndType(orHouse.getHouseCode(), moduleType);
+        	if( null != orHouse ){
+        		houseSPList = relationshipPropertyService.getSPModuleByHouseCodeAndType(orHouse.getHouseCode(), moduleType);
+        		sp2nd = relationshipPropertyService.get2ndSPModuleByHouseCodeAndType(orHouse.getHouseCode(), moduleType);
+        	}
+    		
+        	if( "trusteeshipService".equalsIgnoreCase(moduleType) ){
+        		if( !CollectionUtils.isEmpty(houseSPList) ){
+        			view.addObject("houseSP", houseSPList.get(0));
+        		}
+        		view.addObject("sp2ndList", sp2nd);
+    			view.setViewName("sp/houseSPManagement");
+    		}else{
+    			view.addObject("houseSPList", houseSPList);
+    			
+    			view.setViewName("ep/houseSPManagement");
+    		}
     				
-    		view.addObject("houseSPList", houseSPList);
     		view.addObject("spTypeName", dic.getDicName());
     		view.addObject("spTypeCode", moduleType);
     		view.addObject("opened", ",serviceCustomer,");
@@ -360,12 +378,11 @@ public class OrdinaryHouseController {
     		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
     	}
     	
-    	view.setViewName("ep/houseSPManagement");
     	return view;
     }
     
-    @RequestMapping("/addHouseSP")
-    public String addHouseSP(HttpServletRequest request){
+    @RequestMapping("/saveOrUpdateHouseSP")
+    public String saveOrUpdateHouseSP(HttpServletRequest request){
     	try {
     		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
     		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
@@ -373,14 +390,50 @@ public class OrdinaryHouseController {
         	
     		String spTypeCode = request.getParameter("spTypeCode");
     		String spName = request.getParameter("spName");
+    		String remark = request.getParameter("remark");
+    		String houseSPId = request.getParameter("houseSPId");
     		
-    		GoodsHouseModuleSP houseModule = new GoodsHouseModuleSP();
+    		GoodsHouseSP houseModule = new GoodsHouseSP();
+    		houseModule.setId(GoodsQuickUtils.parseIntegerFromString(houseSPId));
     		houseModule.setHouseCode(orHouse.getHouseCode());
     		houseModule.setModuleSPType(spTypeCode);
     		houseModule.setModuleSPValue(spName);
     		houseModule.setCreateUser(currentUser.getLoginName());
     		houseModule.setUpdateUser(currentUser.getLoginName());
+    		houseModule.setRemark(remark);
     		relationshipPropertyService.saveSPModule(houseModule);
+    		
+    		request.getSession().setAttribute("spTypeCode", spTypeCode);
+    		
+    	} catch (Exception e) {
+    		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
+    	}
+    	
+    	return "redirect:houseSPManagement";
+    }
+    
+    @RequestMapping("/saveOrUpdateSecondHouseSP")
+    public String saveOrUpdateSecondHouseSP(HttpServletRequest request){
+    	try {
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+    		GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
+    		
+    		String spTypeCode = request.getParameter("spTypeCode");
+    		
+    		String spName = request.getParameter("spName");
+    		String moduleType = request.getParameter("moduleType");
+    		String remark = request.getParameter("remark");
+    		
+    		GoodsHouseSP2nd houseModule = new GoodsHouseSP2nd();
+    		houseModule.setHouseCode(orHouse.getHouseCode());
+    		houseModule.setSpType(spTypeCode);
+    		houseModule.setModuleType(moduleType);
+    		houseModule.setSpName(spName);
+    		houseModule.setCreateUser(currentUser.getLoginName());
+    		houseModule.setUpdateUser(currentUser.getLoginName());
+    		houseModule.setRemark(remark);
+    		relationshipPropertyService.saveSPModule2nd(houseModule);
     		
     		request.getSession().setAttribute("spTypeCode", spTypeCode);
     		

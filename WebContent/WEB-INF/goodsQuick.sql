@@ -446,7 +446,7 @@ ROW_FORMAT=COMPACT
 /**
  * 不动产服务商和组件商关系表
  */
-CREATE TABLE tbl_goods_house_module_sp (
+CREATE TABLE tbl_goods_house_sp (
 id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
 house_code				varchar(20),
 module_sp_type  		varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
@@ -456,6 +456,7 @@ create_user  			varchar(20) 	NULL DEFAULT NULL ,
 update_date  			datetime 		NULL DEFAULT NULL ,
 update_user  			varchar(20) 	NULL DEFAULT NULL ,
 status  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+remark  				varchar(200) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 PRIMARY KEY (id)
 )
 ENGINE=InnoDB
@@ -578,3 +579,48 @@ alter table tbl_goods_ordinary_house add column finish_date int NULL DEFAULT 0;
 alter table tbl_goods_ordinary_house_owned add column finish_year int NULL DEFAULT 0;
 alter table tbl_goods_ordinary_house_owned add column finish_month int NULL DEFAULT 0;
 alter table tbl_goods_ordinary_house_owned add column finish_date int NULL DEFAULT 0;
+
+/**
+ * 不动产二级服务商和组件商关系表
+ */
+CREATE TABLE tbl_goods_house_sp_2nd (
+id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+house_code				varchar(20),
+sp_type  				varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+module_type  			varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+sp_name  				varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+create_date  			datetime 		NULL DEFAULT NULL ,
+create_user  			varchar(20) 	NULL DEFAULT NULL ,
+update_date  			datetime 		NULL DEFAULT NULL ,
+update_user  			varchar(20) 	NULL DEFAULT NULL ,
+status  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+remark  				varchar(200) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+/**
+ * 组件商
+ */
+CREATE TABLE tbl_goods_house_module_sp (
+id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+house_code				varchar(20),
+module_type  			varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+sp_name  				varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+create_date  			datetime 		NULL DEFAULT NULL ,
+create_user  			varchar(20) 	NULL DEFAULT NULL ,
+update_date  			datetime 		NULL DEFAULT NULL ,
+update_user  			varchar(20) 	NULL DEFAULT NULL ,
+status  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+remark  				varchar(200) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
