@@ -23,7 +23,7 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label" for="field-1">物库描述</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="repositoryCode" name="repositoryCode">
+								<input type="text" class="form-control" id="repositoryDesc" name="repositoryDesc">
 							</div>
 						</div>
 						<div class="form-group">

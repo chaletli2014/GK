@@ -8,31 +8,40 @@ jQuery(document).ready(function($){
 		var repoName = $("#repositoryName").val();
 		var repoDesc = $("#repositoryDesc").val();
 		var repoType = $("#repositoryType").val();
-		if( checkRepositoryForm(repoName,repoDesc,repoType) ){
-			jQuery.ajax({
-				url: basePath+"saveOrUpdateRepository",
-				data : {
-					repositoryName : repoName,
-					repositoryDesc : repoDesc,
-					repositoryType : repoType
-				},
-				success: function(response){
-					var result = response.result;
-					if( result != 'Y' ){
-						jAlert("新增资品库错误","提醒");
-					}else{
-						jAlert("资品库添加成功，点击确定进入新资品库","信息",function(){
-							window.location.href = basePath+"index?repository_code="+response.repositoryCode;
-						});
-						jQuery('.close').click();
-					}
-					
-				}
-			});
-		}else{
-			jAlert("必填项不能为空","提醒");
+		if( repoName == '' ){
+			jAlert("物库名称不能为空","提醒");
+			return false;
 		}
+		if( repoDesc == '' ){
+			jAlert("物库描述不能为空","提醒");
+			return false;
+		}
+		if( repoType == '' ){
+			jAlert("物库类型不能为空","提醒");
+			return false;
+		}
+		jQuery.ajax({
+			url: basePath+"saveOrUpdateRepository",
+			data : {
+				repositoryName : repoName,
+				repositoryDesc : repoDesc,
+				repositoryType : repoType
+			},
+			success: function(response){
+				var result = response.result;
+				if( result != 'Y' ){
+					jAlert("新增资品库错误","提醒");
+				}else{
+					jAlert("资品库添加成功，点击确定进入新资品库","信息",function(){
+						window.location.href = basePath+"index?repository_code="+response.repositoryCode;
+					});
+					jQuery('.close').click();
+				}
+			}
+		});
 	});
+	
+	$("<span style='color:red;display:inline;font-size:24px;height:10px;line-height:10px;'>*</span>").appendTo(".form_input_required");
 });
 
 function checkRepositoryForm(){

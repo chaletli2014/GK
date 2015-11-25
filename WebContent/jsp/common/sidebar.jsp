@@ -209,6 +209,12 @@
 					<span class="title">数据服务</span>
 				</a>
 			</li>
+			<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
+				<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+					<i class="linecons-sound"></i>
+					<span class="title">报障管理</span>
+				</a>
+			</li>
 			<%--
 			<li <% if( opened.indexOf(",service,")>-1 ){ %>class="opened"<%} %>>
 				<a href="#" onclick="javascript:void(0)">

@@ -59,7 +59,7 @@
 					</ul>
 				</li>
 				<li class="external">
-					<a href="#">
+					<a href="<%=request.getParameter("basePath")%>myMessage">
 						<span>查看所有消息</span>
 						<i class="fa-link-ext"></i>
 					</a>
