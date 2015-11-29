@@ -25,11 +25,6 @@
 								</script>
 								<select class="form-control" id="secondModuleType" name="secondModuleType">
 									<option value="">请选择设备类别</option>
-									<option value="dt" title="">电梯</option>
-									<option value="sb" title="">水泵</option>
-									<option value="sx" title="">水箱</option>
-									<option value="bl" title="">避雷设备</option>
-									<option value="xf" title="">消防设备</option>
 								</select>
 							</div>
 						</div>

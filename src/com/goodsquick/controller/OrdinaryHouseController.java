@@ -422,7 +422,7 @@ public class OrdinaryHouseController {
     		String spTypeCode = request.getParameter("spTypeCode");
     		
     		String spName = request.getParameter("spName");
-    		String moduleType = request.getParameter("moduleType");
+    		String moduleType = request.getParameter("secondModuleType");
     		String remark = request.getParameter("remark");
     		
     		GoodsHouseSP2nd houseModule = new GoodsHouseSP2nd();

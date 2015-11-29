@@ -35,20 +35,6 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<input type="hidden" name="orHouseId" id="orHouseId" value="${orHouse.id}"/>
-					<script type="text/javascript">
-					jQuery(document).ready(function($)
-					{
-						$("#moduleSPTable").dataTable({
-							dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>",
-							aoColumns: [
-								null,
-								null,
-								null,
-								null
-							],
-						});
-					});
-					</script>
 					<div>
 						<c:choose>
 							<c:when test="${null == houseSP}">

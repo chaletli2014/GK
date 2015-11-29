@@ -1,4 +1,8 @@
+var goodsDictionaryURL = basePath + "getGoodsDics";
+var dics;
 jQuery(document).ready(function($){
+	initDics('trusteeship_module');
+	
 	$(".relation_delete").click(function(){
 		var relationShipIdIndex = this.id.indexOf('_');
 		var relationShipId = this.id.substring(0,relationShipIdIndex);
@@ -50,3 +54,72 @@ jQuery(document).ready(function($){
 		jQuery('#new_second_module_sp_div').modal('show', {backdrop: 'static'});
 	});
 });
+
+function initDics(dicTypeParam){
+	jQuery.ajax({
+		url: goodsDictionaryURL,
+		data:{
+			dicType : dicTypeParam
+		}
+		,success: function(response){
+			dics = response.dics;
+			initDataTable();
+			initDropDown();
+		}
+	});
+}
+
+function initDataTable(){
+	$("#moduleSPTable").dataTable({
+		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>",
+		aoColumns: [
+        null,
+        null,
+        null,
+        null
+        ],
+        "aoColumnDefs": [
+         {
+        	 "render": function (data, type, full) {
+        		 return getDicNameByCode(data);
+        	 },
+        	 "targets": 0
+         },
+         {
+        	 "render": function (data, type, full) {
+        		 return data;
+        	 },
+        	 "targets": 1
+         },
+         {
+        	 "render": function (data, type, full) {
+        		 return data;
+        	 },
+        	 "targets": 2
+         },
+         ]
+	});
+}
+function initDropDown(){
+	var options="";
+	$.each(dics,function(i,item){
+		options = options + "<option value='"+item.dicCode+"'>"+item.dicName+"</option>";
+	});
+	$("#secondModuleType").append(options);
+	$("#childGoodsCategory").selectBoxIt().data("selectBoxIt");
+	$("#secondModuleType").data("selectBox-selectBoxIt").refresh();
+}
+function getDicNameByCode(dicCodeParam){
+	var returnedDicName = dicCodeParam;
+	
+	if( null != dics ){
+		$.each(dics,function(i,item){
+			if( item.dicCode == dicCodeParam ){
+				returnedDicName = item.dicName;
+				return false;
+			}
+		});
+	}
+	
+	return returnedDicName;
+}

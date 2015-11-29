@@ -175,4 +175,19 @@ public class DictionaryController {
 		
 		return message;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/getGoodsDics")
+	public Map<String, Object> getGoodsDics(HttpServletRequest request){
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			String dicType = request.getParameter("dicType");
+			List<GoodsDictionary> dics = dictionaryService.getDictionaryByType(dicType);
+			result.put("dics", dics);
+		} catch (Exception e) {
+			logger.error("fail to get the dics,",e);
+		}
+		
+		return result;
+	}
 }
