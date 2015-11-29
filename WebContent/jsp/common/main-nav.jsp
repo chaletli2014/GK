@@ -36,17 +36,14 @@
 		<li class="dropdown hover-line">
 			<a href="#" data-toggle="dropdown">
 				<i class="fa-bell-o"></i>
-				<span class="badge badge-purple">1</span>
+				<span class="badge badge-purple" id="messageTips"></span>
 			</a>
 			<ul class="dropdown-menu notifications">
 				<li class="top">
-					<p class="small">
-						<a href="#" class="pull-right">设置全部已读</a>
-						您当前有<strong>1</strong>条新消息.
-					</p>
+					<p class="small" id="messageCount"></p>
 				</li>
 				<li>
-					<ul class="dropdown-menu-list list-unstyled ps-scrollbar">
+					<ul class="dropdown-menu-list list-unstyled ps-scrollbar" id="newMessageList">
 						<li class="active notification-success">
 							<a href="#">
 								<i class="fa-user"></i>

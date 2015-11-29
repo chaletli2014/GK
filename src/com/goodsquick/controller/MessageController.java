@@ -1,15 +1,17 @@
 package com.goodsquick.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsRelatedRequest;
@@ -62,5 +64,20 @@ public class MessageController {
 		}
 		
 		return "redirect:myMessage";
+	}
+	
+	@RequestMapping("/getUnReadMessage")
+	@ResponseBody
+	public Map<String,Object> getUnReadMessage(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			
+			resultMap.put("messageSize", "0");
+		} catch (Exception e) {
+			logger.error("fail to get the message,",e);
+		}
+		return resultMap;
 	}
 }

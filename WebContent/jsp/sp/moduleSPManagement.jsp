@@ -52,11 +52,13 @@
 					<div>
 						<div class="panel-heading" style="margin-top:20px;">
 							<h3 class="panel-title" style="line-height: 28px; margin-right:10px;">组件商信息</h3>
+							<%--
 							<a id="newModuleSPLink">
 								<button class="btn btn-icon btn-info">
 									<li class="fa-plus-square"></li>
 								</button>
 							</a>
+							 --%>
 						</div>
 						<table class="table table-bordered table-striped" id="moduleSPTable">
 							<thead>

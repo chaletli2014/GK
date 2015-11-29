@@ -28,6 +28,7 @@
     <script type="text/javascript" src="<%=basePath%>/js/highcharts.js"></script>
     <script type="text/javascript" src="<%=basePath%>/js/report/report.js"></script>
     <script type="text/javascript" src="<%=basePath%>/js/report/drilldown.js"></script>
+    <script type="text/javascript" src="<%=basePath%>js/goodsquick/message.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>css/fonts/linecons/css/linecons.css">
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>css/fonts/fontawesome/css/font-awesome.min.css">

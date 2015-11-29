@@ -18,7 +18,9 @@
 				<div>
 					<select style="height:24px;" name="industry" id="industry">
 						<option>请选择行业分类</option>
-						<option>不动产</option>
+						<option>物业</option>
+						<option>互联网</option>
+						<option>其他</option>
 					</select>
 				</div>
 				<div>

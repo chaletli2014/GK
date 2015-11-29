@@ -15,18 +15,6 @@
 							<span id="returnMessage" style="color:red;"></span>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-4 control-label" for="field-1">物库名称</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="repositoryName" name="repositoryName" data-validate="required" data-message-required="名称不能为空">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="field-1">物库描述</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="repositoryDesc" name="repositoryDesc">
-							</div>
-						</div>
-						<div class="form-group">
 							<label class="col-sm-4 control-label" for="field-1">物库类型</label>
 							<div class="col-sm-10">
 								<script type="text/javascript">
@@ -43,6 +31,18 @@
 									<option value="2">货品库</option>
 									<option value="3">产品库</option>
 								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="field-1">物库名称</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="repositoryName" name="repositoryName" data-validate="required" data-message-required="名称不能为空">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label" for="field-1">物库描述</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="repositoryDesc" name="repositoryDesc">
 							</div>
 						</div>
 					</div>
