@@ -127,62 +127,69 @@
 					<li <% if( actived.indexOf(",trusteeshipService,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=trusteeshipService">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">托管人管理</span>
+							<span class="title">托管商管理</span>
 						</a>
 					</li>
-					<li <% if( actived.indexOf(",brandService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=brandService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">品牌商管理</span>
+					<li>
+						<a style="padding-left:48px;">
+							<span class="title">供应商管理</span>
 						</a>
-					</li>
-					<li <% if( actived.indexOf(",designService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=designService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">设计商管理</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">制造商管理</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",myHouseSP,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">检测认证商管理</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",channelService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=channelService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">渠道商管理</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",logisticsService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=logisticsService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">物流商管理</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",ownerService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=ownerService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">所有人管理</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=supervisionService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">市场监管人管理</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",recyclingService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=recyclingService">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">回收处理商管理</span>
-						</a>
+						<ul>
+							<li <% if( actived.indexOf(",brandService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=brandService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">品牌商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",designService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=designService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">设计商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">制造商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",myHouseSP,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">检测认证商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",channelService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=channelService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">渠道商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",logisticsService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=logisticsService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">物流商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",ownerService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=ownerService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">所有人管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=supervisionService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">市场监管人管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",recyclingService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=recyclingService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">回收处理商管理</span>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li <% if( actived.indexOf(",serviceCustomer,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>serviceCustomer">

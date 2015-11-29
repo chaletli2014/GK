@@ -35,20 +35,6 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<input type="hidden" name="orHouseId" id="orHouseId" value="${orHouse.id}"/>
-					<script type="text/javascript">
-					jQuery(document).ready(function($)
-					{
-						$("#moduleSPTable").dataTable({
-							dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>",
-							aoColumns: [
-								null,
-								null,
-								null,
-								null
-							],
-						});
-					});
-					</script>
 					<div>
 						<div class="panel-heading" style="margin-top:20px;">
 							<h3 class="panel-title" style="line-height: 28px; margin-right:10px;">组件商信息</h3>

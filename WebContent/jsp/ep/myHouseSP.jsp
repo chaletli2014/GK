@@ -110,7 +110,7 @@
 									</div>
 								</li>
 								<li class="sp_list_item">
-									<div class="sp_title">托管人</div>
+									<div class="sp_title">托管商</div>
 									<div class="sp_detail">&nbsp;${house.trusteeshipName}</div>
 									<div class="sp_actions">
 										<a id="${house.id}_trusteeshipService" class="relation_delete"><button class="btn btn-red">删除</button></a>

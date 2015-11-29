@@ -66,3 +66,17 @@ function showPopDiv(divName){
 	jQuery('#'+divName).modal('show', {backdrop: 'static'});
 }
 
+function getDicNameByCode(dics,dicCodeParam){
+	var returnedDicName = dicCodeParam;
+	
+	if( null != dics ){
+		$.each(dics,function(i,item){
+			if( item.dicCode == dicCodeParam ){
+				returnedDicName = item.dicName;
+				return false;
+			}
+		});
+	}
+	
+	return returnedDicName;
+}

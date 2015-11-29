@@ -78,7 +78,7 @@
 							<thead>
 								<tr>
 									<th>托管组件</th>
-									<th>托管人名称</th>
+									<th>托管商名称</th>
 									<th>备注</th>
 									<th>查看</th>
 								</tr>

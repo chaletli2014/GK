@@ -79,7 +79,7 @@ public class ModuleSPController {
 		} catch (Exception e) {
 			logger.error("fail to get the moduleSPManagement,",e);
 		}
-		view.addObject("opened", ",system,");
+		view.addObject("opened", ",serviceCustomer,");
         view.addObject("actived", ",moduleSPManagement,");
 		return view;
 	}

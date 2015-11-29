@@ -55,20 +55,6 @@ jQuery(document).ready(function($){
 	});
 });
 
-function initDics(dicTypeParam){
-	jQuery.ajax({
-		url: goodsDictionaryURL,
-		data:{
-			dicType : dicTypeParam
-		}
-		,success: function(response){
-			dics = response.dics;
-			initDataTable();
-			initDropDown();
-		}
-	});
-}
-
 function initDataTable(){
 	$("#moduleSPTable").dataTable({
 		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>",
@@ -81,7 +67,7 @@ function initDataTable(){
         "aoColumnDefs": [
          {
         	 "render": function (data, type, full) {
-        		 return getDicNameByCode(data);
+        		 return getDicNameByCode(dics,data);
         	 },
         	 "targets": 0
          },
@@ -109,17 +95,16 @@ function initDropDown(){
 	$("#childGoodsCategory").selectBoxIt().data("selectBoxIt");
 	$("#secondModuleType").data("selectBox-selectBoxIt").refresh();
 }
-function getDicNameByCode(dicCodeParam){
-	var returnedDicName = dicCodeParam;
-	
-	if( null != dics ){
-		$.each(dics,function(i,item){
-			if( item.dicCode == dicCodeParam ){
-				returnedDicName = item.dicName;
-				return false;
-			}
-		});
-	}
-	
-	return returnedDicName;
+function initDics(dicTypeParam){
+	jQuery.ajax({
+		url: goodsDictionaryURL,
+		data:{
+			dicType : dicTypeParam
+		}
+		,success: function(response){
+			dics = response.dics;
+			initDataTable();
+			initDropDown();
+		}
+	});
 }
