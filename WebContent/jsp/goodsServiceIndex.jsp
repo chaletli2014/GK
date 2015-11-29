@@ -1,3 +1,5 @@
+<%@page import="com.goodsquick.model.GoodsRepository"%>
+<%@page import="com.goodsquick.utils.GoodsQuickAttributes"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +45,12 @@
 			<jsp:include page="common/main-nav.jsp" flush="true">
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
-			<h3 style="margin-top:0px;margin-bottom:20px;">首页看板</h3>
+			<h3 style="margin-top:0px;margin-bottom:20px;">
+				<span>
+					<%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%>
+				</span>
+				看板
+			</h3>
 			<div class="row draggable-portlets">
 				<div class="col-md-12">
 					<div class="sorted">

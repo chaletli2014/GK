@@ -14,6 +14,6 @@
 	</div>
 	<div class="login_footer2">
 		<div>2015 © GoodsQuick Technologies. All Rights Reserved.</div>
-		<div>沪ICP备14035318号-2</div>
+		<div>沪ICP备15052920号</div>
 	</div>
 </div>

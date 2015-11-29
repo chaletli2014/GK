@@ -361,13 +361,17 @@ public class OrdinaryHouseController {
     			view.setViewName("sp/houseSPManagement");
     		}else{
     			view.addObject("houseSPList", houseSPList);
-    			
     			view.setViewName("ep/houseSPManagement");
     		}
+        	if("supervisionService".equalsIgnoreCase(moduleType) 
+        			|| "trusteeshipService".equalsIgnoreCase(moduleType)){
+        		view.addObject("opened", ",serviceCustomer,");
+        	}else{
+        		view.addObject("opened", ",serviceCustomer,supplier,");
+        	}
     				
     		view.addObject("spTypeName", dic.getDicName());
     		view.addObject("spTypeCode", moduleType);
-    		view.addObject("opened", ",serviceCustomer,");
     		view.addObject("actived", ","+moduleType+",");
     		Object errorMessage = request.getSession().getAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);
     		if( null != errorMessage ){

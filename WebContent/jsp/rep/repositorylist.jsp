@@ -45,18 +45,15 @@ function checkMessage(){
 	        </jsp:include>
 			<div class="page-title">
 				<div class="title-env">
-					<h1 class="title">资品库管理</h1>
+					<h1 class="title">物库管理</h1>
 				</div>
 				<div class="breadcrumb-env">
 					<ol class="breadcrumb bc-1">
 						<li>
 							<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
 						</li>
-						<li>
-							<a href="#" onclick="javascript:void(0)">我的控制台</a>
-						</li>
 						<li class="active">
-							<strong>资品库管理</strong>
+							<strong>物库管理</strong>
 						</li>
 					</ol>
 				</div>
@@ -81,15 +78,15 @@ function checkMessage(){
 						<a href="#" onclick="addRepository()">
 							<button class="btn btn-purple btn-icon btn-icon-standalone">
 								<i class="fa-cog"></i>
-								<span>新增资品库</span>
+								<span>新增物库</span>
 							</button>
 						</a>
 					</div>
 					<table class="table table-bordered table-striped" id="example-2">
 						<thead>
 							<tr>
-								<th>资品库名称</th>
-								<th>资品库类型</th>
+								<th>物库名称</th>
+								<th>物库类型</th>
 								<th>描述</th>
 								<th>操作</th>
 							</tr>

@@ -1,3 +1,5 @@
+<%@page import="com.goodsquick.model.GoodsRepository"%>
+<%@page import="com.goodsquick.utils.GoodsQuickAttributes"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
@@ -7,6 +9,8 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    
+    GoodsRepository currentRepository = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
 %>
 <head>
 	<title>GoodsQuick</title>

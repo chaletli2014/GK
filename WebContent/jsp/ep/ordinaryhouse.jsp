@@ -29,6 +29,7 @@ jQuery(document).ready(function($){
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
 			<div class="page-title">
+				<%@include file="../common/nav-title.jsp"%>
 				<div class="breadcrumb-env">
 					<ol class="breadcrumb bc-1">
 					<li>

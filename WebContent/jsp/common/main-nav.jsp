@@ -82,7 +82,7 @@
 				<li>
 					<a href="<%=request.getParameter("basePath")%>index?<%=GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE%>=<%=userInfo.getLoginName()+"_0"%>">
 						<i class="fa-folder-o"></i>
-						我的资品库
+						初始资品库
 					</a>
 				</li>
 				<%
@@ -100,6 +100,11 @@
 					<a href="javascript:void(0)" id="nav_newrepository">
 						<i class="fa-plus"></i>
 						新增物库
+					</a>
+				</li>
+				<li>
+					<a href="<%=request.getParameter("basePath")%>repositorylist">
+						<span class="title">物库管理</span>
 					</a>
 				</li>
 				<li class="last">

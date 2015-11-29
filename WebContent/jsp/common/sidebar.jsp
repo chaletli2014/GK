@@ -1,3 +1,5 @@
+<%@page import="com.goodsquick.model.GoodsRepository"%>
+<%@page import="com.goodsquick.utils.GoodsQuickAttributes"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.goodsquick.model.WebUserInfo,org.springframework.security.core.context.SecurityContextHolder" %>
 <%
@@ -11,6 +13,8 @@
 		actived = "*";
 	}
 	WebUserInfo webUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	
+	GoodsRepository currentRepository = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
 %>
 
 <div class="sidebar-menu toggle-others">
@@ -46,6 +50,7 @@
 					<span>首页</span>
 				</a>
 			</li>
+			<%if( "admin".equalsIgnoreCase(webUser.getLoginName()) ) {%>
 			<li <% if( opened.indexOf("system")>-1 ){ %>class="active opened"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-cog"></i>
@@ -55,7 +60,6 @@
 					<%}%>
 				</a>
 				<ul>
-				<%if( "admin".equalsIgnoreCase(webUser.getLoginName()) ) {%>
 					<li <% if( actived.indexOf(",userlist,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>userlist">
 							<span class="title">用户管理</span>
@@ -98,18 +102,13 @@
 							<span class="title">配置项管理</span>
 						</a>
 					</li>
-				<%} %>
-					<li <% if( actived.indexOf(",repository,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>repositorylist">
-							<span class="title">资品库管理</span>
-						</a>
-					</li>
 				</ul>
 			</li>
+			<%} %>
 			<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
 				<a href="<%=request.getParameter("basePath")%>ordinaryhouse">
 					<i class="linecons-database"></i>
-					<span class="title">物库管理</span>
+					<span class="title"><%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%></span>
 				</a>
 			</li>
 			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened"<%} %>>
@@ -130,7 +129,13 @@
 							<span class="title">托管商管理</span>
 						</a>
 					</li>
-					<li>
+					<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=supervisionService">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">市场监管人管理</span>
+						</a>
+					</li>
+					<li <% if( opened.indexOf(",serviceCustomer,supplier,")>-1 ){ %>class="active opened"<%} %>>
 						<a style="padding-left:48px;">
 							<span class="title">供应商管理</span>
 						</a>
@@ -147,13 +152,15 @@
 									<span class="title">设计商管理</span>
 								</a>
 							</li>
+							<%--
 							<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
 								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
 									<i class="entypo-flow-parallel"></i>
 									<span class="title">制造商管理</span>
 								</a>
 							</li>
-							<li <% if( actived.indexOf(",myHouseSP,")>-1 ){ %>class="active"<%} %>>
+							--%>
+							<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
 								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
 									<i class="entypo-flow-parallel"></i>
 									<span class="title">检测认证商管理</span>
@@ -171,18 +178,14 @@
 									<span class="title">物流商管理</span>
 								</a>
 							</li>
+							<%--
 							<li <% if( actived.indexOf(",ownerService,")>-1 ){ %>class="active"<%} %>>
 								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=ownerService">
 									<i class="entypo-flow-parallel"></i>
 									<span class="title">所有人管理</span>
 								</a>
 							</li>
-							<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=supervisionService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">市场监管人管理</span>
-								</a>
-							</li>
+							 --%>
 							<li <% if( actived.indexOf(",recyclingService,")>-1 ){ %>class="active"<%} %>>
 								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=recyclingService">
 									<i class="entypo-flow-parallel"></i>
@@ -191,13 +194,13 @@
 							</li>
 						</ul>
 					</li>
+					<%-- 
 					<li <% if( actived.indexOf(",serviceCustomer,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>serviceCustomer">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">客户管理</span>
 						</a>
 					</li>
-					<%-- 
 					--%>
 				</ul>
 			</li>
@@ -216,7 +219,7 @@
 					<span class="title">数据服务</span>
 				</a>
 			</li>
-			<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
+			<li <% if( actived.indexOf(",event,")>-1 ){ %>class="active"<%} %>>
 				<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
 					<i class="linecons-sound"></i>
 					<span class="title">报障管理</span>
