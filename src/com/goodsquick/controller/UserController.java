@@ -310,6 +310,7 @@ public class UserController {
     		logger.error(String.format("fail to register user,%s",e.getMessage()),e);
     	}
     	
+    	request.getSession(true).setAttribute(GoodsQuickAttributes.WEB_LOGIN_MESSAGE,"注册成功，请登录");
     	return "redirect:login";
     }
 }

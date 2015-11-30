@@ -158,7 +158,7 @@ div.showDetailDiv .form-group{
 *login
 */
 .login_logo{
-	padding: 10px 100px;
+	padding: 4px 100px;
 	border-bottom: #D6DDDF solid 1px;
 }
 .login_logo_center{
@@ -267,14 +267,14 @@ div.showDetailDiv .form-group{
 }
 .register_right form input{
 	width:194px;
-	height:30px;
-	line-height:30px;
-	padding:8px;
+	height:24px;
+	line-height:24px;
+	padding:2px;
 	color:#C3C2C2;
 	background: #FFFFFF;
 }
 .register_right form .register_form_title{
-	margin-top: 20px;
+	margin-top: 6px;
 	font-size: 14px;
 	font-weight: bold;
 }

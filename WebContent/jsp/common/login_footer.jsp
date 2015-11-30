@@ -2,7 +2,6 @@
 <div style="position:absolute;bottom:0px;width: 100%;background: #F4F4F4;">
 	<div class="login_footer1">
 		<div class="login_footer_wechat">关注我们</div>
-		<div class="login_footer_weibo">&nbsp;</div>
 		<div class="login_footer_info">
 			<ul>
 				<li>上海物库网络科技有限公司</li>

@@ -20,10 +20,10 @@
 		<div class="login_form_title">物库管理台</div>
 		<form action="dologin" name="loginForm" id="loginForm" method="post">
 			<div style="padding:10px 30px;">
-				<input type="text" name="web_username" style="width:194px;height:20px;padding:12px;color:#A7C0BF;background: #DDE3EC;" placeholder="账号 /电子邮箱"/>
+				<input type="text" name="web_username" style="width:194px;height:20px;color:#A7C0BF;background: #FFFFFF;" placeholder="账号 /电子邮箱"/>
 			</div>
 			<div style="padding:10px 30px;">
-				<input type="password" name="web_password" style="width:194px;height:20px;padding:12px;background: #DDE3EC;" placeholder="密码"/>
+				<input type="password" name="web_password" style="width:194px;height:20px;color:#A7C0BF;background: #FFFFFF;" placeholder="密码"/>
 			</div>
 			<div style="padding:10px 30px;">
 				<input type="checkbox" name="rememberMe"><span style="color:#A7C0BF">记住登录状态</span>

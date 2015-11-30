@@ -55,7 +55,7 @@
 					<input type="text" name="telephone" id="telephone" placeholder="联系电话"/>
 				</div>
 				<div>
-					<img id="register_btn" src="<%=basePath%>images/register_btn.png" onclick="submitRegister()" style="cursor: pointer;width: 196px;">
+					<img id="register_btn" src="<%=basePath%>images/register_btn.png" onclick="return submitRegister()" style="cursor: pointer;width: 196px;">
 				</div>
 			</form>
 		</div>
