@@ -100,7 +100,7 @@ jQuery(document).ready(function($){
 									竣工时间：
 									<span class="input-group col-sm-9" style="text-align: center;">
 										<span>${orHouse.finishYear}</span><span class="input-group-addon">年</span>
-										<span>${orHouse.finishYear}</span><span class="input-group-addon">月</span>
+										<span>${orHouse.finishMonth}</span><span class="input-group-addon">月</span>
 										<span>${orHouse.finishDate}</span><span class="input-group-addon">日</span>
 									</span>
 								</p>
@@ -135,6 +135,7 @@ jQuery(document).ready(function($){
 							</ul>
 						</div>
 					</c:if>
+					<%--
 					<c:if test="${fn:length(serviceDetails) > 0 }">
 						<div class="panel-heading" style="clear: both;">
 							<h3 class="panel-title">组件列表</h3>
@@ -170,6 +171,7 @@ jQuery(document).ready(function($){
 							</tbody>
 						</table>
 					</c:if>
+					 --%>
 				</div>
 			</div>
 			<%@include file="../common/footer.jsp" %>

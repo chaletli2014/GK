@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../common/header.jsp"%>
+<script type="text/javascript" src="<%=basePath%>/js/goodsquick/repository.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -95,17 +96,17 @@ function checkMessage(){
 							<c:if test="${fn:length(repositoryList) > 0}">
 								<c:forEach items="${repositoryList}" var="repo">
 									<tr>
-										<td>${repo.repositoryName}</td>
-										<td>${repo.repositoryType}</td>
-										<td>${repo.repositoryDesc}</td>
+										<td title="name">${repo.repositoryName}</td>
+										<td title="type">${repo.repositoryType}</td>
+										<td title="desc">${repo.repositoryDesc}</td>
 										<td>
-											<a id="${repo.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyPrivilege">
+											<a id="${repo.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyRepository">
 												编辑
 											</a>
-											<a id="${repo.id}" class="btn btn-primary btn-sm btn-icon icon-left deletePrivilege">
+											<a id="${repo.id}" class="btn btn-primary btn-sm btn-icon icon-left">
 												用户列表
 											</a>
-											<a id="${repo.id}" class="btn btn-danger btn-sm btn-icon icon-left deletePrivilege">
+											<a id="${repo.id}" class="btn btn-danger btn-sm btn-icon icon-left">
 												注销
 											</a>
 										</td>
