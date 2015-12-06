@@ -106,7 +106,7 @@ function checkMessage(){
 											<a id="${repo.id}" class="btn btn-primary btn-sm btn-icon icon-left">
 												用户列表
 											</a>
-											<a id="${repo.id}" class="btn btn-danger btn-sm btn-icon icon-left">
+											<a id="${repo.id}" class="btn btn-danger btn-sm btn-icon icon-left removeRepository">
 												注销
 											</a>
 										</td>

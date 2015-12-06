@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,10 +60,37 @@ public class RepositoryController {
 			
 			List<GoodsRepository> repositoryList = repositoryService.saveOrUpdateRepository(request, goodsRepositoryFromPage);
 			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_LIST, repositoryList);
-			resultMap.put("result", "Y");
+			
+			if( StringUtils.isBlank(repositoryId) ){
+				resultMap.put("result", "NEW");
+			}else{
+				resultMap.put("result", "UPDATE");
+			}
 			resultMap.put("repositoryCode", request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE));
 		} catch (Exception e) {
 			logger.error("fail to get the top level category,",e);
+		}
+		return resultMap;
+	}
+	
+	@RequestMapping("/removeRepository")
+	@ResponseBody
+	public Map<String,Object> removeRepository(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			
+			GoodsRepository goodsRepositoryFromPage = new GoodsRepository();
+			String repositoryId = request.getParameter("repositoryId");
+			
+			goodsRepositoryFromPage.setId(GoodsQuickUtils.parseIntegerFromString(repositoryId));
+			goodsRepositoryFromPage.setUpdateUser(currentUser.getLoginName());
+			
+			repositoryService.removeRepository(goodsRepositoryFromPage);
+			
+		} catch (Exception e) {
+			logger.error("fail to remove repository,",e);
 		}
 		return resultMap;
 	}

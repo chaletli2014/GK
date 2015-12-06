@@ -8,12 +8,9 @@ jQuery(document).ready(function($){
 		var repoName = $("#repositoryName").val();
 		var repoDesc = $("#repositoryDesc").val();
 		var repoType = $("#repositoryType").val();
+		var repoId = $("#repositoryId").val();
 		if( repoName == '' ){
 			jAlert("物库名称不能为空","提醒");
-			return false;
-		}
-		if( repoDesc == '' ){
-			jAlert("物库描述不能为空","提醒");
 			return false;
 		}
 		if( repoType == '' ){
@@ -23,18 +20,22 @@ jQuery(document).ready(function($){
 		jQuery.ajax({
 			url: basePath+"saveOrUpdateRepository",
 			data : {
+				repositoryId : repoId,
 				repositoryName : repoName,
 				repositoryDesc : repoDesc,
 				repositoryType : repoType
 			},
 			success: function(response){
 				var result = response.result;
-				if( result != 'Y' ){
+				if( result != 'UPDATE' && result != 'NEW' ){
 					jAlert("新增资品库错误","提醒");
-				}else{
+				}else if( result == 'NEW' ){
 					jAlert("资品库添加成功，点击确定进入新资品库","信息",function(){
 						window.location.href = basePath+"index?repository_code="+response.repositoryCode;
 					});
+					jQuery('.close').click();
+				}else if( result == 'UPDATE' ){
+					window.location.reload();
 					jQuery('.close').click();
 				}
 			}

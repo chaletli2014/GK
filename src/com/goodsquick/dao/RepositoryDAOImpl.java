@@ -39,12 +39,13 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 			throws Exception {
 		StringBuilder sql = new StringBuilder(100);
 		sql.append("update tbl_goods_repository ");
-        sql.append("set repository_name = ? ");
-		sql.append("where repository_code = ? ");
+        sql.append("set repository_name = ?, repository_desc = ? ");
+		sql.append("where id = ? ");
 		
 		List<Object> params = new ArrayList<Object>();
 		params.add(goodsRepository.getRepositoryName());
-		params.add(goodsRepository.getRepositoryCode());
+		params.add(goodsRepository.getRepositoryDesc());
+		params.add(goodsRepository.getId());
 		
 		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
 	}
@@ -87,6 +88,19 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 			throws Exception {
 		String sql = "select gr.* from tbl_goods_repository gr where gr.status='1' and gr.repository_code = ? ";
 		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{repositoryCode}, new GoodsRepositoryRowMapper());
+	}
+
+	@Override
+	public void removeRepository(GoodsRepository goodsRepositoryFromPage)
+			throws Exception {
+		StringBuilder sql = new StringBuilder(100);
+		sql.append("update tbl_goods_repository set status = 0, update_date=now(), update_user=? where id = ? ");
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(goodsRepositoryFromPage.getUpdateUser());
+		params.add(goodsRepositoryFromPage.getId());
+		
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
 	}
 
 }

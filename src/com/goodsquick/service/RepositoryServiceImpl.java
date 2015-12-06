@@ -70,6 +70,12 @@ public class RepositoryServiceImpl implements RepositoryService {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void removeRepository(GoodsRepository goodsRepositoryFromPage)
+			throws Exception {
+		repositoryDAO.removeRepository(goodsRepositoryFromPage);
+	}
 
 	@Override
 	public GoodsRepository getRepositoryByCode(String repositoryCode)

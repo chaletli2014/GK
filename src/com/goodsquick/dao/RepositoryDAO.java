@@ -13,4 +13,5 @@ public interface RepositoryDAO {
 	public void updateRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 	public void saveRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 	public GoodsRepository getRepositoryByCode(String repositoryCode) throws Exception;
+	public void removeRepository(GoodsRepository goodsRepositoryFromPage) throws Exception;
 }
