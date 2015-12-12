@@ -58,6 +58,19 @@ public class DictionaryServiceImpl implements DictionaryService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public List<GoodsDictionary> getDictionaryByTypeLike(String type)
+			throws Exception {
+		try{
+			return dictionaryDAO.getDictionaryByTypeLike(type);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error(String.format("fail to get the dictionary by type %s,",type),e);
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	public boolean checkIfDictionaryTypeCodeOrNameExists(String typeCode, String name)

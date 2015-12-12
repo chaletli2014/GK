@@ -64,4 +64,12 @@ public class GoodsQuickUtils {
 			return 0;
 		}
 	}
+	
+	public static Double parseDoubleFromString(String input){
+		try{
+			return Double.valueOf(input);
+		}catch(NumberFormatException e){
+			return 0.00;
+		}
+	}
 }

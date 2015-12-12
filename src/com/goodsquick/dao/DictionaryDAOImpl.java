@@ -44,6 +44,15 @@ public class DictionaryDAOImpl implements DictionaryDAO {
         dList = dataBean.getJdbcTemplate().query(sql, new Object[]{type}, new DictionaryRowMapper());
         return dList;
 	}
+	
+	@Override
+	public List<GoodsDictionary> getDictionaryByTypeLike(String type)
+			throws Exception {
+		List<GoodsDictionary> dList = new ArrayList<GoodsDictionary>();
+		String sql = "select gd.*,gdt.type_name from tbl_goods_dictionary gd, tbl_goods_dictionary_type gdt where gd.type_code = gdt.type_code and gdt.type_code like ?";
+		dList = dataBean.getJdbcTemplate().query(sql, new Object[]{type+"%"}, new DictionaryRowMapper());
+		return dList;
+	}
 
 	@Override
 	public boolean checkIfDictionaryTypeCodeOrNameExists(String typeCode, String name)

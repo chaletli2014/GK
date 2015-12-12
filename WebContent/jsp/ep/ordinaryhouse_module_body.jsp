@@ -8,7 +8,14 @@
 			</div>
 			<div style="min-height: 500px;">
 				<div id="leftBody" style="width:45%;float:left;">
-					<a href="javascript:void(0)">新增</a>
+					<div style="float:right;margin:4px 0px;">
+						<a id="newEquLink">
+							新增主体
+							<button class="btn btn-icon btn-info" style="margin-bottom:0px;">
+								<li class="fa-plus-square"></li>
+							</button>
+						</a>
+					</div>
 					<script type="text/javascript">
 					jQuery(document).ready(function($)
 					{

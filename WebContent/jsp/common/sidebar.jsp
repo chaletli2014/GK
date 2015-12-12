@@ -105,8 +105,12 @@
 				</ul>
 			</li>
 			<%} %>
-			<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
+			<li <% if( actived.indexOf(",ordinaryhouse,")>-1|| actived.indexOf(",productlist,")>-1 ){ %>class="active"<%} %>>
+				<%if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){%>
+				<a href="<%=request.getParameter("basePath")%>productlist">
+				<%}else{ %>
 				<a href="<%=request.getParameter("basePath")%>ordinaryhouse">
+				<%} %>
 					<i class="linecons-database"></i>
 					<span class="title"><%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%></span>
 				</a>

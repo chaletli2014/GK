@@ -29,7 +29,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		if( 0 == goodsRepository.getId() ){
 			int repositoryNum = 0;
 			try{
-				List<GoodsRepository> repositoryList = repositoryDAO.getRepositoryByLoginName(goodsRepository.getCreateUser());
+				List<GoodsRepository> repositoryList = repositoryDAO.getRepositoryByLoginName(goodsRepository.getCreateUser(),false);
 				if( !CollectionUtils.isEmpty(repositoryList) ){
 					repositoryNum = repositoryList.size();
 				}
@@ -50,13 +50,13 @@ public class RepositoryServiceImpl implements RepositoryService {
 		}else{
 			repositoryDAO.updateRepository(goodsRepository);
 		}
-		return repositoryDAO.getRepositoryByLoginName(goodsRepository.getCreateUser());
+		return repositoryDAO.getRepositoryByLoginName(goodsRepository.getCreateUser(),true);
 	}
 
 	@Override
 	public List<GoodsRepository> getRepositoryByLoginName(String loginName) throws Exception {
 		try{
-			return repositoryDAO.getRepositoryByLoginName(loginName);
+			return repositoryDAO.getRepositoryByLoginName(loginName,true);
 		} catch(EmptyResultDataAccessException erd){
             return Collections.emptyList();
         } catch(Exception e){

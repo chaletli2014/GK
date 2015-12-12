@@ -12,6 +12,7 @@ public interface DictionaryDAO {
 	public List<GoodsDictionary> getAllDictionary() throws Exception;
 	
 	public List<GoodsDictionary> getDictionaryByType(String type) throws Exception;
+	public List<GoodsDictionary> getDictionaryByTypeLike(String type) throws Exception;
 	
 	public boolean checkIfDictionaryTypeCodeOrNameExists(String typeCode, String name) throws Exception;
 	

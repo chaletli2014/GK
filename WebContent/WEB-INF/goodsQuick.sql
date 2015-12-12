@@ -228,7 +228,7 @@ id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
 provider_code  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL comment '服务商编码',
 product_category  	varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL comment '物品类别',
 service_code		varchar(2000)	not null comment '服务范围',	
-price				decimal(11,6)	not null comment '服务加个',
+price				decimal(11,6)	not null comment '服务价格',
 service_content		varchar(2000) 	comment '服务详细介绍',
 create_user  		varchar(20),
 createdate			datetime,
@@ -617,6 +617,27 @@ update_date  			datetime 		NULL DEFAULT NULL ,
 update_user  			varchar(20) 	NULL DEFAULT NULL ,
 status  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 remark  				varchar(200) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+--产品库
+CREATE TABLE tbl_goods_product (
+id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+product_type		varchar(200)	not null comment '产品类目',
+product_name		varchar(200)	not null comment '产品名称',
+product_price		decimal(11,6)	not null comment '产品价格',
+repository_code		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci not NULL,
+create_user  		varchar(20),
+create_date			datetime,
+update_user			varchar(20),
+update_date			datetime,
+status				varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+remark				varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
 PRIMARY KEY (id)
 )
 ENGINE=InnoDB

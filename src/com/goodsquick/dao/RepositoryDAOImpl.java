@@ -51,9 +51,12 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 	}
 
 	@Override
-	public List<GoodsRepository> getRepositoryByLoginName(String loginName) throws Exception {
-		String sql = "select gr.* from tbl_goods_repository gr, tbl_goods_repository_user gru where gru.user_code = ? and gru.repository_code = gr.repository_code and gru.status = '1' and gr.status='1' ";
-		return dataBean.getJdbcTemplate().query(sql, new Object[]{loginName}, new GoodsRepositoryRowMapper());
+	public List<GoodsRepository> getRepositoryByLoginName(String loginName, boolean hideDeleted) throws Exception {
+		StringBuilder sql = new StringBuilder("select gr.* from tbl_goods_repository gr, tbl_goods_repository_user gru where gru.user_code = ? and gru.repository_code = gr.repository_code");
+		if( hideDeleted ){
+			sql.append(" and gr.status = '1' and gru.status = '1' ");
+		}
+		return dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{loginName}, new GoodsRepositoryRowMapper());
 	}
 
 	@Override
