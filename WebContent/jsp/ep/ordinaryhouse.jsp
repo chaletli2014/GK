@@ -45,6 +45,7 @@ jQuery(document).ready(function($){
 				</div>
 			</div>
 			<div class="panel panel-default">
+				<%--
 				<script type="text/javascript">
 					jQuery(document).ready(function($)
 					{
@@ -60,6 +61,7 @@ jQuery(document).ready(function($){
 						});
 					});
 					</script>
+				 --%>
 				<div class="panel-body">
 					<input type="hidden" id="orHouse" value="${orHouse}"/>
 					<c:if test="${null==orHouse}">

@@ -26,15 +26,6 @@ public class IndexController {
         ModelAndView view = new ModelAndView();
         String viewName = "index";
         WebUserInfo currentUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if( null != currentUser ){
-        	if( "ON".equalsIgnoreCase(currentUser.getHasHouse()) && "ON".equalsIgnoreCase(currentUser.getHasService()) ){
-        		viewName = "goodsServiceIndex";
-        	}else if( "ON".equalsIgnoreCase(currentUser.getHasHouse()) ){
-        		viewName = "goodsIndex";
-        	}else if( "ON".equalsIgnoreCase(currentUser.getHasService()) ){
-        		viewName = "serviceIndex";
-        	}
-        }
         
         String repositoryCode = request.getParameter(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
         if( null == repositoryCode ){
@@ -48,6 +39,14 @@ public class IndexController {
         try {
 			GoodsRepository currentRepository = repositoryService.getRepositoryByCode(repositoryCode);
 			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ, currentRepository);
+			
+			if( null != currentUser ){
+	        	if( "3".equalsIgnoreCase(currentRepository.getRepositoryType()) ){
+	        		viewName = "goodsIndex";
+	        	}else{
+	        		viewName = "goodsServiceIndex";
+	        	}
+	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
