@@ -115,4 +115,15 @@ jQuery(document).ready(function($){
 		$("#newBodyModuleDiv").fadeOut();
 		$("#bodyModuleDetailDiv").fadeIn();
 	});
+	
+	$("#newOtherLink").click(function(){
+		$("#otherInfo").css("width","50%");
+		$("#newOtherDiv").fadeIn();
+	});
+	$("#other_cancelBtn").click(function(){
+		$("#newOtherDiv").fadeOut();
+		setTimeout(function(){
+			$("#otherInfo").css("width","80%");
+		}, 300);
+	});
 });

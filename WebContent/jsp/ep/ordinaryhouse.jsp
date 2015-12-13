@@ -123,13 +123,13 @@ jQuery(document).ready(function($){
 									</a>
 								</li>
 								<li class="sp_list_item">
-									<a href="javascript:void(0)" id="publicInstallation">
+									<a href="javascript:void(0)" id="publicEquipment">
 										<div class="sp_title">设施设备</div>
 										<div class="sp_detail"></div>
 									</a>
 								</li>
 								<li class="sp_list_item">
-									<a href="javascript:void(0)" id="publicEquipment">
+									<a href="javascript:void(0)" id="publicInstallation">
 										<div class="sp_title">其它</div>
 										<div class="sp_detail"></div>
 									</a>
