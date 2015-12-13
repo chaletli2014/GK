@@ -219,7 +219,7 @@
 			</li>
 			<li <% if( actived.indexOf(",myReport,")>-1 ){ %>class="active"<%} %>>
 				<a href="<%=request.getParameter("basePath")%>myReport">
-					<i class="linecons-mail"></i>
+					<i class="linecons-photo"></i>
 					<span class="title">数据服务</span>
 				</a>
 			</li>

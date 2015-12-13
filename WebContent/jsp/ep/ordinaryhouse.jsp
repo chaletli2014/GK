@@ -77,7 +77,7 @@ jQuery(document).ready(function($){
 					</c:if>
 					<c:if test="${orHouse!=null}">
 						<div style="width:50%;float:left;">
-							<blockquote class="blockquote blockquote-info" style="height:318px;">
+							<blockquote class="blockquote blockquote-info" style="height:318px;font-size:14px;">
 								<p>
 									<strong>资品信息</strong>&nbsp;&nbsp;
 									<a href="javascript:void(0)" id="editHouseLink">
@@ -98,7 +98,7 @@ jQuery(document).ready(function($){
 								</p>
 								<p style="display: inline-flex;">
 									竣工时间：
-									<span class="input-group col-sm-9" style="text-align: center;">
+									<span class="input-group col-sm-8" style="text-align: center;">
 										<span>${orHouse.finishYear}</span><span class="input-group-addon">年</span>
 										<span>${orHouse.finishMonth}</span><span class="input-group-addon">月</span>
 										<span>${orHouse.finishDate}</span><span class="input-group-addon">日</span>
@@ -116,19 +116,19 @@ jQuery(document).ready(function($){
 							<ul class="sp_list">
 								<li class="sp_list_item">
 									<a href="javascript:void(0)" id="publicBody">
-										<div class="sp_title">公共主体</div>
+										<div class="sp_title">主体构件</div>
 										<div class="sp_detail"></div>
 									</a>
 								</li>
 								<li class="sp_list_item">
 									<a href="javascript:void(0)" id="publicInstallation">
-										<div class="sp_title">公共设施</div>
+										<div class="sp_title">设施设备</div>
 										<div class="sp_detail"></div>
 									</a>
 								</li>
 								<li class="sp_list_item">
 									<a href="javascript:void(0)" id="publicEquipment">
-										<div class="sp_title">公共设备</div>
+										<div class="sp_title">其它</div>
 										<div class="sp_detail"></div>
 									</a>
 								</li>
