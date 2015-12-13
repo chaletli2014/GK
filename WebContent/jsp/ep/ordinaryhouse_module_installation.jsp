@@ -36,6 +36,7 @@
 						<option value="">请选择类别</option>
 						<option value="xg" title="">悬挂物</option>
 						<option value="lt" title="">立体装饰</option>
+						<option value="lt" title="">其它</option>
 					</select>
 				</div>
 				<div style="float:right;margin-top:18px;">
@@ -79,6 +80,7 @@
 							<option value="">请选择类别</option>
 							<option value="xg" title="">悬挂物</option>
 							<option value="lt" title="">立体装饰</option>
+							<option value="lt" title="">其它</option>
 						</select>
 					</div>
 				</div>
