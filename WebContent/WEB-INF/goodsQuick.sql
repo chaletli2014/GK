@@ -645,3 +645,39 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT
 ;
+
+--不动产主体
+CREATE TABLE tbl_goods_house_subject (
+id  					int(11) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+subject_name  			varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+subject_code  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+subject_desc  			varchar(200) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+parentId  				int(11) 		NULL DEFAULT NULL ,
+has_child  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT;
+
+--主体构件
+CREATE TABLE tbl_goods_house_subject_module (
+id  					int(11) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+subject_id  			int(11) 		NOT NULL,
+module_type_code		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+module_name  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+module_code  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+module_desc  			varchar(200) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+create_user  			varchar(20),
+create_date				datetime,
+update_user				varchar(20),
+update_date				datetime,
+status					varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+remark					varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT;

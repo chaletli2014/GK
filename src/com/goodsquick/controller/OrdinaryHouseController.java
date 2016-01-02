@@ -71,10 +71,13 @@ public class OrdinaryHouseController {
         	List<GoodsServiceDetail> serviceDetails = goodsServiceService.getGoodsServiceDetailsByUserCode(currentUser.getLoginName());
     		view.addObject("serviceDetails", serviceDetails);
     		
+    		List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
+    		view.addObject("moduleTypes", moduleTypes);
+    		
         	view.addObject("opened", ",estate,resident,");
 			view.addObject("actived", ",ordinaryhouse,");
 		} catch (Exception e) {
-			
+			logger.error("fail to show ordinaryhouse,",e);
 		}
         
         view.setViewName("ep/ordinaryhouse");

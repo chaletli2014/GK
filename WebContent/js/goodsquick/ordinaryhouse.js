@@ -44,6 +44,7 @@ jQuery(document).ready(function($){
 	});
 	$("#publicBody").click(function(){
 		jQuery('#houseModuleDiv_body').modal('show', {backdrop: 'static'});
+		jQuery('#houseSubjectFrame').attr("src",basePath+"houseSubjectiframe");
 	});
 	$("#publicInstallation").click(function(){
 		jQuery('#houseModuleDiv_installation').modal('show', {backdrop: 'static'});
@@ -108,6 +109,7 @@ jQuery(document).ready(function($){
 	});
 	
 	$("#newBodyModuleLink").click(function(){
+		clearNewModuleForm();
 		$("#bodyModuleDetailDiv").fadeOut();
 		$("#newBodyModuleDiv").fadeIn();
 	});
@@ -126,4 +128,82 @@ jQuery(document).ready(function($){
 			$("#otherInfo").css("width","80%");
 		}, 300);
 	});
+	$("#bodyModule_submitBtn").click(function(){
+		modifySubjectModule();
+	});
 });
+
+function initSubjectLevel(level){
+	var subjectLevelName = "subjectLevel"+level;
+	var selectId = "#sLevel"+level;
+	jQuery.ajax({
+		url: basePath+"getGoodsDics",
+		data:{
+			dicType : subjectLevelName
+		}
+		,success: function(response){
+			var dics = response.dics;
+			var childSelection = "";
+			
+			$.each(dics,function(n,value) {
+				childSelection = childSelection + "<option value='"+value.dicCode+"'>"+value.dicName+"</option>";
+			});
+			
+			$(selectId).append(childSelection);
+			
+			$(selectId).selectBoxIt().data("selectBoxIt");
+			$(selectId).data("selectBox-selectBoxIt").refresh();
+		}
+    });
+}
+
+function modifySubjectModule(){
+	var subjectId = $("#houseSubjectId").val();
+	var newBodyModuleType = $("#newBodyModuleType").val();
+	var moduleName = $("#moduleName").val();
+	var moduleDesc = $("#moduleDesc").val();
+	jQuery.ajax({
+		url: basePath+"modifySubjectModule",
+		data:{
+			subjectId : subjectId,
+			moduleType : newBodyModuleType,
+			moduleName : moduleName,
+			moduleDesc : moduleDesc
+		}
+		,success: function(response){
+			var result = response.result;
+			if( result == 'Y' ){
+				jAlert("保存成功","提醒",function(){
+					jQuery.ajax({
+						url: basePath+"subjectmodulelist",
+						data:{
+							subjectId :subjectId
+						},
+						success : function(data) {
+							$("#bodyModuleDetailTable").find('tbody').html("");
+							var trList = data.modules;
+							var tbody = "";
+							$.each(trList,function(n,module){
+								tbody = tbody + "<tr><td >"+module.moduleName+"</td><td >"+module.moduleDesc+"</td></tr>";
+							});
+							$("#bodyModuleDetailTable").find('tbody').html(tbody);
+							
+							$("#newBodyModuleDiv").fadeOut();
+							$("#bodyModuleDetailDiv").fadeIn();
+						}
+					});
+				});
+			}else{
+				jAlert("保存失败","提醒");
+			}
+		}
+    });
+}
+
+function clearNewModuleForm(){
+	$("#newBodyModuleType").val('');
+	$("#moduleName").val('');
+	$("#moduleDesc").val('');
+	$("#newBodyModuleType").selectBoxIt().data("selectBoxIt");
+	$("#newBodyModuleType").data("selectBox-selectBoxIt").refresh();
+}
