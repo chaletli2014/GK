@@ -17,7 +17,7 @@ public class GoodsProductDAOImpl extends BaseDAOImpl implements GoodsProductDAO{
 	public List<GoodsProduct> getGoodsProductByRepositoryCode(
 			String repositoryCode) throws Exception {
 		List<GoodsProduct> dtList = new ArrayList<GoodsProduct>();
-        String sql = "select * from tbl_goods_product where repository_code = ?";
+        String sql = "select * from tbl_goods_product where repository_code = ? and status = '1' ";
         dtList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new GoodsProductRowMapper());
         return dtList;
 	}

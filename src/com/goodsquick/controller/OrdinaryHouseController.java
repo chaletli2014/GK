@@ -130,6 +130,10 @@ public class OrdinaryHouseController {
     		}
 			goodsCategory = dictionaryService.getDictionaryByType(productType);
 			view.addObject("goodsCategory", goodsCategory);
+			
+			List<GoodsDictionary> productTypes = dictionaryService.getDictionaryByType("productType1");
+			view.addObject("productTypes", productTypes);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

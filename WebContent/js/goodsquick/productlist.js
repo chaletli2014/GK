@@ -1,5 +1,3 @@
-var goodsDictionaryURL = basePath + "getGoodsDics";
-var goodsDictionaryLikeURL = basePath + "getGoodsDicsLike";
 var typeDics;
 var nameDics;
 
@@ -7,7 +5,9 @@ jQuery(document).ready(function($){
 	initDics('productType1');
 	
 	$("#newProductLink").click(function(){
-		jQuery('#new_product_div').modal('show', {backdrop: 'static'});
+//		clearModifyProductForm();
+//		jQuery('#new_product_div').modal('show', {backdrop: 'static'});
+		window.location.href=basePath+"newProductPre";
 	});
 	
 	$("#productType").change(function(){
@@ -223,4 +223,17 @@ function submitProduct(){
 	}
 	
 	return true;
+}
+
+function clearModifyProductForm(){
+	$("#productType").val('');
+	$("#productName").val('');
+	$("#productPrice").val('');
+	$("#remark").val('');
+	
+	$("#productType").selectBoxIt().data("selectBoxIt");
+	$("#productType").data("selectBox-selectBoxIt").refresh();
+	
+	$("#productName").selectBoxIt().data("selectBoxIt");
+	$("#productName").data("selectBox-selectBoxIt").refresh();
 }

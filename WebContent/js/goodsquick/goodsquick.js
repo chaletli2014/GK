@@ -1,4 +1,10 @@
+var goodsDictionaryLikeURL;
+var goodsDictionaryURL;
+	
 jQuery(document).ready(function($){
+	goodsDictionaryURL = basePath + "getGoodsDics";
+	goodsDictionaryLikeURL = basePath + "getGoodsDicsLike";
+	
 	$("#nav_newrepository").click(function(){
 		jQuery('#addrepositorydiv').modal('show', {backdrop: 'fade'});
 		$("#repo_from_source").val('nav');
