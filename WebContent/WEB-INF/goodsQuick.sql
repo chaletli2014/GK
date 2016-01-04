@@ -681,3 +681,39 @@ ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT;
+
+--产品-电梯
+CREATE TABLE tbl_goods_product_lift (
+id  					int(11) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+code  					varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '电梯编码',
+liftBrand				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '电梯品牌',
+liftPurpose  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '电梯用途',
+liftStyle  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '电梯款型',
+liftCT  				double 			comment '载重量',
+liftNS  				double 			comment '额定速度',
+liftQA  				int 			comment '质保',
+price  					double 			comment '价格',
+holeSize  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '井道尺寸（宽*深）(mm)',
+pitDepth 				int 			comment '底坑深度(mm)',
+overheadHeight  		int				comment '顶层高度(mm)',
+reservation  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '门洞预留（宽*高）(mm)',
+roomSize  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '机房尺寸（宽*深）(mm)',
+roomHeight  			int				comment '机房净高(mm)',
+carSize  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '轿厢尺寸（宽*深）(mm)',
+carHeight  				int				comment '轿厢净高(mm)',
+doorSize  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '开门尺寸（宽*高）(mm)',
+mainPower  				int 			comment '主机功率(kw)',
+manufacturer  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '生产厂家',
+madeDate				datetime		comment '制造日期',
+create_user  			varchar(20),
+create_date				datetime,
+update_user				varchar(20),
+update_date				datetime,
+status					varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+remark					varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT;

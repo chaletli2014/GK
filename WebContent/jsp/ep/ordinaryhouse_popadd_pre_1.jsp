@@ -93,6 +93,7 @@
 		</div>
 	</div>
 	<%@include file="ordinaryhouse_popadd.jsp" %>
+	<%@include file="../productRepo/addLift.jsp" %>
 	<link rel="stylesheet" href="<%=basePath%>js/dropzone/css/dropzone.css">
 	<script src="<%=basePath%>js/dropzone/dropzone.min.js"></script>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">

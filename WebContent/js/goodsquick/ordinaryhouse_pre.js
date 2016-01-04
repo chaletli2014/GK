@@ -75,6 +75,33 @@ jQuery(document).ready(function($){
 		}
 	});
 	
+	$("#liftFinishWizard").click(function(){
+		if(!$("#liftBrand") || $("#liftBrand").val() == ''){
+			jAlert("品牌必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftPurpose") || $("#liftPurpose").val() == '' ){
+			jAlert("用途必选，否则无法提交","错误");
+			return false;
+		}if(!$("#liftStyle") || $("#liftStyle").val() == ''){
+			jAlert("款型必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftCT") || $("#liftCT").val() == ''){
+			jAlert("载重量必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftNS") || $("#liftNS").val() == ''){
+			jAlert("额定速度必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftQA") || $("#liftQA").val() == ''){
+			jAlert("质保必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftPrice") || $("#liftPrice").val() == ''){
+			jAlert("价格必填，否则无法提交","错误");
+			return false;
+		}else{
+			$("#addlift_form").submit();
+		}
+	});
+	
 	$("#servicefinishWizard").click(function(){
 		if(!$("#serviceName") || $("#serviceName").val() == ''){
 			jAlert("产品名称必填，否则无法完成注册","注意");
@@ -169,6 +196,8 @@ jQuery(document).ready(function($){
 		var childCategory = $("#childGoodsCategory").val();
 		if( childCategory == null || childCategory == '' ){
 			jAlert("请选择一个子分类，才能新增产品","错误");
+		}else if( childCategory == '4' ){
+			showPopDiv('newLiftDiv');
 		}else{
 			showPopDiv('newHouseDiv');
 		}
