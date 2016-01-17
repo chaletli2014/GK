@@ -30,7 +30,7 @@
 	<ul class="user-info-menu left-links list-inline list-unstyled">
 		<li class="hidden-sm hidden-xs">
 			<a href="#" data-toggle="sidebar">
-				<i class="fa-bars"></i>
+				<i class="fa-arrows-alt"></i>
 			</a>
 		</li>
 		<li class="dropdown hover-line">
@@ -63,6 +63,11 @@
 				</li>
 			</ul>
 		</li>
+		<%--
+		<li class="dropdown hover-line">
+			<span style="display:block;">库管理</span>
+		</li>
+		 --%>
 	</ul>
 	<!-- Right links for user info navbar -->
 	<ul class="user-info-menu right-links list-inline list-unstyled">

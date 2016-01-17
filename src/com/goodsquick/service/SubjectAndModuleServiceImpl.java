@@ -1,9 +1,11 @@
 package com.goodsquick.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -153,6 +155,25 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
 	public void deleteSubjectModule(GoodsHouseSubjectModule obj)
 			throws Exception {
 		subjectAndModuleDAO.deleteSubjectModule(obj);
+	}
+
+	@Override
+	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectIdAndModuleType(
+			int subjectId, String moduleType) throws Exception {
+		List<GoodsHouseSubjectModule> modules = new ArrayList<GoodsHouseSubjectModule>();
+		try{
+			if( StringUtils.isBlank(moduleType) ){
+				modules = subjectAndModuleDAO.getSubjectModulesBySubjectId(subjectId);
+			}else{
+				modules = subjectAndModuleDAO.getSubjectModulesBySubjectIdAndModuleType(subjectId, moduleType);
+			}
+		} catch(EmptyResultDataAccessException erd){
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get the subject module by subjectId and moduleType,",e);
+            return Collections.emptyList();
+        }
+		return modules;
 	}
 
 }

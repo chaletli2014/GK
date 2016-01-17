@@ -20,6 +20,7 @@ public interface SubjectAndModuleService {
 	public String getSubjectCodeByName(String subjectName) throws Exception;
 	
 	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectId(int subjectId) throws Exception;
+	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectIdAndModuleType(int subjectId, String moduleType) throws Exception;
 	public GoodsHouseSubjectModule getSubjectModuleByModuleId(int moduleId) throws Exception;
 	public void saveOrUpdateSubjectModule(GoodsHouseSubjectModule obj) throws Exception;
 	public void deleteSubjectModule(GoodsHouseSubjectModule obj) throws Exception;

@@ -36,7 +36,7 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div>
-						<div class="panel-heading" style="margin-top:20px;">
+						<div class="panel-heading">
 							<h3 class="panel-title" style="line-height: 28px; margin-right:10px;">产品信息</h3>
 							<a id="newProductLink">
 								<button class="btn btn-icon btn-info">
@@ -44,6 +44,17 @@
 								</button>
 							</a>
 						</div>
+						<div class="panel panel-color panel-success">
+						<a href="#" data-toggle="panel">
+						<div class="panel-heading" style="padding:10px 20px;margin-top:0px;">
+							<h3 class="panel-title">服务类产品</h3>
+							<div class="panel-options">
+								<span class="collapse-icon">&ndash;</span>
+								<span class="expand-icon">+</span>
+							</div>
+						</div>
+						</a>
+						<div class="panel-body">
 						<table class="table table-bordered table-striped" id="productTable">
 							<thead>
 								<tr>
@@ -57,8 +68,8 @@
 							<tbody class="middle-align">
 								<c:forEach items="${products}" var="product">
 									<tr>
-										<td class="ptype" title="${product.productType}">${product.productType}</td>
-										<td class="pname" title="${product.productName}">${product.productName}</td>
+										<td class="ptype" title="${product.productTypeDesc}">${product.productTypeDesc}</td>
+										<td class="pname" title="${product.productNameDesc}">${product.productNameDesc}</td>
 										<td class="pprice" title="${product.productPrice}">${product.productPrice}</td>
 										<td class="remark" title="${product.remark}">${product.remark}</td>
 										<td>
@@ -73,6 +84,50 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						</div>
+						</div>
+						<div class="panel panel-color panel-success">
+						<a href="#" data-toggle="panel">
+						<div class="panel-heading" style="padding:10px 20px;">
+							<h3 class="panel-title">实物类产品-电梯</h3>
+							<div class="panel-options">
+								<span class="collapse-icon">&ndash;</span>
+								<span class="expand-icon">+</span>
+							</div>
+						</div>
+						</a>
+						<div class="panel-body">
+						<table class="table table-bordered table-striped" id="liftTable">
+							<thead>
+								<tr>
+									<th>电梯品牌</th>
+									<th>电梯用途</th>
+									<th>电梯款型</th>
+									<th>产品价格</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody class="middle-align">
+								<c:forEach items="${lifts}" var="lift">
+									<tr>
+										<td class="liftBrand" title="${lift.liftBrand}">${lift.liftBrand}</td>
+										<td class="liftPurpose" title="${lift.liftPurposeDesc}">${lift.liftPurposeDesc}</td>
+										<td class="liftStyle" title="${lift.liftStyleDesc}">${lift.liftStyleDesc}</td>
+										<td class="liftPrice" title="${lift.price}">${lift.price}</td>
+										<td>
+											<a id="${lift.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyProduct">
+												编辑
+											</a>
+											<a id="${lift.id}" class="btn btn-danger btn-sm btn-icon icon-left removeProduct">
+												删除
+											</a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						</div>
+						</div>
 					</div>
 				</div>
 			</div>

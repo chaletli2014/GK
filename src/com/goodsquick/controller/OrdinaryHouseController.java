@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.Category;
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
 import com.goodsquick.model.GoodsHouseSP;
@@ -31,6 +32,7 @@ import com.goodsquick.service.GoodsServiceService;
 import com.goodsquick.service.MessageService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.service.RelationshipPropertyService;
+import com.goodsquick.service.SubjectAndModuleService;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
 
@@ -58,6 +60,10 @@ public class OrdinaryHouseController {
 	@Autowired
 	@Qualifier("messageService")
 	private MessageService messageService;
+	
+	@Autowired
+	@Qualifier("subjectAndModuleService")
+	private SubjectAndModuleService subjectAndModuleService;
 
     @RequestMapping("/ordinaryhouse")
     public ModelAndView ordinaryhouse(HttpServletRequest request){
@@ -74,6 +80,9 @@ public class OrdinaryHouseController {
     		List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
     		view.addObject("moduleTypes", moduleTypes);
     		
+    		List<Category> houseSubjects = subjectAndModuleService.getAllSubject();
+    		
+    		view.addObject("houseSubjects", houseSubjects);
         	view.addObject("opened", ",estate,resident,");
 			view.addObject("actived", ",ordinaryhouse,");
 		} catch (Exception e) {
@@ -134,6 +143,12 @@ public class OrdinaryHouseController {
 			List<GoodsDictionary> productTypes = dictionaryService.getDictionaryByType("productType1");
 			view.addObject("productTypes", productTypes);
 			
+			List<GoodsDictionary> liftPurpose = dictionaryService.getDictionaryByType("lift_purpose");
+			view.addObject("liftPurpose", liftPurpose);
+			
+			List<GoodsDictionary> liftStyle = dictionaryService.getDictionaryByType("lift_style");
+			view.addObject("liftStyle", liftStyle);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -184,26 +199,26 @@ public class OrdinaryHouseController {
     
     @RequestMapping("/addDeviceToOrdinaryHouse")
     public String addDevice2OrdinaryHouse(HttpServletRequest request){
-    	try {
-    		String orHouseId = request.getParameter("orHouseId");
-    		
-    		GoodsOrdinaryHouse orHouse = new GoodsOrdinaryHouse();
-    		if( null != orHouseId && !"".equalsIgnoreCase(orHouseId) ){
-    			orHouse = ordinaryHouseService.getGoodsOrdinaryHouseById(GoodsQuickUtils.parseIntegerFromString(orHouseId));
-    		}
-    		
-    		GoodsHouseDevice houseDevice = new GoodsHouseDevice();
-    		houseDevice.setOrHouseCode(orHouse.getHouseCode());
-    		populateDeviceInfo(houseDevice, request);
-    		
-    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-    		
-    		ordinaryHouseService.saveOrUpdateHouseDevice(houseDevice, orHouse, currentUser);
-    		
-    		request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_HOUSE_ID,orHouseId);
-    	} catch (Exception e) {
-    		logger.error(String.format("保存不动产设备失败,%s",e.getMessage()),e);
-    	}
+//    	try {
+//    		String orHouseId = request.getParameter("orHouseId");
+//    		
+//    		GoodsOrdinaryHouse orHouse = new GoodsOrdinaryHouse();
+//    		if( null != orHouseId && !"".equalsIgnoreCase(orHouseId) ){
+//    			orHouse = ordinaryHouseService.getGoodsOrdinaryHouseById(GoodsQuickUtils.parseIntegerFromString(orHouseId));
+//    		}
+//    		
+//    		GoodsHouseDevice houseDevice = new GoodsHouseDevice();
+//    		houseDevice.setOrHouseCode(orHouse.getHouseCode());
+//    		populateDeviceInfo(houseDevice, request);
+//    		
+//    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+//    		
+//    		ordinaryHouseService.saveOrUpdateHouseDevice(houseDevice, orHouse, currentUser);
+//    		
+//    		request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_HOUSE_ID,orHouseId);
+//    	} catch (Exception e) {
+//    		logger.error(String.format("保存不动产设备失败,%s",e.getMessage()),e);
+//    	}
     	
     	return "redirect:ordinaryHousedevice";
     }
@@ -455,38 +470,6 @@ public class OrdinaryHouseController {
     	return "redirect:houseSPManagement";
     }
     
-    @RequestMapping("/getBodyDetailsByType")
-    @ResponseBody
-    public Map<String,Object> getBodyDetailsByType(HttpServletRequest request){
-    	Map<String,Object> result = new HashMap<String,Object>();
-    	try {
-    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-    		
-    		String moduleType = request.getParameter("moduleType");
-    		List<String> dataList = new ArrayList<String>();
-    		if( "mt".equalsIgnoreCase(moduleType) ){
-    			dataList.add("1号门厅");
-    			dataList.add("2号门厅");
-    			dataList.add("3号门厅");
-    			dataList.add("4号门厅");
-    			dataList.add("5号门厅");
-    		}else if( "wq".equalsIgnoreCase(moduleType) ){
-    			dataList.add("1号外墙");
-    			dataList.add("2号外墙");
-    			dataList.add("3号外墙");
-    			dataList.add("4号外墙");
-    		}else if( "wd".equalsIgnoreCase(moduleType) ){
-    			dataList.add("整栋屋顶");
-    		}
-    		result.put("result", "Y");
-    		result.put("dataList", dataList);
-    	} catch (Exception e) {
-    		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
-    	}
-    	
-    	return result;
-    }
-    
     @RequestMapping("/updateRelationShipAjax")
     @ResponseBody
     public Map<String,String> updateRelationShipAjax(HttpServletRequest request){
@@ -667,20 +650,6 @@ public class OrdinaryHouseController {
     	ordinaryHouse.setPlanCarwayNum(GoodsQuickUtils.parseIntegerFromString(request.getParameter("planCarwayNum")));
     	ordinaryHouse.setActualSidewayNum(GoodsQuickUtils.parseIntegerFromString(request.getParameter("actualSidewayNum")));
     	ordinaryHouse.setActualCarwayNum(GoodsQuickUtils.parseIntegerFromString(request.getParameter("actualCarwayNum")));
-    }
-    
-    private void populateDeviceInfo(GoodsHouseDevice houseDevice, HttpServletRequest request){
-    	houseDevice.setOrHouseId(request.getParameter("orHouseId"));
-    	houseDevice.setDeviceType(request.getParameter("deviceType"));
-    	houseDevice.setDeviceName(request.getParameter("deviceName"));
-    	houseDevice.setManufacturerName(request.getParameter("manufacturerName"));
-    	houseDevice.setBrandName(request.getParameter("brandName"));
-    	houseDevice.setModel(request.getParameter("model"));
-    	
-    	String deviceNum = request.getParameter("deviceNum");
-    	if( null != deviceNum && !"".equalsIgnoreCase(deviceNum) ){
-    		houseDevice.setDeviceNum(GoodsQuickUtils.parseIntegerFromString(deviceNum));
-    	}
     }
     
     private void populateRelationshipInfo(GoodsRelationshipProperty relationshipProperty, HttpServletRequest request){

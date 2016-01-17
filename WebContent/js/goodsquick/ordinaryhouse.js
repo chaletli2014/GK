@@ -66,10 +66,13 @@ jQuery(document).ready(function($){
 		jQuery('#newHouseDiv').modal('show', {backdrop: 'static'});
 	});
 	$("#bodyModuleType").change(function(){
+		var subjectId = $("#houseSubjectId").val();
+		
 		jQuery.ajax({
 			url: basePath+"getBodyDetailsByType",
 			data:{
-				moduleType :this.value
+				moduleType :this.value,
+				subjectId : subjectId
 			},
 	        error : function() {
 	        },
@@ -78,7 +81,7 @@ jQuery(document).ready(function($){
 	        	var trList = data.dataList;
 	        	var tbody = "";
 	        	$.each(trList,function(n,value){
-	        		tbody = tbody + "<tr><td >"+value+"</td><td >"+value+"</td></tr>";
+	        		tbody = tbody + "<tr><td >"+value.moduleName+"</td><td >"+value.moduleDesc+"</td></tr>";
 	        	});
 	        	$('#bodyModuleDetailTable').find('tbody').html(tbody);
 	        }
@@ -130,6 +133,12 @@ jQuery(document).ready(function($){
 	});
 	$("#bodyModule_submitBtn").click(function(){
 		modifySubjectModule();
+	});
+	$("#eq_submitBtn").click(function(){
+		modifyHouseDevice();
+	});
+	$("#eqSubject").change(function(){
+		populateModule();
 	});
 });
 
@@ -198,6 +207,77 @@ function modifySubjectModule(){
 			}
 		}
     });
+}
+
+function modifyHouseDevice(){
+	var eqType = $("#eqType_new").val();
+	var eqName = $("#eqName").val();
+	var eqBrand = $("#eqBrand").val();
+	var eqStyle = $("#eqStyle").val();
+	var eqDesc = $("#eqDesc").val();
+	var subjectId = $("#eqSubject").val();
+	var moduleId = $("#eqModule").val();
+	jQuery.ajax({
+		url: basePath+"saveHouseDevice",
+		data:{
+			eqType : eqType,
+			eqName : eqName,
+			eqBrand : eqBrand,
+			eqStyle : eqStyle,
+			eqDesc : eqDesc,
+			eqSubject : subjectId,
+			eqModule : moduleId
+		}
+	,success: function(response){
+		var result = response.result;
+		if( result == 'Y' ){
+			jAlert("保存成功","提醒",function(){
+				jQuery.ajax({
+					url: basePath+"houseDevicelist",
+					success : function(data) {
+						$("#moduleEquDetailTable").find('tbody').html("");
+						var trList = data.modules;
+						var tbody = "";
+						$.each(trList,function(n,module){
+							tbody = tbody + "<tr><td >"+module.moduleName+"</td><td >"+module.moduleDesc+"</td></tr>";
+						});
+						$("#moduleEquDetailTable").find('tbody').html(tbody);
+						
+						$("#newEquDiv").fadeOut();
+						$("#equInfo").fadeIn();
+					}
+				});
+			});
+		}else{
+			jAlert("保存失败","提醒");
+		}
+	}
+	});
+}
+
+function populateModule(){
+	var subjectId = $("#eqSubject").val();
+	jQuery.ajax({
+		url: basePath+"subjectmodulelist",
+		data:{
+			subjectId : subjectId
+		}
+		,success : function(data) {
+			var modules = data.modules;
+			
+			$("#eqModule option[value!='']").remove();
+			var childSelection = "";
+			
+			$.each(modules,function(n,value) {
+				childSelection = childSelection + "<option value='"+value.id+"'>"+value.moduleName+"</option>";
+			});
+			
+			$("#eqModule").append(childSelection);
+			
+			$("#eqModule").selectBoxIt().data("selectBoxIt");
+			$("#eqModule").data("selectBox-selectBoxIt").refresh();
+		}
+	});
 }
 
 function clearNewModuleForm(){

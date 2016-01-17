@@ -1,57 +1,56 @@
 package com.goodsquick.model;
 
-import java.util.Date;
 
-public class GoodsHouseDevice {
+public class GoodsHouseDevice extends BaseObject{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3900785899561048589L;
 
 	private int id;
 	
 	/**
-	 * 不动产ID
+	 * 设备类型编码
 	 */
-	private String orHouseId;
+	private String eqTypeCode;
 	
 	/**
-	 * 不动产编码
+	 * 设备类型名称
 	 */
-	private String orHouseCode;
-	
-	/**
-	 * 设备分类编码
-	 */
-	private String deviceType;
+	private String eqTypeName;
 	
 	/**
 	 * 设备名称
 	 */
-	private String deviceName;
+	private String name;
 	
 	/**
-	 * 制造商名称
+	 * 设备品牌
 	 */
-	private String manufacturerName;
+	private String brand;
 	
 	/**
-	 * 品牌
+	 * 款型
 	 */
-	private String brandName;
+	private String style;
 	
 	/**
-	 * 规格型号
+	 * 描述
 	 */
-	private String model;
+	private String eqDesc;
 	
 	/**
-	 * 数量
+	 * 主体ID
 	 */
-	private int deviceNum;
+	private int subjectId;
+	
+	/**
+	 * 构件ID
+	 */
+	private int moduleId;
 	
 	private String status;
-	
-	private Date createDate;
-	private String createUser;
-	private Date updateDate;
-	private String updateUser;
 	
 	public int getId() {
 		return id;
@@ -59,77 +58,53 @@ public class GoodsHouseDevice {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public String getEqTypeCode() {
+		return eqTypeCode;
 	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setEqTypeCode(String eqTypeCode) {
+		this.eqTypeCode = eqTypeCode;
 	}
-	public String getCreateUser() {
-		return createUser;
+	public String getEqTypeName() {
+		return eqTypeName;
 	}
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
+	public void setEqTypeName(String eqTypeName) {
+		this.eqTypeName = eqTypeName;
 	}
-	public Date getUpdateDate() {
-		return updateDate;
+	public String getName() {
+		return name;
 	}
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getUpdateUser() {
-		return updateUser;
+	public String getBrand() {
+		return brand;
 	}
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
-	public String getOrHouseId() {
-		return orHouseId;
+	public String getStyle() {
+		return style;
 	}
-	public void setOrHouseId(String orHouseId) {
-		this.orHouseId = orHouseId;
+	public void setStyle(String style) {
+		this.style = style;
 	}
-	public String getOrHouseCode() {
-		return orHouseCode;
+	public String getEqDesc() {
+		return eqDesc;
 	}
-	public void setOrHouseCode(String orHouseCode) {
-		this.orHouseCode = orHouseCode;
+	public void setEqDesc(String eqDesc) {
+		this.eqDesc = eqDesc;
 	}
-	public String getDeviceType() {
-		return deviceType;
+	public int getSubjectId() {
+		return subjectId;
 	}
-	public void setDeviceType(String deviceType) {
-		this.deviceType = deviceType;
+	public void setSubjectId(int subjectId) {
+		this.subjectId = subjectId;
 	}
-	public String getDeviceName() {
-		return deviceName;
+	public int getModuleId() {
+		return moduleId;
 	}
-	public void setDeviceName(String deviceName) {
-		this.deviceName = deviceName;
-	}
-	public String getManufacturerName() {
-		return manufacturerName;
-	}
-	public void setManufacturerName(String manufacturerName) {
-		this.manufacturerName = manufacturerName;
-	}
-	public String getBrandName() {
-		return brandName;
-	}
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
-	}
-	public String getModel() {
-		return model;
-	}
-	public void setModel(String model) {
-		this.model = model;
-	}
-	public int getDeviceNum() {
-		return deviceNum;
-	}
-	public void setDeviceNum(int deviceNum) {
-		this.deviceNum = deviceNum;
+	public void setModuleId(int moduleId) {
+		this.moduleId = moduleId;
 	}
 	public String getStatus() {
 		return status;

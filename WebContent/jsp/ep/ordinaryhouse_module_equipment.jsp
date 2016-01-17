@@ -15,6 +15,7 @@
 						aoColumns: [
 							null,
 							null,
+							null,
 							null
 						],
 						"bLengthChange": true,
@@ -26,13 +27,13 @@
 					<script type="text/javascript">
 						jQuery(document).ready(function($)
 						{
-							$("#equModuleType").selectBoxIt().on('open', function()
+							$("#eqType").selectBoxIt().on('open', function()
 							{
 								$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
 							});
 						});
 					</script>
-					<select class="form-control" id="equModuleType" name="equModuleType">
+					<select class="form-control" id="eqType" name="eqType">
 						<option value="">请选择设施设备类别</option>
 						<option value="dt" title="">电梯</option>
 						<option value="sb" title="">水泵</option>
@@ -53,7 +54,8 @@
 						<tr>
 							<th>设施设备名称</th>
 							<th>设施设备描述</th>
-							<th>设施设备位置</th>
+							<th>隶属主体</th>
+							<th>隶属构件</th>
 						</tr>
 					</thead>
 					<tbody class="middle-align">
@@ -61,44 +63,33 @@
 							<td >1-1号电梯</td>
 							<td >1号楼电梯1</td>
 							<td >1号主体</td>
-						</tr>
-						<tr>
-							<td >1-2号电梯</td>
-							<td >1号楼电梯2</td>
 							<td >1号主体</td>
 						</tr>
-						<tr>
-							<td >2-1号电梯</td>
-							<td >2号楼电梯1</td>
-							<td >2号主体</td>
-						</tr>
-						<tr>
-							<td >2-1号电梯</td>
-							<td >2号楼电梯1</td>
-							<td >2号主体</td>
-						</tr>
-						<tr>
-							<td >2-1号电梯</td>
-							<td >2号楼电梯1</td>
-							<td >2号主体</td>
-						</tr>
+						<c:forEach items="${devices}" var="device">
+							<tr>
+								<td >${device.name}</td>
+								<td >${device.desc}</td>
+								<td >${device.subjectName}</td>
+								<td >${device.moduleName}</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 			<div style="float:right;width:48%;padding-top:18px;margin-left:4px;display: none;" id="newEquDiv">
 				<div class="form-group">
 					<label class="col-sm-4 control-label" for="field-1">设施设备分类</label>
-					<div class="col-sm-10">
+					<div class="col-sm-6">
 						<script type="text/javascript">
 							jQuery(document).ready(function($)
 							{
-								$("#equModuleType_new").selectBoxIt().on('open', function()
+								$("#eqType_new").selectBoxIt().on('open', function()
 								{
 									$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
 								});
 							});
 						</script>
-						<select class="form-control" id="equModuleType_new" name="equModuleType_new">
+						<select class="form-control" id="eqType_new" name="eqType">
 							<option value="">请选择设施设备类别</option>
 							<option value="dt" title="">电梯</option>
 							<option value="sb" title="">水泵</option>
@@ -109,39 +100,68 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-4 control-label" for="field-1">设施设备名称</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="dicName" name="dicName" data-validate="required" data-message-required="名称不能为空">
+					<label class="col-sm-4 control-label" for="eqName">设施设备名称</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="eqName" name="eqName" data-validate="required" data-message-required="名称不能为空">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-4 control-label" for="field-1">设施设备描述</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="dicCode" name="dicCode">
+					<label class="col-sm-4 control-label" for="eqBrand">设施设备品牌</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="eqBrand" name="eqBrand" data-validate="required" data-message-required="品牌不能为空">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-4 control-label" for="field-1">所在位置</label>
-					<div class="col-sm-10">
+					<label class="col-sm-4 control-label" for="eqStyle">设施设备款型</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="eqStyle" name="eqStyle" data-validate="required" data-message-required="款型不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="eqDesc">设施设备描述</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="eqDesc" name="eqDesc">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="eqSubject">隶属主体</label>
+					<div class="col-sm-6">
 						<script type="text/javascript">
 							jQuery(document).ready(function($)
 							{
-								$("#equBodyModule").selectBoxIt().on('open', function()
+								$("#eqSubject").selectBoxIt().on('open', function()
 								{
 									$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
 								});
 							});
 						</script>
-						<select class="form-control" id="equBodyModule" name="equBodyModule">
-							<option value="">公共</option>
-							<option value="1" title="">1号主体</option>
-							<option value="2" title="">2号主体</option>
-							<option value="3" title="">3号主体</option>
+						<select class="form-control" id="eqSubject" name="eqSubject">
+							<option value="">--请选择--</option>
+							<c:forEach items="${houseSubjects}" var="subject">
+								<option value="${subject.id}" title="${subject.name}">${subject.name}</option>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="eqModule">隶属构件</label>
+					<div class="col-sm-6">
+						<script type="text/javascript">
+							jQuery(document).ready(function($)
+							{
+								$("#eqModule").selectBoxIt().on('open', function()
+								{
+									$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
+								});
+							});
+						</script>
+						<select class="form-control" id="eqModule" name="eqModule">
+							<option value="">--请选择--</option>
 						</select>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-success">提交</button>
+					<button id="eq_submitBtn" class="btn btn-success">提交</button>
 					<button id="equ_cancelBtn" class="btn btn-white">取消</button>
 				</div>
 			</div>

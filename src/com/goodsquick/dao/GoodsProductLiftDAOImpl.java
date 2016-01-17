@@ -16,15 +16,22 @@ public class GoodsProductLiftDAOImpl extends BaseDAOImpl implements GoodsProduct
 	public List<GoodsProductLift> getGoodsProductLiftByRepositoryCode(
 			String repositoryCode) throws Exception {
 		List<GoodsProductLift> dtList = new ArrayList<GoodsProductLift>();
-        String sql = "select * from tbl_goods_product_lift where repository_code = ? and status = '1' ";
-        dtList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new GoodsProductLiftRowMapper());
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select gp.*,gd1.dic_name as liftPurposeDesc,gd2.dic_name as liftStyleDesc ");
+		sql.append(" from tbl_goods_product_lift gp, tbl_goods_dictionary gd1, tbl_goods_dictionary gd2 ");
+		sql.append(" where gp.repository_code = ? and gp.status = '1' and gp.liftPurpose = gd1.dic_code and gp.liftStyle = gd2.dic_code ");
+        dtList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new GoodsProductLiftRowMapper());
         return dtList;
 	}
 
 	@Override
 	public GoodsProductLift getGoodsProductLiftById(int productLiftId) throws Exception {
-		String sql = "select * from tbl_goods_product_lift where id = ?";
-        return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{productLiftId}, new GoodsProductLiftRowMapper());
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select gp.*,gd1.dic_name as liftPurposeDesc,gd2.dic_name as liftStyleDesc ");
+		sql.append(" from tbl_goods_product_lift gp, tbl_goods_dictionary gd1, tbl_goods_dictionary gd2 ");
+		sql.append(" where gp.id = ? and gp.liftPurpose = gd1.dic_code and gp.liftStyle = gd2.dic_code ");
+		
+        return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{productLiftId}, new GoodsProductLiftRowMapper());
 	}
 
 	@Override
@@ -33,11 +40,11 @@ public class GoodsProductLiftDAOImpl extends BaseDAOImpl implements GoodsProduct
 		StringBuilder sql = new StringBuilder("insert into tbl_goods_product_lift(id");
         sql.append(",code,liftBrand,liftPurpose,liftStyle,liftCT,liftNS,liftQA,price ");
         sql.append(",holeSize,pitDepth,overheadHeight,reservation,roomSize,roomHeight,carSize,carHeight,doorSize,mainPower,manufacturer,madeDate ");
-        sql.append(",create_date,create_user,update_date,update_user,status,remark)");
+        sql.append(",repository_code,create_date,create_user,update_date,update_user,status,remark)");
 		sql.append("values(null");
 		sql.append(",?,?,?,?,?,?,?,?");
 		sql.append(",?,?,?,?,?,?,?,?,?,?,?,?");
-		sql.append(",now(),?,now(),?,'1',?)");
+		sql.append(",?,now(),?,now(),?,'1',?)");
 
 		List<Object> params = new ArrayList<Object>();
 		params.add(goodsProductLift.getCode());
@@ -60,6 +67,7 @@ public class GoodsProductLiftDAOImpl extends BaseDAOImpl implements GoodsProduct
 		params.add(goodsProductLift.getMainPower());
 		params.add(goodsProductLift.getManufacturer());
 		params.add(goodsProductLift.getMadeDate());
+		params.add(goodsProductLift.getRepositoryCode());
 		params.add(currentUser.getLoginName());
 		params.add(currentUser.getLoginName());
 		params.add(goodsProductLift.getRemark());

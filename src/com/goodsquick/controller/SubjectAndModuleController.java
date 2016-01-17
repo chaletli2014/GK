@@ -165,4 +165,24 @@ public class SubjectAndModuleController {
 		
 		return resultMap;
 	}
+	
+    @RequestMapping("/getBodyDetailsByType")
+    @ResponseBody
+    public Map<String,Object> getBodyDetailsByType(HttpServletRequest request){
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	try {
+    		String moduleType = request.getParameter("moduleType");
+    		int subjectId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("subjectId"));
+    		List<GoodsHouseSubjectModule> moduleList = new ArrayList<GoodsHouseSubjectModule>();
+    		
+    		moduleList = subjectAndModuleService.getSubjectModulesBySubjectIdAndModuleType(subjectId, moduleType);
+    		
+    		result.put("result", "Y");
+    		result.put("dataList", moduleList);
+    	} catch (Exception e) {
+    		logger.error("ordinaryHousedevice: 获取不动产服务商信息失败",e);
+    	}
+    	
+    	return result;
+    }
 }

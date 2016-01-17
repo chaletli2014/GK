@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.cxf.common.util.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -145,20 +144,19 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 				continue;
 			}
 			
-			final String houseCode = house2.getHouseCode();
-			List<GoodsHouseDevice> houseDevices = house2.getHouseDevices();
-			if( !CollectionUtils.isEmpty(houseDevices) ){
-				for( GoodsHouseDevice device : houseDevices ){
-					device.setOrHouseCode(houseCode);
-				}
-				ordinaryHouseDAO.saveOrdinaryHouseDeviceFromFile(houseDevices);
-			}
+//			final String houseCode = house2.getHouseCode();
+//			List<GoodsHouseDevice> houseDevices = house2.getHouseDevices();
+//			if( !CollectionUtils.isEmpty(houseDevices) ){
+//				for( GoodsHouseDevice device : houseDevices ){
+//					device.setOrHouseCode(houseCode);
+//				}
+//				ordinaryHouseDAO.saveOrdinaryHouseDeviceFromFile(houseDevices);
+//			}
 		}
 	}
 
 	@Override
-	public void saveOrUpdateHouseDevice(GoodsHouseDevice houseDevice,
-			GoodsOrdinaryHouse ordinaryHouse, WebUserInfo currentUser)
+	public void saveOrUpdateHouseDevice(GoodsHouseDevice houseDevice, WebUserInfo currentUser)
 			throws Exception {
 		int deviceId = houseDevice.getId();
 		
@@ -167,8 +165,8 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 			houseDevice.setUpdateUser(currentUser.getLoginName());
 			ordinaryHouseDAO.saveHouseDevice(houseDevice);
 		}else{
-			ordinaryHouse.setUpdateUser(currentUser.getLoginName());
-			ordinaryHouse.setUpdateDate(new Date());
+			houseDevice.setUpdateUser(currentUser.getLoginName());
+			houseDevice.setUpdateDate(new Date());
 			ordinaryHouseDAO.updateHouseDevice(houseDevice);
 		}
 	}
@@ -184,6 +182,18 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
             logger.error(String.format("fail to get the house device by user code %s,", currentUser.getLoginName()),e);
             return Collections.emptyList();
         }
+	}
+	
+	@Override
+	public List<GoodsHouseDevice> getAllHouseDeviceByRepositoryCode(String repositoryCode) throws Exception {
+		try{
+			return ordinaryHouseDAO.getAllHouseDeviceByRepositoryCode(repositoryCode);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error(String.format("fail to get the house device by repository code %s,",repositoryCode),e);
+			return Collections.emptyList();
+		}
 	}
 
 	@Override

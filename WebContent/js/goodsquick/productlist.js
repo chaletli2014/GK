@@ -2,7 +2,8 @@ var typeDics;
 var nameDics;
 
 jQuery(document).ready(function($){
-	initDics('productType1');
+	initDataTable();
+	initLiftTable();
 	
 	$("#newProductLink").click(function(){
 //		clearModifyProductForm();
@@ -140,31 +141,6 @@ jQuery(document).ready(function($){
 	});
 });
 
-function initDics(dicTypeParam){
-	jQuery.ajax({
-		url: goodsDictionaryURL,
-		data:{
-			dicType : dicTypeParam
-		}
-		,success: function(response){
-			typeDics = response.dics;
-			initProductName();
-		}
-	});
-}
-function initProductName(){
-	jQuery.ajax({
-		url: goodsDictionaryLikeURL,
-		data:{
-			dicType : 'producttype_'
-		}
-		,success: function(response){
-			nameDics = response.dics;
-			initDataTable();
-		}
-	});
-}
-
 function initDataTable(){
 	$("#productTable").dataTable({
 		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>",
@@ -174,38 +150,25 @@ function initDataTable(){
         null,//价格
         null,//备注
         null//操作
-        ],
-        "aoColumnDefs": [
-         {
-        	 "render": function (data, type, full) {
-        		 return getDicNameByCode(typeDics,data);
-        	 },
-        	 "targets": 0
-         },
-         {
-        	 "render": function (data, type, full) {
-        		 return getDicNameByCode(nameDics,data);
-        	 },
-        	 "targets": 1
-         },
-         {
-        	 "render": function (data, type, full) {
-        		 return data;
-        	 },
-        	 "targets": 2
-         },
-         {
-        	 "render": function (data, type, full) {
-        		 return data;
-        	 },
-        	 "targets": 3
-         },
-         ]
+        ]
 	});
 	
 	$("#productTable").dataTable().yadcf([
 		{column_number : 0}
 	]);
+}
+
+function initLiftTable(){
+	$("#liftTable").dataTable({
+		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>",
+		aoColumns: [
+        null,//电梯品牌
+        null,//电梯用途
+        null,//电梯款型
+        null,//产品价格
+        null//操作
+        ]
+	});
 }
 
 function submitProduct(){

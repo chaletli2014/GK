@@ -1,7 +1,6 @@
 package com.goodsquick.service;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -14,7 +13,7 @@ import com.goodsquick.dao.GoodsProductLiftDAO;
 import com.goodsquick.model.GoodsProductLift;
 import com.goodsquick.model.WebUserInfo;
 
-@Service("goodsProductLiftLiftService")
+@Service("goodsProductLiftService")
 public class GoodsProductLiftServiceImpl implements GoodsProductLiftService {
 	private Logger logger = Logger.getLogger(this.getClass());
 
@@ -46,13 +45,8 @@ public class GoodsProductLiftServiceImpl implements GoodsProductLiftService {
 		int productId = goodsProductLift.getId();
 		
 		if( 0 == productId ){
-			goodsProductLift.setCreateUser(currentUser.getLoginName());
-			goodsProductLift.setUpdateUser(currentUser.getLoginName());
 			goodsProductLiftDAO.saveGoodsProductLift(goodsProductLift, currentUser);
 		}else{
-			goodsProductLift.setUpdateUser(currentUser.getLoginName());
-			goodsProductLift.setUpdateDate(new Date());
-			
 			goodsProductLiftDAO.updateGoodsProductLift(goodsProductLift, currentUser);
 		}
 	}

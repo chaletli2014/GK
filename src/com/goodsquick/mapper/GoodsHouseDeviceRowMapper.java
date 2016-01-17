@@ -12,17 +12,18 @@ public class GoodsHouseDeviceRowMapper implements RowMapper<GoodsHouseDevice>{
     public GoodsHouseDevice mapRow(ResultSet rs, int i) throws SQLException {
     	GoodsHouseDevice dbGoodsHouseDevice = new GoodsHouseDevice();
     	dbGoodsHouseDevice.setId(rs.getInt("id"));
-    	dbGoodsHouseDevice.setOrHouseCode(rs.getString("house_code"));
-    	dbGoodsHouseDevice.setDeviceType(rs.getString("device_type"));
-    	dbGoodsHouseDevice.setDeviceName(rs.getString("device_name"));
-    	dbGoodsHouseDevice.setManufacturerName(rs.getString("manufacturer_name"));
-    	dbGoodsHouseDevice.setBrandName(rs.getString("brand_name"));
-    	dbGoodsHouseDevice.setModel(rs.getString("model"));
-    	dbGoodsHouseDevice.setDeviceNum(rs.getInt("device_num"));
+    	dbGoodsHouseDevice.setEqTypeCode(rs.getString("eq_type_code"));
+    	dbGoodsHouseDevice.setEqTypeName(rs.getString("eq_type_name"));
+    	dbGoodsHouseDevice.setName(rs.getString("name"));
+    	dbGoodsHouseDevice.setBrand(rs.getString("brand"));
+    	dbGoodsHouseDevice.setStyle(rs.getString("style"));
+    	dbGoodsHouseDevice.setEqDesc(rs.getString("eq_desc"));
+    	dbGoodsHouseDevice.setSubjectId(rs.getInt("subjectId"));
+    	dbGoodsHouseDevice.setModuleId(rs.getInt("moduleId"));
     	dbGoodsHouseDevice.setCreateUser(rs.getString("create_user"));
-    	dbGoodsHouseDevice.setCreateDate(rs.getDate("createdate"));
+    	dbGoodsHouseDevice.setCreateDate(rs.getDate("create_date"));
     	dbGoodsHouseDevice.setUpdateUser(rs.getString("update_user"));
-    	dbGoodsHouseDevice.setUpdateDate(rs.getDate("updatedate"));
+    	dbGoodsHouseDevice.setUpdateDate(rs.getDate("update_date"));
     	dbGoodsHouseDevice.setStatus(rs.getString("status"));
         return dbGoodsHouseDevice;
     }

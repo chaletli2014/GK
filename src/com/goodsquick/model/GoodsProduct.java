@@ -13,7 +13,9 @@ public class GoodsProduct extends BaseObject{
 	
 	private int id;
 	private String productType;
+	private String productTypeDesc;
 	private String productName;
+	private String productNameDesc;
 	private double productPrice;
 	private String repositoryCode;
 	private String status;
@@ -60,5 +62,17 @@ public class GoodsProduct extends BaseObject{
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getProductTypeDesc() {
+		return productTypeDesc;
+	}
+	public void setProductTypeDesc(String productTypeDesc) {
+		this.productTypeDesc = productTypeDesc;
+	}
+	public String getProductNameDesc() {
+		return productNameDesc;
+	}
+	public void setProductNameDesc(String productNameDesc) {
+		this.productNameDesc = productNameDesc;
 	}
 }

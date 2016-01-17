@@ -11,7 +11,9 @@ public class GoodsProductRowMapper implements RowMapper<GoodsProduct>{
     	GoodsProduct dbProduct = new GoodsProduct();
     	dbProduct.setId(rs.getInt("id"));
     	dbProduct.setProductType(rs.getString("product_type"));
+    	dbProduct.setProductTypeDesc(rs.getString("product_type_desc"));
     	dbProduct.setProductName(rs.getString("product_name"));
+    	dbProduct.setProductNameDesc(rs.getString("product_name_desc"));
     	dbProduct.setProductPrice(rs.getDouble("product_price"));
     	dbProduct.setRepositoryCode(rs.getString("repository_code"));
     	dbProduct.setCreateDate(rs.getDate("create_date"));

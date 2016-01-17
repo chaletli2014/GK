@@ -28,6 +28,7 @@ public interface OrdinaryHouseDAO {
 	public void updateHouseDevice(GoodsHouseDevice houseDevice) throws Exception;
 	
 	public List<GoodsHouseDevice> getAllHouseDeviceByUser(GoodsOrdinaryHouse ordinaryHouse, WebUserInfo currentUser) throws Exception;
+	public List<GoodsHouseDevice> getAllHouseDeviceByRepositoryCode(String repositoryCode) throws Exception;
 	
 	public void updateSP2House(String updateSQL, List<Object> params) throws Exception;
 	

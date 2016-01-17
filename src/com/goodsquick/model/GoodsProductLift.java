@@ -26,14 +26,24 @@ public class GoodsProductLift extends BaseObject{
 	private String liftBrand;
 	
 	/**
-	 * 电梯用途
+	 * 电梯用途code
 	 */
 	private String liftPurpose;
+	
+	/**
+	 * 电梯用途名称
+	 */
+	private String liftPurposeDesc;
 	
 	/**
 	 * 电梯款型
 	 */
 	private String liftStyle;
+	
+	/**
+	 * 电梯款型名称
+	 */
+	private String liftStyleDesc;
 	
 	/**
 	 * 载重量
@@ -107,6 +117,8 @@ public class GoodsProductLift extends BaseObject{
 	 * 制造日期
 	 */
 	private Date madeDate;
+	
+	private String repositoryCode;
 	
 	private String status;
 	
@@ -250,6 +262,24 @@ public class GoodsProductLift extends BaseObject{
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getRepositoryCode() {
+		return repositoryCode;
+	}
+	public void setRepositoryCode(String repositoryCode) {
+		this.repositoryCode = repositoryCode;
+	}
+	public String getLiftPurposeDesc() {
+		return liftPurposeDesc;
+	}
+	public void setLiftPurposeDesc(String liftPurposeDesc) {
+		this.liftPurposeDesc = liftPurposeDesc;
+	}
+	public String getLiftStyleDesc() {
+		return liftStyleDesc;
+	}
+	public void setLiftStyleDesc(String liftStyleDesc) {
+		this.liftStyleDesc = liftStyleDesc;
 	}
 	
 }

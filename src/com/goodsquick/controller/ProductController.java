@@ -17,9 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsProduct;
-import com.goodsquick.model.GoodsRepository;
+import com.goodsquick.model.GoodsProductLift;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
+import com.goodsquick.service.GoodsProductLiftService;
 import com.goodsquick.service.GoodsProductService;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
@@ -37,22 +38,28 @@ public class ProductController {
 	@Qualifier("goodsProductService")
 	private GoodsProductService goodsProductService;
 	
+	@Autowired
+	@Qualifier("goodsProductLiftService")
+	private GoodsProductLiftService goodsProductLiftService;
+	
 	@RequestMapping("/productlist")
     public ModelAndView productlist(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
         try {
-        	WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
         	String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
     		
         	List<GoodsProduct> products = goodsProductService.getGoodsProductByRepositoryCode(repositoryCode);
         	
         	List<GoodsDictionary> productTypes = dictionaryService.getDictionaryByType("productType1");
         	
+        	List<GoodsProductLift> lifts = goodsProductLiftService.getGoodsProductLiftByRepositoryCode(repositoryCode);
+        	
+        	view.addObject("lifts", lifts);
         	view.addObject("products", products);
         	view.addObject("productTypes", productTypes);
 			view.addObject("actived", ",productlist,");
 		} catch (Exception e) {
-			
+			logger.error("fail to show product list,",e);
 		}
         
         view.setViewName("productRepo/productlist");

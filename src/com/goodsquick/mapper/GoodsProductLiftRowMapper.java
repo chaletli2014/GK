@@ -13,7 +13,9 @@ public class GoodsProductLiftRowMapper implements RowMapper<GoodsProductLift>{
     	dbLift.setCode(rs.getString("code"));
     	dbLift.setLiftBrand(rs.getString("liftBrand"));
     	dbLift.setLiftPurpose(rs.getString("liftPurpose"));
+    	dbLift.setLiftPurposeDesc(rs.getString("liftPurposeDesc"));
     	dbLift.setLiftStyle(rs.getString("liftStyle"));
+    	dbLift.setLiftStyleDesc(rs.getString("liftStyleDesc"));
     	dbLift.setLiftCT(rs.getDouble("liftCT"));
     	dbLift.setLiftNS(rs.getDouble("liftNS"));
     	dbLift.setLiftQA(rs.getInt("liftQA"));
@@ -30,6 +32,7 @@ public class GoodsProductLiftRowMapper implements RowMapper<GoodsProductLift>{
     	dbLift.setMainPower(rs.getInt("mainPower"));
     	dbLift.setManufacturer(rs.getString("manufacturer"));
     	dbLift.setMadeDate(rs.getDate("madeDate"));
+    	dbLift.setRepositoryCode(rs.getString("repository_code"));
     	dbLift.setCreateDate(rs.getDate("create_date"));
     	dbLift.setUpdateDate(rs.getDate("update_date"));
     	dbLift.setCreateUser(rs.getString("create_user"));

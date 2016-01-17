@@ -25,7 +25,7 @@ import com.goodsquick.utils.DataBean;
 import com.goodsquick.utils.GoodsJDBCTemplate;
 
 @Repository("ordinaryHouseDAO")
-public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
+public class OrdinaryHouseDAOImpl extends BaseDAOImpl implements OrdinaryHouseDAO {
 
 	@Autowired
 	@Qualifier("dataBean")
@@ -299,25 +299,25 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 	
 	@Override
 	public void saveOrdinaryHouseDeviceFromFile(List<GoodsHouseDevice> houseDevices) throws Exception {
-		for( GoodsHouseDevice houseDevice : houseDevices ){
-			StringBuilder sql = new StringBuilder("insert into tbl_goods_house_device(id,house_code,device_type,device_name,manufacturer_name ");
-			sql.append(",brand_name,model,device_num ");
-			sql.append(",createdate,create_user,updatedate,update_user,status ) values ");
-			sql.append("(null,?,?,?,?");
-			sql.append(",?,?,?");
-			sql.append(",now(),'admin',now(),'admin','1')");
-			
-			List<Object> params = new ArrayList<Object>();
-			params.add(houseDevice.getOrHouseCode());
-			params.add(houseDevice.getDeviceType());
-			params.add(houseDevice.getDeviceName());
-			params.add(houseDevice.getManufacturerName());
-			params.add(houseDevice.getBrandName());
-			params.add(houseDevice.getModel());
-			params.add(houseDevice.getDeviceNum());
-			
-			dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
-		}
+//		for( GoodsHouseDevice houseDevice : houseDevices ){
+//			StringBuilder sql = new StringBuilder("insert into tbl_goods_house_device(id,house_code,device_type,device_name,manufacturer_name ");
+//			sql.append(",brand_name,model,device_num ");
+//			sql.append(",createdate,create_user,updatedate,update_user,status ) values ");
+//			sql.append("(null,?,?,?,?");
+//			sql.append(",?,?,?");
+//			sql.append(",now(),'admin',now(),'admin','1')");
+//			
+//			List<Object> params = new ArrayList<Object>();
+//			params.add(houseDevice.getOrHouseCode());
+//			params.add(houseDevice.getDeviceType());
+//			params.add(houseDevice.getDeviceName());
+//			params.add(houseDevice.getManufacturerName());
+//			params.add(houseDevice.getBrandName());
+//			params.add(houseDevice.getModel());
+//			params.add(houseDevice.getDeviceNum());
+//			
+//			dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
+//		}
 	}
 
 	@Override
@@ -325,11 +325,10 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		
 		final StringBuilder sql = new StringBuilder(300);
-		sql.append("insert into tbl_goods_house_device(id,house_code,device_type,device_name,manufacturer_name ");
-        sql.append(",brand_name,model,device_num");
-        sql.append(",createdate,create_user,updatedate,update_user,status )");
-		sql.append("values(null,?,?,?,?");
-		sql.append(",?,?,?");
+		sql.append("insert into tbl_goods_house_device");
+		sql.append("(id,eq_type,name,brand,style,eq_desc,subjectId,moduleId ");
+		sql.append(",create_date,create_user,update_date,update_user,status ) ");
+		sql.append("values(null,?,?,?,?,?,?,?");
 		sql.append(",now(),?,now(),?,'1')");
 		
 		dataBean.getJdbcTemplate().update(new PreparedStatementCreator(){
@@ -338,13 +337,13 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
                     Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql.toString(),Statement.RETURN_GENERATED_KEYS);
                 int i = 1;
-                ps.setString(i++, houseDevice.getOrHouseCode());
-                ps.setString(i++, houseDevice.getDeviceType());
-                ps.setString(i++, houseDevice.getDeviceName());
-                ps.setString(i++, houseDevice.getManufacturerName());
-                ps.setString(i++, houseDevice.getBrandName());
-                ps.setString(i++, houseDevice.getModel());
-                ps.setInt(i++, houseDevice.getDeviceNum());
+                ps.setString(i++, houseDevice.getEqTypeCode());
+                ps.setString(i++, houseDevice.getName());
+                ps.setString(i++, houseDevice.getBrand());
+                ps.setString(i++, houseDevice.getStyle());
+                ps.setString(i++, houseDevice.getEqDesc());
+                ps.setInt(i++, houseDevice.getSubjectId());
+                ps.setInt(i++, houseDevice.getModuleId());
                 ps.setString(i++, houseDevice.getCreateUser());
                 ps.setString(i++, houseDevice.getUpdateUser());
                 return ps;
@@ -356,20 +355,19 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 	@Override
 	public void updateHouseDevice(GoodsHouseDevice houseDevice)
 			throws Exception {
-		StringBuilder sql = new StringBuilder(150);
+		StringBuilder sql = new StringBuilder(200);
 		sql.append("update tbl_goods_house_device ");
-        sql.append("set device_name = ?, manufacturer_name = ?, brand_name = ?");
-		sql.append(",model = ?,device_num = ?");
-        sql.append(",update_date = ?,update_user = ? ");
-		sql.append("where id = ? ");
+        sql.append("set name = ?, brand = ?, style = ?, eq_desc = ?, subjectId = ?, moduleId = ?");
+        sql.append(",update_date = ?,update_user = ? where id = ? ");
 		
 		List<Object> params = new ArrayList<Object>();
 		
-		params.add(houseDevice.getDeviceName());
-		params.add(houseDevice.getManufacturerName());
-		params.add(houseDevice.getBrandName());
-		params.add(houseDevice.getModel());
-		params.add(houseDevice.getDeviceNum());
+		params.add(houseDevice.getName());
+		params.add(houseDevice.getBrand());
+		params.add(houseDevice.getStyle());
+		params.add(houseDevice.getEqDesc());
+		params.add(houseDevice.getSubjectId());
+		params.add(houseDevice.getModuleId());
 		params.add(houseDevice.getUpdateDate());
 		params.add(houseDevice.getUpdateUser());
 		params.add(houseDevice.getId());
@@ -392,6 +390,20 @@ public class OrdinaryHouseDAOImpl implements OrdinaryHouseDAO {
 		sql.append(" and hd.create_user = ? and hd.status = '1'");
         ohDeviceList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{ordinaryHouse.getHouseCode(),currentUser.getLoginName()}, new GoodsHouseDeviceRowMapper());
         return ohDeviceList;
+	}
+	
+	@Override
+	public List<GoodsHouseDevice> getAllHouseDeviceByRepositoryCode(String repositoryCode) throws Exception {
+		List<GoodsHouseDevice> ohDeviceList = new ArrayList<GoodsHouseDevice>();
+		StringBuilder sql = new StringBuilder(500);
+		sql.append(" select hd.id,hd.eq_type as eq_type_code,gd.dic_name as eq_type_name, hd.name");
+		sql.append(" ,hd.brand,hd.style,hd.eq_desc,hd.subjectId,hd.moduleId");
+		sql.append(" ,hd.create_user,hd.create_date,hd.update_user,hd.update_date,hd.status");
+		sql.append(" from tbl_goods_house_device hd, tbl_goods_house_subject hs, tbl_goods_dictionary gd ");
+		sql.append(" where hs.repository_code = ? and hd.subjectId = hs.id and hd.eq_type = gd.dic_code ");
+		sql.append(" and hd.status = '1'");
+		ohDeviceList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new GoodsHouseDeviceRowMapper());
+		return ohDeviceList;
 	}
 
 	@Override

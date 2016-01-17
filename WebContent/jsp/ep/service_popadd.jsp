@@ -32,7 +32,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-sm-4 control-label form_input_required" for="productName">产品名称</label>
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<script type="text/javascript">
 									jQuery(document).ready(function($)
 									{

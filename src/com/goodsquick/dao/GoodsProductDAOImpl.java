@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.goodsquick.mapper.GoodsProductRowMapper;
-import com.goodsquick.mapper.GoodsServiceRowMapper;
 import com.goodsquick.model.GoodsProduct;
 import com.goodsquick.model.WebUserInfo;
 
@@ -17,15 +16,22 @@ public class GoodsProductDAOImpl extends BaseDAOImpl implements GoodsProductDAO{
 	public List<GoodsProduct> getGoodsProductByRepositoryCode(
 			String repositoryCode) throws Exception {
 		List<GoodsProduct> dtList = new ArrayList<GoodsProduct>();
-        String sql = "select * from tbl_goods_product where repository_code = ? and status = '1' ";
-        dtList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new GoodsProductRowMapper());
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select gp.*,td.dic_name as product_type_desc,nd.dic_name as product_name_desc ");
+		sql.append(" from tbl_goods_product gp, tbl_goods_dictionary td, tbl_goods_dictionary nd ");
+		sql.append(" where gp.repository_code = ? and gp.status = '1' and gp.product_type = td.dic_code and gp.product_name = nd.dic_code ");
+		
+        dtList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new GoodsProductRowMapper());
         return dtList;
 	}
 
 	@Override
 	public GoodsProduct getGoodsProductById(int productId) throws Exception {
-		String sql = "select * from tbl_goods_product where id = ?";
-        return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{productId}, new GoodsProductRowMapper());
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select gp.*,td.dic_name as product_type_desc,nd.dic_name as product_name_desc ");
+		sql.append(" from tbl_goods_product gp, tbl_goods_dictionary td, tbl_goods_dictionary nd ");
+		sql.append(" where gp.id = ? and gp.product_type = td.dic_code and gp.product_name = nd.dic_code ");
+        return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{productId}, new GoodsProductRowMapper());
 	}
 
 	@Override

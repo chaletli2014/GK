@@ -284,17 +284,17 @@ ROW_FORMAT=COMPACT
 --不动产设备表
 CREATE TABLE tbl_goods_house_device (
 id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
-house_code			varchar(200)	comment '不动产编码',
-device_type			varchar(200)	comment '设备分类',
-device_name			varchar(200)	comment '设备名称',
-manufacturer_name	varchar(200) 	comment '生产制造商名称',
-brand_name			varchar(200) 	comment '品牌名称',
-model				varchar(200) 	comment '规格型号',
-device_num			int 			comment '设备数量',
+eq_type				varchar(20)		comment '设施设备分类',
+name				varchar(200)	comment '设备名称',
+brand				varchar(200)	comment '设备品牌',
+style				varchar(200) 	comment '设备款型',
+eq_desc				varchar(200) 	comment '描述',
+subjectId			int 			comment '隶属主体ID',
+moduleId			int 			comment '隶属构件ID',
 create_user  		varchar(20),
-createdate			datetime,
+create_date			datetime,
 update_user			varchar(20),
-updatedate			datetime,
+update_date			datetime,
 status  			varchar(2) 		DEFAULT NULL ,
 PRIMARY KEY (id)
 )
@@ -654,6 +654,7 @@ subject_code  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DE
 subject_desc  			varchar(200) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 parentId  				int(11) 		NULL DEFAULT NULL ,
 has_child  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' ,
+repository_code  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' ,
 PRIMARY KEY (id)
 )
 ENGINE=InnoDB
@@ -705,6 +706,7 @@ doorSize  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAU
 mainPower  				int 			comment '主机功率(kw)',
 manufacturer  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '生产厂家',
 madeDate				datetime		comment '制造日期',
+repository_code  		varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 create_user  			varchar(20),
 create_date				datetime,
 update_user				varchar(20),

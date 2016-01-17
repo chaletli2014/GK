@@ -106,11 +106,12 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 		List<Object> params = new ArrayList<Object>();
 		
 		sql.append(" insert into tbl_goods_house_subject_module(");
-		sql.append(" id,subject_id,module_code,module_name,module_desc ");
+		sql.append(" id,subject_id,module_type_code,module_code,module_name,module_desc ");
 		sql.append(" ,create_date,create_user,update_date,update_user,status,remark ) ");
-		sql.append(" values(null,?,?,?,?,now(),?,now(),?,'1','*')");
+		sql.append(" values(null,?,?,?,?,?,now(),?,now(),?,'1','*')");
 		
 		params.add(obj.getSubjectId());
+		params.add(obj.getModuleTypeCode());
 		params.add(obj.getModuleCode());
 		params.add(obj.getModuleName());
 		params.add(obj.getModuleDesc());
@@ -127,5 +128,14 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 		params.add(obj.getUpdateUser());
 		params.add(obj.getId());
 		super.deleteObj("tbl_goods_house_subject_module", params);
+	}
+
+	@Override
+	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectIdAndModuleType(
+			int subjectId, String moduleType) throws Exception {
+		List<GoodsHouseSubjectModule> moduleList = new ArrayList<GoodsHouseSubjectModule>();
+        String sql = "select * from tbl_goods_house_subject_module where subject_id = ? and module_type_code = ?";
+        moduleList = dataBean.getJdbcTemplate().query(sql, new Object[]{subjectId,moduleType}, new GoodsHouseSubjectModuleRowMapper());
+        return moduleList;
 	}
 }

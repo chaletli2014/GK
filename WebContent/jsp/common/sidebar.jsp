@@ -23,7 +23,7 @@
 			<!-- logo -->
 			<div class="logo">
 				<a href="<%=request.getParameter("basePath") %>index" class="logo-expanded">
-					<img src="<%=request.getParameter("basePath")%>images/logo-white.png" alt="" width="80px" height="30px"/>
+					<img src="<%=request.getParameter("basePath")%>images/logo_new.png" alt="" width="80px" height="26px"/>
 				</a>
 			</div>
 			<!-- This will toggle the mobile menu and will be visible only on mobile devices -->
@@ -36,12 +36,13 @@
 					<i class="fa-bars"></i>
 				</a>
 			</div>
-			<!-- This will open the popup with user profile settings, you can use for any purpose, just be creative -->
+			<%--
 			<div class="settings-icon" title="编辑用户">
 				<a href="#" data-toggle="settings-pane" data-animate="true">
 					<i class="linecons-cog"></i>
 				</a>
 			</div>
+			 --%>
 		</header>
 		<ul id="main-menu" class="main-menu">
 			<li>

@@ -145,14 +145,14 @@ public class ExcelUtils {
                 	ordinaryHouse.setStartMonth(startMonth);
                 	ordinaryHouse.setFloorSpace(floorSpace);
                 	
-                	List<GoodsHouseDevice> deviceList = new ArrayList<GoodsHouseDevice>();
-                	GoodsHouseDevice houseDevice = new GoodsHouseDevice();
-                	houseDevice.setBrandName(brandName);
-                	houseDevice.setDeviceNum(deviceNum);
-                	houseDevice.setDeviceType("lift_system");
-                	deviceList.add(houseDevice);
-                	
-                	ordinaryHouse.setHouseDevices(deviceList);
+//                	List<GoodsHouseDevice> deviceList = new ArrayList<GoodsHouseDevice>();
+//                	GoodsHouseDevice houseDevice = new GoodsHouseDevice();
+//                	houseDevice.setBrandName(brandName);
+//                	houseDevice.setDeviceNum(deviceNum);
+//                	houseDevice.setDeviceType("lift_system");
+//                	deviceList.add(houseDevice);
+//                	
+//                	ordinaryHouse.setHouseDevices(deviceList);
                     
                 	ordinaryHouses.add(ordinaryHouse);
                 }

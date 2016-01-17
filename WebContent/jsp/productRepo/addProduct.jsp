@@ -7,12 +7,13 @@
 				<h4 class="modal-title">产品编辑</h4>
 			</div>
 			<input type="hidden" name="productId" id="productId">
+			<div class="form-horizontal">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<div class="col-md-12">
+					<div class="col-md-10">
 						<div class="form-group">
 							<label class="col-sm-4 control-label form_input_required" for="productType">产品类目</label>
-							<div class="col-sm-6">
+							<div class="col-sm-8">
 								<script type="text/javascript">
 									jQuery(document).ready(function($)
 									{
@@ -53,13 +54,13 @@
 						</div>
 						<div class="form-group">
 							<label class="col-sm-4 control-label form_input_required" for="productPrice">产品价格</label>
-							<div class="col-sm-6">
+							<div class="col-sm-8">
 								<input type="text" class="form-control" id="productPrice" name="productPrice" value="${product.productPrice}" data-validate="required" data-message-required="价格不能为空">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-4 control-label" for="remark">备注</label>
-							<div class="col-sm-10">
+							<div class="col-sm-8">
 								<input type="text" class="form-control" id="remark" name="remark" value="${product.remark}">
 							</div>
 						</div>
@@ -72,6 +73,7 @@
 						<button class="btn btn-success" id="addNewProductBtn">提交</button>
 					</div>
 				</div>
+			</div>
 			</div>
 		</div>
 	</div>
