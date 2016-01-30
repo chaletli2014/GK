@@ -2,20 +2,24 @@ package com.goodsquick.service;
 
 import java.util.List;
 
-import com.goodsquick.model.Category;
+import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.model.CategoryJsonObj;
 import com.goodsquick.model.GoodsHouseSubjectModule;
 
 public interface SubjectAndModuleService {
 
-	public List<Category> getChildSubjectByParentId(int parentId) throws Exception;
-	public List<Category> getChildSubjectByParentCode(String parentCode) throws Exception;
+	public List<GoodsSubject> getChildSubjectByParentId(int parentId) throws Exception;
+	public List<GoodsSubject> getChildSubjectByParentCode(String parentCode) throws Exception;
 	
-	public List<Category> getAllSubject() throws Exception;
+	public List<GoodsSubject> getSubjectByLevel(String level, String repositoryCode) throws Exception;
+	public List<GoodsSubject> getAllSubject(String repositoryCode) throws Exception;
+	public List<GoodsSubject> getAllSubjectWithRoot(String repositoryCode) throws Exception;
 	
-	public Category getSubjectInfoById(int subjectId) throws Exception;
+	public GoodsSubject getSubjectInfoById(int subjectId) throws Exception;
 	
-	public void saveOrupdateSubject(List<CategoryJsonObj> subjects) throws Exception;
+	public void saveOrupdateSubject(List<CategoryJsonObj> subjects, String repositoryCode) throws Exception;
+	public void saveOrUpdateSubject(GoodsSubject goodsSubject, String repositoryCode) throws Exception;
+	public void saveOrUpdateSubject(List<GoodsSubject> goodsSubjects, String currentUser, String repositoryCode) throws Exception;
 	
 	public String getSubjectCodeByName(String subjectName) throws Exception;
 	

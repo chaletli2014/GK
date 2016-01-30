@@ -4,7 +4,8 @@
  *
 */
 
-body {	
+body {
+	font-size: 14px;
 }
 
 a {
@@ -285,4 +286,28 @@ div.showDetailDiv .form-group{
 }
 .module_detail_cursorTd{
 	background:url(../images/arrow_blue.png) no-repeat top right;
+}
+
+.sidebar_title{
+	background: #6f777c;
+	height:50px;
+	line-height: 50px;
+}
+.sidebar_title span{
+	color:#ffffff;
+	font-size:22px;
+	margin-left:40px;
+	margin-top:10px;
+}
+.page-title div{
+	margin-left:28px;
+}
+.page-title div button{
+	margin-top:10px;
+}
+.subject_tip{
+	background: #dddddd;
+	padding:8px;
+	padding-left:20px;
+	margin-left:20px;
 }

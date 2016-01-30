@@ -653,7 +653,7 @@ subject_name  			varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DE
 subject_code  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 subject_desc  			varchar(200) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 parentId  				int(11) 		NULL DEFAULT NULL ,
-has_child  				varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' ,
+subject_level			varchar(2)		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 repository_code  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' ,
 PRIMARY KEY (id)
 )

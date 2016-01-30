@@ -115,6 +115,8 @@ jQuery(document).ready(function($){
 							</blockquote>
 						</div>
 						<div style="width:40%;float:right;">
+							<img alt="" src=""/>
+							<%--
 							<ul class="sp_list">
 								<li class="sp_list_item">
 									<a href="javascript:void(0)" id="publicBody">
@@ -135,6 +137,7 @@ jQuery(document).ready(function($){
 									</a>
 								</li>
 							</ul>
+							 --%>
 						</div>
 					</c:if>
 					<%--

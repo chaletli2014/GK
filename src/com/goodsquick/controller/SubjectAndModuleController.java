@@ -2,6 +2,7 @@ package com.goodsquick.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goodsquick.model.Category;
 import com.goodsquick.model.CategoryJsonObj;
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseSubjectModule;
+import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
 import com.goodsquick.service.SubjectAndModuleService;
@@ -26,6 +27,9 @@ import com.goodsquick.utils.GoodsCollectionUtils;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 @Controller
@@ -46,7 +50,7 @@ public class SubjectAndModuleController {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("common/subjectListIframe");
 		
-		List<Category> houseSubjectList = new ArrayList<Category>();
+		List<GoodsSubject> houseSubjectList = new ArrayList<GoodsSubject>();
 		
 		try {
 			houseSubjectList = subjectAndModuleService.getChildSubjectByParentId(0);
@@ -58,27 +62,28 @@ public class SubjectAndModuleController {
 		return view;
 	}
 	
-	@ResponseBody
-	@RequestMapping("/subjectlist")
-	public List<CategoryJsonObj> subjectlist(HttpServletRequest request){
+	@RequestMapping("/subjectList")
+	public ModelAndView subjectList(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("subjectModule/subjectList");
 		
-		List<CategoryJsonObj> houseSubjectJsons = new ArrayList<CategoryJsonObj>();
+		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 		try {
-			List<Category> subjectList = subjectAndModuleService.getAllSubject();
-			for( Category cat : subjectList ){
-				CategoryJsonObj houseSubjectJson = new CategoryJsonObj();
-				houseSubjectJson.setId(cat.getId());
-				houseSubjectJson.setName(cat.getName());
-				houseSubjectJson.setpId(cat.getParentId());
-				houseSubjectJsons.add(houseSubjectJson);
-			}
+			String level = request.getParameter("level");
+			List<GoodsSubject> subjectList = subjectAndModuleService.getSubjectByLevel(level, repositoryCode);
+			List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
 			
-			request.getSession().setAttribute("houseSubjectList", houseSubjectJsons);
+			view.addObject("moduleTypes", moduleTypes);
+			view.addObject("subjectList", subjectList);
+			view.addObject("level", level);
+			
+			view.addObject("opened", ",ordinaryhouse,subjectModule,");
+			view.addObject("actived", ",subject"+level+",");
 		} catch (Exception e) {
 			logger.error("fail to get the house subject,",e);
 		}
 		
-		return houseSubjectJsons;
+		return view;
 	}
 	
 	@ResponseBody
@@ -87,8 +92,8 @@ public class SubjectAndModuleController {
 		String treeNodes = request.getParameter("treeNodes");
 		Map<String,String> returnedMap = new HashMap<String,String>();
 		
+		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 		Gson gson = new Gson();
-		
 		List<CategoryJsonObj> list = gson.fromJson(treeNodes, new TypeToken<List<CategoryJsonObj>>(){}.getType());
 		
 		List<CategoryJsonObj> existslist = (List<CategoryJsonObj>)request.getSession().getAttribute("houseSubjectList");
@@ -96,7 +101,7 @@ public class SubjectAndModuleController {
 		List<CategoryJsonObj> diffSubject = null;
 		try {
 			diffSubject = GoodsCollectionUtils.getDifferentCategoryList(existslist, list);
-			subjectAndModuleService.saveOrupdateSubject(diffSubject);
+			subjectAndModuleService.saveOrupdateSubject(diffSubject,repositoryCode);
 			returnedMap.put("result", "Y");
 		} catch (Exception e) {
 			logger.error("fail to get different subject,",e);
@@ -113,9 +118,15 @@ public class SubjectAndModuleController {
 		try {
 			int subjectId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("subjectId"));
 			List<GoodsHouseSubjectModule> subjectModuleList = subjectAndModuleService.getSubjectModulesBySubjectId(subjectId);
+			
+			String subjectName = subjectAndModuleService.getSubjectInfoById(subjectId).getName();
+			
 			resultMap.put("modules", subjectModuleList);
+			resultMap.put("subjectName", subjectName);
+			resultMap.put("result", "Y");
 		} catch (Exception e) {
 			logger.error("fail to get the house subject module,",e);
+			resultMap.put("result", "N");
 		}
 		
 		return resultMap;
@@ -185,4 +196,68 @@ public class SubjectAndModuleController {
     	
     	return result;
     }
+    
+
+	@ResponseBody
+	@RequestMapping("/saveOrUpdateSubject")
+	public Map<String,Object> saveOrUpdateSubject(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		try {
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			
+			String subjectListFromPage = request.getParameter("subjectList");
+			
+			Gson gson = new Gson();
+			JsonParser parser = new JsonParser();
+			JsonElement el = parser.parse(subjectListFromPage);
+			
+			JsonArray subjectArray = new JsonArray();
+			if(el.isJsonArray()){
+				subjectArray = el.getAsJsonArray();
+			}
+			
+			Iterator it = subjectArray.iterator();
+			List<GoodsSubject> subjectList = new ArrayList<GoodsSubject>();
+			while(it.hasNext()){
+				JsonElement e = (JsonElement)it.next();
+				//JsonElement转换为JavaBean对象
+				subjectList.add(gson.fromJson(e, GoodsSubject.class));
+			}
+			
+			subjectAndModuleService.saveOrUpdateSubject(subjectList,currentUser.getLoginName(),repositoryCode);
+			
+			resultMap.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("fail to modify the house subject,",e);
+			resultMap.put("result", "N");
+		}
+		return resultMap;
+	}
+
+	@ResponseBody
+	@RequestMapping("/getParentSubjectListByLevel")
+	public Map<String,Object> getParentSubjectListByLevel(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		try {
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			String subjectLevel = request.getParameter("subjectLevel");
+			if( "2".equalsIgnoreCase(subjectLevel) ){
+				subjectLevel = "1";
+			}else if( "3".equalsIgnoreCase(subjectLevel) ){
+				subjectLevel = "2";
+			}
+			
+			List<GoodsSubject> subjectList = subjectAndModuleService.getSubjectByLevel(subjectLevel,repositoryCode);
+			
+			resultMap.put("result", "Y");
+			resultMap.put("subjectList", subjectList);
+		} catch (Exception e) {
+			logger.error("fail to modify the house subject,",e);
+			resultMap.put("result", "N");
+		}
+		return resultMap;
+	}
 }

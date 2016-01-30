@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goodsquick.model.Category;
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
 import com.goodsquick.model.GoodsHouseSP;
@@ -26,6 +25,7 @@ import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.GoodsServiceDetail;
+import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
 import com.goodsquick.service.GoodsServiceService;
@@ -80,9 +80,6 @@ public class OrdinaryHouseController {
     		List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
     		view.addObject("moduleTypes", moduleTypes);
     		
-    		List<Category> houseSubjects = subjectAndModuleService.getAllSubject();
-    		
-    		view.addObject("houseSubjects", houseSubjects);
         	view.addObject("opened", ",estate,resident,");
 			view.addObject("actived", ",ordinaryhouse,");
 		} catch (Exception e) {

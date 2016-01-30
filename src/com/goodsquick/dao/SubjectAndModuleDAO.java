@@ -2,22 +2,27 @@ package com.goodsquick.dao;
 
 import java.util.List;
 
-import com.goodsquick.model.Category;
+import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.model.CategoryJsonObj;
 import com.goodsquick.model.GoodsHouseSubjectModule;
 
 public interface SubjectAndModuleDAO {
 
-	public List<Category> getChildSubjectByParentId(int parentId) throws Exception;
-	public List<Category> getChildSubjectByParentCode(String parentCode) throws Exception;
+	public List<GoodsSubject> getChildSubjectByParentId(int parentId) throws Exception;
+	public List<GoodsSubject> getChildSubjectByParentCode(String parentCode) throws Exception;
 	
-	public List<Category> getAllSubject() throws Exception;
+	public List<GoodsSubject> getSubjectByLevel(String level,String repositoryCode) throws Exception;
+	public List<GoodsSubject> getAllSubject(String repositoryCode) throws Exception;
+	public List<GoodsSubject> getAllSubjectWithRoot(String repositoryCode) throws Exception;
 	
-	public Category getSubjectInfoById(int subjectId) throws Exception;
+	public GoodsSubject getSubjectInfoById(int subjectId) throws Exception;
 	
+	public void addSubject(CategoryJsonObj obj, String repositoryCode) throws Exception;
 	public void updateSubject(CategoryJsonObj obj) throws Exception;
-	public void addSubject(CategoryJsonObj obj) throws Exception;
 	public void deleteSubject(CategoryJsonObj obj) throws Exception;
+
+	public void addSubject(GoodsSubject obj, String repositoryCode) throws Exception;
+	public void updateSubject(GoodsSubject obj) throws Exception;
 	
 	public String getSubjectCodeByName(String subjectName) throws Exception;
 	

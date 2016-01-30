@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.goodsquick.dao.SubjectAndModuleDAO;
-import com.goodsquick.model.Category;
+import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.model.CategoryJsonObj;
 import com.goodsquick.model.GoodsHouseSubjectModule;
 import com.goodsquick.utils.GoodsQuickAttributes;
@@ -29,7 +29,7 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
 	private SubjectAndModuleDAO subjectAndModuleDAO;
 	
 	@Override
-	public List<Category> getChildSubjectByParentId(int parentId)
+	public List<GoodsSubject> getChildSubjectByParentId(int parentId)
 			throws Exception {
 		try{
 			return subjectAndModuleDAO.getChildSubjectByParentId(parentId);
@@ -42,7 +42,7 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
 	}
 	
 	@Override
-	public List<Category> getChildSubjectByParentCode(String parentCode)
+	public List<GoodsSubject> getChildSubjectByParentCode(String parentCode)
 			throws Exception {
 		try{
 			return subjectAndModuleDAO.getChildSubjectByParentCode(parentCode);
@@ -55,21 +55,21 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
 	}
 
 	@Override
-	public Category getSubjectInfoById(int subjectId) throws Exception {
+	public GoodsSubject getSubjectInfoById(int subjectId) throws Exception {
 		try{
 			return subjectAndModuleDAO.getSubjectInfoById(subjectId);
 		} catch(EmptyResultDataAccessException erd){
-            return new Category();
+            return new GoodsSubject();
         } catch(Exception e){
             logger.error("fail to get the subject info by id,",e);
-            return new Category();
+            return new GoodsSubject();
         }
 	}
 
 	@Override
-	public List<Category> getAllSubject() throws Exception {
+	public List<GoodsSubject> getSubjectByLevel(String level,String repositoryCode) throws Exception {
 		try{
-			return subjectAndModuleDAO.getAllSubject();
+			return subjectAndModuleDAO.getSubjectByLevel(level, repositoryCode);
 		} catch(EmptyResultDataAccessException erd){
             return Collections.emptyList();
         } catch(Exception e){
@@ -77,18 +77,81 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public List<GoodsSubject> getAllSubject(String repositoryCode) throws Exception {
+		try{
+			return subjectAndModuleDAO.getAllSubject(repositoryCode);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get all the subject,",e);
+			return Collections.emptyList();
+		}
+	}
+	
+	@Override
+	public List<GoodsSubject> getAllSubjectWithRoot(String repositoryCode) throws Exception {
+		try{
+			return subjectAndModuleDAO.getAllSubjectWithRoot(repositoryCode);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get all the subject,",e);
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	@Transactional
-	public void saveOrupdateSubject(List<CategoryJsonObj> subjects) throws Exception {
+	public void saveOrupdateSubject(List<CategoryJsonObj> subjects, String repositoryCode) throws Exception {
 		try{
 			for( CategoryJsonObj obj : subjects ){
 				if( GoodsQuickAttributes.STATUS_UPDATE.equalsIgnoreCase(obj.getStatus()) ){
 					subjectAndModuleDAO.updateSubject(obj);
 				}else if( GoodsQuickAttributes.STATUS_NEW.equalsIgnoreCase(obj.getStatus()) ){
-					subjectAndModuleDAO.addSubject(obj);
+					subjectAndModuleDAO.addSubject(obj, repositoryCode);
 				}else if( GoodsQuickAttributes.STATUS_DELETE.equalsIgnoreCase(obj.getStatus()) ){
 					subjectAndModuleDAO.deleteSubject(obj);
+				}
+			}
+		}catch(Exception e){
+			logger.error("fail to save Or update subject,",e);
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void saveOrUpdateSubject(GoodsSubject goodsSubject, String repositoryCode) throws Exception {
+		try{
+			int subjectId = goodsSubject.getId();
+			if( subjectId == 0 ){
+				subjectAndModuleDAO.addSubject(goodsSubject, repositoryCode);
+			}else{
+				subjectAndModuleDAO.updateSubject(goodsSubject);
+			}
+		}catch(Exception e){
+			logger.error("fail to save Or update subject,",e);
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void saveOrUpdateSubject(List<GoodsSubject> goodsSubjects, String currentUser, String repositoryCode) throws Exception {
+		try{
+			for( GoodsSubject goodsSubject : goodsSubjects ){
+				
+				int subjectId = goodsSubject.getId();
+				if( subjectId == 0 ){
+					goodsSubject.setRepositoryCode(repositoryCode);
+					goodsSubject.setCreateUser(currentUser);
+					goodsSubject.setUpdateUser(currentUser);
+					subjectAndModuleDAO.addSubject(goodsSubject, repositoryCode);
+				}else{
+					goodsSubject.setUpdateUser(currentUser);
+					subjectAndModuleDAO.updateSubject(goodsSubject);
 				}
 			}
 		}catch(Exception e){

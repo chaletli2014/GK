@@ -15,6 +15,16 @@
 	WebUserInfo webUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	
 	GoodsRepository currentRepository = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
+	
+	String manageName = "资品管理";
+	String manageLink = request.getParameter("basePath")+"ordinaryhouse";
+	if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
+		manageName = "产品管理";
+		manageLink = request.getParameter("basePath")+"productlist";
+	}else if("2".equalsIgnoreCase(currentRepository.getRepositoryType())){
+		manageName = "货品管理";
+		manageLink = request.getParameter("basePath")+"productlist";
+	}
 %>
 
 <div class="sidebar-menu toggle-others">
@@ -44,11 +54,16 @@
 			</div>
 			 --%>
 		</header>
+		<div class="sidebar_title">
+			<span>
+				<%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%>
+			</span>
+		</div>
 		<ul id="main-menu" class="main-menu">
 			<li>
 				<a href="<%=request.getParameter("basePath") %>index">
 					<i class="linecons-desktop"></i>
-					<span>首页</span>
+					<span>视窗看板</span>
 				</a>
 			</li>
 			<%if( "admin".equalsIgnoreCase(webUser.getLoginName()) ) {%>
@@ -106,15 +121,57 @@
 				</ul>
 			</li>
 			<%} %>
-			<li <% if( actived.indexOf(",ordinaryhouse,")>-1|| actived.indexOf(",productlist,")>-1 ){ %>class="active"<%} %>>
-				<%if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){%>
-				<a href="<%=request.getParameter("basePath")%>productlist">
-				<%}else{ %>
-				<a href="<%=request.getParameter("basePath")%>ordinaryhouse">
-				<%} %>
+			<li <% if( opened.indexOf(",ordinaryhouse,")>-1|| opened.indexOf(",productlist,")>-1 ){ %>class="active opened"<%} %>>
+				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-database"></i>
-					<span class="title"><%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%></span>
+					<span class="title"><%=manageName %></span>
 				</a>
+				<ul>
+					<li <% if( actived.indexOf(",ordinaryhouse,")>-1|| actived.indexOf(",productlist,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=manageLink%>">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">基本信息</span>
+						</a>
+					</li>
+					<li <% if( opened.indexOf(",subjectModule,")>-1 ){ %>class="active opened"<%} %>>
+						<a href="#" onclick="javascript:void(0)">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">主体构件</span>
+						</a>
+						<ul>
+							<li <% if( actived.indexOf(",subject1,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>subjectList?level=1">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">一级主体</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",subject2,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>subjectList?level=2">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">二级主体</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",subject3,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>subjectList?level=3">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">三级主体</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li <% if( actived.indexOf(",trusteeshipService,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseDeviceList">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">设施设备</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseOtherList">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">材料 & 装饰</span>
+						</a>
+					</li>
+				</ul>
 			</li>
 			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened"<%} %>>
 				<a href="#" onclick="javascript:void(0)">

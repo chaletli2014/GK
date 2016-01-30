@@ -18,6 +18,8 @@ public class GoodsHouseSubjectModule extends BaseObject{
 	private String moduleCode;
 	private String moduleDesc;
 	
+	private String moduleTypeName;
+	
 	public int getId() {
 		return id;
 	}
@@ -53,5 +55,14 @@ public class GoodsHouseSubjectModule extends BaseObject{
 	}
 	public void setModuleDesc(String moduleDesc) {
 		this.moduleDesc = moduleDesc;
+	}
+	public String getModuleTypeName() {
+		return moduleTypeName;
+	}
+	public void setModuleTypeName(String moduleTypeName) {
+		this.moduleTypeName = moduleTypeName;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 }

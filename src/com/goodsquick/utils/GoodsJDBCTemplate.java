@@ -2,6 +2,7 @@ package com.goodsquick.utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -29,5 +30,24 @@ public class GoodsJDBCTemplate {
             }
         }, keyHolder);
 		return keyHolder.getKey().intValue();
+	}
+	
+	/**
+	 * 判断查询结果集中是否存在某列
+	 * @param rs 查询结果集
+	 * @param columnName 列名
+	 * @return true 存在; false 不存咋
+	 */
+	public static boolean isExistColumn(ResultSet rs, String columnName) {
+	    try {
+	        if (rs.findColumn(columnName) > 0 ) {
+	            return true;
+	        } 
+	    }
+	    catch (SQLException e) {
+	        return false;
+	    }
+	     
+	    return false;
 	}
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goodsquick.model.GoodsHouseDevice;
-import com.goodsquick.model.GoodsHouseSubjectModule;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.utils.GoodsQuickAttributes;

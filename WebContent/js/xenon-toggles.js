@@ -117,11 +117,13 @@
 				
 				if(public_vars.$sidebarMenu.hasClass('collapsed'))
 				{
+					$('.sidebar_title').css('display','block');
 					public_vars.$sidebarMenu.removeClass('collapsed');
 					ps_init();
 				}
 				else
 				{
+					$('.sidebar_title').css('display','none');
 					public_vars.$sidebarMenu.addClass('collapsed');
 					ps_destroy();
 				}

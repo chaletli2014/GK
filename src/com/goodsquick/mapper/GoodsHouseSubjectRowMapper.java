@@ -5,18 +5,23 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.goodsquick.model.Category;
+import com.goodsquick.model.GoodsSubject;
+import com.goodsquick.utils.GoodsJDBCTemplate;
 
-public class GoodsHouseSubjectRowMapper implements RowMapper<Category>{
+public class GoodsHouseSubjectRowMapper implements RowMapper<GoodsSubject>{
     @Override
-    public Category mapRow(ResultSet rs, int i) throws SQLException {
-    	Category dbHouseSubject = new Category();
-    	dbHouseSubject.setId(rs.getString("id"));
+    public GoodsSubject mapRow(ResultSet rs, int i) throws SQLException {
+    	GoodsSubject dbHouseSubject = new GoodsSubject();
+    	dbHouseSubject.setId(rs.getInt("id"));
     	dbHouseSubject.setName(rs.getString("subject_name"));
     	dbHouseSubject.setCode(rs.getString("subject_code"));
     	dbHouseSubject.setDesc(rs.getString("subject_desc"));
-    	dbHouseSubject.setParentId(rs.getString("parentId"));
-    	dbHouseSubject.setHasChild(rs.getString("has_child"));
+    	dbHouseSubject.setParentId(rs.getInt("parentId"));
+    	dbHouseSubject.setLevel(rs.getString("subject_level"));
+    	dbHouseSubject.setRepositoryCode(rs.getString("repository_code"));
+    	if( GoodsJDBCTemplate.isExistColumn(rs, "parentName") ){
+    		dbHouseSubject.setParentName(rs.getString("parentName"));
+    	}
     	
         return dbHouseSubject;
     }

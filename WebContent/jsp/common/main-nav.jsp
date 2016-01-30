@@ -25,7 +25,7 @@
 		}
 	}catch(Exception e){}
 %>
-<nav class="navbar user-info-navbar" role="navigation">
+<nav class="navbar user-info-navbar" role="navigation" style="height:46px;">
 	<!-- Left links for user info navbar -->
 	<ul class="user-info-menu left-links list-inline list-unstyled">
 		<li class="hidden-sm hidden-xs">
