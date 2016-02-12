@@ -77,13 +77,31 @@ public class SubjectAndModuleController {
 			view.addObject("subjectList", subjectList);
 			view.addObject("level", level);
 			
-			view.addObject("opened", ",ordinaryhouse,subjectModule,");
+			view.addObject("opened", ",productManagement,subjectModule,");
 			view.addObject("actived", ",subject"+level+",");
 		} catch (Exception e) {
 			logger.error("fail to get the house subject,",e);
 		}
 		
 		return view;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getSubjectList")
+	public Map<String,Object> getSubjectList(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		try {
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			List<GoodsSubject> subjectList = subjectAndModuleService.getAllSubject(repositoryCode);
+			resultMap.put("subjectList", subjectList);
+			resultMap.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("fail to get the house subject,",e);
+			resultMap.put("result", "N");
+		}
+		
+		return resultMap;
 	}
 	
 	@ResponseBody
@@ -117,7 +135,8 @@ public class SubjectAndModuleController {
 		
 		try {
 			int subjectId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("subjectId"));
-			List<GoodsHouseSubjectModule> subjectModuleList = subjectAndModuleService.getSubjectModulesBySubjectId(subjectId);
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			List<GoodsHouseSubjectModule> subjectModuleList = subjectAndModuleService.getSubjectModulesBySubjectId(subjectId,repositoryCode);
 			
 			String subjectName = subjectAndModuleService.getSubjectInfoById(subjectId).getName();
 			

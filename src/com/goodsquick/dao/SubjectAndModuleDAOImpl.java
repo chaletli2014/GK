@@ -115,6 +115,14 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
         moduleList = dataBean.getJdbcTemplate().query(sql, new Object[]{subjectId}, new GoodsHouseSubjectModuleRowMapper());
         return moduleList;
 	}
+	
+	@Override
+	public List<GoodsHouseSubjectModule> getAllSubjectModulesByRepositoryCode(String repositoryCode) throws Exception {
+		List<GoodsHouseSubjectModule> moduleList = new ArrayList<GoodsHouseSubjectModule>();
+		String sql = "select sm.*from tbl_goods_house_subject_module sm, tbl_goods_house_subject hs where sm.subject_id = hs.id and hs.repository_code = ? ";
+		moduleList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new GoodsHouseSubjectModuleRowMapper());
+		return moduleList;
+	}
 
 	@Override
 	public GoodsHouseSubjectModule getSubjectModuleByModuleId(int moduleId)

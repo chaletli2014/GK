@@ -63,6 +63,17 @@ public class RepositoryServiceImpl implements RepositoryService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public List<GoodsRepository> getRepositoryByLoginNameAndType(String loginName, String type) throws Exception {
+		try{
+			return repositoryDAO.getRepositoryByLoginNameAndType(loginName,type,true);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	public void updateRepositoryUser(GoodsRepositoryUser repositoryUser)

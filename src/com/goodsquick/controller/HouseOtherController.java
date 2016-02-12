@@ -16,19 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goodsquick.model.GoodsHouseDevice;
+import com.goodsquick.model.GoodsHouseOther;
 import com.goodsquick.model.WebUserInfo;
-import com.goodsquick.service.GoodsHouseDeviceService;
+import com.goodsquick.service.GoodsHouseOtherService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.utils.GoodsQuickAttributes;
-import com.goodsquick.utils.GoodsQuickUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 @Controller
-public class HouseDeviceController {
+public class HouseOtherController {
 	Logger logger = Logger.getLogger(this.getClass());
 
 	@Autowired
@@ -36,21 +35,21 @@ public class HouseDeviceController {
 	private OrdinaryHouseService ordinaryHouseService;
 	
 	@Autowired
-	@Qualifier("goodsHouseDeviceService")
-	private GoodsHouseDeviceService goodsHouseDeviceService;
+	@Qualifier("goodsHouseOtherService")
+	private GoodsHouseOtherService goodsHouseOtherService;
 
-	@RequestMapping("/houseDeviceList")
-	public ModelAndView houseDeviceList(HttpServletRequest request){
+	@RequestMapping("/houseOtherList")
+	public ModelAndView houseOtherList(HttpServletRequest request){
 		ModelAndView view = new ModelAndView();
-		view.setViewName("houseDevice/houseDeviceList");
+		view.setViewName("houseOther/houseOtherList");
 		
 		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 		try {
-			List<GoodsHouseDevice> houseDevices = goodsHouseDeviceService.getAllDevice(repositoryCode);
-			view.addObject("houseDevices", houseDevices);
+			List<GoodsHouseOther> houseOthers = goodsHouseOtherService.getAllOther(repositoryCode);
+			view.addObject("houseOthers", houseOthers);
 			
 			view.addObject("opened", ",productManagement,");
-			view.addObject("actived", ",houseDevice,");
+			view.addObject("actived", ",houseOther,");
 		} catch (Exception e) {
 			logger.error("fail to get the house subject,",e);
 		}
@@ -58,37 +57,37 @@ public class HouseDeviceController {
 		return view;
 	}
 	
-	@RequestMapping("/saveOrUpdateDevice")
+	@RequestMapping("/saveOrUpdateOther")
     @ResponseBody
-    public Map<String,String> saveOrUpdateDevice(HttpServletRequest request){
+    public Map<String,String> saveOrUpdateOther(HttpServletRequest request){
     	Map<String,String> result = new HashMap<String,String>();
     	try {
     		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
     		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
     		
-    		String deviceListFromPage = request.getParameter("deviceList");
+    		String otherListFromPage = request.getParameter("otherList");
 			
 			Gson gson = new Gson();
 			JsonParser parser = new JsonParser();
-			JsonElement el = parser.parse(deviceListFromPage);
+			JsonElement el = parser.parse(otherListFromPage);
 			
-			JsonArray deviceArray = new JsonArray();
+			JsonArray otherArray = new JsonArray();
 			if(el.isJsonArray()){
-				deviceArray = el.getAsJsonArray();
+				otherArray = el.getAsJsonArray();
 			}
 			
-			Iterator it = deviceArray.iterator();
-			List<GoodsHouseDevice> deviceList = new ArrayList<GoodsHouseDevice>();
+			Iterator it = otherArray.iterator();
+			List<GoodsHouseOther> otherList = new ArrayList<GoodsHouseOther>();
 			while(it.hasNext()){
 				JsonElement e = (JsonElement)it.next();
 				//JsonElement转换为JavaBean对象
-				deviceList.add(gson.fromJson(e, GoodsHouseDevice.class));
+				otherList.add(gson.fromJson(e, GoodsHouseOther.class));
 			}
     		
-			goodsHouseDeviceService.saveOrUpdateHouseDevice(deviceList, currentUser.getLoginName(), repositoryCode);
+			goodsHouseOtherService.saveOrUpdateHouseOther(otherList, currentUser.getLoginName(), repositoryCode);
     		result.put("result", "Y");
     	} catch (Exception e) {
-    		logger.error("saveHouseDevice: 保存设施设备失败",e);
+    		logger.error("saveHouseOther: 保存设施设备失败",e);
     		result.put("result", "N");
     		result.put("message", e.getMessage());
     	}

@@ -70,6 +70,7 @@ public class LoginController {
     public String logout(HttpServletRequest request){
         request.getSession().removeAttribute(GoodsQuickAttributes.WEB_LOGIN_MESSAGE);
         request.getSession().removeAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+        request.getSession().removeAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
         return "redirect:login";
     }
 }

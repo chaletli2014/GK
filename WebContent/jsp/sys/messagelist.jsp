@@ -19,21 +19,15 @@
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
 			<div class="page-title">
-				<div class="title-env">
-					<h1 class="title">消息列表</h1>
-				</div>
-					<div class="breadcrumb-env">
-						<ol class="breadcrumb bc-1">
-						<li>
-							<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
-						</li>
-						<li>
-							<a href="#" onclick="javascript:void(0)">我的控制台</a>
-						</li>
-						<li class="active">
-							<strong>我的消息</strong>
-						</li>
-						</ol>
+				<div class="breadcrumb-env">
+					<ol class="breadcrumb bc-1">
+					<li>
+						<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
+					</li>
+					<li class="active">
+						<strong>消息管理</strong>
+					</li>
+					</ol>
 				</div>
 			</div>
 			<div class="panel panel-default">

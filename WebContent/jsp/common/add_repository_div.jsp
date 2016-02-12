@@ -8,12 +8,14 @@
 			</div>
 			<input type="hidden" id="repositoryId" name="repositoryId"/>
 			<input type="hidden" id="repo_from_source" name="${fromSource}"/>
+			<input type="hidden" id="repositoryType" name="repositoryType"/>
 			<div class="modal-body">
 				<div class="content">
 					<div class="panel-body">
 						<div class="form-group">
 							<span id="returnMessage" style="color:red;"></span>
 						</div>
+						<%--
 						<div class="form-group">
 							<label class="col-sm-4 control-label" for="field-1">物库类型</label>
 							<div class="col-sm-10">
@@ -33,6 +35,7 @@
 								</select>
 							</div>
 						</div>
+						 --%>
 						<div class="form-group">
 							<label class="col-sm-4 control-label" for="field-1">物库名称</label>
 							<div class="col-sm-10">

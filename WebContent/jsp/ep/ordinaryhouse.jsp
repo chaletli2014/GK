@@ -36,10 +36,10 @@ jQuery(document).ready(function($){
 						<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
 					</li>
 					<li>
-						<a href="#" onclick="javascript:void(0)">物库管理</a>
+						<a href="#" onclick="javascript:void(0)">资品管理</a>
 					</li>
 					<li class="active">
-						<strong>资品信息</strong>
+						<strong>基本信息</strong>
 					</li>
 					</ol>
 				</div>

@@ -121,7 +121,7 @@
 				</ul>
 			</li>
 			<%} %>
-			<li <% if( opened.indexOf(",ordinaryhouse,")>-1|| opened.indexOf(",productlist,")>-1 ){ %>class="active opened"<%} %>>
+			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-database"></i>
 					<span class="title"><%=manageName %></span>
@@ -159,13 +159,13 @@
 							</li>
 						</ul>
 					</li>
-					<li <% if( actived.indexOf(",trusteeshipService,")>-1 ){ %>class="active"<%} %>>
+					<li <% if( actived.indexOf(",houseDevice,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>houseDeviceList">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">设施设备</span>
 						</a>
 					</li>
-					<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>
+					<li <% if( actived.indexOf(",houseOther,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>houseOtherList">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">材料 & 装饰</span>
@@ -266,6 +266,7 @@
 					--%>
 				</ul>
 			</li>
+			<%--
 			<li <% if( actived.indexOf(",myMessage,")>-1 ){ %>class="active"<%} %>>
 				<a href="<%=request.getParameter("basePath")%>myMessage">
 					<i class="linecons-mail"></i>
@@ -275,17 +276,38 @@
 					<%}%>
 				</a>
 			</li>
+			 --%>
 			<li <% if( actived.indexOf(",myReport,")>-1 ){ %>class="active"<%} %>>
-				<a href="<%=request.getParameter("basePath")%>myReport">
+				<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
 					<i class="linecons-photo"></i>
 					<span class="title">数据服务</span>
 				</a>
 			</li>
-			<li <% if( actived.indexOf(",event,")>-1 ){ %>class="active"<%} %>>
-				<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+			<li <% if( actived.indexOf(",event,")>-1 ){ %>class="opened active"<%} %>>
+				<a>
 					<i class="linecons-sound"></i>
-					<span class="title">报障管理</span>
+					<span class="title">维保管理</span>
 				</a>
+				<ul>
+					<li <% if( actived.indexOf(",designService,")>-1 ){ %>class="active"<%} %>>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">巡检管理</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",brandService,")>-1 ){ %>class="active"<%} %>>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">工单管理</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">维保查询</span>
+						</a>
+					</li>
+				</ul>
 			</li>
 			<%--
 			<li <% if( opened.indexOf(",service,")>-1 ){ %>class="opened"<%} %>>

@@ -48,6 +48,8 @@
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>js/select2/select2-bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>css/jquery.alerts.css">
 
+	<link rel="stylesheet" type="text/css" href="<%=basePath%>css/global.css">
+	
 	<script type="text/javascript">
 	var basePath = "<%=basePath%>";
 	function submitLogin(){

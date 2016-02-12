@@ -57,21 +57,18 @@ $(document).ready(function(){
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
 			<div class="page-title">
-				<div class="title-env">
-					<h1 class="title">用户编辑</h1>
-				</div>
-					<div class="breadcrumb-env">
-						<ol class="breadcrumb bc-1">
-						<li>
-							<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
-						</li>
-						<li>
-							<a href="#" onclick="javascript:void(0)">系统管理</a>
-						</li>
-						<li class="active">
-							<strong>用户管理</strong>
-						</li>
-						</ol>
+				<div class="breadcrumb-env">
+					<ol class="breadcrumb bc-1">
+					<li>
+						<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
+					</li>
+					<li>
+						<a href="#" onclick="javascript:void(0)">系统管理</a>
+					</li>
+					<li class="active">
+						<strong>用户管理</strong>
+					</li>
+					</ol>
 				</div>
 			</div>
 			<div class="panel panel-default">

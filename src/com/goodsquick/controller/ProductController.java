@@ -57,6 +57,7 @@ public class ProductController {
         	view.addObject("lifts", lifts);
         	view.addObject("products", products);
         	view.addObject("productTypes", productTypes);
+        	view.addObject("opened", ",productManagement,");
 			view.addObject("actived", ",productlist,");
 		} catch (Exception e) {
 			logger.error("fail to show product list,",e);

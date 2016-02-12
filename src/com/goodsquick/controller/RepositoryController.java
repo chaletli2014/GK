@@ -1,6 +1,5 @@
 package com.goodsquick.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goodsquick.model.Category;
-import com.goodsquick.model.CategoryJsonObj;
 import com.goodsquick.model.GoodsRepository;
 import com.goodsquick.model.WebUserInfo;
-import com.goodsquick.service.CategoryService;
 import com.goodsquick.service.RepositoryService;
-import com.goodsquick.utils.GoodsCollectionUtils;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 @Controller
 public class RepositoryController {
@@ -111,5 +104,40 @@ public class RepositoryController {
 		view.addObject("opened", ",system,");
         view.addObject("actived", ",repository,");
 		return view;
+	}
+	
+	@RequestMapping("/getRepository")
+	@ResponseBody
+	public Map<String,Object> getRepository(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			List<GoodsRepository> repositoryList1 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"1");
+			List<GoodsRepository> repositoryList2 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"2");
+			List<GoodsRepository> repositoryList3 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"3");
+			
+			resultMap.put("repositoryList1", repositoryList1);
+			resultMap.put("repositoryList2", repositoryList2);
+			resultMap.put("repositoryList3", repositoryList3);
+			
+		} catch (Exception e) {
+			logger.error("fail to get repository by type,",e);
+		}
+		return resultMap;
+	}
+	
+	@RequestMapping("/getRepositoryByCode")
+	@ResponseBody
+	public Map<String,Object> getRepositoryByCode(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			String repositoryCode = request.getParameter("repositoryCode");
+			GoodsRepository repository = repositoryService.getRepositoryByCode(repositoryCode);
+			resultMap.put("repository", repository);
+		} catch (Exception e) {
+			logger.error("fail to get repository by code,",e);
+		}
+		return resultMap;
 	}
 }

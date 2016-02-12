@@ -50,6 +50,15 @@ public class GoodsHouseDevice extends BaseObject{
 	 */
 	private int moduleId;
 	
+	/**
+	 * 主体名称
+	 */
+	private String subjectName;
+	/**
+	 * 构件名称
+	 */
+	private String moduleName;
+	
 	private String status;
 	
 	public int getId() {
@@ -112,5 +121,16 @@ public class GoodsHouseDevice extends BaseObject{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+	public String getModuleName() {
+		return moduleName;
+	}
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
+	}
+	public String getSubjectName() {
+		return subjectName;
+	}
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
 }

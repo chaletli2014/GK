@@ -9,18 +9,18 @@
 <%
 	WebUserInfo userInfo = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	
-	List<GoodsRepository> reposigoryList = new ArrayList<GoodsRepository>();
+	List<GoodsRepository> repositoryList = new ArrayList<GoodsRepository>();
 	GoodsRepository currentRepository = new GoodsRepository();
 	String repositoryGoodsName = "资品";
 	try{
-		reposigoryList = (List<GoodsRepository>)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_LIST);
+		repositoryList = (List<GoodsRepository>)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_LIST);
 		Object repository = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
 		if( null != repository ){
 			currentRepository = (GoodsRepository)repository;
 			if( "2".equalsIgnoreCase(currentRepository.getRepositoryType()) ){
-				repositoryGoodsName = "货品";
+				repositoryGoodsName = "商品";
 			}else if( "3".equalsIgnoreCase(currentRepository.getRepositoryType()) ){
-				repositoryGoodsName = "产品";
+				repositoryGoodsName = "需品";
 			}
 		}
 	}catch(Exception e){}
@@ -34,8 +34,54 @@
 			</a>
 		</li>
 		<li class="dropdown hover-line">
+			<a href="#" data-toggle="dropdown" class="repositoryNav">
+				<span class="">物库管理</span>
+			</a>
+			<ul class="dropdown-menu notifications">
+				<li>
+					<div id="navigationBar" class="qc-navigation">
+						<div class="navigation-inner ">
+							<div class="categories" id="nav-con">
+								<ul class="menu">
+									<li id="h_n_cooperate_t" class="presentation">
+										<div class="nav-down-style nav-down-style-2" id="h_n_cooperate_c">
+											<div class="nav-down-list">
+												<ul class="nav-down-menu goods_menu">
+													<li class="menu-title">
+														<span>商品库</span>
+														<span class="nav_newrepository">新建</span>
+													</li>
+												</ul>
+												<ul class="nav-down-menu own_menu">
+													<li class="menu-title">
+														<span>资品库</span>
+														<span class="nav_newrepository">新建</span>
+													</li>
+													<li class="menu-list-own">
+														<div>
+															<a href="<%=request.getParameter("basePath")%>index?repository_code=<%=userInfo.getLoginName()%>_0">初始资品库</a>
+														</div>
+													</li>
+												</ul>
+												<ul class="nav-down-menu req_menu">
+													<li class="menu-title">
+														<span>需品库</span>
+														<span class="nav_newrepository">新建</span>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</li>					
+								</ul>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</li>
+		<li class="dropdown hover-line">
 			<a href="#" data-toggle="dropdown">
-				<i class="fa-bell-o"></i>
+				<i class="fa-bell-o" title="消息管理"></i>
 				<span class="badge badge-purple" id="messageTips"></span>
 			</a>
 			<ul class="dropdown-menu notifications">
@@ -63,11 +109,6 @@
 				</li>
 			</ul>
 		</li>
-		<%--
-		<li class="dropdown hover-line">
-			<span style="display:block;">库管理</span>
-		</li>
-		 --%>
 	</ul>
 	<!-- Right links for user info navbar -->
 	<ul class="user-info-menu right-links list-inline list-unstyled">
@@ -84,6 +125,7 @@
 						用户资料
 					</a>
 				</li>
+				<%--
 				<li>
 					<a href="<%=request.getParameter("basePath")%>index?<%=GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE%>=<%=userInfo.getLoginName()+"_0"%>">
 						<i class="fa-folder-o"></i>
@@ -91,8 +133,8 @@
 					</a>
 				</li>
 				<%
-					if( !CollectionUtils.isEmpty(reposigoryList) ){
-						for( GoodsRepository repository : reposigoryList ){
+					if( !CollectionUtils.isEmpty(repositoryList) ){
+						for( GoodsRepository repository : repositoryList ){
 				%>
 					<li>
 						<a href="<%=request.getParameter("basePath")%>index?<%=GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE%>=<%=repository.getRepositoryCode()%>">
@@ -112,6 +154,7 @@
 						<span class="title">物库管理</span>
 					</a>
 				</li>
+				 --%>
 				<li class="last">
 					<a href="<%=request.getParameter("basePath")%>logout">
 						<i class="fa-lock"></i>

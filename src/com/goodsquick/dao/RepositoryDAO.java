@@ -9,7 +9,24 @@ public interface RepositoryDAO {
 
 	public void saveRepository(GoodsRepository goodsRepository) throws Exception;
 	public void updateRepository(GoodsRepository goodsRepository) throws Exception;
+	
+	/**
+	 * 根据当前登录用户名获取物库列表
+	 * @param loginName
+	 * @param hideDeleted 是否获取删除的物库，true代表不获取
+	 * @return 物库列表
+	 * @throws Exception
+	 */
 	public List<GoodsRepository> getRepositoryByLoginName(String loginName, boolean hideDeleted) throws Exception;
+	/**
+	 * 根据当前登录用户名和物库类型获取物库列表
+	 * @param loginName
+	 * @param type 物库类型
+	 * @param hideDeleted 是否获取删除的物库，true代表不获取
+	 * @return 物库列表
+	 * @throws Exception
+	 */
+	public List<GoodsRepository> getRepositoryByLoginNameAndType(String loginName, String type, boolean hideDeleted) throws Exception;
 	public void updateRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 	public void saveRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 	public GoodsRepository getRepositoryByCode(String repositoryCode) throws Exception;

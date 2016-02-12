@@ -719,3 +719,24 @@ ENGINE=InnoDB
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT;
+
+--不动产材料装饰表
+CREATE TABLE tbl_goods_house_other (
+id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+type_code			varchar(20)		comment '分类',
+other_name			varchar(200)	comment '名称',
+other_desc			varchar(200) 	comment '描述',
+subjectId			int 			comment '隶属主体ID',
+moduleId			int 			comment '隶属构件ID',
+create_user  		varchar(20),
+create_date			datetime,
+update_user			varchar(20),
+update_date			datetime,
+status  			varchar(2) 		DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;

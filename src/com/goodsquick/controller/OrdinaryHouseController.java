@@ -80,7 +80,7 @@ public class OrdinaryHouseController {
     		List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
     		view.addObject("moduleTypes", moduleTypes);
     		
-        	view.addObject("opened", ",estate,resident,");
+        	view.addObject("opened", ",productManagement,");
 			view.addObject("actived", ",ordinaryhouse,");
 		} catch (Exception e) {
 			logger.error("fail to show ordinaryhouse,",e);

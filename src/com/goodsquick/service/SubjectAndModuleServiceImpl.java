@@ -174,9 +174,13 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
 
 	@Override
 	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectId(
-			int subjectId) throws Exception {
+			int subjectId,String repositoryCode) throws Exception {
 		try{
-			return subjectAndModuleDAO.getSubjectModulesBySubjectId(subjectId);
+			if( subjectId == 0 ){
+				return subjectAndModuleDAO.getAllSubjectModulesByRepositoryCode(repositoryCode);
+			}else{
+				return subjectAndModuleDAO.getSubjectModulesBySubjectId(subjectId);
+			}
 		} catch(EmptyResultDataAccessException erd){
             return Collections.emptyList();
         } catch(Exception e){
