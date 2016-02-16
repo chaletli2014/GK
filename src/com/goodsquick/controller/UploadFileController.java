@@ -1,5 +1,8 @@
 package com.goodsquick.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +10,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goodsquick.model.Category;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.utils.ExcelUtils;
@@ -80,4 +87,84 @@ public class UploadFileController {
 		Map<String, Object> categoryMap = new HashMap<String, Object>();
 		return categoryMap;
 	}
+	
+	/**
+	 * 上传不动产资料
+	 * @param request
+	 * @return Map<String, Object>
+	 */
+	@ResponseBody
+	@RequestMapping("/uploadHouseSourceFile")
+	public Map<String, Object> uploadHouseSourceFile(HttpServletRequest request){
+		Map<String, Object> categoryMap = new HashMap<String, Object>();
+		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+		String sourceFile12 = request.getParameter("sourceFile");
+		String uploadFile = loadFile(request);
+		
+		File sourceFile = new File(uploadFile);
+		
+		String fileName = uploadFile.substring(uploadFile.lastIndexOf('\\'));
+		
+		File targetPath = new File(GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode);
+		File targetFile = new File(GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode+"/"+fileName);
+		
+		if( !targetPath.exists() ){
+			targetPath.mkdirs();
+		}
+		
+		try {
+			FileUtils.copyFile(sourceFile, targetFile);
+		} catch (Exception e) {
+			logger.error("file not found when upload house source file");
+		}
+		
+		return categoryMap;
+	}
+	
+	private String loadFile(HttpServletRequest request){
+    	String savePath =request.getSession().getServletContext().getRealPath("/")+"uploadfiles\\";  
+    	String fileName = "";
+    	try{
+    		request.setCharacterEncoding("UTF-8");
+    		File f1 = new File(savePath);
+    		if (!f1.exists()) {
+    			f1.mkdirs();  
+    		}  
+    		DiskFileItemFactory fac = new DiskFileItemFactory();
+    		ServletFileUpload upload = new ServletFileUpload(fac);
+    		
+    		upload.setHeaderEncoding("utf-8");  
+    		List fileList = null;
+    		try {  
+    			fileList = upload.parseRequest(request);  
+    		} catch (FileUploadException ex) {
+    			ex.printStackTrace();
+    		}
+    		
+    		FileItem item=(FileItem)fileList.get(0);
+    		
+    		if( item.isFormField() ){
+    			logger.info(item.getFieldName());
+    			logger.info(item.getString());
+    		}else{
+    			fileName = item.getName();
+    			if( fileName.indexOf("\\") > 0 ){
+    			    fileName = fileName.substring(fileName.lastIndexOf("\\")+1, fileName.length());
+    			}
+    			FileOutputStream fos = new FileOutputStream(savePath+fileName);
+    			InputStream in = item.getInputStream();
+    			byte buffer[] = new byte[1024];
+    			int len = 0;
+    			while((len=in.read(buffer))>0){
+    				fos.write(buffer,0,len);
+    			}
+    			in.close();
+    			fos.close();
+    		}
+    	}catch(Exception e){
+    		logger.error("fail to load the file");
+    	}
+    	logger.info(String.format("loadFile... the file name is %s", fileName));
+    	return savePath+fileName;
+    }
 }

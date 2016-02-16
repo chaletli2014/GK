@@ -32,7 +32,8 @@
 					<table class="table table-hover" id="deviceTable">
 						<thead>
 							<tr>
-								<th width="20%">设备名称</th>
+								<th width="7%">分类</th>
+								<th width="15%">设备名称</th>
 								<th width="30%">设备描述</th>
 								<th>设施设备位置</th>
 								<th>操作</th>
@@ -41,11 +42,12 @@
 						<tbody class="middle-align">
 							<c:forEach items="${houseDevices}" var="houseDevice">
 								<tr>
+									<td class="dataEditable" title="${houseDevice.eqTypeName}">${houseDevice.eqTypeName}</td>
 									<td class="dataEditable" title="${houseDevice.name}">${houseDevice.name}</td>
 									<td class="dataEditable" title="${houseDevice.eqDesc}">${houseDevice.eqDesc}</td>
 									<td>${houseDevice.subjectName}-${houseDevice.moduleName}</td>
 									<td>
-										<a id="${houseDevice.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyDevice">
+										<a id="${houseDevice.id}" dtype="${houseDevice.eqTypeCode}" class="btn btn-secondary btn-sm btn-icon icon-left modifyDevice">
 											编辑
 										</a>
 										<a id="${houseDevice.id}" class="btn btn-danger btn-sm btn-icon icon-left removeDevice">
@@ -61,7 +63,7 @@
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>
-	<%@include file="houseDevice.jsp" %>
+	<%@include file="houseDeviceLift.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

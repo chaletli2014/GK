@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsHouseDevice;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.GoodsHouseDeviceService;
+import com.goodsquick.service.LiftService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -38,6 +41,10 @@ public class HouseDeviceController {
 	@Autowired
 	@Qualifier("goodsHouseDeviceService")
 	private GoodsHouseDeviceService goodsHouseDeviceService;
+	
+	@Autowired
+	@Qualifier("liftService")
+	private LiftService liftService;
 
 	@RequestMapping("/houseDeviceList")
 	public ModelAndView houseDeviceList(HttpServletRequest request){
@@ -86,6 +93,57 @@ public class HouseDeviceController {
 			}
     		
 			goodsHouseDeviceService.saveOrUpdateHouseDevice(deviceList, currentUser.getLoginName(), repositoryCode);
+    		result.put("result", "Y");
+    	} catch (Exception e) {
+    		logger.error("saveHouseDevice: 保存设施设备失败",e);
+    		result.put("result", "N");
+    		result.put("message", e.getMessage());
+    	}
+    	
+    	return result;
+    }
+
+	@RequestMapping("/getDeviceByIdAndType")
+    @ResponseBody
+    public Map<String,Object> getDeviceByIdAndType(HttpServletRequest request){
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	try {
+    		int deviceId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("deviceId"));
+    		String deviceType = request.getParameter("deviceType");
+    		
+    		if( "dt".equalsIgnoreCase(deviceType) ){
+    			GoodsDeviceLift deviceObj = liftService.getGoodsDeviceLiftById(deviceId);
+    			result.put("deviceObj", deviceObj);
+    		}
+    		result.put("result", "Y");
+    	} catch (Exception e) {
+    		logger.error("saveHouseDevice: 根据ID和类型获取设施设备失败",e);
+    		result.put("result", "N");
+    		result.put("message", e.getMessage());
+    	}
+    	
+    	return result;
+    }
+	
+	@RequestMapping("/modifyDevice")
+    @ResponseBody
+    public Map<String,String> modifyDevice(HttpServletRequest request){
+    	Map<String,String> result = new HashMap<String,String>();
+    	try {
+    		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		
+    		String deviceType = request.getParameter("deviceType");
+    		String deviceObj = request.getParameter("deviceObj");
+    		
+    		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").serializeNulls().create();
+    		JsonParser parser = new JsonParser();
+    		JsonElement el = parser.parse(deviceObj);
+    		
+    		if( "dt".equalsIgnoreCase(deviceType) ){
+    			GoodsDeviceLift lift = gson.fromJson(el, GoodsDeviceLift.class);
+    			liftService.saveOrUpdateDeviceLift(lift, currentUser);
+    		}
+			
     		result.put("result", "Y");
     	} catch (Exception e) {
     		logger.error("saveHouseDevice: 保存设施设备失败",e);

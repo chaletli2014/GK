@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../common/header.jsp"%>
-<script type="text/javascript" src="<%=basePath%>/js/goodsquick/ordinaryhouse.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/goodsquick/ordinaryhouse.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/goodsquick/ajaxfileupload.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function($){
 	if( $("#orHouse").val() == null || $("#orHouse").val() == '' ){

@@ -176,21 +176,35 @@ AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT
 ;
 
---电梯
+--不动产设备-电梯
 CREATE TABLE tbl_goods_devices_lift (
 id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
-code  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-name  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-lift_type			varchar(20)		not null comment '电梯分类',	
-company_code		varchar(20)		not null comment '单位编号',
-model  				varchar(20)		not null comment '规格型号',
-main_arguments		varchar(2000) 	comment '设备主要参数',
-manufacturer		varchar(100) 	comment '制造厂家',
-made_date			datetime comment '制造日期',
+lift_type			varchar(20)		not null default '*' comment '电梯分类',	
+lift_code  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL default '*',
+lift_name  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+lift_desc			varchar(200)	comment '设备描述',
+subject_id			int 			not null comment '隶属主体ID',
+module_id			int 			not null comment '隶属构件ID',
+delivery_date  		datetime		comment '交付日期',
+purchase_price		decimal(11,6)	comment '采购价格',
+user_name			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL comment '使用人',
+brand_code			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL comment '品牌',
+lift_purpose  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '电梯用途',
+lift_style  		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL comment '电梯款型',
+lift_CT  			double 			comment '载重量',
+lift_NS  			double 			comment '额定速度',
+lift_QA				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL comment '保修期限',
+car_size  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL comment '轿厢尺寸（宽*深）(mm)',
+car_height  		int				comment '轿厢净高(mm)',
+door_size  			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL comment '开门尺寸（宽*高）(mm)',
+main_power  		int 			comment '主机功率(kw)',
+made_date			datetime		comment '制造日期',
+life_time			varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL comment '使用期限',
+repository_code		varchar(20) 	comment '物库编码',
 create_user  		varchar(20),
-createdate			datetime,
+create_date			datetime,
 update_user			varchar(20),
-updatedate			datetime,
+update_date			datetime,
 status				varchar(2),
 PRIMARY KEY (id)
 )
@@ -728,6 +742,25 @@ other_name			varchar(200)	comment '名称',
 other_desc			varchar(200) 	comment '描述',
 subjectId			int 			comment '隶属主体ID',
 moduleId			int 			comment '隶属构件ID',
+create_user  		varchar(20),
+create_date			datetime,
+update_user			varchar(20),
+update_date			datetime,
+status  			varchar(2) 		DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+--不动产资源文件表
+CREATE TABLE tbl_goods_house_file (
+id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+repository_code		varchar(20)		comment '物库编码',
+file_name			varchar(200)	comment '文件名称',
+file_path			varchar(200) 	comment '文件路径',
+is_main				int 			comment '是否是封面图片，1是0否',
 create_user  		varchar(20),
 create_date			datetime,
 update_user			varchar(20),

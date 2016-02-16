@@ -53,4 +53,9 @@ public class GoodsQuickAttributes {
      */
     public static final String MESSAGE_REQUEST_HOUSE = "{0}申请成为{1}的用户";
     
+    public static final String UPLOAD_FILE_PATH = "/uploadFiles/";
+    public static final String TEMP_FILE_PATH = "/tempUploadFiles/";
+    
+    public static final String UPLOAD_FILE_TYPE_ALLOWED = "jpg,png";
+    
 }

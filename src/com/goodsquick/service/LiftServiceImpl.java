@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.goodsquick.dao.LiftDAO;
 import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.WebUserInfo;
-import com.goodsquick.utils.GoodsDateUtil;
 
 @Service("liftService")
 public class LiftServiceImpl implements LiftService {
@@ -35,6 +34,18 @@ public class LiftServiceImpl implements LiftService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public List<GoodsDeviceLift> getDeviceLiftByRepositoryCode(String repositoryCode) throws Exception {
+		try{
+			return liftDAO.getDeviceLiftByRepositoryCode(repositoryCode);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get the lift by repositoryCode,",e);
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	public void saveOrUpdateDeviceLift(GoodsDeviceLift lift,
@@ -44,18 +55,8 @@ public class LiftServiceImpl implements LiftService {
 		if( 0 == liftId ){
 			lift.setCreateUser(currentUser.getLoginName());
 			lift.setUpdateUser(currentUser.getLoginName());
-			String maxCode = liftDAO.getMaxCode();
 			
-			if( null == maxCode || "".equalsIgnoreCase(maxCode) ){
-				maxCode = new StringBuilder("lift").append(GoodsDateUtil.getStringFormat(new Date())).append("1").toString();
-			}else{
-				int maxNum = Integer.valueOf(maxCode.substring(12)) + 1;
-				maxCode = new StringBuilder("lift").append(GoodsDateUtil.getStringFormat(new Date())).append(maxNum).toString();
-			}
-			
-			lift.setCode(maxCode);
-			
-			liftDAO.saveDeviceLift(lift);
+			liftDAO.saveDeviceLiftQuick(lift);
 		}else{
 			lift.setUpdateUser(currentUser.getLoginName());
 			lift.setUpdateDate(new Date());

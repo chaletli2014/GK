@@ -344,41 +344,41 @@ jQuery(document).ready(function($){
 			}
 		});
 	});
-	var i = 1,
-	$example_dropzone_filetable = $("#example-dropzone-filetable");
-//	example_dropzone = $("#advancedDropzone").dropzone({
-//		url: basePath+"uploadSourceFile",
-//		addedfile: function(file){
-//			if(i == 1){
-//				$example_dropzone_filetable.find('tbody').html('');
-//			}
-//			var size = parseInt(file.size/1024, 10);
-//			size = size < 1024 ? (size + " KB") : (parseInt(size/1024, 10) + " MB");
-//			
-//			var	$el = $('<tr>\
-//				<td class="text-center">'+(i++)+'</td>\
-//				<td>'+file.name+'</td>\
-//				<td><div class="progress progress-striped"><div class="progress-bar progress-bar-warning"></div></div></td>\
-//				<td>'+size+'</td>\
-//				<td>上传中......</td>\
-//			</tr>');
-//			$example_dropzone_filetable.find('tbody').append($el);
-//			file.fileEntryTd = $el;
-//			file.progressBar = $el.find('.progress-bar');
-//		},
-//		uploadprogress: function(file, progress, bytesSent){
-//			file.progressBar.width(progress + '%');
-//		},
-//		success: function(file){
-//			file.fileEntryTd.find('td:last').html('<span class="text-success">上传成功</span>');
-//			file.progressBar.removeClass('progress-bar-warning').addClass('progress-bar-success');
-//		},
-//		error: function(file){
-//			file.fileEntryTd.find('td:last').html('<span class="text-danger">上传失败</span>');
-//			file.progressBar.removeClass('progress-bar-warning').addClass('progress-bar-red');
-//		}
-//	});
-//	$("#advancedDropzone").css({minHeight: 200});
+	var i = 1;
+	var fileTable = $("#houseFileTable");
+	var example_dropzone = $("#advancedDropzone").dropzone({
+		url: basePath+"uploadSourceFile",
+		addedfile: function(file){
+			if(i == 1){
+				example_dropzone_filetable.find('tbody').html('');
+			}
+			var size = parseInt(file.size/1024, 10);
+			size = size < 1024 ? (size + " KB") : (parseInt(size/1024, 10) + " MB");
+			
+			var	$el = $('<tr>\
+				<td class="text-center">'+(i++)+'</td>\
+				<td>'+file.name+'</td>\
+				<td><div class="progress progress-striped"><div class="progress-bar progress-bar-warning"></div></div></td>\
+				<td>'+size+'</td>\
+				<td>上传中......</td>\
+			</tr>');
+			$example_dropzone_filetable.find('tbody').append($el);
+			file.fileEntryTd = $el;
+			file.progressBar = $el.find('.progress-bar');
+		},
+		uploadprogress: function(file, progress, bytesSent){
+			file.progressBar.width(progress + '%');
+		},
+		success: function(file){
+			file.fileEntryTd.find('td:last').html('<span class="text-success">上传成功</span>');
+			file.progressBar.removeClass('progress-bar-warning').addClass('progress-bar-success');
+		},
+		error: function(file){
+			file.fileEntryTd.find('td:last').html('<span class="text-danger">上传失败</span>');
+			file.progressBar.removeClass('progress-bar-warning').addClass('progress-bar-red');
+		}
+	});
+	$("#advancedDropzone").css({minHeight: 200});
 });
 
 function initDics(dicTypeParam){

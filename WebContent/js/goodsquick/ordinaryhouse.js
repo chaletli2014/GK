@@ -140,6 +140,10 @@ jQuery(document).ready(function($){
 	$("#eqSubject").change(function(){
 		populateModule();
 	});
+	$("#houseSourceFileBtn").click(function(){
+		uploadHouseSourceFile();
+		return false;
+	});
 });
 
 function initSubjectLevel(level){
@@ -278,6 +282,20 @@ function populateModule(){
 			$("#eqModule").data("selectBox-selectBoxIt").refresh();
 		}
 	});
+}
+function uploadHouseSourceFile(){
+	var filename = $("#sourceFile").val();
+	$.ajax({
+      type: "POST",
+      url: basePath+"uploadHouseSourceFile",
+      enctype: 'multipart/form-data',
+      data: {
+    	  sourceFile: filename
+      },
+      success: function () {
+        alert("Data Uploaded: ");
+      }
+    });
 }
 
 function clearNewModuleForm(){

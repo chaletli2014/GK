@@ -91,6 +91,7 @@
 				        	<jsp:param name="basePath" value="<%=basePath%>"/>
 				        </jsp:include>
 					</div>
+					</form>
 					<div class="tab-pane" id="tab_source">
 						<%@include file="ordinaryhouse_param_source.jsp" %>
 					</div>
@@ -104,7 +105,6 @@
 						</li>
 					</ul>
 				</div>
-				</form>
 			</div>
 		</div>
 	</div>

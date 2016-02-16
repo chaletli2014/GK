@@ -1,5 +1,6 @@
 package com.goodsquick.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.goodsquick.dao.GoodsHouseDeviceDAO;
+import com.goodsquick.dao.LiftDAO;
+import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsHouseDevice;
 
 @Service("goodsHouseDeviceService")
@@ -22,11 +25,32 @@ public class GoodsHouseDeviceServiceImpl implements GoodsHouseDeviceService {
 	@Qualifier("goodsHouseDeviceDAO")
 	private GoodsHouseDeviceDAO goodsHouseDeviceDAO;
 	
+	@Autowired
+	@Qualifier("liftDAO")
+	private LiftDAO liftDAO;
+	
 	@Override
 	public List<GoodsHouseDevice> getAllDevice(String repositoryCode)
 			throws Exception {
+		List<GoodsHouseDevice> devices = new ArrayList<GoodsHouseDevice>();
 		try{
-			return goodsHouseDeviceDAO.getAllHouseDeviceByRepositoryCode(repositoryCode);
+			devices.addAll(goodsHouseDeviceDAO.getAllHouseDeviceByRepositoryCode(repositoryCode));
+			List<GoodsDeviceLift> lifts = liftDAO.getDeviceLiftByRepositoryCode(repositoryCode);
+			for( GoodsDeviceLift dbLift : lifts ){
+				GoodsHouseDevice liftDevice = new GoodsHouseDevice();
+				liftDevice.setEqTypeCode("dt");
+				liftDevice.setEqTypeName("电梯");
+				liftDevice.setName(dbLift.getLiftName());
+				liftDevice.setEqDesc(dbLift.getLiftDesc());
+				liftDevice.setSubjectId(dbLift.getSubjectId());
+				liftDevice.setSubjectName(dbLift.getSubjectName());
+				liftDevice.setModuleId(dbLift.getModuleId());
+				liftDevice.setModuleName(dbLift.getModuleName());
+				liftDevice.setId(dbLift.getId());
+				
+				devices.add(liftDevice);
+			}
+			return devices;
 		} catch(EmptyResultDataAccessException erd){
             return Collections.emptyList();
         } catch(Exception e){
@@ -47,11 +71,19 @@ public class GoodsHouseDeviceServiceImpl implements GoodsHouseDeviceService {
 		try{
 			for( GoodsHouseDevice houseDevice : houseDevices ){
 				
-				int subjectId = houseDevice.getId();
-				if( subjectId == 0 ){
-					houseDevice.setCreateUser(currentUser);
-					houseDevice.setUpdateUser(currentUser);
-					goodsHouseDeviceDAO.saveHouseDevice(houseDevice);
+				int id = houseDevice.getId();
+				if( id == 0 ){
+					if( "dt".equalsIgnoreCase(houseDevice.getEqTypeCode()) ){
+						GoodsDeviceLift lift = new GoodsDeviceLift();
+						lift.setLiftName(houseDevice.getName());
+						lift.setLiftDesc(houseDevice.getEqDesc());
+						lift.setSubjectId(houseDevice.getSubjectId());
+						lift.setModuleId(houseDevice.getModuleId());
+						lift.setRepositoryCode(repositoryCode);
+						lift.setCreateUser(currentUser);
+						lift.setUpdateUser(currentUser);
+						liftDAO.saveDeviceLiftQuick(lift);
+					}
 				}else{
 					houseDevice.setUpdateUser(currentUser);
 					goodsHouseDeviceDAO.updateHouseDevice(houseDevice);

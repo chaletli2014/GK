@@ -6,19 +6,14 @@ import java.util.Date;
  * 电梯
  * @author chalet
  */
-public class GoodsDeviceLift {
+public class GoodsDeviceLift extends BaseObject{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8768221187952118660L;
 
 	private int id;
-	
-	/**
-	 * 电梯编码
-	 */
-	private String code;
-	
-	/**
-	 * 设备名称
-	 */
-	private String name;
 	
 	/**
 	 * 电梯分类
@@ -26,39 +21,150 @@ public class GoodsDeviceLift {
 	private String liftType;
 	
 	/**
-	 * 电梯品牌
+	 * 电梯分类名称
+	 */
+	private String liftTypeName;
+	
+	/**
+	 * 电梯编码
+	 */
+	private String liftCode;
+	
+	/**
+	 * 设备名称
+	 */
+	private String liftName;
+	
+	/**
+	 * 设备描述
+	 */
+	private String liftDesc;
+	
+	/**
+	 * 所属主体
+	 */
+	private int subjectId;
+	/**
+	 * 所属主体名称
+	 */
+	private String subjectName;
+	
+	/**
+	 * 所属构件
+	 */
+	private int moduleId;
+	
+	/**
+	 * 所属构件名称
+	 */
+	private String moduleName;
+	
+	/**
+	 * 交付日期
+	 */
+	private Date deliveryDate;
+	
+	/**
+	 * 采购价格
+	 */
+	private double purchasePrice;
+	
+	/**
+	 * 使用人
+	 */
+	private String userName;
+	
+	/**
+	 * 电梯品牌编码
+	 */
+	private String brandCode;
+	
+	/**
+	 * 电梯品牌名称
 	 */
 	private String brandName;
 	
 	/**
-	 * 单位编号
+	 * 电梯用途编码
 	 */
-	private String companyCode;
+	private String liftPurpose;
 	
 	/**
-	 * 规格型号
+	 * 电梯用途名称
 	 */
-	private String model;
+	private String liftPurposeName;
 	
 	/**
-	 * 主要参数
+	 * 电梯款型编码
 	 */
-	private String mainArguments;
+	private String liftStyle;
 	
 	/**
-	 * 制造厂家
+	 * 电梯款型名称
 	 */
-	private String manufacturer;
+	private String liftStyleName;
+	
+	/**
+	 * 载重量
+	 */
+	private double liftCT;
+	
+	/**
+	 * 额定速度
+	 */
+	private double liftNS;
+	
+	/**
+	 * 保修期限
+	 */
+	private String liftQA;
+	
+	/**
+	 * 保修期限名称
+	 */
+	private String liftQAName;
+	
+	/**
+	 * 轿厢尺寸（宽*深）(mm)
+	 */
+	private String carSize;
+	
+	/**
+	 * 轿厢净高(mm)
+	 */
+	private int carHeight;
+	
+	/**
+	 * 开门尺寸（宽*高）(mm)
+	 */
+	private String doorSize;
+	
+	/**
+	 * 主机功率(kw)
+	 */
+	private int mainPower;
 	
 	/**
 	 * 制造日期
 	 */
 	private Date madeDate;
 	
-	private String createUser;
-	private Date createDate;
-	private String updateUser;
-	private Date updateDate;
+	/**
+	 * 使用期限
+	 */
+	private String lifeTime;
+	
+	/**
+	 * 使用期限名称
+	 */
+	private String lifeTimeName;
+	
+	private String status;
+	
+	/**
+	 * 物库编码
+	 */
+	private String repositoryCode;
 	
 	public int getId() {
 		return id;
@@ -66,77 +172,83 @@ public class GoodsDeviceLift {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getLiftType() {
 		return liftType;
 	}
 	public void setLiftType(String liftType) {
 		this.liftType = liftType;
 	}
-	public String getCompanyCode() {
-		return companyCode;
+	public String getLiftTypeName() {
+		return liftTypeName;
 	}
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
+	public void setLiftTypeName(String liftTypeName) {
+		this.liftTypeName = liftTypeName;
 	}
-	public String getModel() {
-		return model;
+	public String getLiftCode() {
+		return liftCode;
 	}
-	public void setModel(String model) {
-		this.model = model;
+	public void setLiftCode(String liftCode) {
+		this.liftCode = liftCode;
 	}
-	public String getMainArguments() {
-		return mainArguments;
+	public String getLiftName() {
+		return liftName;
 	}
-	public void setMainArguments(String mainArguments) {
-		this.mainArguments = mainArguments;
+	public void setLiftName(String liftName) {
+		this.liftName = liftName;
 	}
-	public String getManufacturer() {
-		return manufacturer;
+	public String getLiftDesc() {
+		return liftDesc;
 	}
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
+	public void setLiftDesc(String liftDesc) {
+		this.liftDesc = liftDesc;
 	}
-	public Date getMadeDate() {
-		return madeDate;
+	public int getSubjectId() {
+		return subjectId;
 	}
-	public void setMadeDate(Date madeDate) {
-		this.madeDate = madeDate;
+	public void setSubjectId(int subjectId) {
+		this.subjectId = subjectId;
 	}
-	public String getCreateUser() {
-		return createUser;
+	public String getSubjectName() {
+		return subjectName;
 	}
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
 	}
-	public Date getCreateDate() {
-		return createDate;
+	public int getModuleId() {
+		return moduleId;
 	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setModuleId(int moduleId) {
+		this.moduleId = moduleId;
 	}
-	public String getUpdateUser() {
-		return updateUser;
+	public String getModuleName() {
+		return moduleName;
 	}
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
 	}
-	public Date getUpdateDate() {
-		return updateDate;
+	public Date getDeliveryDate() {
+		return deliveryDate;
 	}
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+	public double getPurchasePrice() {
+		return purchasePrice;
+	}
+	public void setPurchasePrice(double purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getBrandCode() {
+		return brandCode;
+	}
+	public void setBrandCode(String brandCode) {
+		this.brandCode = brandCode;
 	}
 	public String getBrandName() {
 		return brandName;
@@ -144,4 +256,107 @@ public class GoodsDeviceLift {
 	public void setBrandName(String brandName) {
 		this.brandName = brandName;
 	}
+	public String getLiftPurpose() {
+		return liftPurpose;
+	}
+	public void setLiftPurpose(String liftPurpose) {
+		this.liftPurpose = liftPurpose;
+	}
+	public String getLiftPurposeName() {
+		return liftPurposeName;
+	}
+	public void setLiftPurposeName(String liftPurposeName) {
+		this.liftPurposeName = liftPurposeName;
+	}
+	public String getLiftStyle() {
+		return liftStyle;
+	}
+	public void setLiftStyle(String liftStyle) {
+		this.liftStyle = liftStyle;
+	}
+	public String getLiftStyleName() {
+		return liftStyleName;
+	}
+	public void setLiftStyleName(String liftStyleName) {
+		this.liftStyleName = liftStyleName;
+	}
+	public double getLiftCT() {
+		return liftCT;
+	}
+	public void setLiftCT(double liftCT) {
+		this.liftCT = liftCT;
+	}
+	public double getLiftNS() {
+		return liftNS;
+	}
+	public void setLiftNS(double liftNS) {
+		this.liftNS = liftNS;
+	}
+	public String getLiftQA() {
+		return liftQA;
+	}
+	public void setLiftQA(String liftQA) {
+		this.liftQA = liftQA;
+	}
+	public String getLiftQAName() {
+		return liftQAName;
+	}
+	public void setLiftQAName(String liftQAName) {
+		this.liftQAName = liftQAName;
+	}
+	public String getCarSize() {
+		return carSize;
+	}
+	public void setCarSize(String carSize) {
+		this.carSize = carSize;
+	}
+	public int getCarHeight() {
+		return carHeight;
+	}
+	public void setCarHeight(int carHeight) {
+		this.carHeight = carHeight;
+	}
+	public String getDoorSize() {
+		return doorSize;
+	}
+	public void setDoorSize(String doorSize) {
+		this.doorSize = doorSize;
+	}
+	public int getMainPower() {
+		return mainPower;
+	}
+	public void setMainPower(int mainPower) {
+		this.mainPower = mainPower;
+	}
+	public Date getMadeDate() {
+		return madeDate;
+	}
+	public void setMadeDate(Date madeDate) {
+		this.madeDate = madeDate;
+	}
+	public String getLifeTime() {
+		return lifeTime;
+	}
+	public void setLifeTime(String lifeTime) {
+		this.lifeTime = lifeTime;
+	}
+	public String getLifeTimeName() {
+		return lifeTimeName;
+	}
+	public void setLifeTimeName(String lifeTimeName) {
+		this.lifeTimeName = lifeTimeName;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getRepositoryCode() {
+		return repositoryCode;
+	}
+	public void setRepositoryCode(String repositoryCode) {
+		this.repositoryCode = repositoryCode;
+	}
+	
 }
