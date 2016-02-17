@@ -300,6 +300,8 @@ fieldset,img,a img,iframe {
 
 .qc-navigation .nav-down-style-2 .nav-down-menu li a {
 	padding-left: 30px;
+	padding-top:4px;
+	padding-bottom:4px;
 	/*
 	padding-right: 30px;*/
 	line-height: 40px;
@@ -321,7 +323,7 @@ fieldset,img,a img,iframe {
 }
 
 .qc-navigation .nav-down-style-2 .nav-down-menu li.menu-list-own div:first-child a{
-	background:url(../images/top_nav_ico.png) no-repeat 0 -109px;
+	background:url(../images/top_nav_ico.png) no-repeat 0 -168px;
 }
 .qc-navigation .nav-down-style-2 .nav-down-menu li.menu-list-own div:first-child a:first-child:hover {
 	background:url(../images/top_nav_ico.png) no-repeat 0 -136px;
@@ -329,17 +331,17 @@ fieldset,img,a img,iframe {
 }
 
 .qc-navigation .nav-down-style-2 .nav-down-menu li.menu-list-goods div:first-child a{
-	background:url(../images/top_nav_ico.png) no-repeat 0 -1px;
+	background:url(../images/top_nav_ico.png) no-repeat 0 -32px;
 }
 .qc-navigation .nav-down-style-2 .nav-down-menu li.menu-list-goods div:first-child a:hover {
-	background:url(../images/top_nav_ico.png) no-repeat 0 -28px;
+	background:url(../images/top_nav_ico.png) no-repeat 0 0px;
 	color:#ef7100;
 }
 .qc-navigation .nav-down-style-2 .nav-down-menu li.menu-list-req div:first-child a{
-	background:url(../images/top_nav_ico.png) no-repeat 0 -55px;
+	background:url(../images/top_nav_ico.png) no-repeat 0 -100px;
 }
 .qc-navigation .nav-down-style-2 .nav-down-menu li.menu-list-req div:first-child a:hover {
-	background:url(../images/top_nav_ico.png) no-repeat 0 -82px;
+	background:url(../images/top_nav_ico.png) no-repeat 0 -68px;
 	color:#ef7100;
 }
 
