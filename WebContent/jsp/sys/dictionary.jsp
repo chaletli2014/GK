@@ -58,9 +58,6 @@ function deleteDic(dicId){
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
 			<div class="page-title">
-				<div class="title-env">
-					<h1 class="title">数据字典</h1>
-				</div>
 				<div class="breadcrumb-env">
 					<ol class="breadcrumb bc-1">
 						<li>

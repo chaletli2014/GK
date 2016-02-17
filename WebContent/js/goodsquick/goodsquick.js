@@ -176,3 +176,25 @@ function populateModuleBySubject(subjectId,newTrCount){
 		}
 	});
 }
+
+
+function populateDropdownByDic(dicTypeCode,selectionId){
+	jQuery.ajax({
+		url: goodsDictionaryURL,
+		data : {
+			dicType : dicTypeCode
+		},
+		success: function(response){
+			var dics = response.dics;
+			var optionList = $("#"+selectionId);
+			optionList.empty();
+			optionList.append("<option value=''>--请选择--</option>");
+			
+			if( dics != null ){
+				$.each(dics,function(n,dicObj){
+					optionList.append("<option value='"+dicObj.dicCode+"'>"+dicObj.dicName+"</option>");
+	        	});
+			}
+		}
+	});
+}

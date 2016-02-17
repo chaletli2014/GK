@@ -38,7 +38,7 @@ public class GoodsDeviceLiftRowMapper implements RowMapper<GoodsDeviceLift>{
 		lift.setCarSize(rs.getString("car_size"));
 		lift.setCarHeight(rs.getInt("car_height"));
 		lift.setDoorSize(rs.getString("door_size"));
-		lift.setMainPower(rs.getInt("main_power"));
+		lift.setMainPower(rs.getString("main_power"));
 		lift.setMadeDate(rs.getDate("made_date"));
 		lift.setLifeTime(rs.getString("life_time"));
 		lift.setLifeTimeName(rs.getString("life_time_name"));

@@ -2,6 +2,14 @@ var newTrCount;
 
 jQuery(document).ready(function($){
 	
+	populateDropdownByDic("lift_type","deviceType");
+	populateDropdownByDic("lift_brand","deviceBrand");
+	populateDropdownByDic("lift_purpose","devicePurpose");
+	populateDropdownByDic("lift_style","deviceStyle");
+	populateDropdownByDic("lift_QA","deviceQA");
+	populateDropdownByDic("lift_mainPower","mainPower");
+	populateDropdownByDic("lift_lifeTime","lifeTime");
+	
 	$("#newDevice").click (function(){
 		createNewDeviceTr();
 	});

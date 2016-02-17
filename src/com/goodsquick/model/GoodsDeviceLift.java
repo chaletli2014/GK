@@ -142,7 +142,7 @@ public class GoodsDeviceLift extends BaseObject{
 	/**
 	 * 主机功率(kw)
 	 */
-	private int mainPower;
+	private String mainPower;
 	
 	/**
 	 * 制造日期
@@ -322,10 +322,10 @@ public class GoodsDeviceLift extends BaseObject{
 	public void setDoorSize(String doorSize) {
 		this.doorSize = doorSize;
 	}
-	public int getMainPower() {
+	public String getMainPower() {
 		return mainPower;
 	}
-	public void setMainPower(int mainPower) {
+	public void setMainPower(String mainPower) {
 		this.mainPower = mainPower;
 	}
 	public Date getMadeDate() {

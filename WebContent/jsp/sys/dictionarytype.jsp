@@ -51,9 +51,6 @@ function checkMessage(){
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
 			<div class="page-title">
-				<div class="title-env">
-					<h1 class="title">数据字典分类</h1>
-				</div>
 					<div class="breadcrumb-env">
 						<ol class="breadcrumb bc-1">
 						<li>
@@ -143,19 +140,19 @@ function checkMessage(){
 								<span id="returnMessage" style="color:red;"></span>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="field-1">分类名称</label>
+								<label class="col-sm-4 control-label" for="dtName">分类名称</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="dtName" name="dtName" data-validate="required" data-message-required="名称不能为空">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="field-1">分类编码</label>
+								<label class="col-sm-4 control-label" for="dtCode">分类编码</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="dtCode" name="dtCode" data-validate="required" data-message-required="编码不能为空" onblur="checkValues()">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label" for="field-1">分类描述</label>
+								<label class="col-sm-4 control-label" for="dtDesc">分类描述</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="dtDesc" name="dtDesc">
 								</div>
