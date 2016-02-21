@@ -734,14 +734,30 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT;
 
---不动产材料装饰表
-CREATE TABLE tbl_goods_house_other (
+--不动产材料装饰表--涂料
+CREATE TABLE tbl_goods_house_paint (
 id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
-type_code			varchar(20)		comment '分类',
-other_name			varchar(200)	comment '名称',
-other_desc			varchar(200) 	comment '描述',
-subjectId			int 			comment '隶属主体ID',
-moduleId			int 			comment '隶属构件ID',
+type1_code			varchar(20)		comment '材料类别1',
+type2_code			varchar(20)		comment '材料类别2',
+paint_name			varchar(200)	comment '名称',
+paint_desc			varchar(200) 	comment '描述',
+subject_id			int 			comment '隶属主体ID',
+module_id			int 			comment '隶属构件ID',
+paint_brand			varchar(20)		comment '材料品牌',
+paint_model			varchar(20)		comment '材料型号',
+paint_style			varchar(20)		comment '材料类型',
+liquid_type			varchar(20)		comment '液态类型',
+film_former			varchar(20)		comment '成膜物性质',
+paint_storage		varchar(20)		comment '储存器',
+solid_proportion  	double 			comment '固体含量',
+brush_area  		double 			comment '涂刷面积',
+tensile_strength  	double 			comment '拉伸强度',
+break_elongation  	double 			comment '断裂伸长率',
+surface_dryTime		varchar(20)		comment '表干时间',
+drying_time			varchar(20)		comment '干燥时间',
+coating_filmColor	varchar(20)		comment '漆膜颜色',
+origin_place		varchar(20)		comment '产地',
+repository_code		varchar(20) 	comment '物库编码',
 create_user  		varchar(20),
 create_date			datetime,
 update_user			varchar(20),

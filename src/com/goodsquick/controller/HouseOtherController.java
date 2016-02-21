@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsHouseOther;
+import com.goodsquick.model.GoodsHousePaint;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.GoodsHouseOtherService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.utils.GoodsQuickAttributes;
+import com.goodsquick.utils.GoodsQuickUtils;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -94,4 +98,55 @@ public class HouseOtherController {
     	
     	return result;
     }
+	
+	@RequestMapping("/getOtherByIdAndType")
+    @ResponseBody
+    public Map<String,Object> getDeviceByIdAndType(HttpServletRequest request){
+    	Map<String,Object> result = new HashMap<String,Object>();
+    	try {
+    		int otherId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("otherId"));
+    		String otherType = request.getParameter("otherType");
+    		
+    		if( "wpp".equalsIgnoreCase(otherType) ){
+    			GoodsHousePaint otherObj = goodsHouseOtherService.getPaintInfoById(otherId);
+    			result.put("otherObj", otherObj);
+    		}
+    		result.put("result", "Y");
+    	} catch (Exception e) {
+    		logger.error("saveHouseOther: 根据ID和类型获取材料装饰失败",e);
+    		result.put("result", "N");
+    		result.put("message", e.getMessage());
+    	}
+    	
+    	return result;
+    }
+	
+	@RequestMapping("/modifyOther")
+	@ResponseBody
+	public Map<String,String> modifyOther(HttpServletRequest request){
+		Map<String,String> result = new HashMap<String,String>();
+		try {
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			
+			String otherType = request.getParameter("otherType");
+    		String otherObj = request.getParameter("otherObj");
+    		
+    		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").serializeNulls().create();
+    		JsonParser parser = new JsonParser();
+    		JsonElement el = parser.parse(otherObj);
+    		
+    		if( "wpp".equalsIgnoreCase(otherType) ){
+    			GoodsHousePaint housePaint = gson.fromJson(el, GoodsHousePaint.class);
+    			goodsHouseOtherService.saveOrUpdateHousePaint(housePaint, currentUser, repositoryCode);
+    		}
+			result.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("saveHouseOther: 保存设施设备失败",e);
+			result.put("result", "N");
+			result.put("message", e.getMessage());
+		}
+		
+		return result;
+	}
 }

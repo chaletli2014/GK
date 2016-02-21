@@ -18,7 +18,7 @@ jQuery(document).ready(function($){
 	
 	$(".showModule").click(function(){
 		emptyModuleForm();
-		showSubjectModule();
+		showSubjectModule($(this).attr("id"));
 	});
 	
 	$(".modifySubject").click(function(){
@@ -157,8 +157,7 @@ function saveSubjectModule(){
 	});
 }
 
-function showSubjectModule(){
-	var subjectId = this.id;
+function showSubjectModule(subjectId){
 	jQuery.ajax({
 		url: basePath+"subjectmodulelist",
 		data : {

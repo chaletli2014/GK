@@ -2,6 +2,7 @@ package com.goodsquick.dao;
 
 import java.util.List;
 
+import com.goodsquick.model.GoodsHousePaint;
 import com.goodsquick.model.GoodsHouseOther;
 
 public interface GoodsHouseOtherDAO {
@@ -13,4 +14,12 @@ public interface GoodsHouseOtherDAO {
 	public GoodsHouseOther getOtherInfoById(int deviceId) throws Exception;
 	
 	public void deleteHouseOther(GoodsHouseOther obj) throws Exception;
+	
+	public List<GoodsHousePaint> getHousePaintByRepositoryCode(String repositoryCode) throws Exception;
+	public void saveHousePaint(GoodsHousePaint housePaint ) throws Exception;
+	public void saveHousePaintQuick(GoodsHousePaint housePaint ) throws Exception;
+	public void updateHousePaint(GoodsHousePaint housePaint ) throws Exception;
+	public void deleteHousePaint(int housePaintId) throws Exception;
+	public GoodsHousePaint getGoodsHousePaintById(int housePaintId) throws Exception;
+	
 }

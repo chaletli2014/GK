@@ -20,7 +20,7 @@
 			<div class="page-title">
 				<div>
 					<button id="newOther" class="btn btn-info">
-						<li class="fa-plus-square">添加材料装饰</li>
+						<li class="fa-plus-square">添加材料&装饰</li>
 					</button>
 					<button id="saveOther" class="btn btn-info">
 						<span>保存</span>
@@ -32,7 +32,8 @@
 					<table class="table table-hover" id="otherTable">
 						<thead>
 							<tr>
-								<th width="20%">名称</th>
+								<th width="7%">分类</th>
+								<th width="15%">名称</th>
 								<th width="30%">描述</th>
 								<th>使用位置</th>
 								<th>操作</th>
@@ -41,14 +42,15 @@
 						<tbody class="middle-align">
 							<c:forEach items="${houseOthers}" var="houseOther">
 								<tr>
+									<td class="dataEditable" title="${houseOther.typeName}">${houseOther.typeName}</td>
 									<td class="dataEditable" title="${houseOther.name}">${houseOther.name}</td>
 									<td class="dataEditable" title="${houseOther.desc}">${houseOther.desc}</td>
 									<td>${houseOther.subjectName}-${houseOther.moduleName}</td>
 									<td>
-										<a id="${houseOther.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyOther">
+										<a id="${houseOther.id}" dtype="${houseOther.typeCode}" class="btn btn-secondary btn-sm btn-icon icon-left modifyOther">
 											编辑
 										</a>
-										<a id="${houseOther.id}" class="btn btn-danger btn-sm btn-icon icon-left removeOther">
+										<a id="${houseOther.id}" class="btn btn-danger btn-sm btn-icon icon-left removeDevice">
 											删除
 										</a>
 									</td>
@@ -61,7 +63,7 @@
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>
-	<%@include file="houseOther.jsp" %>
+	<%@include file="houseOtherPaint.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

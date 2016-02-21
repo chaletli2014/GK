@@ -1,12 +1,13 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="row" style="margin-bottom: 20px;">
+	<%--
 	<div class="panel-body">
 		<div class="row" style="margin-left:0px;margin-bottom:10px;">
 			<form id="uploadHouseSourceForm" method="post" enctype="multipart/form-data">
 				<input type="file" id="sourceFile" name="sourceFile" style="display: inline;"/>
 				<button class="btn btn-success btn-icon" id="houseSourceFileBtn">
 					<i class="fa-check-square-o"></i>
-					<span>上传11</span>
+					<span>上传</span>
 				</button>
 			</form>
 		</div>
@@ -30,6 +31,7 @@
 			</div>
 		</div>
 	</div>
+	 --%>
 	<div>
 		<a id="finishWizard">
 			<button class="btn btn-success btn-icon btn-icon-standalone">
