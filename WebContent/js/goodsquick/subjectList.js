@@ -85,8 +85,13 @@ function saveSubject(){
 		subjectObj.desc = $("#subjectDesc"+i).val();
 		subjectObj.level = $("#subjectLevel_h").val();
 		
-		if( subjectObj.subjectName == '' ){
+		if( subjectObj.name == '' ){
 			jAlert("主体名称不能为空","提醒");
+			return false;
+		}
+		
+		if( subjectObj.parentId == '' ){
+			jAlert("上级主体必须选择","提醒");
 			return false;
 		}
 		
