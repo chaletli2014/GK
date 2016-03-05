@@ -120,7 +120,7 @@ public class UploadFileController {
 		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
 		String targetPathStr = request.getSession().getServletContext().getRealPath("/")+GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode;
-		
+		String downloadPath = request.getSession().getServletContext().getContextPath()+GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode;
 		try{
 			File targetPath = new File(targetPathStr);
 			String ori_fileName = file.getOriginalFilename();
@@ -130,12 +130,13 @@ public class UploadFileController {
 			}
 			
 			String targetFileStr = targetPathStr +"/"+ ori_fileName;
+			String downloadFile = downloadPath + "/"+ ori_fileName;
 			File targetFile = new File(targetFileStr);
 			
 			GoodsHouseFile houseFile = new GoodsHouseFile();
 			houseFile.setFileName(ori_fileName.substring(0,ori_fileName.lastIndexOf('.')));
 			houseFile.setFileType(ori_fileName.substring(ori_fileName.lastIndexOf('.')+1));
-			houseFile.setFilePath(targetFileStr);
+			houseFile.setFilePath(downloadFile);
 			houseFile.setRepositoryCode(repositoryCode);
 			houseFile.setTargetFile(targetFile);
 			houseFile.setIsMain("0");

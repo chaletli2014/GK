@@ -98,11 +98,10 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${houseFiles}" var="houseFile" varStatus="status">
-						<a href="${houseFile.filePath}">${houseFile.fileName}</a>
 							<tr>
 								<td>${status.index+1}</td>
 								<td>${houseFile.fileType}</td>
-								<td><a href="${houseFile.filePath}">${houseFile.fileName}</a></td>
+								<td><a href="${houseFile.filePath}" target="_blank">${houseFile.fileName}</a></td>
 								<td>${houseFile.isMain}</td>
 								<td></td>
 							</tr>
