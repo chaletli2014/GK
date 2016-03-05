@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
+import com.goodsquick.model.GoodsHouseFile;
 import com.goodsquick.model.GoodsHouseSP;
 import com.goodsquick.model.GoodsHouseSP2nd;
 import com.goodsquick.model.GoodsMessage;
@@ -29,6 +30,7 @@ import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
 import com.goodsquick.service.GoodsServiceService;
+import com.goodsquick.service.GoodsSourceFileService;
 import com.goodsquick.service.MessageService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.service.RelationshipPropertyService;
@@ -64,6 +66,10 @@ public class OrdinaryHouseController {
 	@Autowired
 	@Qualifier("subjectAndModuleService")
 	private SubjectAndModuleService subjectAndModuleService;
+	
+	@Autowired
+	@Qualifier("goodsSourceFileService")
+	private GoodsSourceFileService goodsSourceFileService;
 
     @RequestMapping("/ordinaryhouse")
     public ModelAndView ordinaryhouse(HttpServletRequest request){
@@ -79,6 +85,9 @@ public class OrdinaryHouseController {
     		
     		List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
     		view.addObject("moduleTypes", moduleTypes);
+    		
+    		List<GoodsHouseFile> houseFiles = goodsSourceFileService.getGoodsHouseFileByRepositoryCode(repositoryCode);
+    		view.addObject("houseFiles", houseFiles);
     		
         	view.addObject("opened", ",productManagement,");
 			view.addObject("actived", ",ordinaryhouse,");

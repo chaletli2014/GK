@@ -774,6 +774,7 @@ ROW_FORMAT=COMPACT
 CREATE TABLE tbl_goods_house_file (
 id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
 repository_code		varchar(20)		comment '物库编码',
+file_type			varchar(20)		comment '文件类型',
 file_name			varchar(200)	comment '文件名称',
 file_path			varchar(200) 	comment '文件路径',
 is_main				int 			comment '是否是封面图片，1是0否',

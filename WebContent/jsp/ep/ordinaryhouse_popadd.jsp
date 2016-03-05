@@ -1,6 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="modal fade" id="newHouseDiv">
-	<div class="modal-dialog" style="width:70%">
+	<div class="modal-dialog" style="width:80%">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -96,6 +96,7 @@
 						<%@include file="ordinaryhouse_param_source.jsp" %>
 					</div>
 					<!-- Tabs Pager -->
+					<!-- 
 					<ul class="pager wizard">
 						<li class="previous">
 							<a href="#"><i class="entypo-left-open"></i>上一步</a>
@@ -104,6 +105,7 @@
 							<a href="#" id="newProductNext">下一步<i class="entypo-right-open"></i></a>
 						</li>
 					</ul>
+					 -->
 				</div>
 			</div>
 		</div>

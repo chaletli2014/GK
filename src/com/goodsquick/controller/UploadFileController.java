@@ -20,10 +20,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.GoodsHouseFile;
 import com.goodsquick.model.GoodsOrdinaryHouse;
+import com.goodsquick.model.WebUserInfo;
+import com.goodsquick.service.GoodsSourceFileService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.utils.ExcelUtils;
 import com.goodsquick.utils.GoodsQuickAttributes;
@@ -37,6 +42,10 @@ public class UploadFileController {
 	@Autowired
 	@Qualifier("ordinaryHouseService")
 	private OrdinaryHouseService ordinaryHouseService;
+	
+	@Autowired
+	@Qualifier("goodsSourceFileService")
+	private GoodsSourceFileService goodsSourceFileService;
 
 	@RequestMapping("/uploadSource")
     public ModelAndView uploadSource(HttpServletRequest request){
@@ -95,76 +104,50 @@ public class UploadFileController {
 	 */
 	@ResponseBody
 	@RequestMapping("/uploadHouseSourceFile")
-	public Map<String, Object> uploadHouseSourceFile(HttpServletRequest request){
+	public Map<String, Object> uploadHouseSourceFile(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request){
 		Map<String, Object> categoryMap = new HashMap<String, Object>();
+		// 文件是否为空
+		if (file.getSize() == 0 || file.isEmpty()) {
+			categoryMap.put("resultMsg", "上传文件为空");
+			return categoryMap;
+		}
+		// 文件是否过大
+		if (file.getSize() > 10240000) {
+			categoryMap.put("resultMsg", "上传文件过大");
+			return categoryMap;
+		}
+		
 		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
-		String sourceFile12 = request.getParameter("sourceFile");
-		String uploadFile = loadFile(request);
+		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+		String targetPathStr = request.getSession().getServletContext().getRealPath("/")+GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode;
 		
-		File sourceFile = new File(uploadFile);
-		
-		String fileName = uploadFile.substring(uploadFile.lastIndexOf('\\'));
-		
-		File targetPath = new File(GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode);
-		File targetFile = new File(GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode+"/"+fileName);
-		
-		if( !targetPath.exists() ){
-			targetPath.mkdirs();
+		try{
+			File targetPath = new File(targetPathStr);
+			String ori_fileName = file.getOriginalFilename();
+			
+			if( !targetPath.exists() ){
+				targetPath.mkdirs();
+			}
+			
+			String targetFileStr = targetPathStr +"/"+ ori_fileName;
+			File targetFile = new File(targetFileStr);
+			
+			GoodsHouseFile houseFile = new GoodsHouseFile();
+			houseFile.setFileName(ori_fileName.substring(0,ori_fileName.lastIndexOf('.')));
+			houseFile.setFileType(ori_fileName.substring(ori_fileName.lastIndexOf('.')+1));
+			houseFile.setFilePath(targetFileStr);
+			houseFile.setRepositoryCode(repositoryCode);
+			houseFile.setTargetFile(targetFile);
+			houseFile.setIsMain("0");
+			houseFile.setSourceFile(file);
+			
+			goodsSourceFileService.saveOrUpdateGoodsHouseFile(houseFile, currentUser);
+			categoryMap.put("existsFiles", goodsSourceFileService.getGoodsHouseFileByRepositoryCode(repositoryCode));
+			
+		}catch(Exception e){
+			logger.error("fail to upload the file,",e);
+			categoryMap.put("resultMsg", "上传文件失败："+e.getMessage());
 		}
-		
-		try {
-			FileUtils.copyFile(sourceFile, targetFile);
-		} catch (Exception e) {
-			logger.error("file not found when upload house source file");
-		}
-		
 		return categoryMap;
 	}
-	
-	private String loadFile(HttpServletRequest request){
-    	String savePath =request.getSession().getServletContext().getRealPath("/")+"uploadfiles\\";  
-    	String fileName = "";
-    	try{
-    		request.setCharacterEncoding("UTF-8");
-    		File f1 = new File(savePath);
-    		if (!f1.exists()) {
-    			f1.mkdirs();  
-    		}  
-    		DiskFileItemFactory fac = new DiskFileItemFactory();
-    		ServletFileUpload upload = new ServletFileUpload(fac);
-    		
-    		upload.setHeaderEncoding("utf-8");  
-    		List fileList = null;
-    		try {  
-    			fileList = upload.parseRequest(request);  
-    		} catch (FileUploadException ex) {
-    			ex.printStackTrace();
-    		}
-    		
-    		FileItem item=(FileItem)fileList.get(0);
-    		
-    		if( item.isFormField() ){
-    			logger.info(item.getFieldName());
-    			logger.info(item.getString());
-    		}else{
-    			fileName = item.getName();
-    			if( fileName.indexOf("\\") > 0 ){
-    			    fileName = fileName.substring(fileName.lastIndexOf("\\")+1, fileName.length());
-    			}
-    			FileOutputStream fos = new FileOutputStream(savePath+fileName);
-    			InputStream in = item.getInputStream();
-    			byte buffer[] = new byte[1024];
-    			int len = 0;
-    			while((len=in.read(buffer))>0){
-    				fos.write(buffer,0,len);
-    			}
-    			in.close();
-    			fos.close();
-    		}
-    	}catch(Exception e){
-    		logger.error("fail to load the file");
-    	}
-    	logger.info(String.format("loadFile... the file name is %s", fileName));
-    	return savePath+fileName;
-    }
 }
