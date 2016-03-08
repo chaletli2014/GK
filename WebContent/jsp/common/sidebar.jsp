@@ -282,38 +282,58 @@
 					<%}%>
 				</a>
 			</li>
-			 --%>
 			<li <% if( actived.indexOf(",myReport,")>-1 ){ %>class="active"<%} %>>
 				<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
 					<i class="linecons-photo"></i>
 					<span class="title">数据服务</span>
 				</a>
 			</li>
-			<li <% if( actived.indexOf(",event,")>-1 ){ %>class="opened active"<%} %>>
+			 --%>
+			<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="opened active"<%} %>>
 				<a>
 					<i class="linecons-sound"></i>
 					<span class="title">维保管理</span>
 				</a>
 				<ul>
-					<li <% if( actived.indexOf(",designService,")>-1 ){ %>class="active"<%} %>>
+					<li <% if( actived.indexOf(",jh,")>-1 ){ %>class="active"<%} %>>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">计划管理</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",xj,")>-1 ){ %>class="active"<%} %>>
 						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">巡检管理</span>
 						</a>
 					</li>
-					<li <% if( actived.indexOf(",brandService,")>-1 ){ %>class="active"<%} %>>
-						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+					<li <% if( actived.indexOf(",bx,")>-1 ){ %>class="active"<%} %>>
+						<a href="javascript:void(0)">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">工单管理</span>
+							<span class="title">报修管理</span>
 						</a>
-					</li>
-					<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
-						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">维保查询</span>
-						</a>
+						<ul>
+							<li <% if( actived.indexOf(",gd,")>-1 ){ %>class="active"<%} %>>
+								<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">工单管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="active"<%} %>>
+								<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">维保查询</span>
+								</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
+			</li>
+			<li <% if( actived.indexOf(",ys,")>-1 ){ %>class="active"<%} %>>
+				<a href="<%=request.getParameter("basePath") %>index">
+					<i class="linecons-desktop"></i>
+					<span>议事管理</span>
+				</a>
 			</li>
 			<%--
 			<li <% if( opened.indexOf(",service,")>-1 ){ %>class="opened"<%} %>>
