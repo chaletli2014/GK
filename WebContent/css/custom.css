@@ -316,3 +316,10 @@ div.showDetailDiv .form-group{
 #uploadFileForm{
 	font-size:12px;
 }
+
+.ztree li span.button.icon01_ico_open{
+	/**background:url(../images/level_icon.jpg) no-repeat top right*/;
+}
+.icon01_ico_close{
+	
+}

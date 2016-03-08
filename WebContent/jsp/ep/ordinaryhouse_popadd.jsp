@@ -95,6 +95,14 @@
 					<div class="tab-pane" id="tab_source">
 						<%@include file="ordinaryhouse_param_source.jsp" %>
 					</div>
+					<div style="float:right;">
+						<a id="finishWizard">
+							<button class="btn btn-success btn-icon btn-icon-standalone">
+								<i class="fa-check-square-o"></i>
+								<span>完成</span>
+							</button>
+						</a>
+					</div>
 					<!-- Tabs Pager -->
 					<!-- 
 					<ul class="pager wizard">

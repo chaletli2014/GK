@@ -15,6 +15,9 @@ jQuery(document).ready(function($){
 	$("#sm_submitBtn").click(function(){
 		saveSubjectModule();
 	});
+	$("#modifySubjectBtn").click(function(){
+		modifySubject();
+	});
 	
 	$(".showModule").click(function(){
 		emptyModuleForm();
@@ -22,17 +25,19 @@ jQuery(document).ready(function($){
 	});
 	
 	$(".modifySubject").click(function(){
-		$(this).parent().siblings("td").each(function() {
-			if( $(this).hasClass("dataEditable") ){
-				// 获取当前行的其他单元格
-				obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
-				if(!obj_text.length){// 如果没有文本框，则添加文本框使之可以编辑
-					$(this).html("<input type='text' value='"+$(this).text()+"'>");
-				}else{// 如果已经存在文本框，则将其显示为文本框修改的值
-					$(this).html(obj_text.val());
-				}
-			}
-        });
+		showSubjectInfo($(this).attr("id"));
+//		$(this).parent().siblings("td").each(function() {
+//			if( $(this).hasClass("dataEditable") ){
+//				// 获取当前行的其他单元格
+//				obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
+//				if(!obj_text.length){// 如果没有文本框，则添加文本框使之可以编辑
+//					$(this).html("<input type='text' value='"+$(this).text()+"'>");
+//				}else{// 如果已经存在文本框，则将其显示为文本框修改的值
+//					$(this).html(obj_text.val());
+//				}
+//			}
+//        });
+		
 	});
 });
 
@@ -119,6 +124,36 @@ function saveSubject(){
 	});
 }
 
+function modifySubject(){
+	var subjectArray = new Array();
+	
+	var subjectObj = new Object();
+	subjectObj.id = $("#subjectIdModify").val();
+	subjectObj.name = $("#subjectNameModify").val();
+	subjectObj.desc = $("#subjectDescModify").val();
+	
+	if( subjectObj.name == '' ){
+		jAlert("主体名称不能为空","提醒");
+		return false;
+	}
+	subjectArray.push(subjectObj);
+	
+	jQuery.ajax({
+		url: basePath+"saveOrUpdateSubject",
+		data : {
+			subjectList : JSON.stringify(subjectArray)
+		},
+		success: function(response){
+			var result = response.result;
+			if( result == 'Y' ){
+				jAlert("编辑成功","提醒",function(){
+					window.location.reload();
+				});
+			}
+		}
+	});
+}
+
 function saveSubjectModule(){
 	var subjectId = $("#subjectId").val();
 	var moduleType = $("#moduleType").val();
@@ -182,6 +217,28 @@ function showSubjectModule(subjectId){
 				jQuery('#subjectModuleDiv').modal('show', {backdrop: 'static'});
 			}else{
 				jAlert("获取构件失败","提示");
+			}
+		}
+	});
+}
+
+function showSubjectInfo(subjectId){
+	jQuery.ajax({
+		url: basePath+"getSubjectById",
+		data : {
+			subjectId : subjectId
+		},
+		success: function(response){
+			var result = response.result;
+			var subjectObj = response.subjectObj;
+			if( result == 'Y' ){
+				$("#subjectNameModify").val(subjectObj.name);
+				$("#subjectDescModify").val(subjectObj.desc);
+				$("#parentNameModify").val(subjectObj.parentName);
+				$("#subjectIdModify").val(subjectId);
+				jQuery('#subjectModifyDiv').modal('show', {backdrop: 'static'});
+			}else{
+				jAlert("获取主体失败","提示");
 			}
 		}
 	});

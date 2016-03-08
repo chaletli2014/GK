@@ -111,12 +111,4 @@
 			</div>
 		</div>
 	</div>
-	<div>
-		<a id="finishWizard">
-			<button class="btn btn-success btn-icon btn-icon-standalone">
-				<i class="fa-check-square-o"></i>
-				<span>完成</span>
-			</button>
-		</a>
-	</div>
 </div>

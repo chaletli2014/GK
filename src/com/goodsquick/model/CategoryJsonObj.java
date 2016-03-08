@@ -5,6 +5,7 @@ public class CategoryJsonObj {
 	private String id;
 	private String name;
 	private String pId;
+	private String level;
 	
 	/**
 	 * save or update or delete
@@ -35,6 +36,12 @@ public class CategoryJsonObj {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
 	}
 	
 }

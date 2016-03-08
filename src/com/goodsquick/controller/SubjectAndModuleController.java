@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.Category;
 import com.goodsquick.model.CategoryJsonObj;
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseSubjectModule;
@@ -60,6 +61,38 @@ public class SubjectAndModuleController {
 		
 		view.addObject("houseSubjectList", houseSubjectList);
 		return view;
+	}
+	
+
+	@RequestMapping("/subjectView")
+	public ModelAndView subjectView(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("subjectModule/subjectView");
+		view.addObject("opened", ",productManagement,subjectModule,");
+		view.addObject("actived", ",subjectView,");
+		return view;
+	}
+	
+
+	@ResponseBody
+	@RequestMapping("/subjectViewList")
+	public List<CategoryJsonObj> subjectViewList(HttpServletRequest request){
+		List<CategoryJsonObj> subjectView = new ArrayList<CategoryJsonObj>();
+		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+		try{
+			List<GoodsSubject> subjectList = subjectAndModuleService.getAllSubject(repositoryCode);
+			for( GoodsSubject sub : subjectList ){
+				CategoryJsonObj cateJson = new CategoryJsonObj();
+				cateJson.setId(String.valueOf(sub.getId()));
+				cateJson.setName(sub.getName());
+				cateJson.setpId(String.valueOf(sub.getParentId()));
+				cateJson.setLevel(sub.getLevel());
+				subjectView.add(cateJson);
+			}
+		}catch(Exception e){
+			logger.error("fail to get subject view list", e);
+		}
+		return subjectView;
 	}
 	
 	@RequestMapping("/subjectList")
@@ -216,6 +249,22 @@ public class SubjectAndModuleController {
     	return result;
     }
     
+
+	@ResponseBody
+	@RequestMapping("/getSubjectById")
+	public Map<String,Object> getSubjectById(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		try {
+			int subjectId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("subjectId"));
+			resultMap.put("subjectObj", subjectAndModuleService.getSubjectInfoById(subjectId));
+			resultMap.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("fail to get the house subject,",e);
+			resultMap.put("result", "N");
+		}
+		return resultMap;
+	}
 
 	@ResponseBody
 	@RequestMapping("/saveOrUpdateSubject")

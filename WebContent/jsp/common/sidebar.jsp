@@ -139,6 +139,12 @@
 							<span class="title">主体构件</span>
 						</a>
 						<ul>
+							<li <% if( actived.indexOf(",subjectView,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>subjectView">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">概览</span>
+								</a>
+							</li>
 							<li <% if( actived.indexOf(",subject1,")>-1 ){ %>class="active"<%} %>>
 								<a href="<%=request.getParameter("basePath")%>subjectList?level=1">
 									<i class="entypo-flow-parallel"></i>

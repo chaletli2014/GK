@@ -96,6 +96,7 @@
 		</div>
 	</div>
 	<%@include file="subjectModule.jsp" %>
+	<%@include file="subjectModify.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

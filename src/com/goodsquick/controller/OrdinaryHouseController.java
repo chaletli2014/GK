@@ -564,12 +564,12 @@ public class OrdinaryHouseController {
     		GoodsOrdinaryHouse house = ordinaryHouseService.getOwnedGoodsOrdinaryHouseById(Integer.parseInt(houseId));
     		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
     		
-    		List<GoodsHouseDevice> deviceList = ordinaryHouseService.getAllHouseDeviceByUser(house, currentUser);
+//    		List<GoodsHouseDevice> deviceList = ordinaryHouseService.getAllHouseDeviceByUser(house, currentUser);
     		
     		if( null != house ){
     			result.put("result", "Y");
     			result.put("obj", house);
-    			result.put("deviceList", deviceList);
+//    			result.put("deviceList", deviceList);
     		}else{
     			result.put("result", "N");
     		}
