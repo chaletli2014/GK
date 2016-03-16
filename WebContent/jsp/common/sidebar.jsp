@@ -46,13 +46,6 @@
 					<i class="fa-bars"></i>
 				</a>
 			</div>
-			<%--
-			<div class="settings-icon" title="编辑用户">
-				<a href="#" data-toggle="settings-pane" data-animate="true">
-					<i class="linecons-cog"></i>
-				</a>
-			</div>
-			 --%>
 		</header>
 		<div class="sidebar_title">
 			<span>
@@ -60,14 +53,14 @@
 			</span>
 		</div>
 		<ul id="main-menu" class="main-menu">
-			<li>
+			<li <% if( actived.indexOf(",index,")>-1 ){ %>class="active firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="<%=request.getParameter("basePath") %>index">
 					<i class="linecons-desktop"></i>
 					<span>视窗看板</span>
 				</a>
 			</li>
 			<%if( "admin".equalsIgnoreCase(webUser.getLoginName()) ) {%>
-			<li <% if( opened.indexOf("system")>-1 ){ %>class="active opened"<%} %>>
+			<li <% if( opened.indexOf("system")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-cog"></i>
 					<span class="title">我的控制台</span>
@@ -121,7 +114,7 @@
 				</ul>
 			</li>
 			<%} %>
-			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened"<%} %>>
+			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-database"></i>
 					<span class="title"><%=manageName %></span>
@@ -174,93 +167,34 @@
 					<li <% if( actived.indexOf(",houseOther,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>houseOtherList">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">材料 & 装饰</span>
+							<span class="title">材料&nbsp;&&nbsp;装饰</span>
 						</a>
 					</li>
 				</ul>
 			</li>
-			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened"<%} %>>
+			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-globe"></i>
 					<span class="title">物链管理</span>
 				</a>
 				<ul>
-					<li <% if( actived.indexOf(",moduleSPManagement,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>moduleSPManagement">
+					<li <% if( actived.indexOf(",moduleSPManagement_subject,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_subject&spTypeCode=sp_type_js">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">组件商管理</span>
+							<span class="title">小区主体</span>
 						</a>
 					</li>
-					<li <% if( actived.indexOf(",trusteeshipService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=trusteeshipService">
+					<li <% if( actived.indexOf(",moduleSPManagement_equ,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseSPManagement?partCode=sp_equ&spTypeCode=sp_type_brand">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">托管商管理</span>
+							<span class="title">设施设备</span>
 						</a>
 					</li>
-					<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=supervisionService">
+					<li <% if( actived.indexOf(",moduleSPManagement_other,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseSPManagement?partCode=sp_other&spTypeCode=sp_type_brand">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">市场监管人管理</span>
+							<span class="title">材料&nbsp;&&nbsp;装饰</span>
 						</a>
-					</li>
-					<li <% if( opened.indexOf(",serviceCustomer,supplier,")>-1 ){ %>class="active opened"<%} %>>
-						<a style="padding-left:48px;">
-							<span class="title">供应商管理</span>
-						</a>
-						<ul>
-							<li <% if( actived.indexOf(",brandService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=brandService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">品牌商管理</span>
-								</a>
-							</li>
-							<li <% if( actived.indexOf(",designService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=designService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">设计商管理</span>
-								</a>
-							</li>
-							<%--
-							<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">制造商管理</span>
-								</a>
-							</li>
-							--%>
-							<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">检测认证商管理</span>
-								</a>
-							</li>
-							<li <% if( actived.indexOf(",channelService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=channelService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">渠道商管理</span>
-								</a>
-							</li>
-							<li <% if( actived.indexOf(",logisticsService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=logisticsService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">物流商管理</span>
-								</a>
-							</li>
-							<%--
-							<li <% if( actived.indexOf(",ownerService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=ownerService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">所有人管理</span>
-								</a>
-							</li>
-							 --%>
-							<li <% if( actived.indexOf(",recyclingService,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=recyclingService">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">回收处理商管理</span>
-								</a>
-							</li>
-						</ul>
 					</li>
 					<%-- 
 					<li <% if( actived.indexOf(",serviceCustomer,")>-1 ){ %>class="active"<%} %>>
@@ -272,24 +206,7 @@
 					--%>
 				</ul>
 			</li>
-			<%--
-			<li <% if( actived.indexOf(",myMessage,")>-1 ){ %>class="active"<%} %>>
-				<a href="<%=request.getParameter("basePath")%>myMessage">
-					<i class="linecons-mail"></i>
-					<span class="title">消息管理</span>
-					<%if(0 != webUser.getMessageNum()){%>
-					<span class="badge badge-secondary pull-right"><%=webUser.getMessageNum()%></span>
-					<%}%>
-				</a>
-			</li>
-			<li <% if( actived.indexOf(",myReport,")>-1 ){ %>class="active"<%} %>>
-				<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
-					<i class="linecons-photo"></i>
-					<span class="title">数据服务</span>
-				</a>
-			</li>
-			 --%>
-			<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="opened active"<%} %>>
+			<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="opened active firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a>
 					<i class="linecons-sound"></i>
 					<span class="title">维保管理</span>
@@ -329,27 +246,12 @@
 					</li>
 				</ul>
 			</li>
-			<li <% if( actived.indexOf(",ys,")>-1 ){ %>class="active"<%} %>>
+			<li <% if( actived.indexOf(",ys,")>-1 ){ %>class="active firstLI"<%} %>>
 				<a href="<%=request.getParameter("basePath") %>index">
 					<i class="linecons-desktop"></i>
 					<span>议事管理</span>
 				</a>
 			</li>
-			<%--
-			<li <% if( opened.indexOf(",service,")>-1 ){ %>class="opened"<%} %>>
-				<a href="#" onclick="javascript:void(0)">
-					<i class="linecons-note"></i>
-					<span class="title">服务信息管理</span>
-				</a>
-				<ul>
-					<li <% if( actived.indexOf(",serviceprovider,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>serviceprovider" onclick="javascript:void(0)">
-							<span class="title">服务商列表</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			 --%>
 		</ul>
 	</div>
 </div>

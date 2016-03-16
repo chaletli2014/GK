@@ -19,52 +19,39 @@
 	        </jsp:include>
 			<div class="page-title">
 				<%@include file="../common/nav-title.jsp"%>
-				<div class="breadcrumb-env">
-					<ol class="breadcrumb bc-1">
-					<li>
-						<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
-					</li>
-					<li>
-						<a href="#" onclick="javascript:void(0)">物链管理</a>
-					</li>
-					<li class="active">
-						<strong>组件商管理</strong>
-					</li>
-					</ol>
-				</div>
 			</div>
 			<div class="panel panel-default">
-				<div class="panel-body">
-					<input type="hidden" name="orHouseId" id="orHouseId" value="${orHouse.id}"/>
+				<div class="panel-body" style="padding-top:0px;">
+					<input type="hidden" name="partCode" id="partCode" value="${partCode}"/>
+					<input type="hidden" name="spTypeCode" id="spTypeCode" value="${spTypeCode}"/>
+					<ul class="sp_type_ul" id="sp_type_ul">
+					<c:forEach items="${spTypes}" var="spType">
+						<li lid="${spType.dicCode}" class="<c:if test="${spType.dicCode == spTypeCode}">active</c:if>" >${spType.dicName}</li>
+					</c:forEach>
+					</ul>
 					<div>
-						<div class="panel-heading" style="margin-top:20px;">
-							<h3 class="panel-title" style="line-height: 28px; margin-right:10px;">组件商信息</h3>
-							<%--
-							<a id="newModuleSPLink">
-								<button class="btn btn-icon btn-info">
-									<li class="fa-plus-square"></li>
-								</button>
-							</a>
-							 --%>
-						</div>
 						<table class="table table-bordered table-striped" id="moduleSPTable">
 							<thead>
 								<tr>
-									<th>组件名称</th>
-									<th>组件商名称</th>
-									<th>备注</th>
-									<th>查看</th>
+									<th>${spTypeName}名称</th>
+									<th>电话号码</th>
+									<th>操作<a style="float:right;margin-right:16px;" id="newSpLink">新增</a></th>
 								</tr>
 							</thead>
 							<tbody class="middle-align">
 								<c:forEach items="${houseModuleSPList}" var="moduleSP">
 									<tr>
-										<td >${moduleSP.moduleType}</td>
-										<td >${moduleSP.moduleSPName}</td>
-										<td >${moduleSP.remark}</td>
+										<td >${moduleSP.spName}</td>
+										<td >${moduleSP.spTel}</td>
 										<td>
+											<a href="#" class="btn btn-orange btn-sm btn-icon icon-left">
+												编辑
+											</a>
 											<a href="#" class="btn btn-danger btn-sm btn-icon icon-left">
 												删除
+											</a>
+											<a href="#" class="btn btn-blue btn-sm btn-icon icon-left">
+												关联
 											</a>
 										</td>
 									</tr>

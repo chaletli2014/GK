@@ -1,5 +1,7 @@
+<%@page import="com.goodsquick.model.GoodsRepository"%>
+<%@page import="com.goodsquick.utils.GoodsQuickAttributes"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@page import="com.goodsquick.model.WebUserInfo,org.springframework.security.core.context.SecurityContextHolder" %>
 <%
 	String opened = request.getParameter("opened");
 	String actived = request.getParameter("actived");
@@ -10,6 +12,19 @@
 	if( null == actived || "".equals(actived) ){
 		actived = "*";
 	}
+	WebUserInfo webUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	
+	GoodsRepository currentRepository = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
+	
+	String manageName = "资品管理";
+	String manageLink = request.getParameter("basePath")+"ordinaryhouse";
+	if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
+		manageName = "产品管理";
+		manageLink = request.getParameter("basePath")+"productlist";
+	}else if("2".equalsIgnoreCase(currentRepository.getRepositoryType())){
+		manageName = "货品管理";
+		manageLink = request.getParameter("basePath")+"productlist";
+	}
 %>
 
 <div class="sidebar-menu toggle-others">
@@ -18,7 +33,7 @@
 			<!-- logo -->
 			<div class="logo">
 				<a href="<%=request.getParameter("basePath") %>index" class="logo-expanded">
-					<img src="<%=request.getParameter("basePath")%>images/logo@2x.png" width="80" alt="" />
+					<img src="<%=request.getParameter("basePath")%>images/logo_new.png" alt="" width="80px" height="26px"/>
 				</a>
 			</div>
 			<!-- This will toggle the mobile menu and will be visible only on mobile devices -->
@@ -31,18 +46,34 @@
 					<i class="fa-bars"></i>
 				</a>
 			</div>
-			<!-- This will open the popup with user profile settings, you can use for any purpose, just be creative -->
-			<div class="settings-icon">
+			<%--
+			<div class="settings-icon" title="编辑用户">
 				<a href="#" data-toggle="settings-pane" data-animate="true">
 					<i class="linecons-cog"></i>
 				</a>
 			</div>
+			 --%>
 		</header>
+		<div class="sidebar_title">
+			<span>
+				<%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%>
+			</span>
+		</div>
 		<ul id="main-menu" class="main-menu">
-			<li <% if( opened.indexOf("system")>-1 ){ %>class="active opened"<%} %>>
+			<li <% if( actived.indexOf(",index,")>-1 ){ %>class="active firstLI"<%}else{%>class="firstLI"<%} %>>
+				<a href="<%=request.getParameter("basePath") %>index">
+					<i class="linecons-desktop"></i>
+					<span>视窗看板</span>
+				</a>
+			</li>
+			<%if( "admin".equalsIgnoreCase(webUser.getLoginName()) ) {%>
+			<li <% if( opened.indexOf("system")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-cog"></i>
-					<span class="title">系统管理</span>
+					<span class="title">我的控制台</span>
+					<%if(0 != webUser.getMessageNum()){%>
+					<span class="badge badge-secondary pull-right"><%=webUser.getMessageNum()%></span>
+					<%}%>
 				</a>
 				<ul>
 					<li <% if( actived.indexOf(",userlist,")>-1 ){ %>class="active"<%} %>>
@@ -82,465 +113,243 @@
 							<span class="title">资料上传</span>
 						</a>
 					</li>
-					<!-- 
 					<li>
 						<a href="<%=request.getParameter("basePath")%>configure">
 							<span class="title">配置项管理</span>
 						</a>
 					</li>
-					 -->
 				</ul>
 			</li>
-			<li <% if( opened.indexOf(",estate,")>-1 ){ %>class="opened"<%} %>>
-				<a href="layout-variants.html">
+			<%} %>
+			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
+				<a href="#" onclick="javascript:void(0)">
+					<i class="linecons-database"></i>
+					<span class="title"><%=manageName %></span>
+				</a>
+				<ul>
+					<li <% if( actived.indexOf(",ordinaryhouse,")>-1|| actived.indexOf(",productlist,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=manageLink%>">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">基本信息</span>
+						</a>
+					</li>
+					<li <% if( opened.indexOf(",subjectModule,")>-1 ){ %>class="active opened"<%} %>>
+						<a href="#" onclick="javascript:void(0)">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">主体构件</span>
+						</a>
+						<ul>
+							<li <% if( actived.indexOf(",subjectView,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>subjectView">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">概览</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",subject1,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>subjectList?level=1">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">一级主体</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",subject2,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>subjectList?level=2">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">二级主体</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",subject3,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>subjectList?level=3">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">三级主体</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li <% if( actived.indexOf(",houseDevice,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseDeviceList">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">设施设备</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",houseOther,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseOtherList">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">材料 & 装饰</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
+				<a href="#" onclick="javascript:void(0)">
+					<i class="linecons-globe"></i>
+					<span class="title">物链管理</span>
+				</a>
+				<ul>
+					<li <% if( actived.indexOf(",moduleSPManagement,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>moduleSPManagement">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">组件商管理</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",trusteeshipService,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=trusteeshipService">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">托管商管理</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",supervisionService,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=supervisionService">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">市场监管人管理</span>
+						</a>
+					</li>
+					<li <% if( opened.indexOf(",serviceCustomer,supplier,")>-1 ){ %>class="active opened"<%} %>>
+						<a style="padding-left:48px;">
+							<span class="title">供应商管理</span>
+						</a>
+						<ul>
+							<li <% if( actived.indexOf(",brandService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=brandService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">品牌商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",designService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=designService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">设计商管理</span>
+								</a>
+							</li>
+							<%--
+							<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">制造商管理</span>
+								</a>
+							</li>
+							--%>
+							<li <% if( actived.indexOf(",certificationService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=certificationService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">检测认证商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",channelService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=channelService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">渠道商管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",logisticsService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=logisticsService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">物流商管理</span>
+								</a>
+							</li>
+							<%--
+							<li <% if( actived.indexOf(",ownerService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=ownerService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">所有人管理</span>
+								</a>
+							</li>
+							 --%>
+							<li <% if( actived.indexOf(",recyclingService,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseSPManagement?type=recyclingService">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">回收处理商管理</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<%-- 
+					<li <% if( actived.indexOf(",serviceCustomer,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>serviceCustomer">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">客户管理</span>
+						</a>
+					</li>
+					--%>
+				</ul>
+			</li>
+			<%--
+			<li <% if( actived.indexOf(",myMessage,")>-1 ){ %>class="active"<%} %>>
+				<a href="<%=request.getParameter("basePath")%>myMessage">
+					<i class="linecons-mail"></i>
+					<span class="title">消息管理</span>
+					<%if(0 != webUser.getMessageNum()){%>
+					<span class="badge badge-secondary pull-right"><%=webUser.getMessageNum()%></span>
+					<%}%>
+				</a>
+			</li>
+			<li <% if( actived.indexOf(",myReport,")>-1 ){ %>class="active"<%} %>>
+				<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+					<i class="linecons-photo"></i>
+					<span class="title">数据服务</span>
+				</a>
+			</li>
+			 --%>
+			<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="opened active firstLI"<%}else{%>class="firstLI"<%} %>>
+				<a>
+					<i class="linecons-sound"></i>
+					<span class="title">维保管理</span>
+				</a>
+				<ul>
+					<li <% if( actived.indexOf(",jh,")>-1 ){ %>class="active"<%} %>>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">计划管理</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",xj,")>-1 ){ %>class="active"<%} %>>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">巡检管理</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",bx,")>-1 ){ %>class="active"<%} %>>
+						<a href="javascript:void(0)">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">报修管理</span>
+						</a>
+						<ul>
+							<li <% if( actived.indexOf(",gd,")>-1 ){ %>class="active"<%} %>>
+								<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">工单管理</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="active"<%} %>>
+								<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">维保查询</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li <% if( actived.indexOf(",ys,")>-1 ){ %>class="active firstLI"<%} %>>
+				<a href="<%=request.getParameter("basePath") %>index">
 					<i class="linecons-desktop"></i>
-					<span class="title">不动产产品库管理</span>
+					<span>议事管理</span>
 				</a>
-				<ul>
-					<li <% if( opened.indexOf(",resident,")>-1 ){ %>class="opened"<%} %>>
-						<a href="layout-variants.html">
-							<span class="title">居住物业</span>
-						</a>
-						<ul>
-							<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>ordinaryhouse">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">普通住宅</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">高级公寓</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">别墅</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<%--
-					<li <% if( opened.indexOf(",business,")>-1 ){ %>class="opened"<%} %>>
-						<a href="layout-collapsed-sidebar.html">
-							<span class="title">商业物业</span>
-						</a>
-						<ul>
-							<li <% if( actived.indexOf(",officebuilding,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>officebuilding">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">商务办公楼（写字楼）</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">旅馆</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">商店</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">餐馆</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">影剧院</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="layout-static-sidebar.html">
-							<span class="title">旅游物业</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">公园</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">风景名胜</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">历史古迹</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">沙滩</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="layout-horizontal-menu.html">
-							<span class="title">工业物业</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">厂房</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">仓库</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="layout-horizontal-plus-sidebar.html">
-							<span class="title">农业物业</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">农场</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">林场</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">牧场</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">果园</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="layout-horizontal-menu-click-to-open-subs.html">
-							<span class="title">交通物业</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">车站</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">地铁站</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">飞机场</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">公路</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">铁路</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="layout-horizontal-menu-min.html">
-							<span class="title">特殊物业</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">政府机关办公楼</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">学校</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">教堂</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">寺庙</span>
-								</a>
-							</li>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">墓地</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					 --%>
-				</ul>
 			</li>
-			<%-- 
-			<li <% if( opened.indexOf(",estategoods,")>-1 ){ %>class="opened"<%} %>>
-				<a href="#" onclick="javascript:void(0)">
-					<i class="linecons-desktop"></i>
-					<span class="title">不动产物品库管理</span>
-				</a>
-				<ul>
-					<li <% if( actived.indexOf(",myestate,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>myestate" onclick="javascript:void(0)">
-							<span class="title">我的所有不动产</span>
-						</a>
-					</li>
-					<li>
-						<a href="layout-collapsed-sidebar.html">
-							<span class="title">商业物业</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">商务办公楼（写字楼）</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="layout-collapsed-sidebar.html">
-							<span class="title">居住物业</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">普通住宅</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-			<li <% if( opened.indexOf(",product,")>-1 ){ %>class="opened"<%} %>>
+			<%--
+			<li <% if( opened.indexOf(",service,")>-1 ){ %>class="opened"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-note"></i>
-					<span class="title">动产产品库管理</span>
+					<span class="title">服务信息管理</span>
 				</a>
 				<ul>
-					<li <% if( opened.indexOf(",machine,")>-1 ){ %>class="opened"<%} %>>
-						<a href="#" onclick="javascript:void(0)">
-							<span class="title">机器电子电气设备</span>
-						</a>
-						<ul>
-							<li <% if( opened.indexOf(",specialmachine,")>-1 ){ %>class="opened"<%} %>>
-								<a href="#" onclick="javascript:void(0)">
-									<span class="title">特种设备</span>
-								</a>
-								<ul>
-									<li <% if( opened.indexOf(",lift,")>-1 ){ %>class="opened"<%} %>>
-										<a href="#" onclick="javascript:void(0)">
-											<span class="title">电梯</span>
-										</a>
-										<ul>
-											<li <% if( actived.indexOf(",passengerlift,")>-1 ){ %>class="active"<%} %>>
-												<a href="<%=request.getParameter("basePath")%>passengerlift" onclick="javascript:void(0)">
-													<span class="title">乘客电梯</span>
-												</a>
-											</li>
-											<li>
-												<a href="#" onclick="javascript:void(0)">
-													<span class="title">载货电梯</span>
-												</a>
-											</li>
-											<li>
-												<a href="#" onclick="javascript:void(0)">
-													<span class="title">医用电梯</span>
-												</a>
-											</li>
-											<li>
-												<a href="#" onclick="javascript:void(0)">
-													<span class="title">杂物电梯</span>
-												</a>
-											</li>
-											<li>
-												<a href="#" onclick="javascript:void(0)">
-													<span class="title">观光电梯</span>
-												</a>
-											</li>
-											<li>
-												<a href="#" onclick="javascript:void(0)">
-													<span class="title">车辆电梯</span>
-												</a>
-											</li>
-											<li>
-												<a href="#" onclick="javascript:void(0)">
-													<span class="title">船舶电梯</span>
-												</a>
-											</li>
-											<li>
-												<a href="#" onclick="javascript:void(0)">
-													<span class="title">建筑施工电梯</span>
-												</a>
-											</li>
-											<li>
-												<a href="#" onclick="javascript:void(0)">
-													<span class="title">其它电梯</span>
-												</a>
-											</li>
-										</ul>
-									</li>
-									<li>
-										<a href="#" onclick="javascript:void(0)">
-											<span class="title">起重机械</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" onclick="javascript:void(0)">
-											<span class="title">客运索道</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" onclick="javascript:void(0)">
-											<span class="title">大型游乐设施</span>
-										</a>
-									</li>
-									<li>
-										<a href="#" onclick="javascript:void(0)">
-											<span class="title">场（厂）内专用机动车辆</span>
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a href="#" onclick="javascript:void(0)">
-									<span class="title">电机电气设备</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" onclick="javascript:void(0)">
-									<span class="title">电视音像设备</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="#" onclick="javascript:void(0)">
-							<span class="title">塑料橡胶制品</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#" onclick="javascript:void(0)">
-									<span class="title">塑料制品</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" onclick="javascript:void(0)">
-									<span class="title">橡胶制品</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="#" onclick="javascript:void(0)">
-							<span class="title">皮制品</span>
-						</a>
-						<ul>
-							<li>
-								<a href="#" onclick="javascript:void(0)">
-									<span class="title">生皮制品</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" onclick="javascript:void(0)">
-									<span class="title">皮革制品</span>
-								</a>
-							</li>
-							<li>
-								<a href="#" onclick="javascript:void(0)">
-									<span class="title">毛皮制品</span>
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<a href="#" onclick="javascript:void(0)">
-					<i class="linecons-note"></i>
-					<span class="title">动产物品库管理</span>
-				</a>
-				<ul>
-					<li>
-						<a href="#" onclick="javascript:void(0)">
-							<span class="title">我的物品库</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<a href="#" onclick="javascript:void(0)">
-					<i class="linecons-note"></i>
-					<span class="title">流通库管理</span>
-				</a>
-				<ul>
-					<li>
-						<a href="#" onclick="javascript:void(0)">
-							<span class="title">我的流通库</span>
+					<li <% if( actived.indexOf(",serviceprovider,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>serviceprovider" onclick="javascript:void(0)">
+							<span class="title">服务商列表</span>
 						</a>
 					</li>
 				</ul>
 			</li>
 			 --%>
-			<li <% if( opened.indexOf(",service,")>-1 ){ %>class="opened"<%} %>>
-				<a href="#" onclick="javascript:void(0)">
-					<i class="linecons-note"></i>
-					<span class="title">服务库管理</span>
-				</a>
-				<ul>
-					<li <% if( actived.indexOf(",serviceprovider,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>serviceprovider" onclick="javascript:void(0)">
-							<span class="title">我的服务库</span>
-						</a>
-					</li>
-				</ul>
-			</li>
 		</ul>
 	</div>
 </div>

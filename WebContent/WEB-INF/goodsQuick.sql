@@ -618,13 +618,18 @@ ROW_FORMAT=COMPACT
 ;
 
 /**
- * 组件商
+ * 物链管理-小区主体/设施设备/材料装饰
  */
 CREATE TABLE tbl_goods_house_module_sp (
 id  					bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+repository_code			varchar(20),
 house_code				varchar(20),
-module_type  			varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+part_code  				varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+sp_type_code  			varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 sp_name  				varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+sp_id	  				varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+sp_tel  				varchar(50) 	CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+relation_status  		varchar(2) 		CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 create_date  			datetime 		NULL DEFAULT NULL ,
 create_user  			varchar(20) 	NULL DEFAULT NULL ,
 update_date  			datetime 		NULL DEFAULT NULL ,

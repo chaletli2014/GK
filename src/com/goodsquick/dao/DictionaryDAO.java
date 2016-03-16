@@ -30,5 +30,5 @@ public interface DictionaryDAO {
 	
 	public void deleteDictionaryType(GoodsDictionaryType dictionaryType) throws Exception;
 	
-	public GoodsDictionary getDictionaryByCode(String code) throws Exception;
+	public GoodsDictionary getDictionaryByCode(String code, String typeCode) throws Exception;
 }

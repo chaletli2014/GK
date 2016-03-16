@@ -83,3 +83,18 @@ insert into tbl_goods_dictionary values(null,'lift_mainPower','lmp_4.6','4.6kw',
 
 insert into tbl_goods_dictionary values(null,'lift_lifeTime','llt_10y','10年','10年');
 insert into tbl_goods_dictionary values(null,'lift_lifeTime','llt_20y','20年','20年');
+
+--物链初始化
+insert into tbl_goods_dictionary_type values(null,'物链-小区主体','sp_subject','小区主体物链');
+insert into tbl_goods_dictionary_type values(null,'物链-设施设备','sp_equ','设施设备物链');
+insert into tbl_goods_dictionary_type values(null,'物链-材料装饰','sp_other','材料装饰物链');
+
+insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_js','建设单位','小区主体的物联服务商');
+insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_kc','勘察单位','小区主体的物联服务商');
+insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_sf','售房单位','小区主体的物联服务商');
+insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_jl','监理单位','小区主体的物联服务商');
+insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_sj','设计单位','小区主体的物联服务商');
+insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_sg','施工单位','小区主体的物联服务商');
+
+insert into tbl_goods_dictionary values(null,'sp_equ','sp_type_brand','品牌商','设施设备的物联服务商');
+insert into tbl_goods_dictionary values(null,'sp_equ','sp_type_wb','维保商','设施设备的物联服务商');

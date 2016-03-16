@@ -158,10 +158,10 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 	}
 
 	@Override
-	public List<GoodsHouseModuleSP> getModuleSPByHouseCodeAndType(String houseCode,
-			String moduleType) {
+	public List<GoodsHouseModuleSP> getModuleSPByHouseCodeAndType(String repositoryCode, String spTypeCode,
+			String partCode) {
 		try{
-			return relationshipPropertyDAO.getModuleSPByHouseCodeAndType(houseCode,moduleType);
+			return relationshipPropertyDAO.getModuleSPByRepositoryCodeAndType(repositoryCode, spTypeCode, partCode);
 		} catch(EmptyResultDataAccessException erd){
 			return null;
 		} catch(Exception e){

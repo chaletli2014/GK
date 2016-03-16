@@ -119,9 +119,9 @@ public class DictionaryServiceImpl implements DictionaryService {
 	}
 
 	@Override
-	public GoodsDictionary getDictionaryByCode(String code) throws Exception {
+	public GoodsDictionary getDictionaryByCode(String code, String typeCode) throws Exception {
 		try{
-			return dictionaryDAO.getDictionaryByCode(code);
+			return dictionaryDAO.getDictionaryByCode(code, typeCode);
 		} catch(EmptyResultDataAccessException erd){
             return new GoodsDictionary();
         } catch(Exception e){

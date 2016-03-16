@@ -40,7 +40,17 @@
 							$("#existsFileTable tbody").empty();
 							var count = 1;
 							$.each(existsFiles,function(n,fileObj){
-								$("#existsFileTable tbody").append("<tr><td>"+count+"</td><td>"+fileObj.fileType+"</td><td><a href='"+fileObj.filePath+"'>"+fileObj.fileName+"</a></td><td>"+fileObj.isMain+"</td><td></td></tr>");
+								var fileTR = "<tr><td>"+count+"</td>";
+								fileTR = fileTR + "<td>"+fileObj.fileType+"</td>";
+								fileTR = fileTR + "<td><a href='"+fileObj.filePath+"'>"+fileObj.fileName+"</a></td>";
+								if( fileObj.isMain == '是' ){
+									fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' checked class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
+								}else{
+									fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
+								}
+								fileTR = fileTR + "<td></td>";
+								fileTR = fileTR + "</tr>";
+								$("#existsFileTable tbody").append(fileTR);
 								count++;
 							});
 						}
@@ -102,7 +112,9 @@
 								<td>${status.index+1}</td>
 								<td>${houseFile.fileType}</td>
 								<td><a href="${houseFile.filePath}" target="_blank">${houseFile.fileName}</a></td>
-								<td>${houseFile.isMain}</td>
+								<td>
+									<input value="${houseFile.id}" name="isMain" type="checkbox" <c:if test="${'是'==houseFile.isMain}">checked</c:if> class="iswitch iswitch-secondary isMainPicCheckbox">
+								</td>
 								<td></td>
 							</tr>
 						</c:forEach>

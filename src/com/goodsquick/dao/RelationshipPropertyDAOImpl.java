@@ -258,19 +258,25 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	}
 	
 	@Override
-	public List<GoodsHouseModuleSP> getModuleSPByHouseCodeAndType(
-			String houseCode, String moduleType) {
+	public List<GoodsHouseModuleSP> getModuleSPByRepositoryCodeAndType(
+			String repositoryCode, String spTypeCode, String partCode) {
 		StringBuilder sql = new StringBuilder(100);
 		List<String> params = new ArrayList<String>();
 		
-		sql.append(" select * from tbl_goods_house_module_sp ");
-		sql.append(" where house_code = ? ");
+		sql.append(" select sp.*,td.dic_name as sp_type_name from tbl_goods_house_module_sp sp");
+		sql.append(" left join tbl_goods_dictionary td on sp.sp_type_code = td.dic_code and td.type_code = sp.sp_type_code ");
+		sql.append(" where sp.repository_code = ? ");
 		
-		params.add(houseCode);
+		params.add(repositoryCode);
 		
-		if( !StringUtils.isBlank(moduleType) ){
-			sql.append("and module_type = ? ");
-			params.add(moduleType);
+		if( !StringUtils.isBlank(spTypeCode) ){
+			sql.append("and sp.sp_type_code = ? ");
+			params.add(spTypeCode);
+		}
+		
+		if( !StringUtils.isBlank(partCode) ){
+			sql.append("and sp.part_code = ? ");
+			params.add(partCode);
 		}
 		return dataBean.getJdbcTemplate().query(sql.toString(), params.toArray(), new GoodsHouseModuleSPRowMapper());
 	}
@@ -279,14 +285,18 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	@Override
 	public void saveModuleSP(GoodsHouseModuleSP houseModule) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("insert into tbl_goods_house_module_sp(id,house_code,module_type,sp_name");
+		sql.append("insert into tbl_goods_house_module_sp(id,repository_code,house_code");
+		sql.append(",part_code,sp_type_code,sp_name,sp_id,sp_tel,relation_status ");
         sql.append(",create_date,create_user,update_date,update_user,status,remark) ");
-		sql.append("values(null,?,?,?,now(),?,now(),?,'1',?)");
+		sql.append("values(null,?,?,?,?,?,null,?,'1',now(),?,now(),?,'1',?)");
 		
 		List<String> params = new ArrayList<String>();
+		params.add(houseModule.getRepositoryCode());
 		params.add(houseModule.getHouseCode());
-		params.add(houseModule.getModuleType());
-		params.add(houseModule.getModuleSPName());
+		params.add(houseModule.getPartCode());
+		params.add(houseModule.getSpTypeCode());
+		params.add(houseModule.getSpName());
+		params.add(houseModule.getSpTel());
 		params.add(houseModule.getCreateUser());
 		params.add(houseModule.getUpdateUser());
 		params.add(houseModule.getRemark());
@@ -297,11 +307,12 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	@Override
 	public void updateModuleSP(GoodsHouseModuleSP houseModule) {
 		StringBuilder sql = new StringBuilder(150);
-		sql.append("update tbl_goods_house_module_sp set sp_name = ?, remark = ?, update_date = now(), update_user = ? ");
+		sql.append("update tbl_goods_house_module_sp ");
+		sql.append("set sp_tel = ?, remark = ?, update_date = now(), update_user = ? ");
 		sql.append("where id = ? ");
 		
 		List<Object> params = new ArrayList<Object>();
-		params.add(houseModule.getModuleSPName());
+		params.add(houseModule.getSpTel());
 		params.add(houseModule.getRemark());
 		params.add(houseModule.getUpdateUser());
 		params.add(houseModule.getId());

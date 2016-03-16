@@ -110,9 +110,9 @@ public class DictionaryDAOImpl implements DictionaryDAO {
 	}
 
 	@Override
-	public GoodsDictionary getDictionaryByCode(String code) throws Exception {
-        String sql = "select gd.*,gdt.type_name from tbl_goods_dictionary gd, tbl_goods_dictionary_type gdt where gd.type_code = gdt.type_code and gd.dic_code = ? and gd.type_code='serviceTypes' ";
-        return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{code}, new DictionaryRowMapper());
+	public GoodsDictionary getDictionaryByCode(String code, String typeCode) throws Exception {
+        String sql = "select gd.*,gdt.type_name from tbl_goods_dictionary gd, tbl_goods_dictionary_type gdt where gd.type_code = gdt.type_code and gd.dic_code = ? and gd.type_code=? ";
+        return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{code, typeCode}, new DictionaryRowMapper());
 	}
 
 }

@@ -47,6 +47,7 @@ public class IndexController {
 	        		viewName = "goodsServiceIndex";
 	        	}
 	        }
+			view.addObject("actived", ",index,");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

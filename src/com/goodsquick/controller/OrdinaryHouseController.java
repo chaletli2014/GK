@@ -369,7 +369,7 @@ public class OrdinaryHouseController {
     		if( StringUtils.isBlank(moduleType) ){
     			moduleType = (String)request.getSession().getAttribute("spTypeCode");
     		}
-    		GoodsDictionary dic = dictionaryService.getDictionaryByCode(moduleType);
+    		GoodsDictionary dic = dictionaryService.getDictionaryByCode(moduleType,"serviceTypes");
     		
     		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
     		List<GoodsHouseSP> houseSPList = new ArrayList<GoodsHouseSP>();

@@ -790,7 +790,7 @@ body {
 .sidebar-menu {
   display: table-cell;
   position: relative;
-  width: 250px;
+  width: 200px;
   background: #2c2e2f;
   z-index: 1;
 }
@@ -821,8 +821,10 @@ body {
   color: #ffffff;
 }
 .sidebar-menu .main-menu {
+/*
   padding-left: 30px;
   padding-right: 40px;
+*/
   margin-top: 20px;
   margin-bottom: 20px;
   list-style: none;
@@ -862,6 +864,15 @@ body {
 }
 .sidebar-menu .main-menu li.active > a {
   color: #ffffff;
+}
+.sidebar-menu .main-menu li.expanded.firstLI > a {
+	color: #ffffff;
+	background: -ms-linear-gradient(top, #fff,  #0000ff);        /* IE 10 */
+	background:-moz-linear-gradient(top,#b8c4cb,#f6f6f8);/*火狐*/ 
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#b8c4cb), to(#f6f6f8));/*谷歌*/ 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#0000ff));      /* Safari 4-5, Chrome 1-9*/
+	background: -webkit-linear-gradient(top, #fff, #0000ff);   /*Safari5.1 Chrome 10+*/
+	background: -o-linear-gradient(top, #fff, #0000ff);  /*Opera 11.10+*/
 }
 .sidebar-menu .main-menu li.has-sub > a:before {
   position: relative;

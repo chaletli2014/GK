@@ -144,6 +144,11 @@ jQuery(document).ready(function($){
 		uploadHouseSourceFile();
 		return false;
 	});
+	$(".isMainPicCheckbox").change(function(){
+	    if ($(this)[0].checked) {
+          alert( $(this).attr('value') );
+	    }
+	});
 });
 
 function initSubjectLevel(level){

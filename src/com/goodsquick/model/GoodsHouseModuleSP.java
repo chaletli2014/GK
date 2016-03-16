@@ -4,9 +4,15 @@ public class GoodsHouseModuleSP extends BaseObject{
 
 	private static final long serialVersionUID = 6061165700227655805L;
 	private int id;
+	private String repositoryCode;
 	private String houseCode;
-	private String moduleType;
-	private String moduleSPName;
+	private String partCode;
+	private String spTypeCode;
+	private String spTypeName;
+	private String spName;
+	private int spId;
+	private String spTel;
+	private String relationStatus;
 	private String status;
 	private String remark;
 	
@@ -35,17 +41,52 @@ public class GoodsHouseModuleSP extends BaseObject{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getModuleType() {
-		return moduleType;
+	public String getRepositoryCode() {
+		return repositoryCode;
 	}
-	public void setModuleType(String moduleType) {
-		this.moduleType = moduleType;
+	public void setRepositoryCode(String repositoryCode) {
+		this.repositoryCode = repositoryCode;
 	}
-	public String getModuleSPName() {
-		return moduleSPName;
+	public String getPartCode() {
+		return partCode;
 	}
-	public void setModuleSPName(String moduleSPName) {
-		this.moduleSPName = moduleSPName;
+	public void setPartCode(String partCode) {
+		this.partCode = partCode;
 	}
-	
+	public String getSpTypeCode() {
+		return spTypeCode;
+	}
+	public void setSpTypeCode(String spTypeCode) {
+		this.spTypeCode = spTypeCode;
+	}
+	public String getSpTypeName() {
+		return spTypeName;
+	}
+	public void setSpTypeName(String spTypeName) {
+		this.spTypeName = spTypeName;
+	}
+	public String getSpName() {
+		return spName;
+	}
+	public void setSpName(String spName) {
+		this.spName = spName;
+	}
+	public int getSpId() {
+		return spId;
+	}
+	public void setSpId(int spId) {
+		this.spId = spId;
+	}
+	public String getSpTel() {
+		return spTel;
+	}
+	public void setSpTel(String spTel) {
+		this.spTel = spTel;
+	}
+	public String getRelationStatus() {
+		return relationStatus;
+	}
+	public void setRelationStatus(String relationStatus) {
+		this.relationStatus = relationStatus;
+	}
 }
