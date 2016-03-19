@@ -185,13 +185,13 @@
 						</a>
 					</li>
 					<li <% if( actived.indexOf(",moduleSPManagement_equ,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?partCode=sp_equ&spTypeCode=sp_type_brand">
+						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_equ&spTypeCode=sp_type_brand">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">设施设备</span>
 						</a>
 					</li>
 					<li <% if( actived.indexOf(",moduleSPManagement_other,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseSPManagement?partCode=sp_other&spTypeCode=sp_type_brand">
+						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_other&spTypeCode=sp_type_brand">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">材料&nbsp;&&nbsp;装饰</span>
 						</a>

@@ -169,5 +169,18 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 			return null;
 		}
 	}
+	
+	@Override
+	public List<GoodsHouseModuleSP> getModuleSPByModuleType(String repositoryCode, String spTypeCode,
+			String partCode, String moduleType2) {
+		try{
+			return relationshipPropertyDAO.getModuleSPByModuleType(repositoryCode, spTypeCode, partCode, moduleType2);
+		} catch(EmptyResultDataAccessException erd){
+			return null;
+		} catch(Exception e){
+			logger.error(String.format("fail to get the house module by module type %s,",moduleType2),e);
+			return null;
+		}
+	}
 
 }

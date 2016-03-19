@@ -263,11 +263,42 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		StringBuilder sql = new StringBuilder(100);
 		List<String> params = new ArrayList<String>();
 		
-		sql.append(" select sp.*,td.dic_name as sp_type_name from tbl_goods_house_module_sp sp");
+		sql.append(" select sp.*,td.dic_name as sp_type_name, bgd.dic_name as brand_name from tbl_goods_house_module_sp sp");
 		sql.append(" left join tbl_goods_dictionary td on sp.sp_type_code = td.dic_code and td.type_code = sp.sp_type_code ");
+		sql.append(" left join tbl_goods_dictionary bgd on sp.brand_code = bgd.dic_code and bgd.type_code = 'lift_brand' ");
 		sql.append(" where sp.repository_code = ? ");
 		
 		params.add(repositoryCode);
+		
+		if( !StringUtils.isBlank(spTypeCode) ){
+			sql.append("and sp.sp_type_code = ? ");
+			params.add(spTypeCode);
+		}
+		
+		if( !StringUtils.isBlank(partCode) ){
+			sql.append("and sp.part_code = ? ");
+			params.add(partCode);
+		}
+		return dataBean.getJdbcTemplate().query(sql.toString(), params.toArray(), new GoodsHouseModuleSPRowMapper());
+	}
+	
+	@Override
+	public List<GoodsHouseModuleSP> getModuleSPByModuleType(
+			String repositoryCode, String spTypeCode, String partCode, String moduleType2) {
+		StringBuilder sql = new StringBuilder(100);
+		List<String> params = new ArrayList<String>();
+		
+		sql.append(" select sp.*,td.dic_name as sp_type_name, bgd.dic_name as brand_name from tbl_goods_house_module_sp sp");
+		sql.append(" left join tbl_goods_dictionary td on sp.sp_type_code = td.dic_code and td.type_code = sp.sp_type_code ");
+		sql.append(" left join tbl_goods_dictionary bgd on sp.brand_code = bgd.dic_code and bgd.type_code = 'lift_brand' ");
+		sql.append(" where sp.repository_code = ? ");
+		
+		params.add(repositoryCode);
+		
+		if( !StringUtils.isBlank(moduleType2) ){
+			sql.append("and sp.module_type2 = ? ");
+			params.add(moduleType2);
+		}
 		
 		if( !StringUtils.isBlank(spTypeCode) ){
 			sql.append("and sp.sp_type_code = ? ");
@@ -286,14 +317,17 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	public void saveModuleSP(GoodsHouseModuleSP houseModule) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("insert into tbl_goods_house_module_sp(id,repository_code,house_code");
-		sql.append(",part_code,sp_type_code,sp_name,sp_id,sp_tel,relation_status ");
+		sql.append(",part_code,brand_code,module_type1,module_type2,sp_type_code,sp_name,sp_id,sp_tel,relation_status ");
         sql.append(",create_date,create_user,update_date,update_user,status,remark) ");
-		sql.append("values(null,?,?,?,?,?,null,?,'1',now(),?,now(),?,'1',?)");
+		sql.append("values(null,?,?,?,?,?,?,?,?,null,?,'1',now(),?,now(),?,'1',?)");
 		
 		List<String> params = new ArrayList<String>();
 		params.add(houseModule.getRepositoryCode());
 		params.add(houseModule.getHouseCode());
 		params.add(houseModule.getPartCode());
+		params.add(houseModule.getBrandCode());
+		params.add(houseModule.getModuleType1());
+		params.add(houseModule.getModuleType2());
 		params.add(houseModule.getSpTypeCode());
 		params.add(houseModule.getSpName());
 		params.add(houseModule.getSpTel());

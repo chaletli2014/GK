@@ -16,6 +16,10 @@ public class GoodsHouseModuleSPRowMapper implements RowMapper<GoodsHouseModuleSP
     	dbGoodsHouseModule.setHouseCode(rs.getString("house_code"));
     	dbGoodsHouseModule.setSpTypeCode(rs.getString("sp_type_code"));
     	dbGoodsHouseModule.setSpTypeName(rs.getString("sp_type_name"));
+    	dbGoodsHouseModule.setBrandCode(rs.getString("brand_code"));
+    	dbGoodsHouseModule.setBrandName(rs.getString("brand_name"));
+    	dbGoodsHouseModule.setModuleType1(rs.getString("module_type1"));
+    	dbGoodsHouseModule.setModuleType2(rs.getString("module_type2"));
     	dbGoodsHouseModule.setSpName(rs.getString("sp_name"));
     	dbGoodsHouseModule.setSpId(rs.getInt("sp_id"));
     	dbGoodsHouseModule.setSpTel(rs.getString("sp_tel"));

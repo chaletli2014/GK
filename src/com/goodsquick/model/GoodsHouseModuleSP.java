@@ -7,6 +7,10 @@ public class GoodsHouseModuleSP extends BaseObject{
 	private String repositoryCode;
 	private String houseCode;
 	private String partCode;
+	private String brandCode;
+	private String brandName;
+	private String moduleType1;
+	private String moduleType2;
 	private String spTypeCode;
 	private String spTypeName;
 	private String spName;
@@ -88,5 +92,29 @@ public class GoodsHouseModuleSP extends BaseObject{
 	}
 	public void setRelationStatus(String relationStatus) {
 		this.relationStatus = relationStatus;
+	}
+	public String getBrandCode() {
+		return brandCode;
+	}
+	public void setBrandCode(String brandCode) {
+		this.brandCode = brandCode;
+	}
+	public String getBrandName() {
+		return brandName;
+	}
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+	public String getModuleType1() {
+		return moduleType1;
+	}
+	public void setModuleType1(String moduleType1) {
+		this.moduleType1 = moduleType1;
+	}
+	public String getModuleType2() {
+		return moduleType2;
+	}
+	public void setModuleType2(String moduleType2) {
+		this.moduleType2 = moduleType2;
 	}
 }
