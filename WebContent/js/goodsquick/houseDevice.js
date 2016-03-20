@@ -52,6 +52,16 @@ jQuery(document).ready(function($){
 //			}
 //        });
 	});
+
+	$(".removeDevice").click(function(){
+		var deviceId = $(this).attr("id");
+		var deviceType = $(this).attr("dtype");
+		jConfirm("是否确定删除？","提醒",function(r) {
+	    	if(r){
+	    		window.location.href=basePath+"deleteDeviceByIdAndType?deviceId="+deviceId+"&deviceType="+deviceType;
+	    	}
+	    });
+	});
 });
 
 function populateLiftInfo(deviceObj){

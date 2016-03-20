@@ -50,7 +50,7 @@
 										<a id="${houseDevice.id}" dtype="${houseDevice.eqTypeCode}" class="btn btn-secondary btn-sm btn-icon icon-left modifyDevice">
 											编辑
 										</a>
-										<a id="${houseDevice.id}" class="btn btn-danger btn-sm btn-icon icon-left removeDevice">
+										<a id="${houseDevice.id}" dtype="${houseDevice.eqTypeCode}" class="btn btn-danger btn-sm btn-icon icon-left removeDevice">
 											删除
 										</a>
 									</td>

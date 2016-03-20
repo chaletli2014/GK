@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsHouseDevice;
+import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.GoodsHouseDeviceService;
 import com.goodsquick.service.LiftService;
@@ -63,6 +64,24 @@ public class HouseDeviceController {
 		}
 		
 		return view;
+	}
+
+	@RequestMapping("/deleteDeviceByIdAndType")
+	public String deleteDeviceByIdAndType(HttpServletRequest request){
+		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+		String deviceId = request.getParameter("deviceId");
+		String deviceType = request.getParameter("deviceType");
+		
+		GoodsHouseDevice obj = new GoodsHouseDevice();
+		obj.setId(GoodsQuickUtils.parseIntegerFromString(deviceId));
+		obj.setEqTypeCode(deviceType);
+		obj.setUpdateUser(currentUser.getLoginName());
+		try {
+			goodsHouseDeviceService.deleteHouseDevice(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:houseDeviceList";
 	}
 	
 	@RequestMapping("/saveOrUpdateDevice")

@@ -92,8 +92,12 @@ public class GoodsHouseOtherServiceImpl implements GoodsHouseOtherService {
 
 	@Override
 	public void deleteHouseOther(GoodsHouseOther obj) throws Exception {
-		// TODO Auto-generated method stub
-
+		if( "wpp".equalsIgnoreCase(obj.getTypeCode()) ){
+			GoodsHousePaint paintObj = new GoodsHousePaint();
+			paintObj.setId(obj.getId());
+			paintObj.setUpdateUser(obj.getUpdateUser());
+			goodsHouseOtherDAO.deleteHousePaint(paintObj);
+		}
 	}
 
 	@Override

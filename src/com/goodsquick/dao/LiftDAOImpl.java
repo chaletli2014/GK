@@ -12,7 +12,7 @@ import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.utils.DataBean;
 
 @Repository("liftDAO")
-public class LiftDAOImpl implements LiftDAO {
+public class LiftDAOImpl extends BaseDAOImpl implements LiftDAO {
 	
 	@Autowired
 	@Qualifier("dataBean")
@@ -156,8 +156,16 @@ public class LiftDAOImpl implements LiftDAO {
 
 	@Override
 	public void deleteDeviceLift(int liftId) throws Exception {
-		String sql = "update tbl_goods_devices_lift set status = '0' where id = ? ";
+		String sql = "update tbl_goods_devices_lift set status = '0',update_date=now() where id = ? ";
 		dataBean.getJdbcTemplate().update(sql,new Object[]{liftId});
+	}
+	
+	@Override
+	public void deleteDeviceLift(GoodsDeviceLift liftObj) throws Exception {
+		List<Object> params = new ArrayList<Object>();
+		params.add(liftObj.getUpdateUser());
+		params.add(liftObj.getId());
+		super.deleteObj("tbl_goods_devices_lift", params);
 	}
 
 	@Override

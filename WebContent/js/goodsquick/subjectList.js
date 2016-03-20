@@ -24,6 +24,15 @@ jQuery(document).ready(function($){
 		showSubjectModule($(this).attr("id"));
 	});
 	
+	$(".removeSubject").click(function(){
+		var subjectId = $(this).attr("id");
+		jConfirm("是否确定删除？","提醒",function(r) {
+	    	if(r){
+	    		window.location.href=basePath+"deleteSubjectById?subjectId="+subjectId;
+	    	}
+	    });
+	});
+	
 	$(".modifySubject").click(function(){
 		showSubjectInfo($(this).attr("id"));
 //		$(this).parent().siblings("td").each(function() {

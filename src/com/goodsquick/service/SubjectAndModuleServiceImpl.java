@@ -223,6 +223,12 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
 			throws Exception {
 		subjectAndModuleDAO.deleteSubjectModule(obj);
 	}
+	
+	@Override
+	public void deleteSubject(GoodsSubject obj)
+			throws Exception {
+		subjectAndModuleDAO.deleteSubject(obj);
+	}
 
 	@Override
 	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectIdAndModuleType(

@@ -795,3 +795,9 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT
 ;
+
+alter table tbl_goods_house_subject add column status varchar(2) default '1';
+alter table tbl_goods_house_subject add column create_date datetime;
+alter table tbl_goods_house_subject add column create_user varchar(20);
+alter table tbl_goods_house_subject add column update_date datetime;
+alter table tbl_goods_house_subject add column update_user varchar(20);

@@ -97,8 +97,12 @@ public class GoodsHouseDeviceServiceImpl implements GoodsHouseDeviceService {
 
 	@Override
 	public void deleteHouseDevice(GoodsHouseDevice obj) throws Exception {
-		// TODO Auto-generated method stub
-
+		if( "dt".equalsIgnoreCase(obj.getEqTypeCode()) ){
+			GoodsDeviceLift liftObj = new GoodsDeviceLift();
+			liftObj.setId(obj.getId());
+			liftObj.setUpdateUser(obj.getUpdateUser());
+			liftDAO.deleteDeviceLift(liftObj);
+		}
 	}
 
 }

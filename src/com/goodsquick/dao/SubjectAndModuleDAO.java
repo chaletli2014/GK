@@ -32,6 +32,7 @@ public interface SubjectAndModuleDAO {
 	public void updateSubjectModule(GoodsHouseSubjectModule obj) throws Exception;
 	public void addSubjectModule(GoodsHouseSubjectModule obj) throws Exception;
 	public void deleteSubjectModule(GoodsHouseSubjectModule obj) throws Exception;
+	public void deleteSubject(GoodsSubject obj) throws Exception;
 	
 	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectIdAndModuleType(int subjectId, String moduleType) throws Exception;
 }

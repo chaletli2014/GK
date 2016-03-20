@@ -27,7 +27,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	public List<GoodsSubject> getChildSubjectByParentCode(String parentCode)
 			throws Exception {
 		List<GoodsSubject> topSubjectList = new ArrayList<GoodsSubject>();
-		String sql = "select child.* from tbl_goods_house_subject child, tbl_goods_house_subject parent where child.parentId = parent.id and parent.subject_code = ? ";
+		String sql = "select child.* from tbl_goods_house_subject child, tbl_goods_house_subject parent where child.parentId = parent.id and parent.subject_code = ? and child.status='1' ";
 		topSubjectList = dataBean.getJdbcTemplate().query(sql, new Object[]{parentCode}, new GoodsHouseSubjectRowMapper());
 		return topSubjectList;
 	}
@@ -47,9 +47,9 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 		List<GoodsSubject> topSubjectList = new ArrayList<GoodsSubject>();
 		String sql = null;
 		if( "1".equalsIgnoreCase(level) ){
-			sql = "select hs.* from tbl_goods_house_subject hs where hs.subject_level= ? and hs.repository_code = ? ";
+			sql = "select hs.* from tbl_goods_house_subject hs where hs.subject_level= ? and hs.repository_code = ? and hs.status = '1'";
 		}else{
-			sql = "select hs.*,parent.subject_name as parentName from tbl_goods_house_subject hs, tbl_goods_house_subject parent  where hs.subject_level= ? and hs.repository_code = ? and hs.parentId = parent.id ";
+			sql = "select hs.*,parent.subject_name as parentName from tbl_goods_house_subject hs, tbl_goods_house_subject parent  where hs.subject_level= ? and hs.repository_code = ? and hs.parentId = parent.id  and hs.status = '1' ";
 		}
 		topSubjectList = dataBean.getJdbcTemplate().query(sql, new Object[]{level,repositoryCode}, new GoodsHouseSubjectRowMapper());
 		return topSubjectList;
@@ -58,7 +58,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	@Override
 	public List<GoodsSubject> getAllSubject(String repositoryCode) throws Exception {
 		List<GoodsSubject> topSubjectList = new ArrayList<GoodsSubject>();
-        String sql = "select * from tbl_goods_house_subject where repository_code= ?";
+        String sql = "select * from tbl_goods_house_subject where repository_code= ? and status = '1'";
         topSubjectList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new GoodsHouseSubjectRowMapper());
         return topSubjectList;
 	}
@@ -66,14 +66,14 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	@Override
 	public List<GoodsSubject> getAllSubjectWithRoot(String repositoryCode) throws Exception {
 		List<GoodsSubject> topSubjectList = new ArrayList<GoodsSubject>();
-		String sql = "select * from tbl_goods_house_subject where ( repository_code= ? or parentId = 0 )";
+		String sql = "select * from tbl_goods_house_subject where ( repository_code= ? or parentId = 0 ) and status = '1'";
 		topSubjectList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new GoodsHouseSubjectRowMapper());
 		return topSubjectList;
 	}
 	
 	@Override
 	public void addSubject(CategoryJsonObj obj, String repositoryCode) throws Exception {
-		String sql = "insert into tbl_goods_house_subject(id,subject_name,parentId,repository_code) values(null,?,?,?)";
+		String sql = "insert into tbl_goods_house_subject(id,subject_name,parentId,repository_code,status) values(null,?,?,?,'1')";
 		dataBean.getJdbcTemplate().update(sql, new Object[] { obj.getName(),obj.getpId(),repositoryCode });
 	}
 
@@ -91,7 +91,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 
 	@Override
 	public void addSubject(GoodsSubject obj, String repositoryCode) throws Exception {
-		String sql = "insert into tbl_goods_house_subject(id,subject_name,subject_desc,parentId,subject_level,repository_code) values(null,?,?,?,?,?)";
+		String sql = "insert into tbl_goods_house_subject(id,subject_name,subject_desc,parentId,subject_level,repository_code,status) values(null,?,?,?,?,?,'1')";
 		dataBean.getJdbcTemplate().update(sql, new Object[] { obj.getName(),obj.getDesc(),obj.getParentId(),obj.getLevel(),repositoryCode });
 	}
 
@@ -119,7 +119,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	@Override
 	public List<GoodsHouseSubjectModule> getAllSubjectModulesByRepositoryCode(String repositoryCode) throws Exception {
 		List<GoodsHouseSubjectModule> moduleList = new ArrayList<GoodsHouseSubjectModule>();
-		String sql = "select sm.*from tbl_goods_house_subject_module sm, tbl_goods_house_subject hs where sm.subject_id = hs.id and hs.repository_code = ? ";
+		String sql = "select sm.*from tbl_goods_house_subject_module sm, tbl_goods_house_subject hs where sm.subject_id = hs.id and hs.repository_code = ?  and hs.status = '1'";
 		moduleList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new GoodsHouseSubjectModuleRowMapper());
 		return moduleList;
 	}
@@ -173,6 +173,15 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 		params.add(obj.getUpdateUser());
 		params.add(obj.getId());
 		super.deleteObj("tbl_goods_house_subject_module", params);
+	}
+	
+	@Override
+	public void deleteSubject(GoodsSubject obj)
+			throws Exception {
+		List<Object> params = new ArrayList<Object>();
+		params.add(obj.getUpdateUser());
+		params.add(obj.getId());
+		super.deleteObj("tbl_goods_house_subject", params);
 	}
 
 	@Override

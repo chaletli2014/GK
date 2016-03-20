@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -103,6 +104,11 @@ public class SubjectAndModuleController {
 		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 		try {
 			String level = request.getParameter("level");
+			if( StringUtils.isNotBlank(level) ){
+				request.getSession().setAttribute("subjectLevel", level);
+			}else{
+				level = (String)request.getSession().getAttribute("subjectLevel");
+			}
 			List<GoodsSubject> subjectList = subjectAndModuleService.getSubjectByLevel(level, repositoryCode);
 			List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
 			
@@ -117,6 +123,21 @@ public class SubjectAndModuleController {
 		}
 		
 		return view;
+	}
+	
+	@RequestMapping("/deleteSubjectById")
+	public String deleteSubjectById(HttpServletRequest request){
+		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+		String subjectId = request.getParameter("subjectId");
+		GoodsSubject obj = new GoodsSubject();
+		obj.setId(GoodsQuickUtils.parseIntegerFromString(subjectId));
+		obj.setUpdateUser(currentUser.getLoginName());
+		try {
+			subjectAndModuleService.deleteSubject(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:subjectList";
 	}
 	
 	@ResponseBody

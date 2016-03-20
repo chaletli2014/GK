@@ -19,7 +19,7 @@ public interface GoodsHouseOtherDAO {
 	public void saveHousePaint(GoodsHousePaint housePaint ) throws Exception;
 	public void saveHousePaintQuick(GoodsHousePaint housePaint ) throws Exception;
 	public void updateHousePaint(GoodsHousePaint housePaint ) throws Exception;
-	public void deleteHousePaint(int housePaintId) throws Exception;
+	public void deleteHousePaint(GoodsHousePaint obj) throws Exception;
 	public GoodsHousePaint getGoodsHousePaintById(int housePaintId) throws Exception;
 	
 }

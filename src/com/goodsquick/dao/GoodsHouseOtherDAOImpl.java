@@ -98,8 +98,10 @@ public class GoodsHouseOtherDAOImpl extends BaseDAOImpl implements GoodsHouseOth
 
 	@Override
 	public void deleteHouseOther(GoodsHouseOther obj) throws Exception {
-		// TODO Auto-generated method stub
-		
+		List<Object> params = new ArrayList<Object>();
+		params.add(obj.getUpdateUser());
+		params.add(obj.getId());
+		super.deleteObj("tbl_goods_house_other", params);
 	}
 
 	@Override
@@ -185,9 +187,11 @@ public class GoodsHouseOtherDAOImpl extends BaseDAOImpl implements GoodsHouseOth
 	}
 
 	@Override
-	public void deleteHousePaint(int housePaintId) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void deleteHousePaint(GoodsHousePaint obj) throws Exception {
+		List<Object> params = new ArrayList<Object>();
+		params.add(obj.getUpdateUser());
+		params.add(obj.getId());
+		super.deleteObj("tbl_goods_house_paint", params);
 	}
 
 	@Override

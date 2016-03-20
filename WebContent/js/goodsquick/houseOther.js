@@ -42,6 +42,16 @@ jQuery(document).ready(function($){
 			}
 		});
 	});
+
+	$(".removeOther").click(function(){
+		var otherId = $(this).attr("id");
+		var otherType = $(this).attr("dtype");
+		jConfirm("是否确定删除？","提醒",function(r) {
+	    	if(r){
+	    		window.location.href=basePath+"deleteOtherByIdAndType?otherId="+otherId+"&otherType="+otherType;
+	    	}
+	    });
+	});
 });
 
 function createNewOtherTr(){

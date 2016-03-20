@@ -28,4 +28,5 @@ public interface SubjectAndModuleService {
 	public GoodsHouseSubjectModule getSubjectModuleByModuleId(int moduleId) throws Exception;
 	public void saveOrUpdateSubjectModule(GoodsHouseSubjectModule obj) throws Exception;
 	public void deleteSubjectModule(GoodsHouseSubjectModule obj) throws Exception;
+	public void deleteSubject(GoodsSubject obj) throws Exception;
 }

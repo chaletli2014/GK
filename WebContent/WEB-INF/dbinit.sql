@@ -102,10 +102,8 @@ insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_sg','施工�
 
 insert into tbl_goods_dictionary values(null,'sp_equ','sp_type_brand','品牌商','设施设备的物联服务商');
 insert into tbl_goods_dictionary values(null,'sp_equ','sp_type_wb','维保商','设施设备的物联服务商');
-
 insert into tbl_goods_dictionary values(null,'sp_other','sp_type_brand','品牌商','设施设备的物联服务商');
 insert into tbl_goods_dictionary values(null,'sp_other','sp_type_wb','维保商','设施设备的物联服务商');
-
 insert into tbl_goods_dictionary values(null,'equ_moduletype1','moduleType_equ_lift','电梯','设施设备组件-电梯');
 insert into tbl_goods_dictionary values(null,'other_moduletype1','mt_other_fstl','防水涂料','材料装饰-组件1-防水涂料');
 insert into tbl_goods_dictionary values(null,'moduleType_equ_lift','moduleType2_dt','电梯','设施设备组件2-电梯');
