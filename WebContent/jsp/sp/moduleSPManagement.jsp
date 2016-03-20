@@ -19,34 +19,41 @@
 	        </jsp:include>
 			<div class="page-title">
 				<%@include file="../common/nav-title.jsp"%>
+				<c:if test="${partCode == 'sp_equ' || partCode == 'sp_other'}">
+					<script type="text/javascript">
+						jQuery(document).ready(function($){
+							$("#moduleType1").selectBoxIt().on('open', function(){
+								$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
+							});
+							$("#moduleType2").selectBoxIt().on('open', function(){
+								$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
+							});
+						});
+					</script>
+					<ul class="moduleType_ul">
+						<li style="width:100px;height:35px;line-height: 35px;">
+							<span>选择组件</span>
+						</li>
+						<li>
+							<select class="form-control" id="moduleType1" name="moduleType1" onchange="populateModuleType2ByType1(this.value)">
+								<option value="">请选择</option>
+								<c:forEach items="${moduleType1}" var="moduleType">
+									<option value="${moduleType.dicCode}">${moduleType.dicName}</option>
+								</c:forEach>
+							</select>
+						</li>
+						<li>
+							<select class="form-control" id="moduleType2" name="moduleType2">
+								<option value="">--请选择--</option>
+							</select>
+						</li>
+					</ul>
+				</c:if>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-body" style="padding-top:0px;">
 					<input type="hidden" name="partCode" id="partCode" value="${partCode}"/>
 					<input type="hidden" name="spTypeCode" id="spTypeCode" value="${spTypeCode}"/>
-					<c:if test="${partCode == 'sp_equ'}">
-						<div>
-							<span>选择组件</span>
-							<script type="text/javascript">
-								jQuery(document).ready(function($){
-									$("#moduleType1").selectBoxIt().on('open', function(){
-										$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
-									});
-									$("#moduleType2").selectBoxIt().on('open', function(){
-										$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
-									});
-								});
-							</script>
-							<select class="form-control" id="moduleType1" name="moduleType1">
-								<option value="">请选择</option>
-								<option value="lift_brand">电梯</option>
-							</select>
-							<select class="form-control" id="moduleType2" name="moduleType2">
-								<option value="">请选择</option>
-								<option value="lift_brand">电梯</option>
-							</select>
-						</div>
-					</c:if>
 					<ul class="sp_type_ul" id="sp_type_ul">
 					<c:forEach items="${spTypes}" var="spType">
 						<li lid="${spType.dicCode}" class="<c:if test="${spType.dicCode == spTypeCode}">active</c:if>" >${spType.dicName}</li>
@@ -60,7 +67,7 @@
 									<th>品牌</th>
 									<th>单位名称</th>
 									</c:if>
-									<c:if test="${partCode == 'sp_subject'}">
+									<c:if test="${partCode == 'sp_subject' || partCode == 'sp_other'}">
 									<th>${spTypeName}名称</th>
 									</c:if>
 									<th>联系电话</th>
@@ -69,6 +76,9 @@
 										<a style="float:right;margin-right:16px;" id="newEquSpLink">新增</a>
 										</c:if>
 										<c:if test="${partCode == 'sp_subject'}">
+										<a style="float:right;margin-right:16px;" id="newSpLink">新增</a>
+										</c:if>
+										<c:if test="${partCode == 'sp_other'}">
 										<a style="float:right;margin-right:16px;" id="newSpLink">新增</a>
 										</c:if>
 									</th>
@@ -83,13 +93,13 @@
 										<td >${moduleSP.spName}</td>
 										<td >${moduleSP.spTel}</td>
 										<td>
-											<a href="#" class="btn btn-orange btn-sm btn-icon icon-left">
+											<a aid="${moduleSP.id}" href="#" class="btn btn-orange btn-sm btn-icon icon-left moduleEditLink">
 												编辑
 											</a>
-											<a href="#" class="btn btn-danger btn-sm btn-icon icon-left">
+											<a aid="${moduleSP.id}" href="#" class="btn btn-danger btn-sm btn-icon icon-left moduleDeleteLink">
 												删除
 											</a>
-											<a href="#" class="btn btn-blue btn-sm btn-icon icon-left">
+											<a aid="${moduleSP.id}" href="#" class="btn btn-blue btn-sm btn-icon icon-left moduleRelateLink">
 												关联
 											</a>
 										</td>

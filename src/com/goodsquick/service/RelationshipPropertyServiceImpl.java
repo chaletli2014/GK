@@ -183,4 +183,9 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 		}
 	}
 
+	@Override
+	public GoodsHouseModuleSP getModuleSPById(String spId) {
+		return relationshipPropertyDAO.getModuleSPById(spId);
+	}
+
 }

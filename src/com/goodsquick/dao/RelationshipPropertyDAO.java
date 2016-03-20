@@ -27,6 +27,7 @@ public interface RelationshipPropertyDAO {
 	
 	public List<GoodsHouseModuleSP> getModuleSPByRepositoryCodeAndType(String repositoryCode, String spTypeCode, String partCode);
 	public List<GoodsHouseModuleSP> getModuleSPByModuleType(String repositoryCode, String spTypeCode, String partCode, String moduleType2);
+	public GoodsHouseModuleSP getModuleSPById(String spId);
 	public void saveModuleSP(GoodsHouseModuleSP houseModuleSP);
 	public void updateModuleSP(GoodsHouseModuleSP houseModuleSP);
 	public void removeModuleSP(GoodsHouseModuleSP houseModuleSP);

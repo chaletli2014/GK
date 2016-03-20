@@ -208,7 +208,7 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	@Override
 	public List<GoodsHouseSP> getSPModuleByHouseCodeAndType(
 			String houseCode, String moduleType) {
-		String sql = "select * from tbl_goods_house_sp where house_code = ? and module_sp_type = ? ";
+		String sql = "select * from tbl_goods_house_sp where status = '1' and house_code = ? and module_sp_type = ? ";
 		return dataBean.getJdbcTemplate().query(sql, new Object[]{houseCode,moduleType}, new GoodsHouseSPRowMapper());
 	}
 	
@@ -266,7 +266,7 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		sql.append(" select sp.*,td.dic_name as sp_type_name, bgd.dic_name as brand_name from tbl_goods_house_module_sp sp");
 		sql.append(" left join tbl_goods_dictionary td on sp.sp_type_code = td.dic_code and td.type_code = sp.sp_type_code ");
 		sql.append(" left join tbl_goods_dictionary bgd on sp.brand_code = bgd.dic_code and bgd.type_code = 'lift_brand' ");
-		sql.append(" where sp.repository_code = ? ");
+		sql.append(" where sp.status = '1' and sp.repository_code = ? ");
 		
 		params.add(repositoryCode);
 		
@@ -291,7 +291,7 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		sql.append(" select sp.*,td.dic_name as sp_type_name, bgd.dic_name as brand_name from tbl_goods_house_module_sp sp");
 		sql.append(" left join tbl_goods_dictionary td on sp.sp_type_code = td.dic_code and td.type_code = sp.sp_type_code ");
 		sql.append(" left join tbl_goods_dictionary bgd on sp.brand_code = bgd.dic_code and bgd.type_code = 'lift_brand' ");
-		sql.append(" where sp.repository_code = ? ");
+		sql.append(" where sp.status = '1' and sp.repository_code = ? ");
 		
 		params.add(repositoryCode);
 		
@@ -342,10 +342,11 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	public void updateModuleSP(GoodsHouseModuleSP houseModule) {
 		StringBuilder sql = new StringBuilder(150);
 		sql.append("update tbl_goods_house_module_sp ");
-		sql.append("set sp_tel = ?, remark = ?, update_date = now(), update_user = ? ");
+		sql.append("set sp_name = ?, sp_tel = ?, remark = ?, update_date = now(), update_user = ? ");
 		sql.append("where id = ? ");
 		
 		List<Object> params = new ArrayList<Object>();
+		params.add(houseModule.getSpName());
 		params.add(houseModule.getSpTel());
 		params.add(houseModule.getRemark());
 		params.add(houseModule.getUpdateUser());
@@ -356,6 +357,21 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 	@Override
 	public void removeModuleSP(GoodsHouseModuleSP houseModule) {
 		dataBean.getJdbcTemplate().update("update tbl_goods_house_module_sp set status = '0' where id = ? ",houseModule.getId());
+	}
+
+	@Override
+	public GoodsHouseModuleSP getModuleSPById(String spId) {
+		StringBuilder sql = new StringBuilder(100);
+		List<String> params = new ArrayList<String>();
+		
+		sql.append(" select sp.*,td.dic_name as sp_type_name, bgd.dic_name as brand_name from tbl_goods_house_module_sp sp");
+		sql.append(" left join tbl_goods_dictionary td on sp.sp_type_code = td.dic_code and td.type_code = sp.sp_type_code ");
+		sql.append(" left join tbl_goods_dictionary bgd on sp.brand_code = bgd.dic_code and bgd.type_code = 'lift_brand' ");
+		sql.append(" where sp.id = ? ");
+		
+		params.add(spId);
+		
+		return dataBean.getJdbcTemplate().queryForObject(sql.toString(), params.toArray(), new GoodsHouseModuleSPRowMapper());
 	}
 
 }

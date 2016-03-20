@@ -40,7 +40,7 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label" for="spTel">联系电话</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="spTel" name="spTel">
+								<input type="text" class="form-control" id="equSPTel" name="spTel">
 							</div>
 						</div>
 					</div>

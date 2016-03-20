@@ -10,6 +10,8 @@
 			<input type="hidden" name="moduleSPId" id="moduleSPId" value="${moduleSPId}">
 			<input type="hidden" name="spTypeCode_h" id="spTypeCode_h" >
 			<input type="hidden" name="partCode_h" id="partCode_h" >
+			<input type="hidden" name="moduleType1_other_h" id="moduleType1_other_h" >
+			<input type="hidden" name="moduleType2_other_h" id="moduleType2_other_h" >
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="col-md-12">
