@@ -1,7 +1,7 @@
 var newTrCount;
 
 jQuery(document).ready(function($){
-	
+	initDeviceTable();
 	populateDropdownByDic("lift_type","deviceType");
 	populateDropdownByDic("lift_brand","deviceBrand");
 	populateDropdownByDic("lift_purpose","devicePurpose");
@@ -27,7 +27,7 @@ jQuery(document).ready(function($){
 		showDevice();
 	});
 	
-	$(".modifyDevice").click(function(){
+	$("body").delegate('.modifyDevice', 'click', function(){
 		jQuery.ajax({
 			url: basePath+"getDeviceByIdAndType",
 			data:{
@@ -35,25 +35,15 @@ jQuery(document).ready(function($){
 				deviceType : $(this).attr("dtype")
 			},
 			success: function(response){
-				populateLiftInfo(response.deviceObj);
+				populateLiftBasicInfo(response.deviceObj);
 				jQuery('#houseDeviceDiv').modal('show', {backdrop: 'static'});
+				$("#houseDeviceDiv").on("shown.bs.modal",function(e){
+					populateLiftMainInfo(response.deviceObj);
+				});
 			}
 		});
-		
-//		$(this).parent().siblings("td").each(function() {
-//			if( $(this).hasClass("dataEditable") ){
-//				// 获取当前行的其他单元格
-//				obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
-//				if(!obj_text.length){// 如果没有文本框，则添加文本框使之可以编辑
-//					$(this).html("<input type='text' value='"+$(this).text()+"'>");
-//				}else{// 如果已经存在文本框，则将其显示为文本框修改的值
-//					$(this).html(obj_text.val());
-//				}
-//			}
-//        });
 	});
-
-	$(".removeDevice").click(function(){
+	$("body").delegate('.removeDevice', 'click', function(){
 		var deviceId = $(this).attr("id");
 		var deviceType = $(this).attr("dtype");
 		jConfirm("是否确定删除？","提醒",function(r) {
@@ -64,31 +54,7 @@ jQuery(document).ready(function($){
 	});
 });
 
-function populateLiftInfo(deviceObj){
-	//basic
-	$("#deviceId").val(deviceObj.id);
-	$("#subjectId").val(deviceObj.subjectId);
-	$("#subjectName").val(deviceObj.subjectName);
-	$("#moduleId").val(deviceObj.moduleId);
-	$("#moduleName").val(deviceObj.moduleName);
-	var deviceTypeValue = deviceObj.liftType;
-	$("#deviceType option").each(function() {
-        if ($(this).val() == deviceTypeValue ) {
-            $(this).attr("selected", "selected");
-        }
-        $("#deviceType").selectBoxIt().data("selectBoxIt");
-		$("#deviceType").data("selectBox-selectBoxIt").refresh();
-    });
-	
-	$("#deviceCode").val(deviceObj.liftCode);
-	$("#deviceName").val(deviceObj.liftName);
-	$("#deviceDesc").val(deviceObj.liftDesc);
-	$("#deliveryDate").val(deviceObj.deliveryDate);
-	$("#deviceQA").val(deviceObj.liftQA);
-	$("#purchasePrice").val(deviceObj.purchasePrice);
-	$("#deviceUser").val(deviceObj.userName);
-	
-	//main
+function populateLiftMainInfo(deviceObj){
 	var deviceBrandValue = deviceObj.brandCode;
 	$("#deviceBrand option").each(function() {
         if ($(this).val() == deviceBrandValue ) {
@@ -153,6 +119,30 @@ function populateLiftInfo(deviceObj){
 	});
 }
 
+function populateLiftBasicInfo(deviceObj){
+	$("#deviceId").val(deviceObj.id);
+	$("#subjectId").val(deviceObj.subjectId);
+	$("#subjectName").val(deviceObj.subjectName);
+	$("#moduleId").val(deviceObj.moduleId);
+	$("#moduleName").val(deviceObj.moduleName);
+	var deviceTypeValue = deviceObj.liftType;
+	$("#deviceType option").each(function() {
+        if ($(this).val() == deviceTypeValue ) {
+            $(this).attr("selected", "selected");
+        }
+        $("#deviceType").selectBoxIt().data("selectBoxIt");
+		$("#deviceType").data("selectBox-selectBoxIt").refresh();
+    });
+	
+	$("#deviceCode").val(deviceObj.liftCode);
+	$("#deviceName").val(deviceObj.liftName);
+	$("#deviceDesc").val(deviceObj.liftDesc);
+	$("#deliveryDate").val(deviceObj.deliveryDate);
+	$("#deviceQA").val(deviceObj.liftQA);
+	$("#purchasePrice").val(deviceObj.purchasePrice);
+	$("#deviceUser").val(deviceObj.userName);
+}
+
 function createNewDeviceTr(){
 	newTrCount = $(".newDeviceTr").length + 1;
 	
@@ -180,7 +170,7 @@ function createNewDeviceTr(){
 				newTr = newTr + "<td>"+subjectOptionList+" - "+moduleOptionList+"</td>";
 				newTr = newTr + "<td>&nbsp;</td>";
 				newTr = newTr + "</tr>";
-				$("#deviceTable tbody").append(newTr);
+				$("#deviceTable tbody").prepend(newTr);
 			}
 		}
 	});
@@ -328,6 +318,12 @@ function showModule(subjectId){
         	moduleTable.find('tbody').html(tbody);
         }
     });
+}
+
+function initDeviceTable(){
+	$("#deviceTable").dataTable({
+		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>"
+	});
 }
 function emptyDeviceForm(){
 	$("#moduleType").selectBoxIt().data("selectBoxIt");

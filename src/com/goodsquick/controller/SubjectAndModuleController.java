@@ -159,6 +159,24 @@ public class SubjectAndModuleController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("/getChildSubjectByParentId")
+	public Map<String,Object> getChildSubjectByParentId(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		try {
+			String parentId = request.getParameter("parentId");
+			List<GoodsSubject> subjectList = subjectAndModuleService.getChildSubjectByParentId(GoodsQuickUtils.parseIntegerFromString(parentId));
+			resultMap.put("subjectList", subjectList);
+			resultMap.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("fail to get the house subject by parent id,",e);
+			resultMap.put("result", "N");
+		}
+		
+		return resultMap;
+	}
+	
+	@ResponseBody
 	@RequestMapping("/updateSubject")
 	public Map<String,String> updateSubject(HttpServletRequest request){
 		String treeNodes = request.getParameter("treeNodes");

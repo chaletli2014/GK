@@ -1,6 +1,8 @@
 var subjectLevel;
 var parentId;
 var newTrCount;
+var subject1Name;
+var subject2Name;
 
 jQuery(document).ready(function($){
 	initSubjectTable();
@@ -19,12 +21,12 @@ jQuery(document).ready(function($){
 		modifySubject();
 	});
 	
-	$(".showModule").click(function(){
+	$("body").delegate('.showModule', 'click', function(){
 		emptyModuleForm();
 		showSubjectModule($(this).attr("id"));
 	});
 	
-	$(".removeSubject").click(function(){
+	$("body").delegate('.removeSubject', 'click', function(){
 		var subjectId = $(this).attr("id");
 		jConfirm("是否确定删除？","提醒",function(r) {
 	    	if(r){
@@ -33,20 +35,8 @@ jQuery(document).ready(function($){
 	    });
 	});
 	
-	$(".modifySubject").click(function(){
+	$("body").delegate('.modifySubject', 'click', function(){
 		showSubjectInfo($(this).attr("id"));
-//		$(this).parent().siblings("td").each(function() {
-//			if( $(this).hasClass("dataEditable") ){
-//				// 获取当前行的其他单元格
-//				obj_text = $(this).find("input:text");    // 判断单元格下是否有文本框
-//				if(!obj_text.length){// 如果没有文本框，则添加文本框使之可以编辑
-//					$(this).html("<input type='text' value='"+$(this).text()+"'>");
-//				}else{// 如果已经存在文本框，则将其显示为文本框修改的值
-//					$(this).html(obj_text.val());
-//				}
-//			}
-//        });
-		
 	});
 });
 
@@ -63,22 +53,32 @@ function createNewSubjectTr(){
 		jQuery.ajax({
 			url: basePath+"getParentSubjectListByLevel",
 			data : {
-				subjectLevel : subjectLevel
+				subjectLevel : '1'
 			},
 			success: function(response){
 				var result = response.result;
 				var subjectList = response.subjectList;
 				if( result == 'Y' ){
-					var optionList = "<select id=\"parentId"+newTrCount+"\" name =\"parentId\" onchange=\"populateParent(this)\"><option value=\"\">--请选择--</option>";
+					var optionList = "";
+					if( subjectLevel == '2' ){
+						optionList = "<select id=\"parentId"+newTrCount+"\" name =\"parentId\" onchange=\"populateParent(this,'2','"+newTrCount+"')\"><option value=\"\">--请选择--</option>";
+					}else{
+						optionList = "<select id=\"subject1Selection"+newTrCount+"\" name =\"subject1Selection\" onchange=\"populateSubject2BySubject1(this,'"+newTrCount+"')\"><option value=\"\">--请选择--</option>";
+					}
 					$.each(subjectList,function(n,subjectObj){
 						optionList = optionList + "<option value='"+subjectObj.id+"'>"+subjectObj.name+"</option>";
 		        	});
 					optionList = optionList + "</select>";
-					newTr = newTr + "<td>"+optionList+"</td>";
+					if( subjectLevel == '2' ){
+						newTr = newTr + "<td>"+optionList+"</td>";
+					}else if( subjectLevel == '3' ){
+						var subject2List = "<select id=\"parentId"+newTrCount+"\" name =\"parentId\" onchange=\"populateParent(this,'3','"+newTrCount+"')\"><option value=\"\">--请选择--</option>";
+						newTr = newTr + "<td>"+optionList+" - "+subject2List+"</td>";
+					}
 					newTr = newTr + "<td>&nbsp;</td>";
 					newTr = newTr + "<td>&nbsp;</td>";
 					newTr = newTr + "</tr>";
-					$("#subjectTable tbody").append(newTr);
+					$("#subjectTable tbody").prepend(newTr);
 				}
 			}
 		});
@@ -86,8 +86,33 @@ function createNewSubjectTr(){
 		newTr = newTr + "<td>&nbsp;</td>";
 		newTr = newTr + "<td>&nbsp;</td>";
 		newTr = newTr + "</tr>";
-		$("#subjectTable tbody").append(newTr);
+		$("#subjectTable tbody").prepend(newTr);
 	}
+}
+
+/**
+ * 关联二级主体
+ * */
+function populateSubject2BySubject1(subject1,newTrCount){
+	subject1Name = subject1.selectedOptions[0].innerHTML+"-";
+	jQuery.ajax({
+		url: basePath+"getChildSubjectByParentId",
+		data : {
+			parentId : subject1.value
+		},
+		success: function(response){
+			var result = response.result;
+			var subjectList = response.subjectList;
+			if( result == 'Y' ){
+				var optionList = $("#parentId"+newTrCount);
+				optionList.empty();
+				optionList.append("<option value=''>--请选择--</option>");
+				$.each(subjectList,function(n,subjectObj){
+					optionList.append("<option value='"+subjectObj.id+"'>"+subjectObj.name+"</option>");
+	        	});
+			}
+		}
+	});
 }
 
 function saveSubject(){
@@ -253,7 +278,13 @@ function showSubjectInfo(subjectId){
 	});
 }
 
-function populateParent(level){
+function populateParent(level, subjectLevel, rowIndex){
+	if( subjectLevel == '2' ){
+		subject1Name = level.selectedOptions[0].innerHTML;
+	}else if( subjectLevel == '3' ){
+		subject2Name = level.selectedOptions[0].innerHTML;
+	}
+	$("#subjectName"+rowIndex).val(subject1Name+subject2Name);
 	$("#parentId_h").val(level.value);
 }
 

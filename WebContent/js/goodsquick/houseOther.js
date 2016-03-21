@@ -1,15 +1,7 @@
 var newTrCount;
 
 jQuery(document).ready(function($){
-	
-//	populateDropdownByDic("lift_type","deviceType");
-//	populateDropdownByDic("lift_brand","deviceBrand");
-//	populateDropdownByDic("lift_purpose","devicePurpose");
-//	populateDropdownByDic("lift_style","deviceStyle");
-//	populateDropdownByDic("lift_QA","deviceQA");
-//	populateDropdownByDic("lift_mainPower","mainPower");
-//	populateDropdownByDic("lift_lifeTime","lifeTime");
-	
+	initOtherTable();
 	$("#newOther").click (function(){
 		createNewOtherTr();
 	});
@@ -23,11 +15,7 @@ jQuery(document).ready(function($){
 		return false;
 	});
 	
-	$(".showOther").click(function(){
-		
-	});
-	
-	$(".modifyOther").click(function(){
+	$("body").delegate('.modifyOther', 'click', function(){
 		jQuery.ajax({
 			url: basePath+"getOtherByIdAndType",
 			data:{
@@ -43,7 +31,7 @@ jQuery(document).ready(function($){
 		});
 	});
 
-	$(".removeOther").click(function(){
+	$("body").delegate('.removeOther', 'click', function(){
 		var otherId = $(this).attr("id");
 		var otherType = $(this).attr("dtype");
 		jConfirm("是否确定删除？","提醒",function(r) {
@@ -53,6 +41,12 @@ jQuery(document).ready(function($){
 	    });
 	});
 });
+
+function initOtherTable(){
+	$("#otherTable").dataTable({
+		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>"
+	});
+}
 
 function createNewOtherTr(){
 	newTrCount = $(".newOtherTr").length + 1;
@@ -82,7 +76,7 @@ function createNewOtherTr(){
 				newTr = newTr + "<td>"+subjectOptionList+" - "+moduleOptionList+"</td>";
 				newTr = newTr + "<td>&nbsp;</td>";
 				newTr = newTr + "</tr>";
-				$("#otherTable tbody").append(newTr);
+				$("#otherTable tbody").prepend(newTr);
 			}
 		}
 	});
