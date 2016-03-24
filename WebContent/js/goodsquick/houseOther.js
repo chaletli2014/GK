@@ -1,4 +1,5 @@
 var newTrCount;
+var newTrNum = new Array();
 
 jQuery(document).ready(function($){
 	initOtherTable();
@@ -40,6 +41,10 @@ jQuery(document).ready(function($){
 	    	}
 	    });
 	});
+
+	$("body").delegate('.newTrCancle', 'click', function(){
+		$(this).parent().parent().remove();
+	});
 });
 
 function initOtherTable(){
@@ -49,7 +54,11 @@ function initOtherTable(){
 }
 
 function createNewOtherTr(){
-	newTrCount = $(".newOtherTr").length + 1;
+	if( newTrCount && newTrCount != 0 ){
+		newTrCount = newTrCount + 1;
+	}else{
+		newTrCount = 1;
+	}
 	
 	var newTr = "<tr class=\"newOtherTr\">";
 	var otherTypeList = "<select id=\"otherTypeSelection"+newTrCount+"\" name =\"otherTypeSelection\"><option value=\"\">--请选择--</option>";
@@ -74,24 +83,30 @@ function createNewOtherTr(){
 				
 				var moduleOptionList = "<select id=\"moduleSelection"+newTrCount+"\" name =\"moduleSelection\"><option value=\"\">--请选择构件--</option>";
 				newTr = newTr + "<td>"+subjectOptionList+" - "+moduleOptionList+"</td>";
-				newTr = newTr + "<td>&nbsp;</td>";
+				newTr = newTr + "<td><a trNum=\""+newTrCount+"\" class=\"btn btn-danger btn-sm btn-icon icon-left fa-close newTrCancle\">取消</a></td>";
 				newTr = newTr + "</tr>";
 				$("#otherTable tbody").prepend(newTr);
 			}
 		}
 	});
+	
+	newTrNum.push(newTrCount);
 }
 
 function saveOther(){
 	var otherArray = new Array();
-	for( var i = 1; i <= newTrCount; i++ ){
+	for(var i=0;i<newTrNum.length;i++){
 		var otherObj = new Object();
-		otherObj.typeCode = $("#otherTypeSelection"+i).val();
-		otherObj.name = $("#otherName"+i).val();
-		otherObj.desc = $("#otherDesc"+i).val();
-		otherObj.subjectId = $("#subjectSelection"+i).val();
-		otherObj.moduleId = $("#moduleSelection"+i).val();
+		otherObj.typeCode = $("#otherTypeSelection"+newTrNum[i]).val();
+		otherObj.name = $("#otherName"+newTrNum[i]).val();
+		otherObj.desc = $("#otherDesc"+newTrNum[i]).val();
+		otherObj.subjectId = $("#subjectSelection"+newTrNum[i]).val();
+		otherObj.moduleId = $("#moduleSelection"+newTrNum[i]).val();
 
+		if( typeof(otherObj.name) == "undefined" ){
+			continue;
+		}
+		
 		if( otherObj.typeCode == '' ){
 			jAlert("分类必选","提醒");
 			return false;

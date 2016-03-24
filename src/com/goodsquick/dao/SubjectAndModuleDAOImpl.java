@@ -18,7 +18,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	public List<GoodsSubject> getChildSubjectByParentId(int parentId)
 			throws Exception {
 		List<GoodsSubject> topSubjectList = new ArrayList<GoodsSubject>();
-        String sql = "select * from tbl_goods_house_subject where parentId = ? ";
+        String sql = "select * from tbl_goods_house_subject where parentId = ? and status = '1'";
         topSubjectList = dataBean.getJdbcTemplate().query(sql, new Object[]{parentId}, new GoodsHouseSubjectRowMapper());
         return topSubjectList;
 	}
@@ -111,7 +111,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectId(
 			int subjectId) throws Exception {
 		List<GoodsHouseSubjectModule> moduleList = new ArrayList<GoodsHouseSubjectModule>();
-        String sql = "select hs.*,gd.dic_name as module_type_name from tbl_goods_house_subject_module hs, tbl_goods_dictionary gd where subject_id = ? and hs.module_type_code = gd.dic_code and gd.type_code = 'subjectModule'";
+        String sql = "select hs.*,gd.dic_name as module_type_name from tbl_goods_house_subject_module hs, tbl_goods_dictionary gd where subject_id = ? and hs.module_type_code = gd.dic_code and gd.type_code = 'subjectModule' and hs.status='1' ";
         moduleList = dataBean.getJdbcTemplate().query(sql, new Object[]{subjectId}, new GoodsHouseSubjectModuleRowMapper());
         return moduleList;
 	}
@@ -188,7 +188,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectIdAndModuleType(
 			int subjectId, String moduleType) throws Exception {
 		List<GoodsHouseSubjectModule> moduleList = new ArrayList<GoodsHouseSubjectModule>();
-        String sql = "select hs.*,gd.dic_name as module_type_name from tbl_goods_house_subject_module hs, tbl_goods_dictionary gd where subject_id = ? and module_type_code = ? and hs.module_type_code = gd.dic_code and gd.type_code = 'subjectModule'";
+        String sql = "select hs.*,gd.dic_name as module_type_name from tbl_goods_house_subject_module hs, tbl_goods_dictionary gd where subject_id = ? and module_type_code = ? and hs.module_type_code = gd.dic_code and gd.type_code = 'subjectModule' and hs.status='1' ";
         moduleList = dataBean.getJdbcTemplate().query(sql, new Object[]{subjectId,moduleType}, new GoodsHouseSubjectModuleRowMapper());
         return moduleList;
 	}

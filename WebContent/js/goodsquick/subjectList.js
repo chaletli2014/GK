@@ -3,6 +3,7 @@ var parentId;
 var newTrCount;
 var subject1Name;
 var subject2Name;
+var newTrNum = new Array();
 
 jQuery(document).ready(function($){
 	initSubjectTable();
@@ -38,15 +39,23 @@ jQuery(document).ready(function($){
 	$("body").delegate('.modifySubject', 'click', function(){
 		showSubjectInfo($(this).attr("id"));
 	});
+	
+	$("body").delegate('.newTrCancle', 'click', function(){
+		$(this).parent().parent().remove();
+	});
 });
 
 function createNewSubjectTr(){
-	newTrCount = $(".newSubjectTr").length + 1;
+	if( newTrCount && newTrCount != 0 ){
+		newTrCount = newTrCount + 1;
+	}else{
+		newTrCount = 1;
+	}
 	
 	subjectLevel = $("#subjectLevel_h").val();
 	parentId = $("#parentId_h").val();
 	
-	var newTr = "<tr class=\"newSubjectTr\">";
+	var newTr = "<tr class=\"newSubjectTr\" id=\"newSubjectTr"+newTrCount+"\">";
 	newTr = newTr + "<td><input type=\"text\" class=\"form-control\" id=\"subjectName"+newTrCount+"\" name=\"subjectName\"></td>";
 	newTr = newTr + "<td><input type=\"text\" class=\"form-control\" id=\"subjectDesc"+newTrCount+"\" name=\"subjectDesc\"></td>";
 	if( subjectLevel != '1' ){
@@ -75,7 +84,9 @@ function createNewSubjectTr(){
 						var subject2List = "<select id=\"parentId"+newTrCount+"\" name =\"parentId\" onchange=\"populateParent(this,'3','"+newTrCount+"')\"><option value=\"\">--请选择--</option>";
 						newTr = newTr + "<td>"+optionList+" - "+subject2List+"</td>";
 					}
-					newTr = newTr + "<td>&nbsp;</td>";
+					
+					var cancleBtn = "<a class=\"btn btn-danger btn-sm btn-icon icon-left fa-close newTrCancle\">取消</a>";
+					newTr = newTr + "<td>"+cancleBtn+"</td>";
 					newTr = newTr + "<td>&nbsp;</td>";
 					newTr = newTr + "</tr>";
 					$("#subjectTable tbody").prepend(newTr);
@@ -83,11 +94,14 @@ function createNewSubjectTr(){
 			}
 		});
 	}else{
-		newTr = newTr + "<td>&nbsp;</td>";
+		var cancleBtn = "<a class=\"btn btn-danger btn-sm btn-icon icon-left fa-close newTrCancle\">取消</a>";
+		newTr = newTr + "<td>"+cancleBtn+"</td>";
 		newTr = newTr + "<td>&nbsp;</td>";
 		newTr = newTr + "</tr>";
 		$("#subjectTable tbody").prepend(newTr);
 	}
+	
+	newTrNum.push(newTrCount);
 }
 
 /**
@@ -117,12 +131,16 @@ function populateSubject2BySubject1(subject1,newTrCount){
 
 function saveSubject(){
 	var subjectArray = new Array();
-	for( var i = 1; i <= newTrCount; i++ ){
+	for(var i=0;i<newTrNum.length;i++){
 		var subjectObj = new Object();
-		subjectObj.parentId = $("#parentId"+i).val();
-		subjectObj.name = $("#subjectName"+i).val();
-		subjectObj.desc = $("#subjectDesc"+i).val();
+		subjectObj.parentId = $("#parentId"+newTrNum[i]).val();
+		subjectObj.name = $("#subjectName"+newTrNum[i]).val();
+		subjectObj.desc = $("#subjectDesc"+newTrNum[i]).val();
 		subjectObj.level = $("#subjectLevel_h").val();
+		
+		if( typeof(subjectObj.name) == "undefined"){
+			continue;
+		}
 		
 		if( subjectObj.name == '' ){
 			jAlert("主体名称不能为空","提醒");
@@ -218,7 +236,7 @@ function saveSubjectModule(){
 							if( result == 'Y' ){
 								$("#subjectModuleTable tbody").empty();
 								$.each(modules,function(n,moduleObj){
-									$("#subjectModuleTable tbody").append("<tr><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
+									$("#subjectModuleTable tbody").append("<tr><td>&nbsp;</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
 					        	});
 							}else{
 								jAlert("获取构件失败","错误");
@@ -244,7 +262,8 @@ function showSubjectModule(subjectId){
 			if( result == 'Y' ){
 				$("#subjectModuleTable tbody").empty();
 				$.each(modules,function(n,moduleObj){
-					$("#subjectModuleTable tbody").append("<tr><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
+					var actionTD = "<td><span class=\"module_delete\"></span><span class=\"module_modify\"></span></td>";
+					$("#subjectModuleTable tbody").append("<tr>"+actionTD+"<td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
 	        	});
 				$("#subjectName").val(subjectName);
 				$("#subjectId").val(subjectId);
@@ -284,7 +303,11 @@ function populateParent(level, subjectLevel, rowIndex){
 	}else if( subjectLevel == '3' ){
 		subject2Name = level.selectedOptions[0].innerHTML;
 	}
-	$("#subjectName"+rowIndex).val(subject1Name+subject2Name);
+	var parentName = subject1Name;
+	if( subject2Name ){
+		parentName = parentName + subject2Name;
+	}
+	$("#subjectName"+rowIndex).val(parentName);
 	$("#parentId_h").val(level.value);
 }
 

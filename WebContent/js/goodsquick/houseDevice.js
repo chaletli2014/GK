@@ -1,4 +1,5 @@
 var newTrCount;
+var newTrNum = new Array();
 
 jQuery(document).ready(function($){
 	initDeviceTable();
@@ -51,6 +52,10 @@ jQuery(document).ready(function($){
 	    		window.location.href=basePath+"deleteDeviceByIdAndType?deviceId="+deviceId+"&deviceType="+deviceType;
 	    	}
 	    });
+	});
+	
+	$("body").delegate('.newTrCancle', 'click', function(){
+		$(this).parent().parent().remove();
 	});
 });
 
@@ -144,7 +149,11 @@ function populateLiftBasicInfo(deviceObj){
 }
 
 function createNewDeviceTr(){
-	newTrCount = $(".newDeviceTr").length + 1;
+	if( newTrCount && newTrCount != 0 ){
+		newTrCount = newTrCount + 1;
+	}else{
+		newTrCount = 1;
+	}
 	
 	var newTr = "<tr class=\"newDeviceTr\">";
 	var deviceTypeList = "<select id=\"deviceTypeSelection"+newTrCount+"\" name =\"deviceTypeSelection\"><option value=\"\">--请选择--</option>";
@@ -168,23 +177,29 @@ function createNewDeviceTr(){
 				
 				var moduleOptionList = "<select id=\"moduleSelection"+newTrCount+"\" name =\"moduleSelection\"><option value=\"\">--请选择构件--</option>";
 				newTr = newTr + "<td>"+subjectOptionList+" - "+moduleOptionList+"</td>";
-				newTr = newTr + "<td>&nbsp;</td>";
+				newTr = newTr + "<td><a class=\"btn btn-danger btn-sm btn-icon icon-left fa-close newTrCancle\">取消</a></td>";
 				newTr = newTr + "</tr>";
 				$("#deviceTable tbody").prepend(newTr);
 			}
 		}
 	});
+	
+	newTrNum.push(newTrCount);
 }
 
 function saveDevice(){
 	var deviceArray = new Array();
-	for( var i = 1; i <= newTrCount; i++ ){
+	for(var i=0;i<newTrNum.length;i++){
 		var deviceObj = new Object();
-		deviceObj.eqTypeCode = $("#deviceTypeSelection"+i).val();
-		deviceObj.name = $("#deviceName"+i).val();
-		deviceObj.eqDesc = $("#deviceDesc"+i).val();
-		deviceObj.subjectId = $("#subjectSelection"+i).val();
-		deviceObj.moduleId = $("#moduleSelection"+i).val();
+		deviceObj.eqTypeCode = $("#deviceTypeSelection"+newTrNum[i]).val();
+		deviceObj.name = $("#deviceName"+newTrNum[i]).val();
+		deviceObj.eqDesc = $("#deviceDesc"+newTrNum[i]).val();
+		deviceObj.subjectId = $("#subjectSelection"+newTrNum[i]).val();
+		deviceObj.moduleId = $("#moduleSelection"+newTrNum[i]).val();
+		
+		if( typeof(deviceObj.name) == "undefined" ){
+			continue;
+		}
 		
 		if( deviceObj.eqTypeCode == '' ){
 			jAlert("设备分类必选","提醒");

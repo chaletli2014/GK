@@ -22,6 +22,7 @@
 					<table class="table table-hover" id="subjectModuleTable">
 						<thead>
 							<tr>
+								<th>&nbsp;</th>
 								<th>构件分类</th>
 								<th>构件名称</th>
 								<th>构件描述</th>
