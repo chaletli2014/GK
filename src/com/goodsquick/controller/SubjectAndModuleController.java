@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.cxf.common.util.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -104,6 +105,11 @@ public class SubjectAndModuleController {
 		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 		try {
 			String level = request.getParameter("level");
+			String errorMessage = null;
+			if( request.getSession().getAttribute("errorMessage") != null ){
+				errorMessage = (String)request.getSession().getAttribute("errorMessage");
+				request.getSession().removeAttribute("errorMessage");
+			}
 			if( StringUtils.isNotBlank(level) ){
 				request.getSession().setAttribute("subjectLevel", level);
 			}else{
@@ -115,6 +121,7 @@ public class SubjectAndModuleController {
 			view.addObject("moduleTypes", moduleTypes);
 			view.addObject("subjectList", subjectList);
 			view.addObject("level", level);
+			view.addObject("errorMessage", errorMessage);
 			
 			view.addObject("opened", ",productManagement,subjectModule,");
 			view.addObject("actived", ",subject"+level+",");
@@ -133,7 +140,14 @@ public class SubjectAndModuleController {
 		obj.setId(GoodsQuickUtils.parseIntegerFromString(subjectId));
 		obj.setUpdateUser(currentUser.getLoginName());
 		try {
-			subjectAndModuleService.deleteSubject(obj);
+			
+			List<GoodsSubject> childs = subjectAndModuleService.getChildSubjectByParentId(obj.getId());
+			if( !CollectionUtils.isEmpty(childs) ){
+				request.getSession().setAttribute("errorMessage","该主体已经被下级主体使用，无法删除");
+			}else{
+				subjectAndModuleService.deleteSubject(obj);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -19,7 +19,7 @@
 %>
 <%@include file="../common/header.jsp"%>
 <script type="text/javascript" src="<%=basePath%>js/goodsquick/subjectList.js"></script>
-<body class="page-body">
+<body class="page-body" onload="checkMessage('${errorMessage}')">
 	<jsp:include page="../common/settings_pane.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>
