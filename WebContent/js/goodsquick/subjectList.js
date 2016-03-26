@@ -43,6 +43,62 @@ jQuery(document).ready(function($){
 	$("body").delegate('.newTrCancle', 'click', function(){
 		$(this).parent().parent().remove();
 	});
+	
+	$("body").delegate('.deleteModule', 'click', function(){
+		var moduleId = $(this).attr("mid");
+		var subjectId = $("#subjectId").val();
+		jConfirm("是否确定删除？","提醒",function(r) {
+			jQuery.ajax({
+				url: basePath+"deleteSubjectModule",
+				data : {
+					moduleId : moduleId
+				},
+				success: function(response){
+					var result = response.result;
+					if( result == 'Y' ){
+						jAlert("删除成功","提醒",function(){
+							jQuery.ajax({
+								url: basePath+"subjectmodulelist",
+								data : {
+									subjectId : subjectId
+								},
+								success: function(response){
+									var result = response.result;
+									var modules = response.modules;
+									var subjectName = response.subjectName;
+									if( result == 'Y' ){
+										$("#subjectModuleTable tbody").empty();
+										$.each(modules,function(n,moduleObj){
+											var editIcon = "<img src=\""+basePath+"images/icon/change.gif"+"\" mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"list_action_icon editModule\" title=\"编辑\"/>";
+											var deleteIcon = "<img src=\""+basePath+"images/icon/del.gif"+"\" mid=\""+moduleObj.id+"\" class=\"list_action_icon deleteModule\" title=\"删除\"/>";
+											$("#subjectModuleTable tbody").append("<tr><td>"+editIcon+deleteIcon+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
+							        	});
+									}else{
+										jAlert("获取构件失败","错误");
+									}
+								}
+							});
+						});
+					}
+				}
+			});
+		});
+	});
+	
+	$("body").delegate('.editModule', 'click', function(){
+		$("#moduleId_h").val($(this).attr("mid"));
+		$("#moduleName").val($(this).parent().parent().find("td:eq(2)").text());
+		$("#moduleDesc").val($(this).parent().parent().find("td:eq(3)").text());
+		
+		var moduleTypeCode = $(this).attr("mtc");
+		$("#moduleType option").each(function() {
+	        if ($(this).val() == moduleTypeCode ) {
+	            $(this).attr("selected", "selected");
+	        }
+	        $("#moduleType").selectBoxIt().data("selectBoxIt");
+			$("#moduleType").data("selectBox-selectBoxIt").refresh();
+	    });
+	});
 });
 
 function createNewSubjectTr(){
@@ -211,11 +267,23 @@ function saveSubjectModule(){
 	var moduleType = $("#moduleType").val();
 	var moduleName = $("#moduleName").val();
 	var moduleDesc = $("#moduleDesc").val();
+	var moduleId = $("#moduleId_h").val();
+	
+	if( moduleType == '' ){
+		jAlert("构件分类不能为空","提醒");
+		return false;
+	}
+	
+	if( moduleName == '' ){
+		jAlert("构件名称不能为空","提醒");
+		return false;
+	}
 	
 	jQuery.ajax({
 		url: basePath+"modifySubjectModule",
 		data : {
 			subjectId : subjectId,
+			moduleId : moduleId,
 			moduleType : moduleType,
 			moduleName : moduleName,
 			moduleDesc : moduleDesc
@@ -223,24 +291,35 @@ function saveSubjectModule(){
 		success: function(response){
 			var result = response.result;
 			if( result == 'Y' ){
-				jAlert("新增成功","提醒",function(){
+				var msgTitle;
+				if( moduleId == 0 || moduleId == '' ){
+					msgTitle = "新增成功";
+				}else{
+					msgTitle = "修改成功";
+				}
+				jAlert(msgTitle,"提醒",function(){
 					jQuery.ajax({
 						url: basePath+"subjectmodulelist",
 						data : {
 							subjectId : subjectId
 						},
 						success: function(response){
+							$("#moduleName").val('');
+							$("#moduleDesc").val('');
 							var result = response.result;
 							var modules = response.modules;
 							var subjectName = response.subjectName;
 							if( result == 'Y' ){
 								$("#subjectModuleTable tbody").empty();
 								$.each(modules,function(n,moduleObj){
-									$("#subjectModuleTable tbody").append("<tr><td>&nbsp;</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
+									var editIcon = "<img src=\""+basePath+"images/icon/change.gif"+"\" mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"list_action_icon editModule\" title=\"编辑\"/>";
+									var deleteIcon = "<img src=\""+basePath+"images/icon/del.gif"+"\" mid=\""+moduleObj.id+"\" class=\"list_action_icon deleteModule\" title=\"删除\"/>";
+									$("#subjectModuleTable tbody").append("<tr><td>"+editIcon+deleteIcon+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
 					        	});
 							}else{
 								jAlert("获取构件失败","错误");
 							}
+							$("#moduleId_h").val('');
 						}
 					});
 				});
@@ -262,8 +341,9 @@ function showSubjectModule(subjectId){
 			if( result == 'Y' ){
 				$("#subjectModuleTable tbody").empty();
 				$.each(modules,function(n,moduleObj){
-					var actionTD = "<td><span class=\"module_delete\"></span><span class=\"module_modify\"></span></td>";
-					$("#subjectModuleTable tbody").append("<tr>"+actionTD+"<td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
+					var editIcon = "<img src=\""+basePath+"images/icon/change.gif"+"\" mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"list_action_icon editModule\" title=\"编辑\"/>";
+					var deleteIcon = "<img src=\""+basePath+"images/icon/del.gif"+"\" mid=\""+moduleObj.id+"\" class=\"list_action_icon deleteModule\" title=\"删除\"/>";
+					$("#subjectModuleTable tbody").append("<tr><td>"+editIcon+deleteIcon+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
 	        	});
 				$("#subjectName").val(subjectName);
 				$("#subjectId").val(subjectId);

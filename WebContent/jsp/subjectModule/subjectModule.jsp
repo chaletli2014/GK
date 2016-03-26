@@ -1,8 +1,8 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="modal fade showDetailDiv" id="subjectModuleDiv">
-	<div class="modal-dialog" style="width:70%;">
+	<div class="modal-dialog" style="width:85%;">
 		<div class="modal-content" style="min-height: 600px;padding:0px;background:#f1f1f1;">
-			<div style="float:left;width: 60%;background:#fff;min-height:600px;">
+			<div style="float:left;width: 70%;background:#fff;min-height:600px;">
 				<div style="width: 120px;  background: lightskyblue;  color: #fff;margin-top:10px;padding:8px">
 					<span style="margin-left:20px;">构件列表</span>
 				</div>
@@ -22,11 +22,11 @@
 					<table class="table table-hover" id="subjectModuleTable">
 						<thead>
 							<tr>
-								<th>&nbsp;</th>
-								<th>构件分类</th>
-								<th>构件名称</th>
-								<th>构件描述</th>
-								<th>隶属于</th>
+								<th width="10%">&nbsp;</th>
+								<th width="15%">分类</th>
+								<th width="25%">构件名称</th>
+								<th width="30%">构件描述</th>
+								<th width="20%">隶属于</th>
 							</tr>
 						</thead>
 						<tbody class="middle-align">
@@ -34,14 +34,15 @@
 					</table>
 				</div>
 			</div>
-			<div style="float:left;width:39%;min-height:600px;" id="newSubjectModuleDiv">
+			<div style="float:left;width:30%;min-height:600px;" id="newSubjectModuleDiv">
 				<div style="text-align: right;">
 					<button id="subjectModule_close" class="close btn btn-icon btn-info" data-dismiss="modal" aria-hidden="true" style="padding:6px 12px;background:#cc0000;opacity:1;color:white">
 						<li class="fa-close"></li>
 					</button>
 				</div>
+				<input type="hidden" id="moduleId_h" name="moduleId"/>
 				<div style="text-align: center;margin:4px;font-size: 20px;margin-top:40px;">
-					<span style="">添加构件</span>
+					<span style="">构件编辑</span>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-4 control-label" for="field-1">构件分类</label>

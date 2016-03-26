@@ -327,7 +327,10 @@ div.showDetailDiv .form-group{
 .module_delete{
 	
 }
-
+.list_action_icon{
+	margin-right:4px;
+	cursor: pointer;
+}
 /** -------------- 物链管理 ------------ */
 .sp_type_ul{
 	clear: both;

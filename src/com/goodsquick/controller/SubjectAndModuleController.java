@@ -246,12 +246,14 @@ public class SubjectAndModuleController {
 			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
 			
 			int subjectId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("subjectId"));
+			int moduleId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("moduleId"));
 			String moduleType = request.getParameter("moduleType");
 			String moduleName = request.getParameter("moduleName");
 			String moduleDesc = request.getParameter("moduleDesc");
 			
 			GoodsHouseSubjectModule obj = new GoodsHouseSubjectModule();
 			obj.setSubjectId(subjectId);
+			obj.setId(moduleId);
 			obj.setModuleTypeCode(moduleType);
 			obj.setModuleName(moduleName);
 			obj.setModuleDesc(moduleDesc);
@@ -262,6 +264,27 @@ public class SubjectAndModuleController {
 			resultMap.put("result", "Y");
 		} catch (Exception e) {
 			logger.error("fail to modify the house subject module,",e);
+			resultMap.put("result", "N");
+		}
+		return resultMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/deleteSubjectModule")
+	public Map<String,Object> deleteSubjectModule(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		try {
+			int moduleId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("moduleId"));
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			
+			GoodsHouseSubjectModule obj = new GoodsHouseSubjectModule();
+			obj.setId(moduleId);
+			obj.setUpdateUser(currentUser.getLoginName());
+			subjectAndModuleService.deleteSubjectModule(obj);
+			resultMap.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("fail to delete the house subject module,",e);
 			resultMap.put("result", "N");
 		}
 		return resultMap;

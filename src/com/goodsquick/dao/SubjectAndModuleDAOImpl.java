@@ -140,6 +140,8 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 		sql.append("where id = ? ");
 		
 		List<Object> params = new ArrayList<Object>();
+		params.add(obj.getModuleName());
+		params.add(obj.getModuleDesc());
 		params.add(obj.getId());
 		
 		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
