@@ -35,8 +35,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	@Override
 	public GoodsSubject getSubjectInfoById(int subjectId) throws Exception {
 		StringBuilder sql = new StringBuilder("select hs.*");
-		sql.append(",case when hs.parentId = 0 then '' ");
-		sql.append(" else (select subject_name from tbl_goods_house_subject parent where parent.id = hs.parentId) end as parentName ");
+		sql.append(",'' as subject1Name, '' as subject2Name ");
 		sql.append("from tbl_goods_house_subject hs ");
 		sql.append("where hs.id= ? ");
 		return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{subjectId}, new GoodsHouseSubjectRowMapper());
@@ -45,13 +44,21 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	@Override
 	public List<GoodsSubject> getSubjectByLevel(String level, String repositoryCode) throws Exception {
 		List<GoodsSubject> topSubjectList = new ArrayList<GoodsSubject>();
-		String sql = null;
+		StringBuilder sql = new StringBuilder("");
 		if( "1".equalsIgnoreCase(level) ){
-			sql = "select hs.* from tbl_goods_house_subject hs where hs.subject_level= ? and hs.repository_code = ? and hs.status = '1'";
-		}else{
-			sql = "select hs.*,parent.subject_name as parentName from tbl_goods_house_subject hs, tbl_goods_house_subject parent  where hs.subject_level= ? and hs.repository_code = ? and hs.parentId = parent.id  and hs.status = '1' ";
+			sql.append("select hs.* from tbl_goods_house_subject hs ");
+			sql.append("where hs.subject_level= ? and hs.repository_code = ? and hs.status = '1'");
+		}else if( "2".equalsIgnoreCase(level) ){
+			sql.append("select hs.*,subject1.subject_name as subject1Name ");
+			sql.append("from tbl_goods_house_subject hs, tbl_goods_house_subject subject1 ");
+			sql.append("where hs.subject_level= ? and hs.repository_code = ? and hs.parentId = subject1.id  and hs.status = '1' ");
+		}else if( "3".equalsIgnoreCase(level) ){
+			sql.append("select hs.*,subject1.subject_name as subject1Name, subject2.subject_name as subject2Name ");
+			sql.append("from tbl_goods_house_subject hs, tbl_goods_house_subject subject1, tbl_goods_house_subject subject2 ");
+			sql.append("where hs.subject_level= ? and hs.repository_code = ? and hs.status = '1' ");
+			sql.append("and hs.parentId = subject2.id and subject2.parentId = subject1.id  ");
 		}
-		topSubjectList = dataBean.getJdbcTemplate().query(sql, new Object[]{level,repositoryCode}, new GoodsHouseSubjectRowMapper());
+		topSubjectList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{level,repositoryCode}, new GoodsHouseSubjectRowMapper());
 		return topSubjectList;
 	}
 

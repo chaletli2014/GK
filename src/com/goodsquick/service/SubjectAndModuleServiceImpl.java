@@ -57,7 +57,19 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
 	@Override
 	public GoodsSubject getSubjectInfoById(int subjectId) throws Exception {
 		try{
-			return subjectAndModuleDAO.getSubjectInfoById(subjectId);
+			GoodsSubject subject = subjectAndModuleDAO.getSubjectInfoById(subjectId);
+			
+			if( "2".equalsIgnoreCase(subject.getLevel()) ){
+				GoodsSubject subject1 = subjectAndModuleDAO.getSubjectInfoById(subject.getParentId());
+				subject.setSubject1Name(subject1.getName());
+			}else if( "3".equalsIgnoreCase(subject.getLevel()) ){
+				GoodsSubject subject2 = subjectAndModuleDAO.getSubjectInfoById(subject.getParentId());
+				subject.setSubject2Name(subject2.getName());
+				GoodsSubject subject1 = subjectAndModuleDAO.getSubjectInfoById(subject2.getParentId());
+				subject.setSubject1Name(subject1.getName());
+			}
+			
+			return subject;
 		} catch(EmptyResultDataAccessException erd){
             return new GoodsSubject();
         } catch(Exception e){

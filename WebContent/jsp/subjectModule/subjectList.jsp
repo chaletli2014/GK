@@ -51,13 +51,13 @@
 					<table class="table table-hover" id="subjectTable">
 						<thead>
 							<tr>
-								<th width="20%">主体名称</th>
-								<th width="30%">主体描述</th>
+								<th width="15%">主体名称</th>
+								<th width="20%">主体描述</th>
 								<%if( !"1".equalsIgnoreCase(level) ){%>
-								<th>隶属于</th>
+								<th width="30%">隶属于</th>
 								<%} %>
-								<th>主体操作</th>
-								<th>附属构件</th>
+								<th width="10%">主体操作</th>
+								<th width="10%">附属构件</th>
 							</tr>
 						</thead>
 						<tbody class="middle-align">
@@ -65,26 +65,19 @@
 								<tr>
 									<td class="dataEditable" title="${subject.name}">${subject.name}</td>
 									<td class="dataEditable" title="${subject.desc}">${subject.desc}</td>
-									<%if( !"1".equalsIgnoreCase(level) ){%>
-									<td>${subject.parentName}</td>
+									<%if( "2".equalsIgnoreCase(level) ){%>
+									<td>${subject.subject1Name}</td>
+									<%}else if( "3".equalsIgnoreCase(level) ){%>
+									<td>${subject.subject1Name}&nbsp;-&nbsp;${subject.subject2Name}</td>
 									<%} %>
 									<td>
-										<a id="${subject.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifySubject">
-											编辑
-										</a>
-										<a id="${subject.id}" class="btn btn-danger btn-sm btn-icon icon-left removeSubject">
-											删除
-										</a>
+										<img src="<%=basePath%>images/icon/change.gif" id="${subject.id}" class="list_action_icon modifySubject" title="编辑"/>
+										<img src="<%=basePath%>images/icon/del.gif" id="${subject.id}" class="list_action_icon removeSubject" title="删除"/>
 									</td>
 									<td>
 										<a id="${subject.id}" class="btn btn-secondary btn-sm btn-icon icon-left showModule">
 											查看构件
 										</a>
-										<%--
-										<a id="${subject.id}" class="btn btn-danger btn-sm btn-icon icon-left removeProduct">
-											添加构件
-										</a>
-										 --%>
 									</td>
 								</tr>
 							</c:forEach>

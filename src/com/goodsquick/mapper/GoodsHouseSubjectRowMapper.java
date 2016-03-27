@@ -19,8 +19,11 @@ public class GoodsHouseSubjectRowMapper implements RowMapper<GoodsSubject>{
     	dbHouseSubject.setParentId(rs.getInt("parentId"));
     	dbHouseSubject.setLevel(rs.getString("subject_level"));
     	dbHouseSubject.setRepositoryCode(rs.getString("repository_code"));
-    	if( GoodsJDBCTemplate.isExistColumn(rs, "parentName") ){
-    		dbHouseSubject.setParentName(rs.getString("parentName"));
+    	if( GoodsJDBCTemplate.isExistColumn(rs, "subject1Name") ){
+    		dbHouseSubject.setSubject1Name(rs.getString("subject1Name"));
+    	}
+    	if( GoodsJDBCTemplate.isExistColumn(rs, "subject2Name") ){
+    		dbHouseSubject.setSubject2Name(rs.getString("subject2Name"));
     	}
     	
         return dbHouseSubject;

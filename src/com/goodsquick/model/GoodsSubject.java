@@ -19,7 +19,8 @@ public class GoodsSubject extends BaseObject{
 	private String level;
 	private String repositoryCode;
 	
-	private String parentName;
+	private String subject1Name;
+	private String subject2Name;
 	
 	public int getId() {
 		return id;
@@ -63,11 +64,16 @@ public class GoodsSubject extends BaseObject{
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	public String getParentName() {
-		return parentName;
+	public String getSubject1Name() {
+		return subject1Name;
 	}
-	public void setParentName(String parentName) {
-		this.parentName = parentName;
+	public void setSubject1Name(String subject1Name) {
+		this.subject1Name = subject1Name;
 	}
-	
+	public String getSubject2Name() {
+		return subject2Name;
+	}
+	public void setSubject2Name(String subject2Name) {
+		this.subject2Name = subject2Name;
+	}
 }

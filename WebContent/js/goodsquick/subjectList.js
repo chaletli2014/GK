@@ -18,6 +18,9 @@ jQuery(document).ready(function($){
 	$("#sm_submitBtn").click(function(){
 		saveSubjectModule();
 	});
+	$("#sm_clearBtn").click(function(){
+		emptyModuleForm();
+	});
 	$("#modifySubjectBtn").click(function(){
 		modifySubject();
 	});
@@ -48,40 +51,42 @@ jQuery(document).ready(function($){
 		var moduleId = $(this).attr("mid");
 		var subjectId = $("#subjectId").val();
 		jConfirm("是否确定删除？","提醒",function(r) {
-			jQuery.ajax({
-				url: basePath+"deleteSubjectModule",
-				data : {
-					moduleId : moduleId
-				},
-				success: function(response){
-					var result = response.result;
-					if( result == 'Y' ){
-						jAlert("删除成功","提醒",function(){
-							jQuery.ajax({
-								url: basePath+"subjectmodulelist",
-								data : {
-									subjectId : subjectId
-								},
-								success: function(response){
-									var result = response.result;
-									var modules = response.modules;
-									var subjectName = response.subjectName;
-									if( result == 'Y' ){
-										$("#subjectModuleTable tbody").empty();
-										$.each(modules,function(n,moduleObj){
-											var editIcon = "<img src=\""+basePath+"images/icon/change.gif"+"\" mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"list_action_icon editModule\" title=\"编辑\"/>";
-											var deleteIcon = "<img src=\""+basePath+"images/icon/del.gif"+"\" mid=\""+moduleObj.id+"\" class=\"list_action_icon deleteModule\" title=\"删除\"/>";
-											$("#subjectModuleTable tbody").append("<tr><td>"+editIcon+deleteIcon+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
-							        	});
-									}else{
-										jAlert("获取构件失败","错误");
+			if(r){
+				jQuery.ajax({
+					url: basePath+"deleteSubjectModule",
+					data : {
+						moduleId : moduleId
+					},
+					success: function(response){
+						var result = response.result;
+						if( result == 'Y' ){
+							jAlert("删除成功","提醒",function(){
+								jQuery.ajax({
+									url: basePath+"subjectmodulelist",
+									data : {
+										subjectId : subjectId
+									},
+									success: function(response){
+										var result = response.result;
+										var modules = response.modules;
+										var subjectName = response.subjectName;
+										if( result == 'Y' ){
+											$("#subjectModuleTable tbody").empty();
+											$.each(modules,function(n,moduleObj){
+												var editIcon = "<img src=\""+basePath+"images/icon/change.gif"+"\" mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"list_action_icon editModule\" title=\"编辑\"/>";
+												var deleteIcon = "<img src=\""+basePath+"images/icon/del.gif"+"\" mid=\""+moduleObj.id+"\" class=\"list_action_icon deleteModule\" title=\"删除\"/>";
+												$("#subjectModuleTable tbody").append("<tr><td>"+editIcon+deleteIcon+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
+								        	});
+										}else{
+											jAlert("获取构件失败","错误");
+										}
 									}
-								}
+								});
 							});
-						});
+						}
 					}
-				}
-			});
+				});
+			}
 		});
 	});
 	
@@ -367,7 +372,11 @@ function showSubjectInfo(subjectId){
 			if( result == 'Y' ){
 				$("#subjectNameModify").val(subjectObj.name);
 				$("#subjectDescModify").val(subjectObj.desc);
-				$("#parentNameModify").val(subjectObj.parentName);
+				if( subjectObj.level == '2' ){
+					$("#parentNameModify").val(subjectObj.subject1Name);
+				}else if( subjectObj.level == '3' ){
+					$("#parentNameModify").val(subjectObj.subject1Name+"-"+subjectObj.subject2Name);
+				}
 				$("#subjectIdModify").val(subjectId);
 				jQuery('#subjectModifyDiv').modal('show', {backdrop: 'static'});
 			}else{
@@ -423,6 +432,7 @@ function initSubjectTable(){
 function emptyModuleForm(){
 	$("#moduleType").selectBoxIt().data("selectBoxIt");
 	$("#moduleType").data("selectBox-selectBoxIt").refresh();
+	$("#moduleId_h").val('');
 	$("#moduleName").val('');
 	$("#moduleDesc").val('');
 }

@@ -85,6 +85,7 @@
 				</div>
 				<div class="modal-footer" style="text-align:left;margin-left:10px;">
 					<button id="sm_submitBtn" class="btn btn-success">提交</button>
+					<button id="sm_clearBtn" class="btn btn-warning">取消</button>
 				</div>
 			</div>
 		</div>
