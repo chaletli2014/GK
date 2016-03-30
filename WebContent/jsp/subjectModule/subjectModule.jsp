@@ -6,7 +6,7 @@
 				<div style="width: 120px;  background: lightskyblue;  color: #fff;margin-top:10px;padding:8px">
 					<span style="margin-left:20px;">构件列表</span>
 				</div>
-				<div style="margin-left:10px;" id="equInfo">
+				<div style="margin-left:10px;overflow-y:auto;max-height:520px;" id="equInfo">
 					<script type="text/javascript">
 					/**
 					jQuery(document).ready(function($)

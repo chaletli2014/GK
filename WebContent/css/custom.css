@@ -331,6 +331,9 @@ div.showDetailDiv .form-group{
 	margin-right:4px;
 	cursor: pointer;
 }
+.table tbody tr td.smBtnTD a, .table tbody tr td.subjectListBtnTD a{
+	margin-bottom:4px;
+}
 /** -------------- 物链管理 ------------ */
 .sp_type_ul{
 	clear: both;

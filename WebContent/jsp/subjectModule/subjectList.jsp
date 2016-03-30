@@ -70,9 +70,13 @@
 									<%}else if( "3".equalsIgnoreCase(level) ){%>
 									<td>${subject.subject1Name}&nbsp;-&nbsp;${subject.subject2Name}</td>
 									<%} %>
-									<td>
-										<img src="<%=basePath%>images/icon/change.gif" id="${subject.id}" class="list_action_icon modifySubject" title="编辑"/>
-										<img src="<%=basePath%>images/icon/del.gif" id="${subject.id}" class="list_action_icon removeSubject" title="删除"/>
+									<td class="subjectListBtnTD">
+										<a id="${subject.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifySubject">
+											编辑
+										</a></br>
+										<a id="${subject.id}" class="btn btn-danger btn-sm btn-icon icon-left removeSubject">
+											删除
+										</a>
 									</td>
 									<td>
 										<a id="${subject.id}" class="btn btn-secondary btn-sm btn-icon icon-left showModule">

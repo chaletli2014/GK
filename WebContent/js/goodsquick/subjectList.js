@@ -317,9 +317,9 @@ function saveSubjectModule(){
 							if( result == 'Y' ){
 								$("#subjectModuleTable tbody").empty();
 								$.each(modules,function(n,moduleObj){
-									var editIcon = "<img src=\""+basePath+"images/icon/change.gif"+"\" mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"list_action_icon editModule\" title=\"编辑\"/>";
-									var deleteIcon = "<img src=\""+basePath+"images/icon/del.gif"+"\" mid=\""+moduleObj.id+"\" class=\"list_action_icon deleteModule\" title=\"删除\"/>";
-									$("#subjectModuleTable tbody").append("<tr><td>"+editIcon+deleteIcon+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
+									var editBtn = "<a mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"btn btn-secondary btn-sm btn-icon icon-left editModule\">编辑</a>";
+									var deleteBtn = "<a mid=\""+moduleObj.id+"\" class=\"btn btn-danger btn-sm btn-icon icon-left deleteModule\">删除</a>";
+									$("#subjectModuleTable tbody").append("<tr><td class=\"smBtnTD\">"+editBtn+"</br>"+deleteBtn+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
 					        	});
 							}else{
 								jAlert("获取构件失败","错误");
@@ -346,9 +346,9 @@ function showSubjectModule(subjectId){
 			if( result == 'Y' ){
 				$("#subjectModuleTable tbody").empty();
 				$.each(modules,function(n,moduleObj){
-					var editIcon = "<img src=\""+basePath+"images/icon/change.gif"+"\" mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"list_action_icon editModule\" title=\"编辑\"/>";
-					var deleteIcon = "<img src=\""+basePath+"images/icon/del.gif"+"\" mid=\""+moduleObj.id+"\" class=\"list_action_icon deleteModule\" title=\"删除\"/>";
-					$("#subjectModuleTable tbody").append("<tr><td>"+editIcon+deleteIcon+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
+					var editBtn = "<a mid=\""+moduleObj.id+"\" mtc=\""+moduleObj.moduleTypeCode+"\" class=\"btn btn-secondary btn-sm btn-icon icon-left editModule\">编辑</a>";
+					var deleteBtn = "<a mid=\""+moduleObj.id+"\" class=\"btn btn-danger btn-sm btn-icon icon-left deleteModule\">删除</a>";
+					$("#subjectModuleTable tbody").append("<tr><td class=\"smBtnTD\">"+editBtn+"</br>"+deleteBtn+"</td><td>"+moduleObj.moduleTypeName+"</td><td>"+moduleObj.moduleName+"</td><td>"+moduleObj.moduleDesc+"</td><td>"+subjectName+"</td></tr>");
 	        	});
 				$("#subjectName").val(subjectName);
 				$("#subjectId").val(subjectId);
