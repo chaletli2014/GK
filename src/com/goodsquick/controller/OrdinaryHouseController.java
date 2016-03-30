@@ -78,7 +78,11 @@ public class OrdinaryHouseController {
         	WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
         	String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
         	
+        	String contextPath = request.getSession().getServletContext().getContextPath();
         	GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
+        	if( StringUtils.isBlank(orHouse.getMainPic()) ){
+        		orHouse.setMainPic(contextPath+GoodsQuickAttributes.DEFAULT_HOUSE_PIC);
+        	}
         	view.addObject("orHouse", orHouse);
         	
         	List<GoodsServiceDetail> serviceDetails = goodsServiceService.getGoodsServiceDetailsByUserCode(currentUser.getLoginName());

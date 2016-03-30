@@ -54,9 +54,13 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 			throws Exception {
 		try{
 			GoodsOrdinaryHouse house = ordinaryHouseDAO.getOrdinaryHouseByRepositoryCode(repositoryCode);
-			String mainPic = ordinaryHouseDAO.getMainPicByRepositoryCode(repositoryCode);
-			if( StringUtils.isBlank(mainPic) ){
-				mainPic = GoodsQuickAttributes.DEFAULT_HOUSE_PIC;
+			String mainPic = null;
+			try{
+				mainPic = ordinaryHouseDAO.getMainPicByRepositoryCode(repositoryCode);
+			}catch(EmptyResultDataAccessException erd){
+				logger.error("there is no main pic of ordinary house");
+			} catch(Exception e){
+				logger.error("fail to get the main pic of ordinary house",e);
 			}
 			house.setMainPic(mainPic);
 			return house;
