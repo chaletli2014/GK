@@ -80,7 +80,7 @@ public class OrdinaryHouseController {
         	
         	String contextPath = request.getSession().getServletContext().getContextPath();
         	GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
-        	if( StringUtils.isBlank(orHouse.getMainPic()) ){
+        	if( orHouse != null && StringUtils.isBlank(orHouse.getMainPic()) ){
         		orHouse.setMainPic(contextPath+GoodsQuickAttributes.DEFAULT_HOUSE_PIC);
         	}
         	view.addObject("orHouse", orHouse);
