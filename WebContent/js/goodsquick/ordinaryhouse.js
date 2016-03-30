@@ -1,3 +1,31 @@
+var setting = {
+	async: {
+		enable: true,
+		url:basePath+"subjectViewList",
+		autoParam:["id"]
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	},
+	callback: {
+		onClick : subjectNodeClick
+	}
+};
+
+var viewSetting = {
+		async: {
+			enable: true,
+			autoParam:["id"]
+		},
+		data: {
+			simpleData: {
+				enable: true
+			}
+		}
+	};
+
 jQuery(document).ready(function($){
 	$(".houseNameLink").click(function(){
 		var houseId = this.tabIndex;
@@ -149,7 +177,89 @@ jQuery(document).ready(function($){
           alert( $(this).attr('value') );
 	    }
 	});
+	$.fn.zTree.init($("#subjectTree"), setting);
 });
+
+function subjectNodeClick(event, treeId, treeNode){
+	initModuleNodes(treeNode.id);
+//	initDeviceNodes(treeNode.id);
+//	initOtherNodes(treeNode.id);
+}
+
+function initModuleNodes(subjectId){
+	var nodeList = "[";
+	jQuery.ajax({
+		url: basePath+"subjectModuleNodes",
+		type: 'POST',
+		async: false,
+		data : {
+			subjectId : subjectId
+		},
+		dataType:"json",
+		success: function(result) {
+			var modules = result.modules;
+			$.each(modules, function(i, item) {
+				nodeList = nodeList + "{id:'" + item.id + "',pId:'0', name:'" + item.moduleName + "'},";
+			});
+			if( nodeList == '[' ){
+				nodeList = nodeList + "]";
+			}else{
+				nodeList = nodeList.substring(0, nodeList.length - 1) + "]";
+			}
+			$.fn.zTree.init($("#moduleTree"), viewSetting, eval('(' + nodeList + ')'));
+		}
+	});
+}
+
+function initDeviceNodes(subjectId){
+	var nodeList = "[";
+	jQuery.ajax({
+		url: basePath+"subjectmodulelist",
+		type: 'POST',
+		async: false,
+		data : {
+			subjectId : subjectId
+		},
+		dataType:"json",
+		success: function(result) {
+			var modules = result.modules;
+			$.each(modules, function(i, item) {
+				nodeList = nodeList + "{id:'" + item.id + "',pId:'0', name:'" + item.moduleName + "'},";
+			});
+			if( nodeList == '[' ){
+				nodeList = nodeList + "]";
+			}else{
+				nodeList = nodeList.substring(0, nodeList.length - 1) + "]";
+			}
+			$.fn.zTree.init($("#moduleTree"), viewSetting, eval('(' + nodeList + ')'));
+		}
+	});
+}
+
+function initOtherNodes(subjectId){
+	var nodeList = "[";
+	jQuery.ajax({
+		url: basePath+"subjectmodulelist",
+		type: 'POST',
+		async: false,
+		data : {
+			subjectId : subjectId
+		},
+		dataType:"json",
+		success: function(result) {
+			var modules = result.modules;
+			$.each(modules, function(i, item) {
+				nodeList = nodeList + "{id:'" + item.id + "',pId:'0', name:'" + item.moduleName + "'},";
+			});
+			if( nodeList == '[' ){
+				nodeList = nodeList + "]";
+			}else{
+				nodeList = nodeList.substring(0, nodeList.length - 1) + "]";
+			}
+			$.fn.zTree.init($("#moduleTree"), viewSetting, eval('(' + nodeList + ')'));
+		}
+	});
+}
 
 function initSubjectLevel(level){
 	var subjectLevelName = "subjectLevel"+level;

@@ -238,6 +238,24 @@ public class SubjectAndModuleController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("/subjectModuleNodes")
+	public Map<String,Object> subjectModuleNodes(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		try {
+			int subjectId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("subjectId"));
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			List<GoodsHouseSubjectModule> subjectModuleList = subjectAndModuleService.getAllModuleNodesBySubjectId(subjectId,repositoryCode);
+			resultMap.put("modules", subjectModuleList);
+		} catch (Exception e) {
+			logger.error("fail to get the house subject module,",e);
+			resultMap.put("result", "N");
+		}
+		
+		return resultMap;
+	}
+	
+	@ResponseBody
 	@RequestMapping("/modifySubjectModule")
 	public Map<String,Object> modifySubjectModule(HttpServletRequest request){
 		Map<String,Object> resultMap = new HashMap<String,Object>();

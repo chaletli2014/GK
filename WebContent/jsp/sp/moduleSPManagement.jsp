@@ -59,6 +59,26 @@
 						<li lid="${spType.dicCode}" class="<c:if test="${spType.dicCode == spTypeCode}">active</c:if>" >${spType.dicName}</li>
 					</c:forEach>
 					</ul>
+					<div style="margin-top:20px;">
+						<c:if test="${partCode == 'sp_equ'}">
+						<a style="float:right;margin-right:16px;" id="newEquSpLink" class="btn btn-orange">
+							<i class="fa fa-plus"></i>
+							新增
+						</a>
+						</c:if>
+						<c:if test="${partCode == 'sp_subject'}">
+						<a style="float:right;margin-right:16px;" id="newSpLink" class="btn btn-orange">
+							<i class="fa fa-plus"></i>
+							新增
+						</a>
+						</c:if>
+						<c:if test="${partCode == 'sp_other'}">
+						<a style="float:right;margin-right:16px;" id="newSpLink" class="btn btn-orange">
+							<i class="fa fa-plus"></i>
+							新增
+						</a>
+						</c:if>
+					</div>
 					<div>
 						<table class="table table-bordered table-striped" id="moduleSPTable">
 							<thead>
@@ -71,17 +91,7 @@
 									<th>${spTypeName}名称</th>
 									</c:if>
 									<th>联系电话</th>
-									<th>操作
-										<c:if test="${partCode == 'sp_equ'}">
-										<a style="float:right;margin-right:16px;" id="newEquSpLink">新增</a>
-										</c:if>
-										<c:if test="${partCode == 'sp_subject'}">
-										<a style="float:right;margin-right:16px;" id="newSpLink">新增</a>
-										</c:if>
-										<c:if test="${partCode == 'sp_other'}">
-										<a style="float:right;margin-right:16px;" id="newSpLink">新增</a>
-										</c:if>
-									</th>
+									<th>操作 </th>
 								</tr>
 							</thead>
 							<tbody class="middle-align">

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +20,7 @@ import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.GoodsDateUtil;
+import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickSearcherUtils;
 
 @Service("ordinaryHouseService")
@@ -51,7 +53,13 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 	public GoodsOrdinaryHouse getOrdinaryHouseByRepositoryCode(String repositoryCode)
 			throws Exception {
 		try{
-			return ordinaryHouseDAO.getOrdinaryHouseByRepositoryCode(repositoryCode);
+			GoodsOrdinaryHouse house = ordinaryHouseDAO.getOrdinaryHouseByRepositoryCode(repositoryCode);
+			String mainPic = ordinaryHouseDAO.getMainPicByRepositoryCode(repositoryCode);
+			if( StringUtils.isBlank(mainPic) ){
+				mainPic = GoodsQuickAttributes.DEFAULT_HOUSE_PIC;
+			}
+			house.setMainPic(mainPic);
+			return house;
 		} catch(EmptyResultDataAccessException erd){
 			return null;
 		} catch(Exception e){

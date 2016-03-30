@@ -35,4 +35,6 @@ public interface OrdinaryHouseDAO {
 	public List<GoodsRelationshipProperty> getAllHouseRelationshipByUserCode(String userCode) throws Exception;
 	
 	public List<String> getAllExistsHouses() throws Exception;
+	
+	public String getMainPicByRepositoryCode(String repositoryCode);
 }

@@ -200,6 +200,19 @@ public class SubjectAndModuleServiceImpl implements SubjectAndModuleService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public List<GoodsHouseSubjectModule> getAllModuleNodesBySubjectId(
+			int subjectId,String repositoryCode) throws Exception {
+		try{
+			return subjectAndModuleDAO.getAllModuleNodesBySubjectId(subjectId);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get the subject module by subjectId,",e);
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	public GoodsHouseSubjectModule getSubjectModuleByModuleId(int moduleId)

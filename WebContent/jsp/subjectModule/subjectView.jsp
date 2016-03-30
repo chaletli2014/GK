@@ -2,46 +2,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="../common/header.jsp"%>
+<script type="text/javascript" src="<%=basePath%>js/goodsquick/subjectView.js"></script>
 <style type="text/css">
 	.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
 </style>
-<SCRIPT type="text/javascript">
-var setting = {
-		async: {
-			enable: true,
-			url:"<%=basePath%>subjectViewList",
-			autoParam:["id"],
-			dataFilter: filter
-		},
-		view: {
-		},
-		data: {
-			simpleData: {
-				enable: true
-			}
-		},
-		callback: {
-		}
-	};
-
-	function filter(treeId, parentNode, childNodes) {
-		if (!childNodes) return null;
-		for (var i=0, l=childNodes.length; i<l; i++) {
-			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
-			if( childNodes[i].level == '1' ){
-				//childNodes[i].iconSkin = "icon01";
-			}else if( childNodes[i].level == '2' ){
-				//childNodes[i].iconSkin = "icon02";
-			}else if( childNodes[i].level == '3' ){
-				//childNodes[i].iconSkin = "icon03";
-			}
-		}
-		return childNodes;
-	}
-	$(document).ready(function(){
-		$.fn.zTree.init($("#treeDemo"), setting);
-	});
-</SCRIPT>
 <body class="page-body">
 	<jsp:include page="../common/settings_pane.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
@@ -72,9 +36,12 @@ var setting = {
 				</div>
 			</div>
 			<div class="panel panel-default">
-				<div class="panel-body">
+				<div class="content_wrap">
 					<div class="zTreeDemoBackground left">
-						<ul id="treeDemo" class="ztree"></ul>
+						<ul id="subjectTree" class="ztree"></ul>
+					</div>
+					<div class="zTreeDemoBackground right">
+						<ul id="moduleTree" class="ztree"></ul>
 					</div>
 				</div>
 			</div>

@@ -3,6 +3,7 @@
 <html lang="en">
 <%@include file="../common/header.jsp"%>
 <script type="text/javascript" src="<%=basePath%>js/goodsquick/ordinaryhouse.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=basePath%>css/demo.css" />
 <script type="text/javascript">
 jQuery(document).ready(function($){
 	if( $("#orHouse").val() == null || $("#orHouse").val() == '' ){
@@ -28,41 +29,8 @@ jQuery(document).ready(function($){
 			<jsp:include page="../common/main-nav.jsp" flush="true">
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
-			<div class="page-title">
-				<%@include file="../common/nav-title.jsp"%>
-				<div class="breadcrumb-env">
-					<ol class="breadcrumb bc-1">
-					<li>
-						<a href="<%=basePath%>index"><i class="fa-home"></i>首页</a>
-					</li>
-					<li>
-						<a href="#" onclick="javascript:void(0)">资品管理</a>
-					</li>
-					<li class="active">
-						<strong>基本信息</strong>
-					</li>
-					</ol>
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<%--
-				<script type="text/javascript">
-					jQuery(document).ready(function($)
-					{
-						$("#serviceDetailTable").dataTable({
-							dom: "t" + "<'row'<'col-xs-6'i><'col-xs-6'p>>",
-							aoColumns: [
-								null,
-								null,
-								null,
-								null,
-								null
-							],
-						});
-					});
-					</script>
-				 --%>
-				<div class="panel-body">
+			<div>
+				<div class="panel-body" style="padding-top:0px;">
 					<input type="hidden" id="orHouse" value="${orHouse}"/>
 					<c:if test="${null==orHouse}">
 						<div>
@@ -79,7 +47,7 @@ jQuery(document).ready(function($){
 					</c:if>
 					<c:if test="${orHouse!=null}">
 						<div style="width:50%;float:left;">
-							<blockquote class="blockquote blockquote-info" style="height:318px;font-size:14px;">
+							<blockquote class="blockquote blockquote-info" style="height:160px;font-size:14px;">
 								<p>
 									<strong>资品信息</strong>&nbsp;&nbsp;
 									<a href="javascript:void(0)" id="editHouseLink">
@@ -95,90 +63,33 @@ jQuery(document).ready(function($){
 								<p>
 									坐落位置：<span>${orHouse.location}</span>
 								</p>
-								<p>
-									所属地域：<span>${orHouse.province} - ${orHouse.city}</span>
-								</p>
-								<p style="display: inline-flex;">
-									竣工时间：
-									<span class="input-group col-sm-8" style="text-align: center;">
-										<span>${orHouse.finishYear}</span><span class="input-group-addon">年</span>
-										<span>${orHouse.finishMonth}</span><span class="input-group-addon">月</span>
-										<span>${orHouse.finishDate}</span><span class="input-group-addon">日</span>
-									</span>
-								</p>
-								<p>
-									开发公司：<span>${orHouse.company}</span>
-								</p>
-								<p>
-									物业公司：<span>${orHouse.propertyName}</span>
-								</p>
 							</blockquote>
 						</div>
-						<div style="width:40%;float:right;">
-							<img alt="" src=""/>
-							<%--
-							<ul class="sp_list">
-								<li class="sp_list_item">
-									<a href="javascript:void(0)" id="publicBody">
-										<div class="sp_title">主体构件</div>
-										<div class="sp_detail"></div>
-									</a>
-								</li>
-								<li class="sp_list_item">
-									<a href="javascript:void(0)" id="publicEquipment">
-										<div class="sp_title">设施设备</div>
-										<div class="sp_detail"></div>
-									</a>
-								</li>
-								<li class="sp_list_item">
-									<a href="javascript:void(0)" id="publicInstallation">
-										<div class="sp_title">其它</div>
-										<div class="sp_detail"></div>
-									</a>
-								</li>
-							</ul>
-							 --%>
+						<div style="width:35%;float:right;">
+							<img width="300px" height="160px" src="${orHouse.mainPic}" />
 						</div>
 					</c:if>
-					<%--
-					<c:if test="${fn:length(serviceDetails) > 0 }">
-						<div class="panel-heading" style="clear: both;">
-							<h3 class="panel-title">组件列表</h3>
-						</div>
-						<table class="table table-bordered table-striped" id="serviceDetailTable">
-							<thead>
-								<tr>
-									<th>服务名称</th>
-									<th>服务范围</th>
-									<th>服务价格</th>
-									<th>服务简介</th>
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody class="middle-align">
-								<c:forEach items="${serviceDetails}" var="serviceDetail">
-									<tr>
-										<td >${serviceDetail.serviceName}</td>
-										<td >${serviceDetail.serviceRangeName}</td>
-										<td >${serviceDetail.price}</td>
-										<td >${serviceDetail.serviceContent}</td>
-										<td>
-											<ul class="table_action_list">
-												<li>
-													<a href="#" class="btn btn-danger btn-sm btn-icon icon-left">
-														删除
-													</a>
-												</li>
-											</ul>
-										</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-					</c:if>
-					 --%>
 				</div>
 			</div>
+			<div class="content_wrap">
+				<div class="zTreeDemoBackground left">
+					<div class="treeNodeTitle">主体</div>
+					<ul id="subjectTree" class="ztree"></ul>
+				</div>
+				<div class="zTreeDemoBackground left">
+					<div class="treeNodeTitle">构件</div>
+					<ul id="moduleTree" class="ztree"></ul>
+				</div>
+				<div class="zTreeDemoBackground left">
+					<div class="treeNodeTitle">设施设备</div>
+					<ul id="deviceTree" class="ztree"></ul>
+				</div>
+				<div class="zTreeDemoBackground left">
+					<div class="treeNodeTitle">材料装饰</div>
+					<ul id="otherTree" class="ztree"></ul>
+				</div>
+			</div>
+			
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>

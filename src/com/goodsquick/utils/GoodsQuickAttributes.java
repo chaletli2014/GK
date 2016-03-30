@@ -55,6 +55,7 @@ public class GoodsQuickAttributes {
     
     public static final String UPLOAD_FILE_PATH = "/uploadFiles/";
     public static final String TEMP_FILE_PATH = "/tempUploadFiles/";
+    public static final String DEFAULT_HOUSE_PIC = "/housePic/defaultPic.jpg";
     
     public static final String UPLOAD_FILE_TYPE_ALLOWED = "jpg,png";
     

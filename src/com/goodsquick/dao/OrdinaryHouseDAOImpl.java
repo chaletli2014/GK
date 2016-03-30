@@ -442,4 +442,9 @@ public class OrdinaryHouseDAOImpl extends BaseDAOImpl implements OrdinaryHouseDA
 		return dataBean.getJdbcTemplate().queryForList("select distinct building_name from tbl_goods_ordinary_house", String.class);
 	}
 
+	@Override
+	public String getMainPicByRepositoryCode(String repositoryCode) {
+		return dataBean.getJdbcTemplate().queryForObject("select file_path from tbl_goods_house_file where is_main='1' and status='1' and repository_code=?", String.class, repositoryCode);
+	}
+
 }

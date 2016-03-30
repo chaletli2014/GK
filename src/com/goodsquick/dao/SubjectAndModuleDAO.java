@@ -27,6 +27,7 @@ public interface SubjectAndModuleDAO {
 	public String getSubjectCodeByName(String subjectName) throws Exception;
 	
 	public List<GoodsHouseSubjectModule> getSubjectModulesBySubjectId(int subjectId) throws Exception;
+	public List<GoodsHouseSubjectModule> getAllModuleNodesBySubjectId(int subjectId) throws Exception;
 	public List<GoodsHouseSubjectModule> getAllSubjectModulesByRepositoryCode(String repositoryCode) throws Exception;
 	public GoodsHouseSubjectModule getSubjectModuleByModuleId(int moduleId) throws Exception;
 	public void updateSubjectModule(GoodsHouseSubjectModule obj) throws Exception;

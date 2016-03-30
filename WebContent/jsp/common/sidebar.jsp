@@ -120,55 +120,67 @@
 					<span class="title"><%=manageName %></span>
 				</a>
 				<ul>
-					<li <% if( actived.indexOf(",ordinaryhouse,")>-1|| actived.indexOf(",productlist,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=manageLink%>">
+					<li>
+						<a href="#">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">基本信息</span>
+							<span class="title">动产</span>
 						</a>
 					</li>
-					<li <% if( opened.indexOf(",subjectModule,")>-1 ){ %>class="active opened"<%} %>>
-						<a href="#" onclick="javascript:void(0)">
+					<li <% if( opened.indexOf(",subjectModule,")>-1 
+							|| actived.indexOf(",houseDevice,")>-1 
+							|| actived.indexOf(",houseOther,")>-1
+							|| actived.indexOf(",ordinaryhouse,")>-1 
+							|| actived.indexOf(",productlist,")>-1 ){ %>class="active opened"<%} %>>
+						<a href="<%=manageLink%>">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">主体构件</span>
+							<span class="title">不动产</span>
 						</a>
 						<ul>
-							<li <% if( actived.indexOf(",subjectView,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>subjectView">
+							<li <% if( actived.indexOf(",ordinaryhouse,")>-1|| actived.indexOf(",productlist,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=manageLink%>">
 									<i class="entypo-flow-parallel"></i>
-									<span class="title">概览</span>
+									<span class="title">基本信息</span>
 								</a>
 							</li>
-							<li <% if( actived.indexOf(",subject1,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>subjectList?level=1">
+							<li <% if( opened.indexOf(",subjectModule,")>-1 ){ %>class="active opened"<%} %>>
+								<a href="#" onclick="javascript:void(0)">
 									<i class="entypo-flow-parallel"></i>
-									<span class="title">一级主体</span>
+									<span class="title">主体构件</span>
+								</a>
+								<ul>
+									<li <% if( actived.indexOf(",subject1,")>-1 ){ %>class="active"<%} %>>
+										<a href="<%=request.getParameter("basePath")%>subjectList?level=1">
+											<i class="entypo-flow-parallel"></i>
+											<span class="title">一级主体</span>
+										</a>
+									</li>
+									<li <% if( actived.indexOf(",subject2,")>-1 ){ %>class="active"<%} %>>
+										<a href="<%=request.getParameter("basePath")%>subjectList?level=2">
+											<i class="entypo-flow-parallel"></i>
+											<span class="title">二级主体</span>
+										</a>
+									</li>
+									<li <% if( actived.indexOf(",subject3,")>-1 ){ %>class="active"<%} %>>
+										<a href="<%=request.getParameter("basePath")%>subjectList?level=3">
+											<i class="entypo-flow-parallel"></i>
+											<span class="title">三级主体</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li <% if( actived.indexOf(",houseDevice,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseDeviceList">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">设施设备</span>
 								</a>
 							</li>
-							<li <% if( actived.indexOf(",subject2,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>subjectList?level=2">
+							<li <% if( actived.indexOf(",houseOther,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>houseOtherList">
 									<i class="entypo-flow-parallel"></i>
-									<span class="title">二级主体</span>
-								</a>
-							</li>
-							<li <% if( actived.indexOf(",subject3,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>subjectList?level=3">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">三级主体</span>
+									<span class="title">材料&nbsp;&&nbsp;装饰</span>
 								</a>
 							</li>
 						</ul>
-					</li>
-					<li <% if( actived.indexOf(",houseDevice,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseDeviceList">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">设施设备</span>
-						</a>
-					</li>
-					<li <% if( actived.indexOf(",houseOther,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>houseOtherList">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">材料&nbsp;&&nbsp;装饰</span>
-						</a>
 					</li>
 				</ul>
 			</li>
@@ -178,32 +190,72 @@
 					<span class="title">物链管理</span>
 				</a>
 				<ul>
-					<li <% if( actived.indexOf(",sp_subject,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_subject&spTypeCode=sp_type_js">
+					<li <% if( actived.indexOf(",sp_subject,")>-1
+							|| actived.indexOf(",sp_equ,")>-1
+							|| actived.indexOf(",sp_other,")>-1 ){ %>class="active opened"<%} %>>
+						<a href="javascript:void(0)">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">小区主体</span>
+							<span class="title">物链列表</span>
+						</a>
+						<ul>
+							<li <% if( actived.indexOf(",sp_subject,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_subject&spTypeCode=sp_type_js">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">小区主体</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",sp_equ,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_equ&spTypeCode=sp_type_brand">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">设施设备</span>
+								</a>
+							</li>
+							<li <% if( actived.indexOf(",sp_other,")>-1 ){ %>class="active"<%} %>>
+								<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_other&spTypeCode=sp_type_brand">
+									<i class="entypo-flow-parallel"></i>
+									<span class="title">材料&nbsp;&&nbsp;装饰</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">物链雷达</span>
 						</a>
 					</li>
-					<li <% if( actived.indexOf(",sp_equ,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_equ&spTypeCode=sp_type_brand">
+					<li>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">设施设备</span>
+							<span class="title">关联申请</span>
 						</a>
 					</li>
-					<li <% if( actived.indexOf(",sp_other,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_other&spTypeCode=sp_type_brand">
+				</ul>
+			</li>
+			<li class="firstLI">
+				<a>
+					<i class="linecons-sound"></i>
+					<span class="title">武讯管理</span>
+				</a>
+				<ul>
+					<li>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">材料&nbsp;&&nbsp;装饰</span>
+							<span class="title">发讯息</span>
 						</a>
 					</li>
-					<%-- 
-					<li <% if( actived.indexOf(",serviceCustomer,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>serviceCustomer">
+					<li>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">客户管理</span>
+							<span class="title">收件箱</span>
 						</a>
 					</li>
-					--%>
+					<li>
+						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">发件箱</span>
+						</a>
+					</li>
 				</ul>
 			</li>
 			<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="opened active firstLI"<%}else{%>class="firstLI"<%} %>>

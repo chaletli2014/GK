@@ -206,6 +206,11 @@ public class GoodsOrdinaryHouse {
 	
 	private String repositoryCode;
 	
+	/**
+	 * 主图
+	 */
+	private String mainPic;
+	
 	public int getId() {
 		return id;
 	}
@@ -523,6 +528,12 @@ public class GoodsOrdinaryHouse {
 	}
 	public void setFinishDate(int finishDate) {
 		this.finishDate = finishDate;
+	}
+	public String getMainPic() {
+		return mainPic;
+	}
+	public void setMainPic(String mainPic) {
+		this.mainPic = mainPic;
 	}
 	
 }
