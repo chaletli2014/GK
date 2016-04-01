@@ -372,8 +372,15 @@ div.showDetailDiv .form-group{
 .treeNodeTitle{
 	font-size:14px;
 	font-weight: bold;
-	border: 1px solid #617775;
-	background: #f0f6e4;
 	padding-left:20px;
 	padding:4px;
+}
+.house_main_tree_div{
+	padding:0px;
+	padding-left:40px;
+	width:246px;
+	float:left;
+	height: 360px;
+	overflow: scroll;
+	margin-right:6px;
 }

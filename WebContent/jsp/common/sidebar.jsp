@@ -53,12 +53,14 @@
 			</span>
 		</div>
 		<ul id="main-menu" class="main-menu">
+			<%--
 			<li <% if( actived.indexOf(",index,")>-1 ){ %>class="active firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="<%=request.getParameter("basePath") %>index">
 					<i class="linecons-desktop"></i>
 					<span>视窗看板</span>
 				</a>
 			</li>
+			 --%>
 			<%if( "admin".equalsIgnoreCase(webUser.getLoginName()) ) {%>
 			<li <% if( opened.indexOf("system")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
@@ -120,12 +122,6 @@
 					<span class="title"><%=manageName %></span>
 				</a>
 				<ul>
-					<li>
-						<a href="#">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">动产</span>
-						</a>
-					</li>
 					<li <% if( opened.indexOf(",subjectModule,")>-1 
 							|| actived.indexOf(",houseDevice,")>-1 
 							|| actived.indexOf(",houseOther,")>-1
@@ -182,6 +178,12 @@
 							</li>
 						</ul>
 					</li>
+					<li>
+						<a href="#">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">动产</span>
+						</a>
+					</li>
 				</ul>
 			</li>
 			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
@@ -235,7 +237,7 @@
 			<li class="firstLI">
 				<a>
 					<i class="linecons-sound"></i>
-					<span class="title">武讯管理</span>
+					<span class="title">物讯管理</span>
 				</a>
 				<ul>
 					<li>

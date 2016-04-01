@@ -3,7 +3,9 @@
 <html lang="en">
 <%@include file="../common/header.jsp"%>
 <script type="text/javascript" src="<%=basePath%>js/goodsquick/ordinaryhouse.js"></script>
+<%--
 <link rel="stylesheet" type="text/css" href="<%=basePath%>css/demo.css" />
+ --%>
 <script type="text/javascript">
 jQuery(document).ready(function($){
 	if( $("#orHouse").val() == null || $("#orHouse").val() == '' ){
@@ -30,7 +32,7 @@ jQuery(document).ready(function($){
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
 			<div>
-				<div class="panel-body" style="padding-top:0px;">
+				<div class="panel-body" style="padding-top:0px;padding-left:0px;">
 					<input type="hidden" id="orHouse" value="${orHouse}"/>
 					<c:if test="${null==orHouse}">
 						<div>
@@ -46,7 +48,7 @@ jQuery(document).ready(function($){
 						</div>
 					</c:if>
 					<c:if test="${orHouse!=null}">
-						<div style="width:50%;float:left;">
+						<div style="width:560px;float:left;">
 							<blockquote class="blockquote blockquote-info" style="height:160px;font-size:14px;">
 								<p>
 									<strong>资品信息</strong>&nbsp;&nbsp;
@@ -65,26 +67,26 @@ jQuery(document).ready(function($){
 								</p>
 							</blockquote>
 						</div>
-						<div style="width:35%;float:right;">
+						<div style="width:35%;float:left;">
 							<img width="300px" height="160px" src="${orHouse.mainPic}" />
 						</div>
 					</c:if>
 				</div>
 			</div>
 			<div class="content_wrap">
-				<div class="zTreeDemoBackground left">
+				<div class="zTreeDemoBackground left blockquote blockquote-info house_main_tree_div">
 					<div class="treeNodeTitle">主体</div>
 					<ul id="subjectTree" class="ztree"></ul>
 				</div>
-				<div class="zTreeDemoBackground left">
+				<div class="zTreeDemoBackground left blockquote blockquote-info house_main_tree_div">
 					<div class="treeNodeTitle">构件</div>
 					<ul id="moduleTree" class="ztree"></ul>
 				</div>
-				<div class="zTreeDemoBackground left">
+				<div class="zTreeDemoBackground left blockquote blockquote-info house_main_tree_div">
 					<div class="treeNodeTitle">设施设备</div>
 					<ul id="deviceTree" class="ztree"></ul>
 				</div>
-				<div class="zTreeDemoBackground left">
+				<div class="zTreeDemoBackground left blockquote blockquote-info house_main_tree_div">
 					<div class="treeNodeTitle">材料装饰</div>
 					<ul id="otherTree" class="ztree"></ul>
 				</div>

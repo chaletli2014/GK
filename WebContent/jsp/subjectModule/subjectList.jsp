@@ -54,9 +54,9 @@
 								<th width="15%">主体名称</th>
 								<th width="20%">主体描述</th>
 								<%if( !"1".equalsIgnoreCase(level) ){%>
-								<th width="30%">隶属于</th>
+								<th width="25%">隶属于</th>
 								<%} %>
-								<th width="10%">主体操作</th>
+								<th width="15%">主体操作</th>
 								<th width="10%">附属构件</th>
 							</tr>
 						</thead>
@@ -73,7 +73,7 @@
 									<td class="subjectListBtnTD">
 										<a id="${subject.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifySubject">
 											编辑
-										</a></br>
+										</a>
 										<a id="${subject.id}" class="btn btn-danger btn-sm btn-icon icon-left removeSubject">
 											删除
 										</a>
