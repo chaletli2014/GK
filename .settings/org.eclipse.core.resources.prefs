@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/config/system.properties=UTF-8
 encoding//WebContent/css/custom.css=UTF-8
 encoding//WebContent/css/fonts/linecons/css/linecons-codes.css=gbk
+encoding//WebContent/css/login.css=UTF-8
 encoding//WebContent/css/xenon-core.css=UTF-8
 encoding//WebContent/jsp/common/categoryDiv.jsp=UTF-8
 encoding//WebContent/jsp/common/footer.jsp=UTF-8

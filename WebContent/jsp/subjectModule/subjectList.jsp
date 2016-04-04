@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -5,6 +6,10 @@
 	String subjectTip = "";
 	String addBtnName = "";
 	String level = request.getParameter("level");
+	if( StringUtils.isBlank(level) ){
+		level = (String)request.getSession().getAttribute("subjectLevel");
+	}
+	
 	if( "1".equalsIgnoreCase(level) ){
 		subjectTip = "注：一级主体是指住宅小区里的独栋楼宇或裙楼";
 		addBtnName = "添加一级主体";

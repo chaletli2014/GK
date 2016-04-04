@@ -5,6 +5,7 @@
 */
 
 body {
+	font-family: "Microsoft YaHei";
 	font-size: 14px;
 }
 
@@ -169,6 +170,13 @@ div.showDetailDiv .form-group{
 	zoom:1;
 	min-width:1240px;
 	background:url(../images/background_banner.png);
+}
+.g-banner{
+	overflow-y: scroll;
+    background-size: cover;
+    height: 100%;
+    position: relative;
+    background:url(../images/background_banner.png) center center no-repeat;
 }
 .login_logo{
 	padding: 4px 100px;
@@ -455,10 +463,12 @@ div.showDetailDiv .form-group{
 	margin-bottom:10px;
 }
 .treeNodeTitle{
-	font-size:14px;
-	font-weight: bold;
-	padding-left:20px;
-	padding:4px;
+	font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #617775;
+    background: #f0f6e4;
+    padding-left: 20px;
+    padding: 4px;
 }
 .house_main_tree_div{
 	padding:0px;

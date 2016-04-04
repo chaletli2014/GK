@@ -107,7 +107,7 @@ public class OrdinaryHouseController {
     @RequestMapping("/newProductPre")
     public ModelAndView newProductPre(HttpServletRequest request){
     	ModelAndView view = new ModelAndView();
-		view.addObject("opened", ",estate,resident,");
+		view.addObject("opened", ",productManagement,");
 		view.addObject("actived", ",ordinaryhouse,");
     	view.setViewName("ep/ordinaryhouse_popadd_pre");
     	return view;
@@ -132,8 +132,8 @@ public class OrdinaryHouseController {
     @RequestMapping("/newProductPreOne")
     public ModelAndView newProductPre1(HttpServletRequest request){
     	ModelAndView view = new ModelAndView();
-    	view.addObject("opened", ",estate,resident,");
-    	view.addObject("actived", ",ordinaryhouse,");
+    	view.addObject("opened", ",productManagement,");
+		view.addObject("actived", ",ordinaryhouse,");
     	String viewName = "ep/ordinaryhouse_popadd_pre_1";
     	
     	List<GoodsDictionary> goodsCategory = new ArrayList<GoodsDictionary>();
@@ -191,7 +191,7 @@ public class OrdinaryHouseController {
     		List<GoodsHouseDevice> deviceList = ordinaryHouseService.getAllHouseDeviceByUser(orHouse, currentUser);
     		view.addObject("deviceList", deviceList);
     		
-    		view.addObject("opened", ",estate,resident,");
+    		view.addObject("opened", ",productManagement,");
     		view.addObject("actived", ",ordinaryhouse,");
     		
     		Object errorMessage = request.getSession().getAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);
@@ -248,8 +248,8 @@ public class OrdinaryHouseController {
     			view.addObject("relationshipProperty", relationshipProperty);
     		}
     		
-    		view.addObject("opened", ",estate,resident,");
-			view.addObject("actived", ",ordinaryhouse,");
+    		view.addObject("opened", ",productManagement,");
+    		view.addObject("actived", ",ordinaryhouse,");
 			
 			Object errorMessage = request.getSession().getAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);
 			if( null != errorMessage ){
@@ -309,8 +309,8 @@ public class OrdinaryHouseController {
     		GoodsRelationshipProperty relationshipProperty = relationshipPropertyService.getRelationshipProperty("tbl_goods_ordinary_house", GoodsQuickUtils.parseIntegerFromString(orHouseId));
 			view.addObject("relationshipProperty", relationshipProperty);
     		
-    		view.addObject("opened", ",estate,resident,");
-    		view.addObject("actived", ",ordinaryhouse,");
+			view.addObject("opened", ",productManagement,");
+			view.addObject("actived", ",ordinaryhouse,");
     		
     		Object errorMessage = request.getSession().getAttribute(GoodsQuickAttributes.WEB_ERROR_MESSAGE);
     		if( null != errorMessage ){

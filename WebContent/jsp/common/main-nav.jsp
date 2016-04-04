@@ -48,14 +48,14 @@
 											<div class="nav-down-list">
 												<ul class="nav-down-menu goods_menu">
 													<li class="menu-title">
-														<span>商品库</span>
-														<span class="nav_newrepository">新建</span>
+														<span>产品库</span>
+														<span class="nav_newrepository">＋新建</span>
 													</li>
 												</ul>
 												<ul class="nav-down-menu own_menu">
 													<li class="menu-title">
 														<span>资品库</span>
-														<span class="nav_newrepository">新建</span>
+														<span class="nav_newrepository">＋新建</span>
 													</li>
 													<li class="menu-list-own">
 														<div>
@@ -66,7 +66,7 @@
 												<ul class="nav-down-menu req_menu">
 													<li class="menu-title">
 														<span>需品库</span>
-														<span class="nav_newrepository">新建</span>
+														<span class="nav_newrepository">＋新建</span>
 													</li>
 												</ul>
 											</div>

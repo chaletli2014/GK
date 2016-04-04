@@ -19,10 +19,10 @@
 	String manageName = "资品管理";
 	String manageLink = request.getParameter("basePath")+"ordinaryhouse";
 	if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
-		manageName = "产品管理";
+		manageName = "需品管理";
 		manageLink = request.getParameter("basePath")+"productlist";
 	}else if("2".equalsIgnoreCase(currentRepository.getRepositoryType())){
-		manageName = "货品管理";
+		manageName = "产品管理";
 		manageLink = request.getParameter("basePath")+"productlist";
 	}
 %>

@@ -2,6 +2,8 @@ var goodsDictionaryLikeURL;
 var goodsDictionaryURL;
 	
 jQuery(document).ready(function($){
+	$.ajaxSetup({ cache: false });
+	
 	goodsDictionaryURL = basePath + "getGoodsDics";
 	goodsDictionaryLikeURL = basePath + "getGoodsDicsLike";
 	
