@@ -16,4 +16,20 @@ public interface LiftDAO {
 	public GoodsDeviceLift getGoodsDeviceLiftById(int liftId) throws Exception;
 	
 	public String getMaxCode() throws Exception;
+	
+	/**
+	 * 根据主体ID获取该主体及子主体下的所有设备
+	 * @param subjectId 主体ID
+	 * @return List<GoodsDeviceLift>
+	 * @throws Exception Exception
+	 */
+	public List<GoodsDeviceLift> getDeviceLiftBySubjectId(int subjectId) throws Exception;
+	
+	/**
+	 * 根据构件ID获取该构件下的所有设备
+	 * @param moduleId 构件ID
+	 * @return List<GoodsDeviceLift>
+	 * @throws Exception Exception
+	 */
+	public List<GoodsDeviceLift> getDeviceLiftByModuleId(int moduleId) throws Exception;
 }

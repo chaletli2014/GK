@@ -14,17 +14,32 @@ var setting = {
 	}
 };
 
-var viewSetting = {
-		async: {
-			enable: true,
-			autoParam:["id"]
-		},
-		data: {
-			simpleData: {
-				enable: true
-			}
+var moduleSetting = {
+	async: {
+		enable: true,
+		autoParam:["id"]
+	},
+	data: {
+		simpleData: {
+			enable: true
 		}
-	};
+	},
+	callback: {
+		onClick : moduleNodeClick
+	}
+};
+
+var viewSetting = {
+	async: {
+		enable: true,
+		autoParam:["id"]
+	},
+	data: {
+		simpleData: {
+			enable: true
+		}
+	}
+};
 
 jQuery(document).ready(function($){
 	$(".houseNameLink").click(function(){
@@ -182,8 +197,13 @@ jQuery(document).ready(function($){
 
 function subjectNodeClick(event, treeId, treeNode){
 	initModuleNodes(treeNode.id);
-//	initDeviceNodes(treeNode.id);
-//	initOtherNodes(treeNode.id);
+	initDeviceNodes(treeNode.id,0);
+	initOtherNodes(treeNode.id,0);
+}
+
+function moduleNodeClick(event, treeId, treeNode){
+	initDeviceNodes(0,treeNode.id);
+	initOtherNodes(0,treeNode.id);
 }
 
 function initModuleNodes(subjectId){
@@ -206,57 +226,59 @@ function initModuleNodes(subjectId){
 			}else{
 				nodeList = nodeList.substring(0, nodeList.length - 1) + "]";
 			}
-			$.fn.zTree.init($("#moduleTree"), viewSetting, eval('(' + nodeList + ')'));
+			$.fn.zTree.init($("#moduleTree"), moduleSetting, eval('(' + nodeList + ')'));
 		}
 	});
 }
 
-function initDeviceNodes(subjectId){
+function initDeviceNodes(subjectId,moduleId){
 	var nodeList = "[";
 	jQuery.ajax({
-		url: basePath+"subjectmodulelist",
+		url: basePath+"deviceNodes",
 		type: 'POST',
 		async: false,
 		data : {
-			subjectId : subjectId
+			subjectId : subjectId,
+			moduleId : moduleId
 		},
 		dataType:"json",
 		success: function(result) {
-			var modules = result.modules;
-			$.each(modules, function(i, item) {
-				nodeList = nodeList + "{id:'" + item.id + "',pId:'0', name:'" + item.moduleName + "'},";
+			var devices = result.devices;
+			$.each(devices, function(i, item) {
+				nodeList = nodeList + "{id:'" + item.id + "',pId:'0', name:'" + item.eqTypeName + '-' + item.name + "'},";
 			});
 			if( nodeList == '[' ){
 				nodeList = nodeList + "]";
 			}else{
 				nodeList = nodeList.substring(0, nodeList.length - 1) + "]";
 			}
-			$.fn.zTree.init($("#moduleTree"), viewSetting, eval('(' + nodeList + ')'));
+			$.fn.zTree.init($("#deviceTree"), viewSetting, eval('(' + nodeList + ')'));
 		}
 	});
 }
 
-function initOtherNodes(subjectId){
+function initOtherNodes(subjectId,moduleId){
 	var nodeList = "[";
 	jQuery.ajax({
-		url: basePath+"subjectmodulelist",
+		url: basePath+"otherNodes",
 		type: 'POST',
 		async: false,
 		data : {
-			subjectId : subjectId
+			subjectId : subjectId,
+			moduleId : moduleId
 		},
 		dataType:"json",
 		success: function(result) {
-			var modules = result.modules;
-			$.each(modules, function(i, item) {
-				nodeList = nodeList + "{id:'" + item.id + "',pId:'0', name:'" + item.moduleName + "'},";
+			var others = result.others;
+			$.each(others, function(i, item) {
+				nodeList = nodeList + "{id:'" + item.id + "',pId:'0', name:'" + item.typeName + '-' + item.name + "'},";
 			});
 			if( nodeList == '[' ){
 				nodeList = nodeList + "]";
 			}else{
 				nodeList = nodeList.substring(0, nodeList.length - 1) + "]";
 			}
-			$.fn.zTree.init($("#moduleTree"), viewSetting, eval('(' + nodeList + ')'));
+			$.fn.zTree.init($("#otherTree"), viewSetting, eval('(' + nodeList + ')'));
 		}
 	});
 }

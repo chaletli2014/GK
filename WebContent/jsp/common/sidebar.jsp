@@ -260,6 +260,7 @@
 					</li>
 				</ul>
 			</li>
+			<%--
 			<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="opened active firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a>
 					<i class="linecons-sound"></i>
@@ -306,6 +307,7 @@
 					<span>议事管理</span>
 				</a>
 			</li>
+			--%>
 		</ul>
 	</div>
 </div>

@@ -123,4 +123,62 @@ public class GoodsHouseOtherServiceImpl implements GoodsHouseOtherService {
 		}
 	}
 
+	@Override
+	public List<GoodsHouseOther> getHouseOtherBySubjectId(int subjectId)
+			throws Exception {
+		List<GoodsHouseOther> houseOthers = new ArrayList<GoodsHouseOther>();
+		try{
+			List<GoodsHousePaint> paints = goodsHouseOtherDAO.getHousePaintBySubjectId(subjectId);
+			for( GoodsHousePaint dbPaint : paints ){
+				GoodsHouseOther houseOther = new GoodsHouseOther();
+				houseOther.setTypeCode(dbPaint.getType2Code());
+				houseOther.setTypeName("防水涂料");
+				houseOther.setName(dbPaint.getPaintName());
+				houseOther.setDesc(dbPaint.getPaintDesc());
+				houseOther.setSubjectId(dbPaint.getSubjectId());
+				houseOther.setSubjectName(dbPaint.getSubjectName());
+				houseOther.setModuleId(dbPaint.getModuleId());
+				houseOther.setModuleName(dbPaint.getModuleName());
+				houseOther.setId(dbPaint.getId());
+				
+				houseOthers.add(houseOther);
+			}
+			return houseOthers;
+		} catch(EmptyResultDataAccessException erd){
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get the house other by subject id,",e);
+            return Collections.emptyList();
+        }
+	}
+
+	@Override
+	public List<GoodsHouseOther> getHouseOtherByModuleId(int moduleId)
+			throws Exception {
+		List<GoodsHouseOther> houseOthers = new ArrayList<GoodsHouseOther>();
+		try{
+			List<GoodsHousePaint> paints = goodsHouseOtherDAO.getHousePaintByModuleId(moduleId);
+			for( GoodsHousePaint dbPaint : paints ){
+				GoodsHouseOther houseOther = new GoodsHouseOther();
+				houseOther.setTypeCode(dbPaint.getType2Code());
+				houseOther.setTypeName("防水涂料");
+				houseOther.setName(dbPaint.getPaintName());
+				houseOther.setDesc(dbPaint.getPaintDesc());
+				houseOther.setSubjectId(dbPaint.getSubjectId());
+				houseOther.setSubjectName(dbPaint.getSubjectName());
+				houseOther.setModuleId(dbPaint.getModuleId());
+				houseOther.setModuleName(dbPaint.getModuleName());
+				houseOther.setId(dbPaint.getId());
+				
+				houseOthers.add(houseOther);
+			}
+			return houseOthers;
+		} catch(EmptyResultDataAccessException erd){
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get the house other by module id,",e);
+            return Collections.emptyList();
+        }
+	}
+
 }

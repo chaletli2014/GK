@@ -20,6 +20,10 @@ function submitRegister(){
 		loginAlert("两次密码不一致","提醒");
 		return false;
 	}
+	if($("#realName").val() == ''){
+		loginAlert("姓名不能为空","提醒");
+		return false;
+	}
 	
 	$("#register_form").submit();
 }

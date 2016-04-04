@@ -105,4 +105,60 @@ public class GoodsHouseDeviceServiceImpl implements GoodsHouseDeviceService {
 		}
 	}
 
+	@Override
+	public List<GoodsHouseDevice> getHouseDeviceBySubjectId(int subjectId) throws Exception {
+		List<GoodsHouseDevice> devices = new ArrayList<GoodsHouseDevice>();
+		try{
+			List<GoodsDeviceLift> lifts = liftDAO.getDeviceLiftBySubjectId(subjectId);
+			for( GoodsDeviceLift dbLift : lifts ){
+				GoodsHouseDevice liftDevice = new GoodsHouseDevice();
+				liftDevice.setEqTypeCode("dt");
+				liftDevice.setEqTypeName("电梯");
+				liftDevice.setName(dbLift.getLiftName());
+				liftDevice.setEqDesc(dbLift.getLiftDesc());
+				liftDevice.setSubjectId(dbLift.getSubjectId());
+				liftDevice.setSubjectName(dbLift.getSubjectName());
+				liftDevice.setModuleId(dbLift.getModuleId());
+				liftDevice.setModuleName(dbLift.getModuleName());
+				liftDevice.setId(dbLift.getId());
+				
+				devices.add(liftDevice);
+			}
+			return devices;
+		} catch(EmptyResultDataAccessException erd){
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get the device by repositoryCode,",e);
+            return Collections.emptyList();
+        }
+	}
+
+	@Override
+	public List<GoodsHouseDevice> getHouseDeviceByModuleId(int moduleId) throws Exception {
+		List<GoodsHouseDevice> devices = new ArrayList<GoodsHouseDevice>();
+		try{
+			List<GoodsDeviceLift> lifts = liftDAO.getDeviceLiftByModuleId(moduleId);
+			for( GoodsDeviceLift dbLift : lifts ){
+				GoodsHouseDevice liftDevice = new GoodsHouseDevice();
+				liftDevice.setEqTypeCode("dt");
+				liftDevice.setEqTypeName("电梯");
+				liftDevice.setName(dbLift.getLiftName());
+				liftDevice.setEqDesc(dbLift.getLiftDesc());
+				liftDevice.setSubjectId(dbLift.getSubjectId());
+				liftDevice.setSubjectName(dbLift.getSubjectName());
+				liftDevice.setModuleId(dbLift.getModuleId());
+				liftDevice.setModuleName(dbLift.getModuleName());
+				liftDevice.setId(dbLift.getId());
+				
+				devices.add(liftDevice);
+			}
+			return devices;
+		} catch(EmptyResultDataAccessException erd){
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get the device by repositoryCode,",e);
+            return Collections.emptyList();
+        }
+	}
+
 }

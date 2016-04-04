@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsHouseDevice;
 import com.goodsquick.model.GoodsHouseOther;
 import com.goodsquick.model.GoodsHousePaint;
@@ -167,5 +166,29 @@ public class HouseOtherController {
 		}
 		
 		return result;
+	}
+	
+
+	@ResponseBody
+	@RequestMapping("/otherNodes")
+	public Map<String,Object> otherNodes(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			int subjectId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("subjectId"));
+			int moduleId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("moduleId"));
+			
+			List<GoodsHouseOther> otherList = new ArrayList<GoodsHouseOther>();
+			
+			if( subjectId != 0 ){
+				otherList = goodsHouseOtherService.getHouseOtherBySubjectId(subjectId);
+			}else if( moduleId != 0 ){
+				otherList = goodsHouseOtherService.getHouseOtherByModuleId(moduleId);
+			}
+			resultMap.put("others", otherList);
+		} catch (Exception e) {
+			logger.error("fail to get the house others,",e);
+		}
+		
+		return resultMap;
 	}
 }

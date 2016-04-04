@@ -13,4 +13,20 @@ public interface GoodsHouseDeviceService {
 	public void saveOrUpdateHouseDevice(List<GoodsHouseDevice> goodsSubjects, String currentUser, String repositoryCode) throws Exception;
 	
 	public void deleteHouseDevice(GoodsHouseDevice obj) throws Exception;
+	
+	/**
+	 * 根据主体ID查出该主体以及子主体下的所有设备
+	 * @param subjectId
+	 * @return List<GoodsHouseDevice> 设备列表
+	 * @throws Exception
+	 */
+	public List<GoodsHouseDevice> getHouseDeviceBySubjectId(int subjectId) throws Exception;
+	
+	/**
+	 * 根据构件ID查出该构件下的所有设备
+	 * @param moduleId
+	 * @return List<GoodsHouseDevice> 设备列表
+	 * @throws Exception
+	 */
+	public List<GoodsHouseDevice> getHouseDeviceByModuleId(int moduleId) throws Exception;
 }

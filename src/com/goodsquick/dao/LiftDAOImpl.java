@@ -2,21 +2,29 @@ package com.goodsquick.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-
 import com.goodsquick.mapper.GoodsDeviceLiftRowMapper;
 import com.goodsquick.model.GoodsDeviceLift;
-import com.goodsquick.utils.DataBean;
 
 @Repository("liftDAO")
 public class LiftDAOImpl extends BaseDAOImpl implements LiftDAO {
 	
-	@Autowired
-	@Qualifier("dataBean")
-	private DataBean dataBean;
+	private static final StringBuilder LIFT_QUERY_SELECTION_FROM
+		= new StringBuilder("dl.*,hs.subject_name,sm.module_name,lt.dic_name as lift_type_name")
+			.append(" ,br.dic_name as brand_name ")
+			.append(" ,lp.dic_name as lift_purpose_name ")
+			.append(" ,ls.dic_name as lift_style_name ")
+			.append(" ,qa.dic_name as lift_QA_name ")
+			.append(" ,ltime.dic_name as life_time_name ")
+			.append(" from tbl_goods_devices_lift dl")
+			.append(" left join tbl_goods_house_subject hs on dl.subject_id = hs.id ")
+			.append(" left join tbl_goods_house_subject_module sm on dl.module_id = sm.id ")
+			.append(" left join tbl_goods_dictionary lt on dl.lift_type = lt.dic_code ")
+			.append(" left join tbl_goods_dictionary br on dl.brand_code = br.dic_code ")
+			.append(" left join tbl_goods_dictionary lp on dl.lift_purpose = lp.dic_code ")
+			.append(" left join tbl_goods_dictionary ls on dl.lift_style = ls.dic_code ")
+			.append(" left join tbl_goods_dictionary qa on dl.lift_QA = qa.dic_code ")
+			.append(" left join tbl_goods_dictionary ltime on dl.life_time = ltime.dic_code ");
 
 	@Override
 	public List<GoodsDeviceLift> getDeviceLiftByUserCode(String userCode, String liftType)
@@ -32,21 +40,8 @@ public class LiftDAOImpl extends BaseDAOImpl implements LiftDAO {
 			throws Exception {
 		List<GoodsDeviceLift> ohList = new ArrayList<GoodsDeviceLift>();
 		StringBuilder sql = new StringBuilder();
-		sql.append("select dl.*,hs.subject_name,sm.module_name,lt.dic_name as lift_type_name ");
-		sql.append(" ,br.dic_name as brand_name ");
-		sql.append(" ,lp.dic_name as lift_purpose_name ");
-		sql.append(" ,ls.dic_name as lift_style_name ");
-		sql.append(" ,qa.dic_name as lift_QA_name ");
-		sql.append(" ,ltime.dic_name as life_time_name ");
-		sql.append(" from tbl_goods_devices_lift dl");
-		sql.append(" left join tbl_goods_house_subject hs on dl.subject_id = hs.id ");
-		sql.append(" left join tbl_goods_house_subject_module sm on dl.module_id = sm.id ");
-		sql.append(" left join tbl_goods_dictionary lt on dl.lift_type = lt.dic_code ");
-		sql.append(" left join tbl_goods_dictionary br on dl.brand_code = br.dic_code ");
-		sql.append(" left join tbl_goods_dictionary lp on dl.lift_purpose = lp.dic_code ");
-		sql.append(" left join tbl_goods_dictionary ls on dl.lift_style = ls.dic_code ");
-		sql.append(" left join tbl_goods_dictionary qa on dl.lift_QA = qa.dic_code ");
-		sql.append(" left join tbl_goods_dictionary ltime on dl.life_time = ltime.dic_code ");
+		sql.append("select ");
+		sql.append(LIFT_QUERY_SELECTION_FROM);
 		sql.append("where dl.repository_code = ? and dl.status = '1' ");
 		ohList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new GoodsDeviceLiftRowMapper());
 		return ohList;
@@ -171,21 +166,8 @@ public class LiftDAOImpl extends BaseDAOImpl implements LiftDAO {
 	@Override
 	public GoodsDeviceLift getGoodsDeviceLiftById(int liftId) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select dl.*,hs.subject_name,sm.module_name,lt.dic_name as lift_type_name ");
-		sql.append(" ,br.dic_name as brand_name ");
-		sql.append(" ,lp.dic_name as lift_purpose_name ");
-		sql.append(" ,ls.dic_name as lift_style_name ");
-		sql.append(" ,qa.dic_name as lift_QA_name ");
-		sql.append(" ,ltime.dic_name as life_time_name ");
-		sql.append(" from tbl_goods_devices_lift dl");
-		sql.append(" left join tbl_goods_house_subject hs on dl.subject_id = hs.id ");
-		sql.append(" left join tbl_goods_house_subject_module sm on dl.module_id = sm.id ");
-		sql.append(" left join tbl_goods_dictionary lt on dl.lift_type = lt.dic_code ");
-		sql.append(" left join tbl_goods_dictionary br on dl.brand_code = br.dic_code ");
-		sql.append(" left join tbl_goods_dictionary lp on dl.lift_purpose = lp.dic_code ");
-		sql.append(" left join tbl_goods_dictionary ls on dl.lift_style = ls.dic_code ");
-		sql.append(" left join tbl_goods_dictionary qa on dl.lift_QA = qa.dic_code ");
-		sql.append(" left join tbl_goods_dictionary ltime on dl.life_time = ltime.dic_code ");
+		sql.append("select ");
+		sql.append(LIFT_QUERY_SELECTION_FROM);
 		sql.append("where dl.id = ? ");
         return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{liftId}, new GoodsDeviceLiftRowMapper());
 	}
@@ -194,6 +176,27 @@ public class LiftDAOImpl extends BaseDAOImpl implements LiftDAO {
 	public String getMaxCode() throws Exception {
 		String sql = "select max(code) from tbl_goods_devices_lift";
 		return dataBean.getJdbcTemplate().queryForObject(sql, String.class);
+	}
+
+	@Override
+	public List<GoodsDeviceLift> getDeviceLiftBySubjectId(int subjectId)
+			throws Exception {
+		List<GoodsDeviceLift> ohList = new ArrayList<GoodsDeviceLift>();
+		StringBuilder sql = new StringBuilder("select ");
+		sql.append(LIFT_QUERY_SELECTION_FROM);
+		sql.append(" where FIND_IN_SET(dl.subject_id, queryChildrenSubjectInfo(?)) and dl.status='1' ");
+		ohList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{subjectId}, new GoodsDeviceLiftRowMapper());
+        return ohList;
+	}
+
+	@Override
+	public List<GoodsDeviceLift> getDeviceLiftByModuleId(int moduleId)
+			throws Exception {
+		List<GoodsDeviceLift> ohList = new ArrayList<GoodsDeviceLift>();
+		StringBuilder sql = new StringBuilder("select ").append(LIFT_QUERY_SELECTION_FROM);
+		sql.append(" where dl.module_id=? and dl.status='1' ");
+		ohList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{moduleId}, new GoodsDeviceLiftRowMapper());
+        return ohList;
 	}
 
 }

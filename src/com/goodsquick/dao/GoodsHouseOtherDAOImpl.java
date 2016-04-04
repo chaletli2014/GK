@@ -12,16 +12,28 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.goodsquick.mapper.GoodsDeviceLiftRowMapper;
 import com.goodsquick.mapper.GoodsHouseOtherRowMapper;
 import com.goodsquick.mapper.GoodsHousePaintRowMapper;
-import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsHouseOther;
 import com.goodsquick.model.GoodsHousePaint;
 
 @Repository("goodsHouseOtherDAO")
 public class GoodsHouseOtherDAOImpl extends BaseDAOImpl implements GoodsHouseOtherDAO {
 
+	private static final StringBuilder OTHER_QUERY_SELECTION_FROM = new StringBuilder("")
+					.append(" select ho.id,ho.type_code,gd.dic_name as type_name, ho.other_name ")
+					.append(" ,ho.other_desc,ho.subjectId,ho.moduleId ")
+					.append(" ,ho.create_user,ho.create_date,ho.update_user,ho.update_date,ho.status ")
+					.append(" ,hs.subject_name as subjectName,sm.module_name as moduleName ")
+					.append(" from tbl_goods_house_other ho ")
+					.append(" left join tbl_goods_house_subject hs on ho.subjectId = hs.id ")
+					.append(" left join tbl_goods_house_subject_module sm on ho.moduleId = sm.id ")
+					.append(" left join tbl_goods_dictionary gd on ho.type_code = gd.dic_code ");
+	private static final StringBuilder PAINT_QUERY_SELECTION_FROM = new StringBuilder("")
+					.append(" select hp.*,hs.subject_name,sm.module_name ")
+					.append(" from tbl_goods_house_paint hp")
+					.append(" left join tbl_goods_house_subject hs on hp.subject_id = hs.id ")
+					.append(" left join tbl_goods_house_subject_module sm on hp.module_id = sm.id ");
 	@Override
 	public int saveHouseOther(final GoodsHouseOther houseOther) throws Exception {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -77,14 +89,7 @@ public class GoodsHouseOtherDAOImpl extends BaseDAOImpl implements GoodsHouseOth
 	public List<GoodsHouseOther> getAllHouseOtherByRepositoryCode(String repositoryCode) throws Exception {
 		List<GoodsHouseOther> ohOtherList = new ArrayList<GoodsHouseOther>();
 		StringBuilder sql = new StringBuilder(500);
-		sql.append(" select ho.id,ho.type_code,gd.dic_name as type_name, ho.other_name");
-		sql.append(" ,ho.other_desc,ho.subjectId,ho.moduleId");
-		sql.append(" ,ho.create_user,ho.create_date,ho.update_user,ho.update_date,ho.status");
-		sql.append(" ,hs.subject_name as subjectName,sm.module_name as moduleName ");
-		sql.append(" from tbl_goods_house_other ho ");
-		sql.append(" left join tbl_goods_house_subject hs on ho.subjectId = hs.id ");
-		sql.append(" left join tbl_goods_house_subject_module sm on ho.moduleId = sm.id ");
-		sql.append(" left join tbl_goods_dictionary gd on ho.type_code = gd.dic_code ");
+		sql.append(OTHER_QUERY_SELECTION_FROM);
 		sql.append(" where hs.repository_code = ? and ho.status = '1'");
 		ohOtherList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new GoodsHouseOtherRowMapper());
 		return ohOtherList;
@@ -109,10 +114,7 @@ public class GoodsHouseOtherDAOImpl extends BaseDAOImpl implements GoodsHouseOth
 			String repositoryCode) throws Exception {
 		List<GoodsHousePaint> paintList = new ArrayList<GoodsHousePaint>();
 		StringBuilder sql = new StringBuilder();
-		sql.append("select hp.*,hs.subject_name,sm.module_name ");
-		sql.append(" from tbl_goods_house_paint hp");
-		sql.append(" left join tbl_goods_house_subject hs on hp.subject_id = hs.id ");
-		sql.append(" left join tbl_goods_house_subject_module sm on hp.module_id = sm.id ");
+		sql.append(PAINT_QUERY_SELECTION_FROM);
 		sql.append("where hp.repository_code = ? and hp.status = '1' ");
 		paintList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new GoodsHousePaintRowMapper());
 		return paintList;
@@ -198,12 +200,31 @@ public class GoodsHouseOtherDAOImpl extends BaseDAOImpl implements GoodsHouseOth
 	public GoodsHousePaint getGoodsHousePaintById(int housePaintId)
 			throws Exception {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select hp.*,hs.subject_name,sm.module_name ");
-		sql.append(" from tbl_goods_house_paint hp");
-		sql.append(" left join tbl_goods_house_subject hs on hp.subject_id = hs.id ");
-		sql.append(" left join tbl_goods_house_subject_module sm on hp.module_id = sm.id ");
+		sql.append(PAINT_QUERY_SELECTION_FROM);
 		sql.append("where hp.id = ? ");
         return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{housePaintId}, new GoodsHousePaintRowMapper());
+	}
+
+	@Override
+	public List<GoodsHousePaint> getHousePaintBySubjectId(int subjectId)
+			throws Exception {
+		List<GoodsHousePaint> paintList = new ArrayList<GoodsHousePaint>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(PAINT_QUERY_SELECTION_FROM);
+		sql.append("where FIND_IN_SET(hp.subject_id, queryChildrenSubjectInfo(?)) and hp.status = '1' ");
+		paintList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{subjectId}, new GoodsHousePaintRowMapper());
+		return paintList;
+	}
+
+	@Override
+	public List<GoodsHousePaint> getHousePaintByModuleId(int moduleId)
+			throws Exception {
+		List<GoodsHousePaint> paintList = new ArrayList<GoodsHousePaint>();
+		StringBuilder sql = new StringBuilder();
+		sql.append(PAINT_QUERY_SELECTION_FROM);
+		sql.append("where hp.module_id = ? and hp.status = '1' ");
+		paintList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{moduleId}, new GoodsHousePaintRowMapper());
+		return paintList;
 	}
 
 }

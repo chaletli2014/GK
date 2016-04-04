@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsHouseDevice;
-import com.goodsquick.model.GoodsSubject;
+import com.goodsquick.model.GoodsHouseSubjectModule;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.GoodsHouseDeviceService;
 import com.goodsquick.service.LiftService;
@@ -172,4 +172,27 @@ public class HouseDeviceController {
     	
     	return result;
     }
+	
+	@ResponseBody
+	@RequestMapping("/deviceNodes")
+	public Map<String,Object> deviceNodes(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			int subjectId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("subjectId"));
+			int moduleId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("moduleId"));
+			
+			List<GoodsHouseDevice> devicesList = new ArrayList<GoodsHouseDevice>();
+			
+			if( subjectId != 0 ){
+				devicesList = goodsHouseDeviceService.getHouseDeviceBySubjectId(subjectId);
+			}else if( moduleId != 0 ){
+				devicesList = goodsHouseDeviceService.getHouseDeviceByModuleId(moduleId);
+			}
+			resultMap.put("devices", devicesList);
+		} catch (Exception e) {
+			logger.error("fail to get the house devices,",e);
+		}
+		
+		return resultMap;
+	}
 }

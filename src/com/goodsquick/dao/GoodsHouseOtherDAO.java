@@ -22,4 +22,7 @@ public interface GoodsHouseOtherDAO {
 	public void deleteHousePaint(GoodsHousePaint obj) throws Exception;
 	public GoodsHousePaint getGoodsHousePaintById(int housePaintId) throws Exception;
 	
+	public List<GoodsHousePaint> getHousePaintBySubjectId(int subjectId) throws Exception; 
+	public List<GoodsHousePaint> getHousePaintByModuleId(int moduleId) throws Exception; 
+	
 }
