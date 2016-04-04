@@ -108,3 +108,6 @@ insert into tbl_goods_dictionary values(null,'equ_moduletype1','moduleType_equ_l
 insert into tbl_goods_dictionary values(null,'other_moduletype1','mt_other_fstl','防水涂料','材料装饰-组件1-防水涂料');
 insert into tbl_goods_dictionary values(null,'moduleType_equ_lift','moduleType2_dt','电梯','设施设备组件2-电梯');
 insert into tbl_goods_dictionary values(null,'mt_other_fstl','mt2_other_fstl','防水涂料','材料装饰-组件2-防水涂料');
+
+insert into tbl_goods_dictionary_type values(null,'物链-物链雷达','radar_sp','物链雷达的tab分类');
+insert into tbl_goods_dictionary values(null,'radar_sp','radar_sp_supplier','供应商','物链雷达的tab分类-供应商');

@@ -220,8 +220,8 @@
 							</li>
 						</ul>
 					</li>
-					<li>
-						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+					<li <% if( actived.indexOf(",houseRadar,")>-1){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseRadar?spTypeCode=house_radar_supplier">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">物链雷达</span>
 						</a>
