@@ -108,7 +108,7 @@ public class OrdinaryHouseController {
     public ModelAndView newProductPre(HttpServletRequest request){
     	ModelAndView view = new ModelAndView();
 		view.addObject("opened", ",productManagement,");
-		view.addObject("actived", ",ordinaryhouse,");
+		view.addObject("actived", ",newProduct,");
     	view.setViewName("ep/ordinaryhouse_popadd_pre");
     	return view;
     }
@@ -133,7 +133,7 @@ public class OrdinaryHouseController {
     public ModelAndView newProductPre1(HttpServletRequest request){
     	ModelAndView view = new ModelAndView();
     	view.addObject("opened", ",productManagement,");
-		view.addObject("actived", ",ordinaryhouse,");
+		view.addObject("actived", ",newProduct,");
     	String viewName = "ep/ordinaryhouse_popadd_pre_1";
     	
     	List<GoodsDictionary> goodsCategory = new ArrayList<GoodsDictionary>();

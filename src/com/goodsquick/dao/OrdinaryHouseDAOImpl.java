@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.cxf.common.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -43,8 +44,14 @@ public class OrdinaryHouseDAOImpl extends BaseDAOImpl implements OrdinaryHouseDA
 	@Override
 	public GoodsOrdinaryHouse getOrdinaryHouseByRepositoryCode(String repositoryCode)
 			throws Exception{
+		List<GoodsOrdinaryHouse> ohList = new ArrayList<GoodsOrdinaryHouse>();
 		String sql = "select * from tbl_goods_ordinary_house_owned where repository_code = ? and status = '1' ";
-		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{repositoryCode}, new OrdinaryHouseRowMapper());
+		ohList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new OrdinaryHouseRowMapper());
+		if( !CollectionUtils.isEmpty(ohList) ){
+			return ohList.get(0);
+		}else{
+			return null;
+		}
 	}
 	
 	@Override
