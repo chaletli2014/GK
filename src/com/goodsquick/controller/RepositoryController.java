@@ -81,9 +81,10 @@ public class RepositoryController {
 			goodsRepositoryFromPage.setUpdateUser(currentUser.getLoginName());
 			
 			repositoryService.removeRepository(goodsRepositoryFromPage);
-			
+			resultMap.put("result", "Y");
 		} catch (Exception e) {
 			logger.error("fail to remove repository,",e);
+			resultMap.put("result", "N");
 		}
 		return resultMap;
 	}

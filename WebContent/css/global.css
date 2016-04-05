@@ -310,16 +310,19 @@ fieldset,img,a img,iframe {
 	color: #fff
 }
 .qc-navigation .nav-down-style-2 .nav-down-menu li div:first-child{
-	width:80%;
+	width:70%;
 	float:left;
 	overflow: hidden;
 }
 .qc-navigation .nav-down-style-2 .nav-down-menu li div:nth-child(2){
-	width:10%;
+	width:20%;
 	float:right;
 }
 .qc-navigation .nav-down-style-2 .nav-down-menu li div:nth-child(2) a{
 	padding:0px;
+}
+.qc-navigation .nav-down-style-2 .nav-down-menu li div:nth-child(2) a:nth-child(1){
+	margin-right:8px;
 }
 
 .qc-navigation .nav-down-style-2 .nav-down-menu li.menu-list-own div:first-child a{

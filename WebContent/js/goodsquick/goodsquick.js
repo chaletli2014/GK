@@ -13,7 +13,7 @@ jQuery(document).ready(function($){
 		$("#repo_from_source").val('nav');
 		if( $(this).prev().html() == '资品库' ){
 			$("#repositoryType").val('1');
-		}else if( $(this).prev().html() == '商品库' ){
+		}else if( $(this).prev().html() == '产品库' ){
 			$("#repositoryType").val('2');
 		}else if( $(this).prev().html() == '需品库' ){
 			$("#repositoryType").val('3');
@@ -43,6 +43,38 @@ jQuery(document).ready(function($){
 		});
 	});
 	
+	$(document).on('click', '.nav_delrepository', function(){
+		var repositoryId = $(this).attr("rid");
+		var gId = $(this).attr("gid");
+		var repositoryName = $(this).attr("rname");
+		var message = "";
+		if( gId == '1' ){
+			message = "是否删除资品库[ "+repositoryName+" ]?";
+		}else if( gId == '2' ){
+			message = "是否删除产品库[ "+repositoryName+" ]?";
+		}else if( gId == '3' ){
+			message = "是否删除需品库[ "+repositoryName+" ]?";
+		}
+		jConfirm(message,"信息",function(r) {
+	    	if(r){
+	    		jQuery.ajax({
+	    			url: basePath+"removeRepository",
+	    			data:{
+	    				repositoryId : repositoryId
+	    			},
+	    			success: function(response){
+	    				var result = response.result;
+	    				if( result == 'Y' ){
+	    					jAlert("物库删除成功", "提示");
+	    				}else{
+	    					jAlert("物库删除失败", "提示");
+	    				}
+	    			}
+	    		});
+	    	}
+		});
+	});
+	
 	$(".repositoryNav").click(function(){
 		jQuery.ajax({
 			url: basePath+"getRepository",
@@ -54,21 +86,30 @@ jQuery(document).ready(function($){
 				if( list1 != null ){
 					$(".dyrepos1").remove();
 					$.each(list1,function(n,repos1){
-						$(".own_menu").append("<li class=\"menu-list-own dyrepos1\"><div><a href=\""+basePath+"\index?repository_code="+repos1.repositoryCode+"\">"+repos1.repositoryName+"</a></div><div><a gid=\"1\" rid=\""+repos1.id+"\" rcode=\""+repos1.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a></div></li>");
+						var reposDiv = "<div><a href=\""+basePath+"\index?repository_code="+repos1.repositoryCode+"\">"+repos1.repositoryName+"</a></div>";
+						var editA = "<a gid=\"1\" rid=\""+repos1.id+"\" rcode=\""+repos1.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a>";
+						var deleteA = "<a gid=\"1\" rid=\""+repos1.id+"\" rname=\""+repos1.repositoryName+"\" class=\"nav_delrepository\"><i class=\"fa-close\"></i></a>";
+						$(".own_menu").append("<li class=\"menu-list-own dyrepos1\">"+reposDiv+"<div>"+editA+deleteA+"</div></li>");
 					});
 				}
 				
 				if( list2 != null ){
 					$(".dyrepos2").remove();
 					$.each(list2,function(n,repos2){
-						$(".goods_menu").append("<li class=\"menu-list-goods dyrepos2\"><div><a href=\""+basePath+"\index?repository_code="+repos2.repositoryCode+"\">"+repos2.repositoryName+"</a></div><div><a gid=\"2\" rid=\""+repos2.id+"\" rcode=\""+repos2.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a></div></li>");
+						var reposDiv = "<div><a href=\""+basePath+"\index?repository_code="+repos2.repositoryCode+"\">"+repos2.repositoryName+"</a></div>";
+						var editA = "<a gid=\"2\" rid=\""+repos2.id+"\" rcode=\""+repos2.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a>";
+						var deleteA = "<a gid=\"2\" rid=\""+repos2.id+"\" rname=\""+repos2.repositoryName+"\" class=\"nav_delrepository\"><i class=\"fa-close\"></i></a>";
+						$(".goods_menu").append("<li class=\"menu-list-goods dyrepos2\">"+reposDiv+"<div>"+editA+deleteA+"</div></li>");
 					});
 				}
 				
 				if( list3 != null ){
 					$(".dyrepos3").remove();
 					$.each(list3,function(n,repos3){
-						$(".req_menu").append("<li class=\"menu-list-req dyrepos3\"><div><a href=\""+basePath+"\index?repository_code="+repos3.repositoryCode+"\">"+repos3.repositoryName+"</a></div><div><a gid=\"3\" rid=\""+repos3.id+"\" rcode=\""+repos3.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a></div></li>");
+						var reposDiv = "<div><a href=\""+basePath+"\index?repository_code="+repos3.repositoryCode+"\">"+repos3.repositoryName+"</a></div>";
+						var editA = "<a gid=\"3\" rid=\""+repos3.id+"\" rcode=\""+repos3.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a>";
+						var deleteA = "<a gid=\"3\" rid=\""+repos3.id+"\" rname=\""+repos3.repositoryName+"\" class=\"nav_delrepository\"><i class=\"fa-close\"></i></a>";
+						$(".req_menu").append("<li class=\"menu-list-req dyrepos3\">"+reposDiv+"<div>"+editA+deleteA+"</div></li>");
 					});
 				}
 			}
