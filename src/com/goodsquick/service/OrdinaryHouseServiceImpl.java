@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +19,6 @@ import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.GoodsDateUtil;
-import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickSearcherUtils;
 
 @Service("ordinaryHouseService")
@@ -33,6 +31,10 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 	@Autowired
 	@Qualifier("relationshipPropertyService")
 	private RelationshipPropertyService relationshipPropertyService;
+	
+	@Autowired
+	@Qualifier("goodsSourceFileService")
+	private GoodsSourceFileService goodsSourceFileService;
 	
 	Logger logger = Logger.getLogger(this.getClass());
 	
@@ -110,6 +112,7 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 		}
 		
 		relationshipPropertyService.saveOrUpdateRelationshipProperty(relationshipProperty, userInfo);
+		goodsSourceFileService.setMainPicOfGoodsHouse(ordinaryHouse.getMainPicId(), ordinaryHouse.getRepositoryCode(), userInfo);
 	}
 
 	@Override

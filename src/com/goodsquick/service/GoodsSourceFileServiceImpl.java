@@ -65,4 +65,10 @@ public class GoodsSourceFileServiceImpl implements GoodsSourceFileService {
             return Collections.emptyList();
         }
 	}
+
+	@Override
+	public void setMainPicOfGoodsHouse(int houseFileId, String repositoryCode, WebUserInfo currentUser)
+			throws Exception {
+		goodsSourceFileDAO.setMainPicOfGoodsHouse(houseFileId, repositoryCode, currentUser);
+	}
 }

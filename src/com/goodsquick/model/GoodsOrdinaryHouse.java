@@ -211,6 +211,8 @@ public class GoodsOrdinaryHouse {
 	 */
 	private String mainPic;
 	
+	private int mainPicId;
+	
 	public int getId() {
 		return id;
 	}
@@ -534,6 +536,12 @@ public class GoodsOrdinaryHouse {
 	}
 	public void setMainPic(String mainPic) {
 		this.mainPic = mainPic;
+	}
+	public int getMainPicId() {
+		return mainPicId;
+	}
+	public void setMainPicId(int mainPicId) {
+		this.mainPicId = mainPicId;
 	}
 	
 }

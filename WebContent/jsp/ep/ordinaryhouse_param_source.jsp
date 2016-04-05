@@ -43,10 +43,14 @@
 								var fileTR = "<tr><td>"+count+"</td>";
 								fileTR = fileTR + "<td>"+fileObj.fileType+"</td>";
 								fileTR = fileTR + "<td><a href='"+fileObj.filePath+"'>"+fileObj.fileName+"</a></td>";
-								if( fileObj.isMain == '是' ){
-									fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' checked class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
+								if( fileObj.fileType == 'JPG' || fileObj.fileType == 'jpg' || fileObj.fileType == 'png' || fileObj.fileType == 'PNG' ){
+									if( fileObj.isMain == '是' ){
+										fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' checked class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
+									}else{
+										fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
+									}
 								}else{
-									fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
+									fileTR = fileTR + "<td></td>";
 								}
 								fileTR = fileTR + "<td></td>";
 								fileTR = fileTR + "</tr>";
@@ -95,6 +99,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-9">
+				<input type="hidden" id="mainPicId"/>
 				<strong>已上传文件列表</strong>
 				<table class="table table-model-2 table-hover" id="existsFileTable">
 					<thead>
@@ -113,7 +118,9 @@
 								<td>${houseFile.fileType}</td>
 								<td><a href="${houseFile.filePath}" target="_blank">${houseFile.fileName}</a></td>
 								<td>
-									<input value="${houseFile.id}" name="isMain" type="checkbox" <c:if test="${'是'==houseFile.isMain}">checked</c:if> class="iswitch iswitch-secondary isMainPicCheckbox">
+									<c:if test="${houseFile.fileType == 'JPG' || houseFile.fileType == 'jpg' || houseFile.fileType == 'png' || houseFile.fileType == 'PNG'}">
+										<input value="${houseFile.id}" name="isMain" type="checkbox" <c:if test="${'是'==houseFile.isMain}">checked</c:if> class="iswitch iswitch-secondary isMainPicCheckbox">
+									</c:if>
 								</td>
 								<td></td>
 							</tr>

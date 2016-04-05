@@ -13,4 +13,6 @@ public interface GoodsSourceFileDAO {
 	public GoodsHouseFile getGoodsHouseFileById(int houseFileId) throws Exception;
 	
 	public List<GoodsHouseFile> getGoodsHouseFileByRepositoryCode(String repositoryCode) throws Exception;
+	
+	public void setMainPicOfGoodsHouse( int houseFileId, String repositoryCode, WebUserInfo currentUser ) throws Exception;
 }

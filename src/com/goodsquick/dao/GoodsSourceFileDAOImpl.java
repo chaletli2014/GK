@@ -71,4 +71,25 @@ public class GoodsSourceFileDAOImpl extends BaseDAOImpl implements GoodsSourceFi
         return fileList;
 	}
 
+	@Override
+	public void setMainPicOfGoodsHouse(int houseFileId, String repositoryCode, WebUserInfo currentUser)
+			throws Exception {
+		StringBuilder sql = new StringBuilder("update tbl_goods_house_file ");
+		sql.append("set is_main = 0, update_date = now(),update_user = ? ");
+		sql.append("where repository_code = ? ");
+		List<Object> params = new ArrayList<Object>();
+		params.add(currentUser.getLoginName());
+		params.add(repositoryCode);
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
+		
+		sql = new StringBuilder("update tbl_goods_house_file ");
+        sql.append("set is_main = 1, update_date = now(),update_user = ? ");
+		sql.append("where id = ? ");
+		params = new ArrayList<Object>();
+		params.add(currentUser.getLoginName());
+		params.add(houseFileId);
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
+		
+	}
+
 }

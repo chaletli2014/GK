@@ -187,10 +187,13 @@ jQuery(document).ready(function($){
 		uploadHouseSourceFile();
 		return false;
 	});
-	$(".isMainPicCheckbox").change(function(){
-	    if ($(this)[0].checked) {
-          alert( $(this).attr('value') );
-	    }
+	
+	$("body").delegate('.isMainPicCheckbox', 'change', function(){
+		var pics = $(".isMainPicCheckbox");
+		$.each(pics, function(i, pic) {
+			$(this).removeAttr("checked");
+		});
+		$(this).prop("checked",true);
 	});
 	$.fn.zTree.init($("#subjectTree"), setting);
 });

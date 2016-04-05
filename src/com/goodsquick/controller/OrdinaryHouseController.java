@@ -617,6 +617,7 @@ public class OrdinaryHouseController {
     	if( null != orHouseId && !"".equalsIgnoreCase(orHouseId) ){
     		ordinaryHouse.setId(GoodsQuickUtils.parseIntegerFromString(orHouseId));
     	}
+    	ordinaryHouse.setMainPicId(GoodsQuickUtils.parseIntegerFromString(request.getParameter("isMain")));
     	ordinaryHouse.setBuildingName(request.getParameter("buildingName"));
     	ordinaryHouse.setProvince(request.getParameter("province"));
     	ordinaryHouse.setCity(request.getParameter("city"));
