@@ -5,10 +5,7 @@ public class GoodsHouseModuleSP extends BaseObject{
 	private static final long serialVersionUID = 6061165700227655805L;
 	private int id;
 	private String repositoryCode;
-	private String houseCode;
-	private String partCode;
-	private String brandCode;
-	private String brandName;
+	private String fromSource;
 	private String moduleType1;
 	private String moduleType2;
 	private String spTypeCode;
@@ -16,9 +13,15 @@ public class GoodsHouseModuleSP extends BaseObject{
 	private String spName;
 	private int spId;
 	private String spTel;
+	private String spPhone;
 	private String relationStatus;
 	private String status;
 	private String remark;
+	
+	/**
+	 * 产品与服务名称
+	 */
+	private String proServiceName;
 	
 	public int getId() {
 		return id;
@@ -33,12 +36,6 @@ public class GoodsHouseModuleSP extends BaseObject{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getHouseCode() {
-		return houseCode;
-	}
-	public void setHouseCode(String houseCode) {
-		this.houseCode = houseCode;
-	}
 	public String getRemark() {
 		return remark;
 	}
@@ -50,12 +47,6 @@ public class GoodsHouseModuleSP extends BaseObject{
 	}
 	public void setRepositoryCode(String repositoryCode) {
 		this.repositoryCode = repositoryCode;
-	}
-	public String getPartCode() {
-		return partCode;
-	}
-	public void setPartCode(String partCode) {
-		this.partCode = partCode;
 	}
 	public String getSpTypeCode() {
 		return spTypeCode;
@@ -93,18 +84,6 @@ public class GoodsHouseModuleSP extends BaseObject{
 	public void setRelationStatus(String relationStatus) {
 		this.relationStatus = relationStatus;
 	}
-	public String getBrandCode() {
-		return brandCode;
-	}
-	public void setBrandCode(String brandCode) {
-		this.brandCode = brandCode;
-	}
-	public String getBrandName() {
-		return brandName;
-	}
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
-	}
 	public String getModuleType1() {
 		return moduleType1;
 	}
@@ -116,5 +95,23 @@ public class GoodsHouseModuleSP extends BaseObject{
 	}
 	public void setModuleType2(String moduleType2) {
 		this.moduleType2 = moduleType2;
+	}
+	public String getFromSource() {
+		return fromSource;
+	}
+	public void setFromSource(String fromSource) {
+		this.fromSource = fromSource;
+	}
+	public String getSpPhone() {
+		return spPhone;
+	}
+	public void setSpPhone(String spPhone) {
+		this.spPhone = spPhone;
+	}
+	public String getProServiceName() {
+		return proServiceName;
+	}
+	public void setProServiceName(String proServiceName) {
+		this.proServiceName = proServiceName;
 	}
 }

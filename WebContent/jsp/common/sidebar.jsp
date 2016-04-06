@@ -212,33 +212,11 @@
 					<span class="title">物链管理</span>
 				</a>
 				<ul>
-					<li <% if( actived.indexOf(",sp_subject,")>-1
-							|| actived.indexOf(",sp_equ,")>-1
-							|| actived.indexOf(",sp_other,")>-1 ){ %>class="active opened"<%} %>>
-						<a href="javascript:void(0)">
+					<li <% if( actived.indexOf(",moduleSPList,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?spTypeCode=sp_type_brand">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">物链列表</span>
 						</a>
-						<ul>
-							<li <% if( actived.indexOf(",sp_subject,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_subject&spTypeCode=sp_type_js">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">小区主体</span>
-								</a>
-							</li>
-							<li <% if( actived.indexOf(",sp_equ,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_equ&spTypeCode=sp_type_brand">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">设施设备</span>
-								</a>
-							</li>
-							<li <% if( actived.indexOf(",sp_other,")>-1 ){ %>class="active"<%} %>>
-								<a href="<%=request.getParameter("basePath")%>moduleSPManagement?partCode=sp_other&spTypeCode=sp_type_brand">
-									<i class="entypo-flow-parallel"></i>
-									<span class="title">材料&nbsp;&&nbsp;装饰</span>
-								</a>
-							</li>
-						</ul>
 					</li>
 					<li <% if( actived.indexOf(",houseRadar,")>-1){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>houseRadar?spTypeCode=house_radar_supplier">

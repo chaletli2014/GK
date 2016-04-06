@@ -85,29 +85,19 @@ insert into tbl_goods_dictionary values(null,'lift_lifeTime','llt_10y','10年','
 insert into tbl_goods_dictionary values(null,'lift_lifeTime','llt_20y','20年','20年');
 
 --物链初始化
-insert into tbl_goods_dictionary_type values(null,'物链-小区主体','sp_subject','小区主体物链');
-insert into tbl_goods_dictionary_type values(null,'物链-设施设备','sp_equ','设施设备物链');
-insert into tbl_goods_dictionary_type values(null,'物链-材料装饰','sp_other','材料装饰物链');
-insert into tbl_goods_dictionary_type values(null,'设施设备-组件1','equ_moduletype1','设施设备-组件1');
-insert into tbl_goods_dictionary_type values(null,'材料装饰-组件1','other_moduletype1','材料装饰-组件1');
-insert into tbl_goods_dictionary_type values(null,'设施设备组件1-电梯','moduleType_equ_lift','设施设备组件1-电梯');
-insert into tbl_goods_dictionary_type values(null,'材料装饰组件1-防水涂料','mt_other_fstl','材料装饰组件1-防水涂料');
-
-insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_js','建设单位','小区主体的物联服务商');
-insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_kc','勘察单位','小区主体的物联服务商');
-insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_sf','售房单位','小区主体的物联服务商');
-insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_jl','监理单位','小区主体的物联服务商');
-insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_sj','设计单位','小区主体的物联服务商');
-insert into tbl_goods_dictionary values(null,'sp_subject','sp_type_sg','施工单位','小区主体的物联服务商');
-
-insert into tbl_goods_dictionary values(null,'sp_equ','sp_type_brand','品牌商','设施设备的物联服务商');
-insert into tbl_goods_dictionary values(null,'sp_equ','sp_type_wb','维保商','设施设备的物联服务商');
-insert into tbl_goods_dictionary values(null,'sp_other','sp_type_brand','品牌商','设施设备的物联服务商');
-insert into tbl_goods_dictionary values(null,'sp_other','sp_type_wb','维保商','设施设备的物联服务商');
-insert into tbl_goods_dictionary values(null,'equ_moduletype1','moduleType_equ_lift','电梯','设施设备组件-电梯');
-insert into tbl_goods_dictionary values(null,'other_moduletype1','mt_other_fstl','防水涂料','材料装饰-组件1-防水涂料');
-insert into tbl_goods_dictionary values(null,'moduleType_equ_lift','moduleType2_dt','电梯','设施设备组件2-电梯');
-insert into tbl_goods_dictionary values(null,'mt_other_fstl','mt2_other_fstl','防水涂料','材料装饰-组件2-防水涂料');
-
+insert into tbl_goods_dictionary_type values(null,'设施设备-组件1','moduletype1','设施设备-组件1');
+insert into tbl_goods_dictionary_type values(null,'设施设备组件1-电梯','moduletype1_lift','设施设备组件1-电梯');
 insert into tbl_goods_dictionary_type values(null,'物链-物链雷达','houseRadar','物链雷达的tab分类');
+insert into tbl_goods_dictionary_type values(null,'物链列表-供应商类型','sp_type','物链列表的tab分类');
+
+insert into tbl_goods_dictionary values(null,'sp_type','sp_type_brand','供应商','设施设备的物联服务商');
+insert into tbl_goods_dictionary values(null,'sp_type','sp_type_sup','监管方','设施设备的物联服务商');
+insert into tbl_goods_dictionary values(null,'moduletype1','moduleType1_lift','电梯','设施设备组件-电梯');
+insert into tbl_goods_dictionary values(null,'moduletype1_lift','moduletype2_lift','电梯','设施设备组件2-电梯');
+insert into tbl_goods_dictionary values(null,'moduletype1_lift','moduletype2_liftdoor','电梯门','设施设备组件2-电梯门');
+
+insert into tbl_goods_dictionary values(null,'moduletype1','moduleType1_food','食品药品监督管理机构','食品药品监督管理机构');
+insert into tbl_goods_dictionary_type values(null,'食品药品监督管理机构','moduleType1_food','食品药品监督管理机构');
+insert into tbl_goods_dictionary values(null,'moduleType1_food','moduletype2_food_sup','食品药品监管','食品药品监管');
+
 insert into tbl_goods_dictionary values(null,'houseRadar','house_radar_supplier','供应商','物链雷达的tab分类-供应商');

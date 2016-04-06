@@ -24,8 +24,8 @@ public interface RelationshipPropertyService {
 	public void saveSPModule2nd(GoodsHouseSP2nd houseModule);
 	public void removeSPModule2nd(GoodsHouseSP2nd houseModule);
 
-	public List<GoodsHouseModuleSP> getModuleSPByHouseCodeAndType(String repositoryCode, String spTypeCode, String partCode);
-	public List<GoodsHouseModuleSP> getModuleSPByModuleType(String repositoryCode, String spTypeCode, String partCode, String moduleType2);
+	public List<GoodsHouseModuleSP> getModuleSPByHouseCodeAndType(String repositoryCode, String spTypeCode);
+	public List<GoodsHouseModuleSP> getModuleSPByModuleType(String repositoryCode, String spTypeCode, String moduleType2);
 	public GoodsHouseModuleSP getModuleSPById(String spId);
 	public void saveModuleSP(GoodsHouseModuleSP houseModuleSP);
 	public void removeModuleSP(GoodsHouseModuleSP houseModuleSP);

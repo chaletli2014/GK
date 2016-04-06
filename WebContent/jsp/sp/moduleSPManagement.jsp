@@ -19,7 +19,23 @@
 	        </jsp:include>
 			<div class="page-title">
 				<%@include file="../common/nav-title.jsp"%>
-				<c:if test="${partCode == 'sp_equ' || partCode == 'sp_other'}">
+				<span style="margin-left:28px;font-size:16px;font-weight: bold;">物链列表</span>
+				<span style="float:right;margin-top:2px;">
+					<a style="margin-right:30px;" id="newSpLink" class="btn btn-orange">
+						<i class="fa fa-plus"></i>
+						新增供应商
+					</a>
+				</span>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body" style="padding-top:0px;">
+					<input type="hidden" name="partCode" id="partCode" value="${partCode}"/>
+					<input type="hidden" name="spTypeCode" id="spTypeCode" value="${spTypeCode}"/>
+					<ul class="sp_type_ul" id="sp_type_ul">
+						<c:forEach items="${spTypes}" var="spType">
+							<li lid="${spType.dicCode}" class="<c:if test="${spType.dicCode == spTypeCode}">active</c:if>" >${spType.dicName}</li>
+						</c:forEach>
+					</ul>
 					<script type="text/javascript">
 						jQuery(document).ready(function($){
 							$("#moduleType1").selectBoxIt().on('open', function(){
@@ -31,11 +47,11 @@
 						});
 					</script>
 					<ul class="moduleType_ul">
-						<li style="width:100px;height:35px;line-height: 35px;">
-							<span>选择组件</span>
+						<li style="width:60px;height:35px;line-height: 35px;margin-right:10px;">
+							<span>产品类别</span>
 						</li>
 						<li>
-							<select class="form-control" id="moduleType1" name="moduleType1" onchange="populateModuleType2ByType1(this.value)">
+							<select class="form-control" id="moduleType1" name="moduleType1" onchange="populateModuleType2ByType1('moduleType2',this.value)">
 								<option value="">请选择</option>
 								<c:forEach items="${moduleType1}" var="moduleType">
 									<option value="${moduleType.dicCode}">${moduleType.dicName}</option>
@@ -48,69 +64,38 @@
 							</select>
 						</li>
 					</ul>
-				</c:if>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-body" style="padding-top:0px;">
-					<input type="hidden" name="partCode" id="partCode" value="${partCode}"/>
-					<input type="hidden" name="spTypeCode" id="spTypeCode" value="${spTypeCode}"/>
-					<ul class="sp_type_ul" id="sp_type_ul">
-					<c:forEach items="${spTypes}" var="spType">
-						<li lid="${spType.dicCode}" class="<c:if test="${spType.dicCode == spTypeCode}">active</c:if>" >${spType.dicName}</li>
-					</c:forEach>
-					</ul>
-					<div style="margin-top:20px;">
-						<c:if test="${partCode == 'sp_equ'}">
-						<a style="float:right;margin-right:16px;" id="newEquSpLink" class="btn btn-orange">
-							<i class="fa fa-plus"></i>
-							新增
-						</a>
-						</c:if>
-						<c:if test="${partCode == 'sp_subject'}">
-						<a style="float:right;margin-right:16px;" id="newSpLink" class="btn btn-orange">
-							<i class="fa fa-plus"></i>
-							新增
-						</a>
-						</c:if>
-						<c:if test="${partCode == 'sp_other'}">
-						<a style="float:right;margin-right:16px;" id="newSpLink" class="btn btn-orange">
-							<i class="fa fa-plus"></i>
-							新增
-						</a>
-						</c:if>
-					</div>
 					<div>
 						<table class="table table-bordered table-striped" id="moduleSPTable">
 							<thead>
 								<tr>
-									<c:if test="${partCode == 'sp_equ'}">
-									<th>品牌</th>
-									<th>单位名称</th>
-									</c:if>
-									<c:if test="${partCode == 'sp_subject' || partCode == 'sp_other'}">
-									<th>${spTypeName}名称</th>
-									</c:if>
-									<th>联系电话</th>
-									<th>操作 </th>
+									<th width="20%">${spTypeName}名称</th>
+									<th width="15%">产品与服务</th>
+									<th width="15%">联系电话</th>
+									<th width="10%">来源</th>
+									<th width="10%">状态</th>
+									<th width="30%">操作 </th>
 								</tr>
 							</thead>
 							<tbody class="middle-align">
 								<c:forEach items="${houseModuleSPList}" var="moduleSP">
 									<tr>
-										<c:if test="${partCode == 'sp_equ'}">
-										<td>${moduleSP.brandName}</td>
-										</c:if>
 										<td >${moduleSP.spName}</td>
+										<td >${moduleSP.proServiceName}</td>
 										<td >${moduleSP.spTel}</td>
+										<td >${moduleSP.fromSource}</td>
+										<td >${moduleSP.relationStatus}</td>
 										<td>
-											<a aid="${moduleSP.id}" href="#" class="btn btn-orange btn-sm btn-icon icon-left moduleEditLink">
-												编辑
+											<a aid="${moduleSP.id}" href="#" class="btn btn-orange btn-sm btn-icon icon-left moduleViewLink">
+												查看
 											</a>
-											<a aid="${moduleSP.id}" href="#" class="btn btn-danger btn-sm btn-icon icon-left moduleDeleteLink">
-												删除
+											<a aid="${moduleSP.id}" href="#" class="btn btn-secondary btn-sm btn-icon icon-left moduleEditLink">
+												编辑
 											</a>
 											<a aid="${moduleSP.id}" href="#" class="btn btn-blue btn-sm btn-icon icon-left moduleRelateLink">
 												关联
+											</a>
+											<a aid="${moduleSP.id}" href="#" class="btn btn-black btn-sm btn-icon icon-left moduleDeleteLink">
+												删除
 											</a>
 										</td>
 									</tr>
@@ -123,7 +108,6 @@
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>
-	<%@include file="addModuleSP.jsp" %>
 	<%@include file="addEquModuleSP.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>

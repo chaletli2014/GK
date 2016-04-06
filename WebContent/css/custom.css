@@ -430,6 +430,8 @@ div.showDetailDiv .form-group{
 /** -------------- 物链管理 ------------ */
 .sp_type_ul{
 	clear: both;
+	height: 52px;
+    border-bottom: #aaa solid 1px;
 }
 .sp_type_ul li.active{
 	float:left;
@@ -450,12 +452,13 @@ div.showDetailDiv .form-group{
 }
 
 .moduleType_ul{
-	margin-left:58px;
-	margin-top:8px;
+	clear:both;
+	margin:18px 0;
+	height:30px;
 }
 .moduleType_ul li{
 	float:left;
-	width: 300px;
+	width: 200px;
 	margin-right:30px;
 }
 

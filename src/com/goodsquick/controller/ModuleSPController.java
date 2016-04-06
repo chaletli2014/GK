@@ -52,22 +52,14 @@ public class ModuleSPController {
 			
 			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 			String spTypeCode = (String)request.getSession().getAttribute("spTypeCode");
-			String partCode = (String)request.getSession().getAttribute("partCode");
-			
-			if( "sp_equ".equalsIgnoreCase(partCode) ){
-				moduleSP.setModuleType1(request.getParameter("moduleType1_equ_h"));
-				moduleSP.setModuleType2(request.getParameter("moduleType2_equ_h"));
-			}else if( "sp_other".equalsIgnoreCase(partCode) ){
-				moduleSP.setModuleType1(request.getParameter("moduleType1_other_h"));
-				moduleSP.setModuleType2(request.getParameter("moduleType2_other_h"));
-			}
+			moduleSP.setModuleType1(request.getParameter("modifyModuleType1"));
+			moduleSP.setModuleType2(request.getParameter("modifyModuleType2"));
 			
 			moduleSP.setRepositoryCode(repositoryCode);
         	moduleSP.setSpTypeCode(spTypeCode);
-        	moduleSP.setPartCode(partCode);
+        	moduleSP.setFromSource("手动添加");
         	
         	request.getSession().setAttribute("spTypeCode", spTypeCode);
-        	request.getSession().setAttribute("partCode", partCode);
         	
         	populateModuleSP(moduleSP, currentUser, request);
 			
@@ -85,12 +77,6 @@ public class ModuleSPController {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("sp/moduleSPManagement");
 		
-		String partCode = request.getParameter("partCode");
-		if( StringUtils.isBlank(partCode) ){
-			partCode = (String)request.getSession().getAttribute("partCode");
-		}else{
-			request.getSession().setAttribute("partCode", partCode);
-		}
 		String spTypeCode = request.getParameter("spTypeCode");
 		if( StringUtils.isBlank(spTypeCode) ){
 			spTypeCode = (String)request.getSession().getAttribute("spTypeCode");
@@ -103,22 +89,15 @@ public class ModuleSPController {
     		List<GoodsHouseModuleSP> houseModuleSPList = new ArrayList<GoodsHouseModuleSP>();
     		List<GoodsDictionary> moduleType1List = new ArrayList<GoodsDictionary>();
     		
-    		GoodsDictionary dic = dictionaryService.getDictionaryByCode(spTypeCode,partCode);
-    		List<GoodsDictionary> spTypes = dictionaryService.getDictionaryByType(partCode);
+    		GoodsDictionary dic = dictionaryService.getDictionaryByCode(spTypeCode,"sp_type");
+    		List<GoodsDictionary> spTypes = dictionaryService.getDictionaryByType("sp_type");
     		
-    		houseModuleSPList = relationshipPropertyService.getModuleSPByHouseCodeAndType(repositoryCode, spTypeCode, partCode);
+    		houseModuleSPList = relationshipPropertyService.getModuleSPByHouseCodeAndType(repositoryCode, spTypeCode);
     		
-    		String moduleType1Code = "";
-    		if( "sp_equ".equalsIgnoreCase(partCode) ){
-    			moduleType1Code = "equ_moduletype1";
-    		}else if( "sp_other".equalsIgnoreCase(partCode) ){
-    			moduleType1Code = "other_moduletype1";
-    		}
-    		moduleType1List = dictionaryService.getDictionaryByType(moduleType1Code);
+    		moduleType1List = dictionaryService.getDictionaryByType("moduletype1");
     		
     		view.addObject("houseModuleSPList", houseModuleSPList);
     		view.addObject("moduleType1", moduleType1List);
-    		view.addObject("partCode", partCode);
     		view.addObject("spTypes", spTypes);
     		view.addObject("spTypeCode", spTypeCode);
     		view.addObject("spTypeName", dic.getDicName());
@@ -126,7 +105,7 @@ public class ModuleSPController {
 			logger.error("fail to get the moduleSPManagement,",e);
 		}
 		view.addObject("opened", ",serviceCustomer,");
-        view.addObject("actived", ","+partCode+",");
+        view.addObject("actived", ",moduleSPList,");
 		return view;
 	}
 	
@@ -146,11 +125,10 @@ public class ModuleSPController {
     	Map<String,Object> result = new HashMap<String,Object>();
     	try {
     		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
-    		String partCode = request.getParameter("partCode");
     		String moduleType2 = request.getParameter("moduleType2");
     		String spTypeCode = request.getParameter("spTypeCode");
     		
-    		List<GoodsHouseModuleSP> houseModuleSPList = relationshipPropertyService.getModuleSPByModuleType(repositoryCode, spTypeCode, partCode, moduleType2);
+    		List<GoodsHouseModuleSP> houseModuleSPList = relationshipPropertyService.getModuleSPByModuleType(repositoryCode, spTypeCode, moduleType2);
     		
     		result.put("spList", houseModuleSPList);
     		result.put("result", "Y");
@@ -189,9 +167,9 @@ public class ModuleSPController {
     	}
     	
     	moduleSP.setId(GoodsQuickUtils.parseIntegerFromString(moduleSPId));
-    	moduleSP.setBrandCode(request.getParameter("brandCode"));
     	moduleSP.setSpName(request.getParameter("spName"));
     	moduleSP.setSpTel(request.getParameter("spTel"));
+    	moduleSP.setSpPhone(request.getParameter("spPhone"));
     	moduleSP.setRemark(request.getParameter("remark"));
     	moduleSP.setCreateUser(currentUser.getLoginName());
     	moduleSP.setUpdateUser(currentUser.getLoginName());
