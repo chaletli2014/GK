@@ -9,6 +9,14 @@ jQuery(document).ready(function($){
 		$("#spName").val('');
 		$("#spTel").val('');
 		$("#spPhone").val('');
+		$("#modifyModuleType1").val('');
+		$("#modifyModuleType1").removeAttr("disabled");
+		$("#modifyModuleType1").selectBoxIt().data("selectBoxIt");
+		$("#modifyModuleType1").data("selectBox-selectBoxIt").refresh();
+		$("#modifyModuleType2").val('');
+		$("#modifyModuleType2").removeAttr("disabled");
+		$("#modifyModuleType2").selectBoxIt().data("selectBoxIt");
+		$("#modifyModuleType2").data("selectBox-selectBoxIt").refresh();
 		
 		jQuery('#new_module_sp_div').modal('show', {backdrop: 'static'});
 	});
@@ -31,7 +39,7 @@ jQuery(document).ready(function($){
 		}
 	});
 	
-	$(".moduleEditLink").click(function(){
+	$("body").delegate('.moduleEditLink', 'click', function(){
 		var spId = $(this).attr("aid");
 		jQuery.ajax({
 			url: basePath + "getModuleSPInfoById",
@@ -44,13 +52,35 @@ jQuery(document).ready(function($){
 				$("#spPhone").val(moduleSP.spPhone);
 				$("#spTel").val(moduleSP.spTel);
 				$("#moduleSPId").val(moduleSP.id);
+				
+				var moduleType1 = moduleSP.moduleType1;
+				var moduleType2 = moduleSP.moduleType2;
+				$("#modifyModuleType1 option").each(function() {
+			        if ($(this).val() == moduleType1 ) {
+			            $(this).attr("selected", "selected");
+			        }
+			    });
+				$("#modifyModuleType1").attr("disabled","disabled");
+				$("#modifyModuleType1").selectBoxIt().data("selectBoxIt");
+				$("#modifyModuleType1").data("selectBox-selectBoxIt").refresh();
+				
+				var options="<option value='"+moduleType2+"'>"+moduleSP.proServiceName+"</option>";
+				$("#modifyModuleType2").append(options);
+				$("#modifyModuleType2 option").each(function() {
+			        if ($(this).val() == moduleType2 ) {
+			            $(this).attr("selected", "selected");
+			        }
+			    });
+				$("#modifyModuleType2").attr("disabled","disabled");
+				$("#modifyModuleType2").selectBoxIt().data("selectBoxIt");
+				$("#modifyModuleType2").data("selectBox-selectBoxIt").refresh();
 				jQuery('#new_module_sp_div').modal('show', {backdrop: 'static'});
 			}
 		});
 		
 	});
 	
-	$(".moduleDeleteLink").click(function(){
+	$("body").delegate('.moduleDeleteLink', 'click', function(){
 		var spId = $(this).attr("aid");
 		jConfirm("是否确定删除？","提醒",function(r) {
 	    	if(r){
@@ -58,12 +88,11 @@ jQuery(document).ready(function($){
 	    	}
 	    });
 	});
-	
-	$(".moduleRelateLink").click(function(){
+	$("body").delegate('.moduleRelateLink', 'click', function(){
 		jAlert("功能测试中：未发现该注册公司","提示");
 	});
 	
-	$(".moduleViewLink").click(function(){
+	$("body").delegate('.moduleViewLink', 'click', function(){
 		jAlert("功能测试中：供应商未关联，无法查看其信息","提示");
 	});
 });

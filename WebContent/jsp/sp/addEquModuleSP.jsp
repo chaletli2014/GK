@@ -14,7 +14,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label class="col-sm-4 control-label form_input_required" for="brandCode">产品与服务</label>
-							<div class="col-sm-6">
+							<div class="col-sm-6" id="moduleTypeDiv">
 								<script type="text/javascript">
 									jQuery(document).ready(function($){
 										$("#modifyModuleType1").selectBoxIt().on('open', function(){
