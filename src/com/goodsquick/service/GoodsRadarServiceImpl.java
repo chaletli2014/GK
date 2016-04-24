@@ -3,6 +3,7 @@ package com.goodsquick.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.cxf.common.util.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +31,11 @@ public class GoodsRadarServiceImpl implements GoodsRadarService {
 	public List<GoodsCompanyInfo> getCompanyInfoByRepositoryCode(String repositoryCode) throws Exception {
 		try{
 			List<String> liftBrands = liftDAO.getLiftBrandsByRepositoryCode(repositoryCode);
-			return goodsRadarDAO.getCompanyInfoByLiftBrands(liftBrands);
+			if( CollectionUtils.isEmpty(liftBrands) ){
+				return Collections.emptyList();
+			}else{
+				return goodsRadarDAO.getCompanyInfoByLiftBrands(liftBrands);
+			}
 		} catch(EmptyResultDataAccessException erd){
 			return Collections.emptyList();
 		} catch(Exception e){
