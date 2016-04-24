@@ -740,7 +740,7 @@
         credits: {
             enabled: !0,
             text: "goodsquick.com",
-            href: "http://www.highcharts.com",
+            href: "",
             position: {
                 align: "right",
                 x: -10,

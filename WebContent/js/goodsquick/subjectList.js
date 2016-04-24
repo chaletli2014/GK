@@ -117,8 +117,8 @@ function createNewSubjectTr(){
 	parentId = $("#parentId_h").val();
 	
 	var newTr = "<tr class=\"newSubjectTr\" id=\"newSubjectTr"+newTrCount+"\">";
-	newTr = newTr + "<td><input type=\"text\" class=\"form-control\" id=\"subjectName"+newTrCount+"\" name=\"subjectName\"></td>";
-	newTr = newTr + "<td><input type=\"text\" class=\"form-control\" id=\"subjectDesc"+newTrCount+"\" name=\"subjectDesc\"></td>";
+	var nameTD = "<td><input type=\"text\" class=\"form-control\" id=\"subjectName"+newTrCount+"\" name=\"subjectName\"></td>";
+	var descTD = "<td><input type=\"text\" class=\"form-control\" id=\"subjectDesc"+newTrCount+"\" name=\"subjectDesc\"></td>";
 	if( subjectLevel != '1' ){
 		jQuery.ajax({
 			url: basePath+"getParentSubjectListByLevel",
@@ -142,11 +142,12 @@ function createNewSubjectTr(){
 					if( subjectLevel == '2' ){
 						newTr = newTr + "<td>"+optionList+"</td>";
 					}else if( subjectLevel == '3' ){
-						var subject2List = "<select id=\"parentId"+newTrCount+"\" name =\"parentId\" onchange=\"populateParent(this,'3','"+newTrCount+"')\"><option value=\"\">--请选择--</option>";
+						var subject2List = "</br><select id=\"parentId"+newTrCount+"\" name =\"parentId\" onchange=\"populateParent(this,'3','"+newTrCount+"')\"><option value=\"\">--请选择--</option>";
 						newTr = newTr + "<td>"+optionList+" - "+subject2List+"</td>";
 					}
 					
 					var cancleBtn = "<a class=\"btn btn-danger btn-sm btn-icon icon-left fa-close newTrCancle\">取消</a>";
+					newTr = newTr + nameTD +　descTD;
 					newTr = newTr + "<td>"+cancleBtn+"</td>";
 					newTr = newTr + "<td>&nbsp;</td>";
 					newTr = newTr + "</tr>";
@@ -156,6 +157,7 @@ function createNewSubjectTr(){
 		});
 	}else{
 		var cancleBtn = "<a class=\"btn btn-danger btn-sm btn-icon icon-left fa-close newTrCancle\">取消</a>";
+		newTr = newTr + nameTD +　descTD;
 		newTr = newTr + "<td>"+cancleBtn+"</td>";
 		newTr = newTr + "<td>&nbsp;</td>";
 		newTr = newTr + "</tr>";
@@ -396,7 +398,7 @@ function populateParent(level, subjectLevel, rowIndex){
 	if( subject2Name ){
 		parentName = parentName + subject2Name;
 	}
-	$("#subjectName"+rowIndex).val(parentName);
+	$("#subjectName"+rowIndex).val(parentName+'-');
 	$("#parentId_h").val(level.value);
 }
 

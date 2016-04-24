@@ -46,7 +46,7 @@ function toregscreen(e){
     });
     
     $("#divReg").animate({
-        "margin-top": '140px'
+        "margin-top": '40px'
     });
     window.isReg = true;
 }

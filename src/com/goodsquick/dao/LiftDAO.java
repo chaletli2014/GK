@@ -32,4 +32,12 @@ public interface LiftDAO {
 	 * @throws Exception Exception
 	 */
 	public List<GoodsDeviceLift> getDeviceLiftByModuleId(int moduleId) throws Exception;
+	
+	/**
+	 * 根据物库编码查找当前物库维护的所有电梯品牌，用于物库雷达搜索
+	 * @param repositoryCode 物库编码
+	 * @return List<String> 电梯品牌集合
+	 * @throws Exception
+	 */
+	public List<String> getLiftBrandsByRepositoryCode(String repositoryCode) throws Exception;
 }

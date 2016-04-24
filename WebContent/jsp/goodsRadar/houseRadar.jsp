@@ -93,19 +93,19 @@
 										</a>
 									</td>
 								</tr>
-								<c:forEach items="${radarResultList}" var="result">
+								<c:forEach items="${companyInfos}" var="company">
 									<tr>
-										<td >${moduleSP.spName}</td>
-										<td >${moduleSP.spTel}</td>
+										<td >${company.companyName}</td>
+										<td >电梯</td>
 										<td>
-											<a aid="${moduleSP.id}" href="#" class="btn btn-orange btn-sm btn-icon icon-left moduleEditLink">
-												编辑
+											<a aid="${moduleSP.id}" href="#" class="btn btn-orange btn-sm btn-icon icon-left radarResultEditLink">
+												查看
 											</a>
-											<a aid="${moduleSP.id}" href="#" class="btn btn-danger btn-sm btn-icon icon-left moduleDeleteLink">
-												删除
-											</a>
-											<a aid="${moduleSP.id}" href="#" class="btn btn-blue btn-sm btn-icon icon-left moduleRelateLink">
+											<a aid="${moduleSP.id}" href="#" class="btn btn-blue btn-sm btn-icon icon-left radarResultRelateLink">
 												关联
+											</a>
+											<a aid="${moduleSP.id}" href="#" class="btn btn-danger btn-sm btn-icon icon-left radarResultDeleteLink">
+												忽略
 											</a>
 										</td>
 									</tr>

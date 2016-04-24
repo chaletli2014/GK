@@ -2,6 +2,8 @@ package com.goodsquick.controller;
 
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.goodsquick.model.GoodsHouseModuleSP;
 import com.goodsquick.model.GoodsProductLift;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.GoodsProductLiftService;
@@ -54,6 +58,25 @@ public class LiftController {
     	}
     	return "redirect:productlist";
     }
+    
+	@RequestMapping("/getLiftInfoById")
+	@ResponseBody
+	public Map<String,Object> getLiftInfoById(HttpServletRequest request){
+		Map<String,Object> result = new HashMap<String,Object>();
+		try {
+			int liftId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("liftId"));
+			GoodsProductLift liftObj = goodsProductLiftService.getGoodsProductLiftById(liftId);
+			
+			result.put("liftObj", liftObj);
+			result.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("getLiftInfoById: 根据ID获取电梯信息失败",e);
+			result.put("result", "N");
+			result.put("message", e.getMessage());
+		}
+		
+		return result;
+	}
     
     private void populateLiftInfo(GoodsProductLift lift, HttpServletRequest request){
 

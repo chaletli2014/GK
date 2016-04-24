@@ -3,6 +3,8 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.goodsquick.model.WebUserInfo,org.springframework.security.core.context.SecurityContextHolder" %>
 <%
+	GoodsRepository currentRepository = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
+	
 	String opened = request.getParameter("opened");
 	String actived = request.getParameter("actived");
 	
@@ -14,22 +16,23 @@
 	}
 	WebUserInfo webUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	
-	GoodsRepository currentRepository = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
-	
 	String manageName = "资品管理";
 	String newRepoName = "添加资品";
 	String manageLink = request.getParameter("basePath")+"ordinaryhouse";
+	String repoPreName = "资品";
+	
 	if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
+		repoPreName = "需品";
 		manageName = "需品管理";
 		newRepoName = "添加需品";
 		manageLink = request.getParameter("basePath")+"productlist";
 	}else if("2".equalsIgnoreCase(currentRepository.getRepositoryType())){
+		repoPreName = "产品";
 		manageName = "产品管理";
 		newRepoName = "添加产品";
 		manageLink = request.getParameter("basePath")+"productlist";
 	}
 %>
-
 <div class="sidebar-menu toggle-others">
 	<div class="sidebar-menu-inner">
 		<header class="logo-env">
@@ -51,9 +54,11 @@
 			</div>
 		</header>
 		<div class="sidebar_title">
-			<span>
-				<%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%>
-			</span>
+			<a href="<%=request.getParameter("basePath")%>mainIndex">
+				<span>
+					<%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%>
+				</span>
+			</a>
 		</div>
 		<ul id="main-menu" class="main-menu">
 			<%--

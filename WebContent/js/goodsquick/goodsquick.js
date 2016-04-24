@@ -86,7 +86,7 @@ jQuery(document).ready(function($){
 				if( list1 != null ){
 					$(".dyrepos1").remove();
 					$.each(list1,function(n,repos1){
-						var reposDiv = "<div><a href=\""+basePath+"\index?repository_code="+repos1.repositoryCode+"\">"+repos1.repositoryName+"</a></div>";
+						var reposDiv = "<div><a href=\""+basePath+"\mainIndex?repository_code="+repos1.repositoryCode+"\">"+repos1.repositoryName+"</a></div>";
 						var editA = "<a gid=\"1\" rid=\""+repos1.id+"\" rcode=\""+repos1.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a>";
 						var deleteA = "<a gid=\"1\" rid=\""+repos1.id+"\" rname=\""+repos1.repositoryName+"\" class=\"nav_delrepository\"><i class=\"fa-close\"></i></a>";
 						$(".own_menu").append("<li class=\"menu-list-own dyrepos1\">"+reposDiv+"<div>"+editA+deleteA+"</div></li>");
@@ -96,7 +96,7 @@ jQuery(document).ready(function($){
 				if( list2 != null ){
 					$(".dyrepos2").remove();
 					$.each(list2,function(n,repos2){
-						var reposDiv = "<div><a href=\""+basePath+"\index?repository_code="+repos2.repositoryCode+"\">"+repos2.repositoryName+"</a></div>";
+						var reposDiv = "<div><a href=\""+basePath+"\mainIndex?repository_code="+repos2.repositoryCode+"\">"+repos2.repositoryName+"</a></div>";
 						var editA = "<a gid=\"2\" rid=\""+repos2.id+"\" rcode=\""+repos2.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a>";
 						var deleteA = "<a gid=\"2\" rid=\""+repos2.id+"\" rname=\""+repos2.repositoryName+"\" class=\"nav_delrepository\"><i class=\"fa-close\"></i></a>";
 						$(".goods_menu").append("<li class=\"menu-list-goods dyrepos2\">"+reposDiv+"<div>"+editA+deleteA+"</div></li>");
@@ -106,7 +106,7 @@ jQuery(document).ready(function($){
 				if( list3 != null ){
 					$(".dyrepos3").remove();
 					$.each(list3,function(n,repos3){
-						var reposDiv = "<div><a href=\""+basePath+"\index?repository_code="+repos3.repositoryCode+"\">"+repos3.repositoryName+"</a></div>";
+						var reposDiv = "<div><a href=\""+basePath+"\mainIndex?repository_code="+repos3.repositoryCode+"\">"+repos3.repositoryName+"</a></div>";
 						var editA = "<a gid=\"3\" rid=\""+repos3.id+"\" rcode=\""+repos3.repositoryCode+"\" class=\"nav_editrepository\"><i class=\"fa-edit\"></i></a>";
 						var deleteA = "<a gid=\"3\" rid=\""+repos3.id+"\" rname=\""+repos3.repositoryName+"\" class=\"nav_delrepository\"><i class=\"fa-close\"></i></a>";
 						$(".req_menu").append("<li class=\"menu-list-req dyrepos3\">"+reposDiv+"<div>"+editA+deleteA+"</div></li>");
@@ -143,7 +143,7 @@ jQuery(document).ready(function($){
 					jAlert("编辑物库错误","提醒");
 				}else if( result == 'NEW' ){
 					jAlert("物库添加成功，点击确定进入新物库","信息",function(){
-						window.location.href = basePath+"index?repository_code="+response.repositoryCode;
+						window.location.href = basePath+"mainIndex?repository_code="+response.repositoryCode;
 					});
 					jQuery('.close').click();
 				}else if( result == 'UPDATE' ){

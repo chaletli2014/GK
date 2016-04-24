@@ -11,6 +11,12 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     
     GoodsRepository currentRepository = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
+	String repoPreName = "资品";
+	if( null != currentRepository && "3".equalsIgnoreCase(currentRepository.getRepositoryType())){
+		repoPreName = "需品";
+	}else if( null != currentRepository && "2".equalsIgnoreCase(currentRepository.getRepositoryType())){
+		repoPreName = "产品";
+	}
 %>
 <head>
 	<title>GoodsQuick</title>

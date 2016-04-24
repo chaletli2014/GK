@@ -482,3 +482,83 @@ div.showDetailDiv .form-group{
 	overflow: scroll;
 	margin-right:6px;
 }
+
+.index_title{
+	margin-left:30px;
+	font-size: 16px;
+}
+.index_ul li{
+	height: 360px;
+	width:360px;
+	display: block;
+	float:left;
+	border: 1px solid #aaa;
+	margin:10px;
+}
+.index_repository{
+	overflow-y: scroll;
+	height: 320px;
+}
+.index_li_title{
+	text-align: left;
+	padding-left:20px;
+	line-height:40px;
+	height:40px;
+	background:#29363A;
+	color:white;
+	font-weight: bold;
+}
+.index_li_list{
+    margin: 10px;
+    display: block;
+    width: 300px;
+    float: left;
+}
+.index_li_list div{
+	padding-left:4px;
+	cursor: pointer;
+}
+.index_li_list div i{
+	margin-left:4px;
+	margin-right:8px;
+}
+.index_li_list>:first-child{
+	font-size:18px;
+	color:black;
+	margin:10px 0;
+}
+.index_li_list div:nth-child(2), .index_li_list div:nth-child(3){
+	border:2px solid #f2fafc;
+	display: block;
+    width: 140px;
+    height: 40px;
+    float: left;
+    margin-right:10px;
+    padding:4px;
+}
+.index_li_list div:nth-child(2):hover, .index_li_list div:nth-child(3):hover{
+	background: #f2fafc;
+}
+.index_menu_ul{
+	padding-left:12px;
+}
+.user-info-navbar .index_menu_ul > li {
+	border:0px;
+}
+.user-info-navbar .index_menu_ul > li > a {
+	border-bottom: 0px;
+	color:#fff;
+}
+.user-info-navbar .index_menu_ul > li > a:hover {
+  color: #ef7100;
+  font-weight: bold;
+}
+.index_panel_lift{
+	height: 80px;
+}
+.index_panel_heading a{
+	float:right;
+    color: white;
+    font-size: 12px;
+}
+}

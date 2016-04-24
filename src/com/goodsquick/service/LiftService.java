@@ -12,4 +12,6 @@ public interface LiftService {
 	public void saveOrUpdateDeviceLift(GoodsDeviceLift lift, WebUserInfo currentUser) throws Exception;
 	public void deleteDeviceLift(int ordinaryHouseId) throws Exception;
 	public GoodsDeviceLift getGoodsDeviceLiftById(int liftId) throws Exception;
+	
+	public List<String> getLiftBrandsByRepositoryCode(String repositoryCode) throws Exception;
 }

@@ -19,7 +19,7 @@
 					<span></span>
 				</div>
 				<form role="form" class="form-horizontal" action="saveLift" method="post" id="addlift_form">
-				<input type="hidden" id="liftId" name="liftId" value="${lift.id}">
+				<input type="hidden" id="liftId" name="liftId" value="">
 				<div class="tab-content">
 					<!-- Tabs Content -->
 					<div class="tab-pane active" id="lift_tab_basic">

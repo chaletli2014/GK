@@ -75,4 +75,17 @@ public class LiftServiceImpl implements LiftService {
 		return liftDAO.getGoodsDeviceLiftById(liftId);
 	}
 
+	@Override
+	public List<String> getLiftBrandsByRepositoryCode(String repositoryCode)
+			throws Exception {
+		try{
+			return liftDAO.getLiftBrandsByRepositoryCode(repositoryCode);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get the lift brand by repositoryCode,",e);
+			return Collections.emptyList();
+		}
+	}
+
 }

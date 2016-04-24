@@ -8,32 +8,20 @@
 <%@page import="java.util.List"%>
 <%
 	WebUserInfo userInfo = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	
-	List<GoodsRepository> repositoryList = new ArrayList<GoodsRepository>();
-	GoodsRepository currentRepository = new GoodsRepository();
-	String repositoryGoodsName = "资品";
-	try{
-		repositoryList = (List<GoodsRepository>)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_LIST);
-		Object repository = request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
-		if( null != repository ){
-			currentRepository = (GoodsRepository)repository;
-			if( "2".equalsIgnoreCase(currentRepository.getRepositoryType()) ){
-				repositoryGoodsName = "商品";
-			}else if( "3".equalsIgnoreCase(currentRepository.getRepositoryType()) ){
-				repositoryGoodsName = "需品";
-			}
-		}
-	}catch(Exception e){}
 %>
-<nav class="navbar user-info-navbar" role="navigation" style="height:46px;">
-	<!-- Left links for user info navbar -->
-	<ul class="user-info-menu left-links list-inline list-unstyled">
-		<li class="hidden-sm hidden-xs">
-			<a href="#" data-toggle="sidebar">
-				<i class="fa-arrows-alt"></i>
+<nav class="navbar user-info-navbar" role="navigation" style="height:50px;background:#29363A;">
+	<ul class="user-info-menu left-links list-inline list-unstyled index_menu_ul">
+		<li>
+			<a href="<%=request.getParameter("basePath") %>index" class="logo-expanded">
+				<img src="<%=request.getParameter("basePath")%>images/logo_new.png" alt="" width="80px" height="26px"/>
 			</a>
 		</li>
-		<li class="dropdown hover-line">
+		<li class="hidden-sm hidden-xs" style="padding-top:6px;font-size:16px;">
+			<a href="<%=request.getParameter("basePath") %>index" data-toggle="sidebar">
+				总览
+			</a>
+		</li>
+		<li class="dropdown hover-line" style="padding-top:6px;font-size:16px;">
 			<a href="#" data-toggle="dropdown" class="repositoryNav">
 				<span class="">物库管理</span>
 			</a>
@@ -79,7 +67,7 @@
 				</li>
 			</ul>
 		</li>
-		<li class="dropdown hover-line">
+		<li class="dropdown hover-line" style="padding-top:6px;font-size:16px;">
 			<a href="#" data-toggle="dropdown">
 				<i class="fa-bell-o" title="消息管理"></i>
 				<span class="badge badge-purple" id="messageTips"></span>
@@ -111,8 +99,8 @@
 		</li>
 	</ul>
 	<!-- Right links for user info navbar -->
-	<ul class="user-info-menu right-links list-inline list-unstyled">
-		<li class="dropdown user-profile">
+	<ul class="user-info-menu right-links list-inline list-unstyled index_menu_ul">
+		<li class="dropdown user-profile" style="padding-top:6px;font-size:16px;">
 			<a href="#" data-toggle="dropdown">
 				<span><%=userInfo.getName() %>&nbsp;&nbsp;的账户
 					<i class="fa-angle-down"></i>

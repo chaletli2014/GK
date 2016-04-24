@@ -12,8 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.GoodsCompanyInfo;
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.service.DictionaryService;
+import com.goodsquick.service.GoodsRadarService;
+import com.goodsquick.service.LiftService;
+import com.goodsquick.utils.GoodsQuickAttributes;
 
 @Controller
 public class GoodsRadarController {
@@ -23,6 +27,14 @@ public class GoodsRadarController {
 	@Autowired
 	@Qualifier("dictionaryService")
 	private DictionaryService dictionaryService;
+	
+	@Autowired
+	@Qualifier("liftService")
+	private LiftService liftService;
+	
+	@Autowired
+	@Qualifier("goodsRadarService")
+	private GoodsRadarService goodsRadarService;
 
 	@RequestMapping("/houseRadar")
 	public ModelAndView houseRadar(HttpServletRequest request){
@@ -39,6 +51,10 @@ public class GoodsRadarController {
 			}
 			view.addObject("spTypeCode", spTypeCode);
 			
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			
+			List<GoodsCompanyInfo> companyInfos = goodsRadarService.getCompanyInfoByRepositoryCode(repositoryCode);
+			view.addObject("companyInfos", companyInfos);
 		} catch (Exception e) {
 			logger.error("fail to show the house radar ",e);
 		}

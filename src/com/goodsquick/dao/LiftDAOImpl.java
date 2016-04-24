@@ -2,7 +2,9 @@ package com.goodsquick.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.stereotype.Repository;
+
 import com.goodsquick.mapper.GoodsDeviceLiftRowMapper;
 import com.goodsquick.model.GoodsDeviceLift;
 
@@ -196,6 +198,15 @@ public class LiftDAOImpl extends BaseDAOImpl implements LiftDAO {
 		StringBuilder sql = new StringBuilder("select ").append(LIFT_QUERY_SELECTION_FROM);
 		sql.append(" where dl.module_id=? and dl.status='1' ");
 		ohList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{moduleId}, new GoodsDeviceLiftRowMapper());
+        return ohList;
+	}
+
+	@Override
+	public List<String> getLiftBrandsByRepositoryCode(String repositoryCode)
+			throws Exception {
+		List<String> ohList = new ArrayList<String>();
+        String sql = "select br.dic_name from tbl_goods_devices_lift dl left join tbl_goods_dictionary br on dl.brand_code = br.dic_code where repository_code = ? and status = '1' ";
+        ohList = dataBean.getJdbcTemplate().queryForList(sql, String.class, new Object[]{repositoryCode});
         return ohList;
 	}
 

@@ -28,7 +28,7 @@
 						<a href="#" onclick="javascript:void(0)">物库管理</a>
 					</li>
 					<li class="active">
-						<strong>产品信息</strong>
+						<strong><%=repoPreName%>信息</strong>
 					</li>
 					</ol>
 				</div>
@@ -37,7 +37,7 @@
 				<div class="panel-body">
 					<div>
 						<div class="panel-heading">
-							<h3 class="panel-title" style="line-height: 28px; margin-right:10px;">产品信息</h3>
+							<h3 class="panel-title" style="line-height: 28px; margin-right:10px;"><%=repoPreName%>信息</h3>
 							<a id="newProductLink">
 								<button class="btn btn-icon btn-info">
 									<li class="fa-plus-square"></li>
@@ -47,7 +47,7 @@
 						<div class="panel panel-color panel-success">
 						<a href="#" data-toggle="panel">
 						<div class="panel-heading" style="padding:10px 20px;margin-top:0px;">
-							<h3 class="panel-title">服务类产品</h3>
+							<h3 class="panel-title">服务类<%=repoPreName%></h3>
 							<div class="panel-options">
 								<span class="collapse-icon">&ndash;</span>
 								<span class="expand-icon">+</span>
@@ -58,9 +58,9 @@
 						<table class="table table-bordered table-striped" id="productTable">
 							<thead>
 								<tr>
-									<th>产品类目</th>
-									<th>产品名称</th>
-									<th>产品价格</th>
+									<th><%=repoPreName%>类目</th>
+									<th><%=repoPreName%>名称</th>
+									<th><%=repoPreName%>价格</th>
 									<th>备注</th>
 									<th>操作</th>
 								</tr>
@@ -73,10 +73,10 @@
 										<td class="pprice" title="${product.productPrice}">${product.productPrice}</td>
 										<td class="remark" title="${product.remark}">${product.remark}</td>
 										<td>
-											<a id="${product.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyProduct">
+											<a id="${product.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyServiceP">
 												编辑
 											</a>
-											<a id="${product.id}" class="btn btn-danger btn-sm btn-icon icon-left removeProduct">
+											<a id="${product.id}" class="btn btn-danger btn-sm btn-icon icon-left removeServiceP">
 												删除
 											</a>
 										</td>
@@ -89,7 +89,7 @@
 						<div class="panel panel-color panel-success">
 						<a href="#" data-toggle="panel">
 						<div class="panel-heading" style="padding:10px 20px;">
-							<h3 class="panel-title">实物类产品-电梯</h3>
+							<h3 class="panel-title">实物类<%=repoPreName%>-电梯</h3>
 							<div class="panel-options">
 								<span class="collapse-icon">&ndash;</span>
 								<span class="expand-icon">+</span>
@@ -103,7 +103,7 @@
 									<th>电梯品牌</th>
 									<th>电梯用途</th>
 									<th>电梯款型</th>
-									<th>产品价格</th>
+									<th>价格</th>
 									<th>操作</th>
 								</tr>
 							</thead>
@@ -135,6 +135,7 @@
 		</div>
 	</div>
 	<%@include file="addProduct.jsp" %>
+	<%@include file="addLift.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

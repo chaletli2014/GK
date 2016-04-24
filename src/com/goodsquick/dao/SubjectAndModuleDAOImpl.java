@@ -65,7 +65,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	@Override
 	public List<GoodsSubject> getAllSubject(String repositoryCode) throws Exception {
 		List<GoodsSubject> topSubjectList = new ArrayList<GoodsSubject>();
-        String sql = "select * from tbl_goods_house_subject hs where repository_code= ? and status = '1' order by hs.update_date desc";
+        String sql = "select * from tbl_goods_house_subject hs where repository_code= ? and status = '1' order by hs.subject_name ";
         topSubjectList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new GoodsHouseSubjectRowMapper());
         return topSubjectList;
 	}
@@ -126,7 +126,7 @@ public class SubjectAndModuleDAOImpl extends BaseDAOImpl implements SubjectAndMo
 	@Override
 	public List<GoodsHouseSubjectModule> getAllModuleNodesBySubjectId(int subjectId) throws Exception {
 		List<GoodsHouseSubjectModule> moduleList = new ArrayList<GoodsHouseSubjectModule>();
-		String sql = "select sm.* from tbl_goods_house_subject_module sm, tbl_goods_house_subject hs where FIND_IN_SET(hs.id, queryChildrenSubjectInfo(?)) and sm.subject_id = hs.id ";
+		String sql = "select sm.* from tbl_goods_house_subject_module sm, tbl_goods_house_subject hs where FIND_IN_SET(hs.id, queryChildrenSubjectInfo(?)) and sm.subject_id = hs.id and sm.status = '1' and hs.status = '1' ";
 		moduleList = dataBean.getJdbcTemplate().query(sql, new Object[]{subjectId}, new GoodsHouseSubjectModuleRowMapper());
 		return moduleList;
 	}

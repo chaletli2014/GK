@@ -31,6 +31,7 @@
 	<script type="text/javascript" src="<%=basePath%>js/goodsquick/login.js"></script>
 	<link href="<%=basePath%>css/login.css" rel="stylesheet">
 	<link href="<%=basePath%>css/reset.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="<%=basePath%>css/jquery.alerts.css">
 	
 	<script type="text/javascript">
 	var basePath = "<%=basePath%>";

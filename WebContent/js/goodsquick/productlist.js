@@ -41,7 +41,7 @@ jQuery(document).ready(function($){
 		}
 	});
 	
-	$(".removeProduct").click(function(){
+	$("body").delegate('.removeServiceP', 'click', function(){
 		var productId = this.id;
 		jConfirm("是否删除当前产品？","信息",function(r) {
 	    	if(r){
@@ -60,7 +60,7 @@ jQuery(document).ready(function($){
 	    });
 	});
 	
-	$(".modifyProduct").click(function(){
+	$("body").delegate('.modifyServiceP', 'click', function(){
 		jQuery('#new_product_div').modal('show', {backdrop: 'fade'});
 		$("#productId").val(this.id);
 		
@@ -92,6 +92,48 @@ jQuery(document).ready(function($){
 				$("#remark").val($(this).attr("title"));
 			}
 		});
+	});
+	
+	$("body").delegate('.modifyProduct', 'click', function(){
+		$("#liftId").val(this.id);
+		
+		jQuery.ajax({
+			url: basePath+"getLiftInfoById",
+			data:{
+				liftId : this.id
+			},
+			success: function(response){
+				populateLiftInfo(response.liftObj);
+				jQuery('#newLiftDiv').modal('show', {backdrop: 'fade'});
+			}
+		});
+	});
+	
+	$("body").delegate('#liftFinishWizard', 'click', function(){
+		if(!$("#liftBrand") || $("#liftBrand").val() == ''){
+			jAlert("品牌必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftPurpose") || $("#liftPurpose").val() == '' ){
+			jAlert("用途必选，否则无法提交","错误");
+			return false;
+		}if(!$("#liftStyle") || $("#liftStyle").val() == ''){
+			jAlert("款型必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftCT") || $("#liftCT").val() == ''){
+			jAlert("载重量必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftNS") || $("#liftNS").val() == ''){
+			jAlert("额定速度必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftQA") || $("#liftQA").val() == ''){
+			jAlert("质保必填，否则无法提交","错误");
+			return false;
+		}if(!$("#liftPrice") || $("#liftPrice").val() == ''){
+			jAlert("价格必填，否则无法提交","错误");
+			return false;
+		}else{
+			$("#addlift_form").submit();
+		}
 	});
 	
 	$("#addNewProductBtn").click(function(){
@@ -186,6 +228,40 @@ function submitProduct(){
 	}
 	
 	return true;
+}
+
+function populateLiftInfo(liftObj){
+	$("#liftBrand").val(liftObj.liftBrand);
+	var liftPurpose = liftObj.liftPurpose;
+	$("#liftPurpose option").each(function() {
+        if ($(this).val() == liftPurpose ) {
+            $(this).attr("selected", "selected");
+        }
+        $("#liftPurpose").selectBoxIt().data("selectBoxIt");
+		$("#liftPurpose").data("selectBox-selectBoxIt").refresh();
+    });
+	var liftStyle = liftObj.liftStyle;
+	$("#liftStyle option").each(function() {
+		if ($(this).val() == liftStyle ) {
+			$(this).attr("selected", "selected");
+		}
+		$("#liftStyle").selectBoxIt().data("selectBoxIt");
+		$("#liftStyle").data("selectBox-selectBoxIt").refresh();
+	});
+	$("#liftCT").val(liftObj.liftCT);
+	$("#liftNS").val(liftObj.liftNS);
+	$("#liftQA").val(liftObj.liftQA);
+	$("#liftPrice").val(liftObj.liftPrice);
+	$("#holeSize").val(liftObj.holeSize);
+	$("#pitDepth").val(liftObj.pitDepth);
+	$("#overheadHeight").val(liftObj.overheadHeight);
+	$("#reservation").val(liftObj.reservation);
+	$("#roomSize").val(liftObj.roomSize);
+	$("#roomHeight").val(liftObj.roomHeight);
+	$("#carSize").val(liftObj.carSize);
+	$("#carHeight").val(liftObj.carHeight);
+	$("#doorSize").val(liftObj.doorSize);
+	$("#mainPower").val(liftObj.mainPower);
 }
 
 function clearModifyProductForm(){
