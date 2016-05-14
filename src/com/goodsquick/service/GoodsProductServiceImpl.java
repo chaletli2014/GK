@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.goodsquick.dao.GoodsProductDAO;
+import com.goodsquick.dao.GoodsSourceFileDAO;
 import com.goodsquick.model.GoodsProduct;
 import com.goodsquick.model.GoodsProductObj;
 import com.goodsquick.model.WebUserInfo;
@@ -22,6 +23,10 @@ public class GoodsProductServiceImpl implements GoodsProductService {
 	@Autowired
 	@Qualifier("goodsProductDAO")
 	private GoodsProductDAO goodsProductDAO;
+	
+	@Autowired
+	@Qualifier("goodsSourceFileDAO")
+	private GoodsSourceFileDAO goodsSourceFileDAO;
 	
 	@Override
 	public List<GoodsProduct> getGoodsProductByRepositoryCode(
@@ -96,6 +101,7 @@ public class GoodsProductServiceImpl implements GoodsProductService {
 			
 			goodsProductDAO.updateProductObj(goodsProduct, currentUser);
 		}
+		goodsSourceFileDAO.setMainPicOfGoodsProduct(goodsProduct.getMainPicId(), productId, goodsProduct.getRepositoryCode(), currentUser);
 	}
 
 	@Override

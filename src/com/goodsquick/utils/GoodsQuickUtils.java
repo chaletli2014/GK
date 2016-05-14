@@ -66,6 +66,14 @@ public class GoodsQuickUtils {
 		}
 	}
 	
+	public static Long parseLongFromString(String input){
+		try{
+			return Long.valueOf(input);
+		}catch(NumberFormatException e){
+			return 0L;
+		}
+	}
+	
 	public static Double parseDoubleFromString(String input){
 		try{
 			return Double.valueOf(input);

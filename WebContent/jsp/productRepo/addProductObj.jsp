@@ -14,6 +14,9 @@
 					<li>
 						<a href="#tab_main" data-toggle="tab">主要参数</a>
 					</li>
+					<li>
+						<a href="#tab_source" data-toggle="tab">资料库</a>
+					</li>
 				</ul>
 				<div class="progress-indicator">
 					<span></span>
@@ -79,6 +82,9 @@
 				        	<jsp:param name="basePath" value="<%=basePath%>"/>
 				        </jsp:include>
 					 --%>
+					</div>
+					<div class="tab-pane" id="tab_source">
+						<%@include file="addProductSource.jsp" %>
 					</div>
 					<!-- Tabs Pager -->
 					<div>

@@ -17,13 +17,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDictionary;
+import com.goodsquick.model.GoodsHouseFile;
 import com.goodsquick.model.GoodsProduct;
 import com.goodsquick.model.GoodsProductLift;
 import com.goodsquick.model.GoodsProductObj;
+import com.goodsquick.model.GoodsProductSource;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
 import com.goodsquick.service.GoodsProductLiftService;
 import com.goodsquick.service.GoodsProductService;
+import com.goodsquick.service.GoodsSourceFileService;
 import com.goodsquick.utils.GoodsDateUtil;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
@@ -44,6 +47,10 @@ public class ProductController {
 	@Autowired
 	@Qualifier("goodsProductLiftService")
 	private GoodsProductLiftService goodsProductLiftService;
+	
+	@Autowired
+	@Qualifier("goodsSourceFileService")
+	private GoodsSourceFileService goodsSourceFileService;
 	
 	@RequestMapping("/newGoodsProductPre")
 	public ModelAndView newGoodsProductPre(HttpServletRequest request){
@@ -109,6 +116,7 @@ public class ProductController {
 			productObjFromPage.setProductDom(productDom);
 			productObjFromPage.setProductQA(productQA);
 			productObjFromPage.setProductPrice(productPrice);
+			productObjFromPage.setMainPicId(GoodsQuickUtils.parseLongFromString(request.getParameter("isMain")));
 			
 			goodsProductService.saveOrUpdateProductObj(productObjFromPage, currentUser);
 			
@@ -236,6 +244,11 @@ public class ProductController {
 		try {
 			int productId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("productId"));
 			GoodsProductObj productObj = goodsProductService.getProductObjById(productId);
+			request.getSession().setAttribute("currentProductObj", productObj);
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			
+			List<GoodsProductSource> productSources = goodsSourceFileService.getGoodsProductSourceByRCAndProductId(repositoryCode, productId);
+			result.put("productSources", productSources);
 			
 			result.put("productObj", productObj);
 			result.put("result", "Y");

@@ -836,3 +836,25 @@ alter table tbl_goods_dictionary_type modify column type_code varchar(50);
 alter table tbl_goods_dictionary modify column type_code varchar(50);
 alter table tbl_goods_dictionary modify column dic_name varchar(50);
 alter table tbl_goods_dictionary modify column dic_code varchar(50);
+
+--产品资源文件表
+CREATE TABLE tbl_goods_product_source (
+id  							bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+repository_code					varchar(20)		comment '物库编码',
+tbl_goods_product_obj_id		bigint(20)		comment '产品主键',
+file_type						varchar(20)		comment '文件类型',
+file_name						varchar(200)	comment '文件名称',
+file_path						varchar(200) 	comment '文件路径',
+is_main							int 			comment '是否是封面图片，1是0否',
+create_user  					varchar(20),
+create_date						datetime,
+update_user						varchar(20),
+update_date						datetime,
+status  						varchar(2) 		DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;

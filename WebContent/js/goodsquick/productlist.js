@@ -71,6 +71,7 @@ jQuery(document).ready(function($){
 			success: function(response){
 				populateProductObjInfo(response.productObj);
 				jQuery('#newProductObjDiv').modal('show', {backdrop: 'fade'});
+				populateProductSource(response.productSources);
 			}
 		});
 	});
@@ -169,8 +170,16 @@ jQuery(document).ready(function($){
 			$("#addlift_form").submit();
 		}
 	});
+	$("body").delegate('.isMainPicCheckbox', 'change', function(){
+		var pics = $(".isMainPicCheckbox");
+		$.each(pics, function(i, pic) {
+			$(this).removeAttr("checked");
+		});
+		$(this).prop("checked",true);
+		$("#mainPicId").val($(this).val());
+	});
 	
-	$("#productObjBtn").click(function(){
+	$("body").delegate('#productObjBtn', 'click', function(){
 		var productType = $("#productType").val();
 		var productName = $("#productName").val();
 		var productBrand = $("#productBrand").val();
@@ -181,6 +190,7 @@ jQuery(document).ready(function($){
 		var productPrice = $("#productPrice").val();
 		var remark = $("#remark").val();
 		var productId = $("#productId").val();
+		var isMain = $("#mainPicId").val();
 		if( productName == '' ){
 			jAlert("产品名称不能为空","提醒");
 			return false;
@@ -201,7 +211,8 @@ jQuery(document).ready(function($){
 				productDom : productDom,
 				productQA : productQA,
 				productPrice : productPrice,
-				remark : remark
+				remark : remark,
+				isMain: isMain
 			},
 			success: function(response){
 				var result = response.result;
@@ -370,6 +381,29 @@ function populateProductObjInfo(productObj){
 	$("#productDom").val(productObj.productDom);
 	$("#productQA").val(productObj.productQA);
 	$("#productPrice").val(productObj.productPrice);
+}
+
+function populateProductSource(productSource){
+	$("#existsFileTable tbody").empty();
+	var count = 1;
+	$.each(productSource,function(n,fileObj){
+		var fileTR = "<tr><td>"+count+"</td>";
+		fileTR = fileTR + "<td>"+fileObj.fileType+"</td>";
+		fileTR = fileTR + "<td><a href='"+fileObj.filePath+"'>"+fileObj.fileName+"</a></td>";
+		if( fileObj.fileType == 'JPG' || fileObj.fileType == 'jpg' || fileObj.fileType == 'png' || fileObj.fileType == 'PNG' ){
+			if( fileObj.isMain == '是' ){
+				fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' checked class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
+			}else{
+				fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
+			}
+		}else{
+			fileTR = fileTR + "<td></td>";
+		}
+		fileTR = fileTR + "<td></td>";
+		fileTR = fileTR + "</tr>";
+		$("#existsFileTable tbody").append(fileTR);
+		count++;
+	});
 }
 
 function clearModifyProductForm(){

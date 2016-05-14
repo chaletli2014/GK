@@ -26,6 +26,8 @@ public class GoodsProductObj extends BaseObject{
 	private Date productDom;
 	private int productQA;
 	
+	private long mainPicId;
+	
 	public int getId() {
 		return id;
 	}
@@ -109,5 +111,11 @@ public class GoodsProductObj extends BaseObject{
 	}
 	public void setProductQA(int productQA) {
 		this.productQA = productQA;
+	}
+	public long getMainPicId() {
+		return mainPicId;
+	}
+	public void setMainPicId(long mainPicId) {
+		this.mainPicId = mainPicId;
 	}
 }
