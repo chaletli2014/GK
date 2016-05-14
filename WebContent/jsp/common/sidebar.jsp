@@ -150,6 +150,9 @@
 							<span class="title">列表</span>
 						</a>
 						<ul>
+							<%
+								if(!"2".equalsIgnoreCase(currentRepository.getRepositoryType())){
+							%>
 							<li <% if( opened.indexOf(",subjectModule,")>-1 
 								|| actived.indexOf(",houseDevice,")>-1 
 								|| actived.indexOf(",houseOther,")>-1
@@ -205,6 +208,7 @@
 								</li>
 							</ul>
 						</li>
+						<%} %>
 						<li <% if( actived.indexOf(",productlist,")>-1 ){%>class="active"<%} %>>
 							<a href="<%=request.getParameter("basePath")%>productlist">
 								<i class="entypo-flow-parallel"></i>
