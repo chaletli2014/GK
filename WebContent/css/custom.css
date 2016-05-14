@@ -88,6 +88,37 @@ div.product_select_pre a.product_link{
 	font-weight: bold;
 }
 
+#product_pre_div .product_block{
+	width:48%;
+	float:left;
+	margin-right:10px;
+	padding-bottom:20px;
+}
+
+#product_pre_div .product_level{
+	margin:10px;
+	padding:10px;
+	height:400px;
+}
+
+div.product_pre_model{
+	width:48%;
+	display: block;
+	background-image:url(../images/bgw.png);
+	float:left;
+	margin:4px
+}
+div.product_pre_model a.product_link{
+	display: block;
+	color:#999;
+	border: 1px dashed #999;
+	height:140px;
+	line-height:140px;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+}
+
 div.detail_show_title{
 	float:left;
 	width: 100px;
@@ -560,5 +591,4 @@ div.showDetailDiv .form-group{
 	float:right;
     color: white;
     font-size: 12px;
-}
 }

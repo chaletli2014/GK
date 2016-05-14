@@ -38,11 +38,56 @@
 					<div>
 						<div class="panel-heading">
 							<h3 class="panel-title" style="line-height: 28px; margin-right:10px;"><%=repoPreName%>信息</h3>
-							<a id="newProductLink">
-								<button class="btn btn-icon btn-info">
-									<li class="fa-plus-square"></li>
-								</button>
-							</a>
+						</div>
+						<div class="panel panel-color panel-success">
+						<a href="#" data-toggle="panel">
+						<div class="panel-heading" style="padding:10px 20px;">
+							<h3 class="panel-title">实物类<%=repoPreName%></h3>
+							<div class="panel-options">
+								<span class="collapse-icon">&ndash;</span>
+								<span class="expand-icon">+</span>
+							</div>
+						</div>
+						</a>
+						<div class="panel-body">
+						<table class="table table-bordered table-striped" id="productObjTable">
+							<thead>
+								<tr>
+									<th width="20%">产品类型</th>
+									<th>名称</th>
+									<th>品牌</th>
+									<th>型号</th>
+									<th>编码</th>
+									<th>生产日期</th>
+									<th>质保</th>
+									<th>价格</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody class="middle-align">
+								<c:forEach items="${productObjs}" var="obj">
+									<tr>
+										<td class="productType" title="${obj.productTypeDesc}">${obj.productTypeDesc}</td>
+										<td class="productName" title="${obj.productName}">${obj.productName}</td>
+										<td class="productBrand" title="${obj.productBrand}">${obj.productBrand}</td>
+										<td class="productModel" title="${obj.productModel}">${obj.productModel}</td>
+										<td class="itemCode" title="${obj.itemCode}">${obj.itemCode}</td>
+										<td class="productDom" title="${obj.productDom}">${obj.productDom}</td>
+										<td class="productQA" title="${obj.productQA}">${obj.productQA}</td>
+										<td class="productPrice" title="${obj.productPrice}">${obj.productPrice}</td>
+										<td>
+											<a id="${obj.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyProductObj">
+												编辑
+											</a></br></br>
+											<a id="${obj.id}" class="btn btn-danger btn-sm btn-icon icon-left removeProductObj">
+												删除
+											</a>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						</div>
 						</div>
 						<div class="panel panel-color panel-success">
 						<a href="#" data-toggle="panel">
@@ -86,56 +131,13 @@
 						</table>
 						</div>
 						</div>
-						<div class="panel panel-color panel-success">
-						<a href="#" data-toggle="panel">
-						<div class="panel-heading" style="padding:10px 20px;">
-							<h3 class="panel-title">实物类<%=repoPreName%>-电梯</h3>
-							<div class="panel-options">
-								<span class="collapse-icon">&ndash;</span>
-								<span class="expand-icon">+</span>
-							</div>
-						</div>
-						</a>
-						<div class="panel-body">
-						<table class="table table-bordered table-striped" id="liftTable">
-							<thead>
-								<tr>
-									<th>电梯品牌</th>
-									<th>电梯用途</th>
-									<th>电梯款型</th>
-									<th>价格</th>
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody class="middle-align">
-								<c:forEach items="${lifts}" var="lift">
-									<tr>
-										<td class="liftBrand" title="${lift.liftBrand}">${lift.liftBrand}</td>
-										<td class="liftPurpose" title="${lift.liftPurposeDesc}">${lift.liftPurposeDesc}</td>
-										<td class="liftStyle" title="${lift.liftStyleDesc}">${lift.liftStyleDesc}</td>
-										<td class="liftPrice" title="${lift.price}">${lift.price}</td>
-										<td>
-											<a id="${lift.id}" class="btn btn-secondary btn-sm btn-icon icon-left modifyProduct">
-												编辑
-											</a>
-											<a id="${lift.id}" class="btn btn-danger btn-sm btn-icon icon-left removeProduct">
-												删除
-											</a>
-										</td>
-									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-						</div>
-						</div>
 					</div>
 				</div>
 			</div>
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>
-	<%@include file="addProduct.jsp" %>
-	<%@include file="addLift.jsp" %>
+	<%@include file="addProductObj.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>

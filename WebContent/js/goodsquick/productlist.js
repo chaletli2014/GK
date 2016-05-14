@@ -3,7 +3,7 @@ var nameDics;
 
 jQuery(document).ready(function($){
 	initDataTable();
-	initLiftTable();
+	initProductObjTable();
 	
 	$("#newProductLink").click(function(){
 //		clearModifyProductForm();
@@ -58,6 +58,40 @@ jQuery(document).ready(function($){
 	    	}else{
 	    	}
 	    });
+	});
+	
+	$("body").delegate('.modifyProductObj', 'click', function(){
+		$("#productId").val(this.id);
+		
+		jQuery.ajax({
+			url: basePath+"getProductInfoById",
+			data:{
+				productId : this.id
+			},
+			success: function(response){
+				populateProductObjInfo(response.productObj);
+				jQuery('#newProductObjDiv').modal('show', {backdrop: 'fade'});
+			}
+		});
+	});
+	
+	$("body").delegate('.removeProductObj', 'click', function(){
+		var productId = this.id;
+		jConfirm("是否删除当前产品？","信息",function(r) {
+			if(r){
+				jQuery.ajax({
+					url: basePath+"removeProductObj",
+					data : {
+						productId : productId
+					},
+					success: function(response){
+						window.location.reload();
+						jQuery('.close').click();
+					}
+				});
+			}else{
+			}
+		});
 	});
 	
 	$("body").delegate('.modifyServiceP', 'click', function(){
@@ -136,6 +170,62 @@ jQuery(document).ready(function($){
 		}
 	});
 	
+	$("#productObjBtn").click(function(){
+		var productType = $("#productType").val();
+		var productName = $("#productName").val();
+		var productBrand = $("#productBrand").val();
+		var productModel = $("#productModel").val();
+		var itemCode = $("#itemCode").val();
+		var productDom = $("#productDom").val();
+		var productQA = $("#productQA").val();
+		var productPrice = $("#productPrice").val();
+		var remark = $("#remark").val();
+		var productId = $("#productId").val();
+		if( productName == '' ){
+			jAlert("产品名称不能为空","提醒");
+			return false;
+		}
+		if( productPrice == '' ){
+			jAlert("产品价格不能为空","提醒");
+			return false;
+		}
+		jQuery.ajax({
+			url: basePath+"saveOrUpdateProductObj",
+			data : {
+				productId : productId,
+				productType : productType,
+				productName : productName,
+				productBrand : productBrand,
+				productModel : productModel,
+				itemCode : itemCode,
+				productDom : productDom,
+				productQA : productQA,
+				productPrice : productPrice,
+				remark : remark
+			},
+			success: function(response){
+				var result = response.result;
+				if( result != 'UPDATE' && result != 'NEW' ){
+					jAlert("编辑产品失败","提醒");
+				}else if( result == 'NEW' ){
+					jConfirm("新增产品成功,是否进入产品列表？","信息",function(r) {
+				    	if(r){
+				    		window.location.href=basePath+"productlist";
+				    	}else{
+				    		window.location.reload();
+				    		jQuery('.close').click();
+				    	}
+				    });
+				}else if( result == 'UPDATE' ){
+					jAlert("产品信息更新成功","提醒",function(){
+						window.location.reload();
+						jQuery('.close').click();
+					});
+				}
+			}
+		});
+	});
+	
 	$("#addNewProductBtn").click(function(){
 		var productType = $("#productType").val();
 		var productName = $("#productName").val();
@@ -200,17 +290,24 @@ function initDataTable(){
 	]);
 }
 
-function initLiftTable(){
-	$("#liftTable").dataTable({
+function initProductObjTable(){
+	$("#productObjTable").dataTable({
 		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>",
 		aoColumns: [
-        null,//电梯品牌
-        null,//电梯用途
-        null,//电梯款型
-        null,//产品价格
+        null,//分类
+        null,//名称
+        null,//品牌
+        null,//型号
+        null,//编码
+        null,//生产日期
+        null,//质保
+        null,//价格
         null//操作
         ]
 	});
+	$("#productObjTable").dataTable().yadcf([
+  		{column_number : 0}
+  	]);
 }
 
 function submitProduct(){
@@ -262,6 +359,17 @@ function populateLiftInfo(liftObj){
 	$("#carHeight").val(liftObj.carHeight);
 	$("#doorSize").val(liftObj.doorSize);
 	$("#mainPower").val(liftObj.mainPower);
+}
+
+function populateProductObjInfo(productObj){
+	$("#productType").val(productObj.productType);
+	$("#productName").val(productObj.productName);
+	$("#productBrand").val(productObj.productBrand);
+	$("#productModel").val(productObj.productModel);
+	$("#itemCode").val(productObj.itemCode);
+	$("#productDom").val(productObj.productDom);
+	$("#productQA").val(productObj.productQA);
+	$("#productPrice").val(productObj.productPrice);
 }
 
 function clearModifyProductForm(){

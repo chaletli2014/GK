@@ -803,3 +803,36 @@ alter table tbl_goods_house_subject add column create_date datetime;
 alter table tbl_goods_house_subject add column create_user varchar(20);
 alter table tbl_goods_house_subject add column update_date datetime;
 alter table tbl_goods_house_subject add column update_user varchar(20);
+
+
+--实物类产品库
+CREATE TABLE tbl_goods_product_obj (
+id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
+product_type		varchar(200)	not null comment '产品类目',
+product_name		varchar(200)	not null comment '产品名称',
+product_brand		varchar(200)	not null comment '产品品牌',
+product_model		varchar(200)	not null comment '产品型号',
+item_code			varchar(200)	not null comment '产品编码',
+product_dom			date			not null comment '生产日期',
+product_QA			int				not null comment '质保',
+product_price		decimal(11,6)	not null comment '产品价格',
+repository_code		varchar(20) 	CHARACTER SET utf8 COLLATE utf8_general_ci not NULL,
+create_user  		varchar(20),
+create_date			datetime,
+update_user			varchar(20),
+update_date			datetime,
+status				varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+remark				varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+alter table tbl_goods_dictionary_type modify column type_name varchar(50);
+alter table tbl_goods_dictionary_type modify column type_code varchar(50);
+alter table tbl_goods_dictionary modify column type_code varchar(50);
+alter table tbl_goods_dictionary modify column dic_name varchar(50);
+alter table tbl_goods_dictionary modify column dic_code varchar(50);

@@ -80,12 +80,10 @@ public class UsernamePasswordAuthenticationFilter extends org.springframework.se
     		auth.setDetails(roles);
     		
     		SecurityContextHolder.getContext().setAuthentication(auth);
-    		System.out.println("setAuth");
     	}
     	
     	if( null != SecurityContextHolder.getContext() && null != SecurityContextHolder.getContext().getAuthentication() ){
     		WebUserInfo webUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    		System.out.println("auth:"+webUser.getLoginName());
     	}
     	
     	super.doFilter(request, response, chain);

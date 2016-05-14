@@ -15,22 +15,26 @@
 		actived = "*";
 	}
 	WebUserInfo webUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String basePath = request.getParameter("basePath");
 	
 	String manageName = "资品管理";
 	String newRepoName = "添加资品";
-	String manageLink = request.getParameter("basePath")+"ordinaryhouse";
+	String manageLink = basePath+"ordinaryhouse";
 	String repoPreName = "资品";
+	String newLink = basePath+"newProductPre";
 	
 	if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
 		repoPreName = "需品";
 		manageName = "需品管理";
 		newRepoName = "添加需品";
-		manageLink = request.getParameter("basePath")+"productlist";
+		manageLink = basePath+"productlist";
+		newLink = basePath+"newProductPre";
 	}else if("2".equalsIgnoreCase(currentRepository.getRepositoryType())){
 		repoPreName = "产品";
 		manageName = "产品管理";
 		newRepoName = "添加产品";
-		manageLink = request.getParameter("basePath")+"productlist";
+		manageLink = basePath+"productlist";
+		newLink = basePath+"newGoodsProductPre";
 	}
 %>
 <div class="sidebar-menu toggle-others">
@@ -131,7 +135,7 @@
 				</a>
 				<ul>
 					<li <% if( actived.indexOf(",newProduct,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>newProductPre">
+						<a href="<%=newLink%>">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title"><%=newRepoName%></span>
 						</a>

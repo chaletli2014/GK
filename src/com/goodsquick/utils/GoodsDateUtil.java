@@ -6,8 +6,8 @@ import java.util.Date;
 
 public class GoodsDateUtil {
 
-	private static String DATE_FORMAT_YYYYmmDD = "YYYYMMdd";
-	private static String DATE_FORMAT_YYYY_mm_DD = "YYYY-MM-dd";
+	private static String DATE_FORMAT_YYYYmmDD = "yyyyMMdd";
+	private static String DATE_FORMAT_YYYY_mm_DD = "yyyy-MM-dd";
 	
 	public static String getStringFormat(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_YYYYmmDD);
