@@ -101,3 +101,14 @@ insert into tbl_goods_dictionary_type values(null,'食品药品监督管理机�
 insert into tbl_goods_dictionary values(null,'moduleType1_food','moduletype2_food_sup','食品药品监管','食品药品监管');
 
 insert into tbl_goods_dictionary values(null,'houseRadar','house_radar_supplier','供应商','物链雷达的tab分类-供应商');
+
+insert into tbl_goods_dictionary_type values(null,'不动产产品/资品模板','template_estate','不动产产品/资品模板');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_oh','普通住宅','不动产模板-普通住宅');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_ob','写字楼','不动产模板-写字楼');
+
+insert into tbl_goods_dictionary_type values(null,'动产产品/资品模板','template_chattel','动产产品/资品模板');
+insert into tbl_goods_dictionary values(null,'template_chattel','template_lift','电梯','动产模板-电梯');
+insert into tbl_goods_dictionary values(null,'template_chattel','template_security','安防','动产模板-安防');
+insert into tbl_goods_dictionary values(null,'template_chattel','template_fireP','消防','动产模板-消防');
+insert into tbl_goods_dictionary values(null,'template_chattel','template_airC','空调','动产模板-空调');
+insert into tbl_goods_dictionary values(null,'template_chattel','template_waterP','给排水泵','动产模板-给排水泵');

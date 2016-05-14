@@ -23,6 +23,7 @@
 				</div>
 				<form role="form" class="form-horizontal" action="saveordinaryhouse" method="post" id="addordinaryhouse_form">
 				<input type="hidden" id="orHouseId" name="orHouseId" value="${orHouse.id}">
+				<input type="hidden" id="assetType" name="assetType">
 				<div class="tab-content">
 					<!-- Tabs Content -->
 					<div class="tab-pane active" id="tab_basic">
@@ -87,13 +88,13 @@
 						</div>
 					</div>
 					<div class="tab-pane" id="tab_main">
-						<jsp:include page="ordinaryhouse_param_basic.jsp" flush="true">
+						<jsp:include page="../ep/ordinaryhouse_param_basic.jsp" flush="true">
 				        	<jsp:param name="basePath" value="<%=basePath%>"/>
 				        </jsp:include>
 					</div>
 					</form>
 					<div class="tab-pane" id="tab_source">
-						<%@include file="ordinaryhouse_param_source.jsp" %>
+						<%@include file="../ep/ordinaryhouse_param_source.jsp" %>
 					</div>
 					<div style="float:right;">
 						<a id="finishWizard">

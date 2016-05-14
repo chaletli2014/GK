@@ -26,7 +26,6 @@ import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.GoodsServiceDetail;
-import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
 import com.goodsquick.service.GoodsServiceService;
@@ -617,6 +616,7 @@ public class OrdinaryHouseController {
     	if( null != orHouseId && !"".equalsIgnoreCase(orHouseId) ){
     		ordinaryHouse.setId(GoodsQuickUtils.parseIntegerFromString(orHouseId));
     	}
+    	ordinaryHouse.setPropertyType(request.getParameter("assetType"));
     	ordinaryHouse.setMainPicId(GoodsQuickUtils.parseIntegerFromString(request.getParameter("isMain")));
     	ordinaryHouse.setBuildingName(request.getParameter("buildingName"));
     	ordinaryHouse.setProvince(request.getParameter("province"));
@@ -632,8 +632,6 @@ public class OrdinaryHouseController {
     	ordinaryHouse.setProjectPositionW(request.getParameter("projectPositionW"));
     	ordinaryHouse.setProjectPositionS(request.getParameter("projectPositionS"));
     	ordinaryHouse.setProjectPositionN(request.getParameter("projectPositionN"));
-    	ordinaryHouse.setPropertyType(request.getParameter("propertyType"));
-    	ordinaryHouse.setPropertytypeO(request.getParameter("propertytypeO"));
     	ordinaryHouse.setFinishYear(GoodsQuickUtils.parseIntegerFromString(request.getParameter("finishYear")));
     	ordinaryHouse.setFinishMonth(GoodsQuickUtils.parseIntegerFromString(request.getParameter("finishMonth")));
     	ordinaryHouse.setFinishDate(GoodsQuickUtils.parseIntegerFromString(request.getParameter("finishDate")));

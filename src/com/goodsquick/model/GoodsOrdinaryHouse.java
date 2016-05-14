@@ -83,12 +83,17 @@ public class GoodsOrdinaryHouse {
 	private String projectPositionN;
 	
 	/**
-	 * 物业类型
+	 * 不动产类型
 	 */
 	private String propertyType;
 	
 	/**
-	 * 物业类型 - 其他
+	 * 不动产类型名称
+	 */
+	private String propertyTypeDesc;
+	
+	/**
+	 * 不动产类型 - 其他
 	 */
 	private String propertytypeO;
 	
@@ -542,6 +547,12 @@ public class GoodsOrdinaryHouse {
 	}
 	public void setMainPicId(int mainPicId) {
 		this.mainPicId = mainPicId;
+	}
+	public String getPropertyTypeDesc() {
+		return propertyTypeDesc;
+	}
+	public void setPropertyTypeDesc(String propertyTypeDesc) {
+		this.propertyTypeDesc = propertyTypeDesc;
 	}
 	
 }

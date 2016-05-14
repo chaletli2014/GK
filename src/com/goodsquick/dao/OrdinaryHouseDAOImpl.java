@@ -45,8 +45,10 @@ public class OrdinaryHouseDAOImpl extends BaseDAOImpl implements OrdinaryHouseDA
 	public GoodsOrdinaryHouse getOrdinaryHouseByRepositoryCode(String repositoryCode)
 			throws Exception{
 		List<GoodsOrdinaryHouse> ohList = new ArrayList<GoodsOrdinaryHouse>();
-		String sql = "select * from tbl_goods_ordinary_house_owned where repository_code = ? and status = '1' ";
-		ohList = dataBean.getJdbcTemplate().query(sql, new Object[]{repositoryCode}, new OrdinaryHouseRowMapper());
+		StringBuilder sql = new StringBuilder("select ho.*,coalesce(gd.dic_name,ho.property_type) as property_type_desc from tbl_goods_ordinary_house_owned ho ");
+		sql.append(" left join tbl_goods_dictionary gd on ho.property_type = gd.dic_code and gd.type_code='template_estate' ");
+		sql.append(" where ho.repository_code = ? and ho.status = '1'  ");
+		ohList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new OrdinaryHouseRowMapper());
 		if( !CollectionUtils.isEmpty(ohList) ){
 			return ohList.get(0);
 		}else{

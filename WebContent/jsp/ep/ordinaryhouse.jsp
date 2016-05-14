@@ -9,7 +9,7 @@ jQuery(document).ready(function($){
 	if( $("#orHouse").val() == null || $("#orHouse").val() == '' ){
 		jConfirm("您还没有添加任何资品，是否现在添加？","信息",function(r) {
 	    	if(r){
-	    		window.location.href="<%=basePath%>newProductPre";
+	    		window.location.href="<%=basePath%>newAssetPre";
 	    	}
 		});
 	}
@@ -58,7 +58,7 @@ jQuery(document).ready(function($){
 									资品名称：<a class="houseNameLink" tabindex="${orHouse.id}" href="javascript:void(0)" title="点击查看明细">${orHouse.buildingName}</a>
 								</p>
 								<p>
-									资品类型：<span>${orHouse.propertyType}</span>
+									资品类型：<span>${orHouse.propertyTypeDesc}</span>
 								</p>
 								<p>
 									坐落位置：<span>${orHouse.location}</span>

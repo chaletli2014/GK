@@ -21,7 +21,7 @@
 	String newRepoName = "添加资品";
 	String manageLink = basePath+"ordinaryhouse";
 	String repoPreName = "资品";
-	String newLink = basePath+"newProductPre";
+	String newLink = basePath+"newAssetPre";
 	
 	if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
 		repoPreName = "需品";

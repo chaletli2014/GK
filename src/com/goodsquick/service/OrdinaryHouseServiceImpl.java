@@ -61,7 +61,7 @@ public class OrdinaryHouseServiceImpl implements OrdinaryHouseService {
 				try{
 					mainPic = ordinaryHouseDAO.getMainPicByRepositoryCode(repositoryCode);
 				}catch(EmptyResultDataAccessException erd){
-					logger.error("there is no main pic of ordinary house");
+					logger.warn("there is no main pic of ordinary house");
 				} catch(Exception e){
 					logger.error("fail to get the main pic of ordinary house",e);
 				}
