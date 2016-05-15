@@ -75,7 +75,7 @@
 							<div class="panel-heading panel-heading-thin">
 								<div class="panel-title">资品看板</div>
 								<div style="float:right;">
-									<a href="<%=basePath%>newProductPre">
+									<a href="<%=basePath%>newAssetPre">
 										<button class="btn btn-primary">+ 新增资品</button>
 									</a>
 								</div>
