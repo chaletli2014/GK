@@ -90,7 +90,8 @@ jQuery(document).ready(function($){
 				productDom : productDom,
 				productQA : productQA,
 				productPrice : productPrice,
-				remark : remark
+				remark : remark,
+				isMain : isMain
 			},
 			success: function(response){
 				var result = response.result;

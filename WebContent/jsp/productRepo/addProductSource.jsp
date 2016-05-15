@@ -44,7 +44,9 @@
 								fileTR = fileTR + "<td>"+fileObj.fileType+"</td>";
 								fileTR = fileTR + "<td><a href='"+fileObj.filePath+"'>"+fileObj.fileName+"</a></td>";
 								if( fileObj.fileType == 'JPG' || fileObj.fileType == 'jpg' || fileObj.fileType == 'png' || fileObj.fileType == 'PNG' ){
+									alert(fileObj.isMain);
 									if( fileObj.isMain == '是' ){
+										$("#mainPicId").val(fileObj.id);
 										fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' checked class='iswitch iswitch-secondary isMainPicCheckbox'></td>";
 									}else{
 										fileTR = fileTR + "<td><input value='"+fileObj.id+"' name='isMain' type='checkbox' class='iswitch iswitch-secondary isMainPicCheckbox'></td>";

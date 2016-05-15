@@ -177,34 +177,37 @@ public class UploadFileController {
 			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
 			GoodsProductObj currentProductObj = (GoodsProductObj)request.getSession().getAttribute("currentProductObj");
-			long goodsProductObjId = currentProductObj.getId();
-			String targetPathStr = request.getSession().getServletContext().getRealPath("/")+GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode+"/"+goodsProductObjId;
-			String downloadPath = request.getSession().getServletContext().getContextPath()+GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode+"/"+goodsProductObjId;
-			
-			File targetPath = new File(targetPathStr);
-			String ori_fileName = file.getOriginalFilename();
-			
-			if( !targetPath.exists() ){
-				targetPath.mkdirs();
+			if( null == currentProductObj ){
+				categoryMap.put("resultMsg", "请先保存产品再上传资料文件");
+			}else{
+				long goodsProductObjId = currentProductObj.getId();
+				String targetPathStr = request.getSession().getServletContext().getRealPath("/")+GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode+"/"+goodsProductObjId;
+				String downloadPath = request.getSession().getServletContext().getContextPath()+GoodsQuickAttributes.UPLOAD_FILE_PATH+repositoryCode+"/"+goodsProductObjId;
+				
+				File targetPath = new File(targetPathStr);
+				String ori_fileName = file.getOriginalFilename();
+				
+				if( !targetPath.exists() ){
+					targetPath.mkdirs();
+				}
+				
+				String targetFileStr = targetPathStr +"/"+ ori_fileName;
+				String downloadFile = downloadPath + "/"+ ori_fileName;
+				File targetFile = new File(targetFileStr);
+				
+				GoodsProductSource productSource = new GoodsProductSource();
+				productSource.setFileName(ori_fileName.substring(0,ori_fileName.lastIndexOf('.')));
+				productSource.setFileType(ori_fileName.substring(ori_fileName.lastIndexOf('.')+1));
+				productSource.setFilePath(downloadFile);
+				productSource.setRepositoryCode(repositoryCode);
+				productSource.setGoodsProductObjId(goodsProductObjId);
+				productSource.setTargetFile(targetFile);
+				productSource.setIsMain("0");
+				productSource.setSourceFile(file);
+				
+				goodsSourceFileService.saveOrUpdateGoodsProductSource(productSource, currentUser);
+				categoryMap.put("existsFiles", goodsSourceFileService.getGoodsProductSourceByRCAndProductId(repositoryCode, goodsProductObjId));
 			}
-			
-			String targetFileStr = targetPathStr +"/"+ ori_fileName;
-			String downloadFile = downloadPath + "/"+ ori_fileName;
-			File targetFile = new File(targetFileStr);
-			
-			GoodsProductSource productSource = new GoodsProductSource();
-			productSource.setFileName(ori_fileName.substring(0,ori_fileName.lastIndexOf('.')));
-			productSource.setFileType(ori_fileName.substring(ori_fileName.lastIndexOf('.')+1));
-			productSource.setFilePath(downloadFile);
-			productSource.setRepositoryCode(repositoryCode);
-			productSource.setGoodsProductObjId(goodsProductObjId);
-			productSource.setTargetFile(targetFile);
-			productSource.setIsMain("0");
-			productSource.setSourceFile(file);
-			
-			goodsSourceFileService.saveOrUpdateGoodsProductSource(productSource, currentUser);
-			categoryMap.put("existsFiles", goodsSourceFileService.getGoodsProductSourceByRCAndProductId(repositoryCode, goodsProductObjId));
-			
 		}catch(Exception e){
 			logger.error("fail to upload the product source,",e);
 			categoryMap.put("resultMsg", "上传文件失败："+e.getMessage());
