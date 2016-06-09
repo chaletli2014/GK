@@ -74,6 +74,7 @@ jQuery(document).ready(function($){
 				$("#modifyModuleType2").attr("disabled","disabled");
 				$("#modifyModuleType2").selectBoxIt().data("selectBoxIt");
 				$("#modifyModuleType2").data("selectBox-selectBoxIt").refresh();
+				$("#spName").attr("disabled","disabled");
 				jQuery('#new_module_sp_div').modal('show', {backdrop: 'static'});
 			}
 		});
@@ -89,11 +90,11 @@ jQuery(document).ready(function($){
 	    });
 	});
 	$("body").delegate('.moduleRelateLink', 'click', function(){
-		jAlert("功能测试中：未发现该注册公司","提示");
+		handleRelation($(this).attr("aid"));
 	});
 	
 	$("body").delegate('.moduleViewLink', 'click', function(){
-		jAlert("功能测试中：供应商未关联，无法查看其信息","提示");
+		jAlert("功能建设中：暂不支持查看供应商信息","提示");
 	});
 });
 
@@ -123,6 +124,27 @@ function refreshDataTable(moduleType2){
         		tbody = tbody + "<a aid=\""+sp.id+"\" href=\"#\" class=\"btn btn-black btn-sm btn-icon icon-left moduleDeleteLink\">删除</a></td></tr>";
         	});
         	moduleTable.find('tbody').html(tbody);
+		}
+	});
+}
+
+function handleRelation(spId){
+	jQuery.ajax({
+		url: basePath + "handleSpRelation",
+		data:{
+			spId : spId
+		}
+		,success: function(response){
+			var result = response.result;
+			if( result == 'N' ){
+				jAlert("未发现该注册公司","提示");
+			}else if( result == 'Y' ){
+				jAlert("已关联成功","提示",function(){
+					window.location.reload();
+				});
+			}else{
+				jAlert("系统错误，关联失败！请重新登录，或联系系统管理员","错误");
+			}
 		}
 	});
 }

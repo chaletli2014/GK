@@ -23,7 +23,7 @@ public class GoodsHouseModuleSPRowMapper implements RowMapper<GoodsHouseModuleSP
     	dbGoodsHouseModule.setSpId(rs.getInt("sp_id"));
     	dbGoodsHouseModule.setSpTel(rs.getString("sp_tel"));
     	dbGoodsHouseModule.setSpPhone(rs.getString("sp_phone"));
-    	dbGoodsHouseModule.setRelationStatus(rs.getString("relation_status")=="1"?"未关联":"关联");
+    	dbGoodsHouseModule.setRelationStatus("1".equalsIgnoreCase(rs.getString("relation_status"))?"未关联":"已关联");
     	dbGoodsHouseModule.setCreateUser(rs.getString("create_user"));
     	dbGoodsHouseModule.setCreateDate(rs.getDate("create_date"));
     	dbGoodsHouseModule.setUpdateUser(rs.getString("update_user"));

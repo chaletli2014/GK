@@ -245,26 +245,26 @@
 					</li>
 				</ul>
 			</li>
-			<li class="firstLI">
+			<li <% if( opened.indexOf(",msgManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a>
 					<i class="linecons-sound"></i>
 					<span class="title">物讯管理</span>
 				</a>
 				<ul>
-					<li>
-						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+					<li <% if( actived.indexOf(",createNewMsg,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>createNewMsg">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">发讯息</span>
 						</a>
 					</li>
-					<li>
-						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+					<li <% if( actived.indexOf(",inBox,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>getInBox">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">收件箱</span>
 						</a>
 					</li>
-					<li>
-						<a href="javascript:void(0)" onclick="jAlert('模块功能开发中','提示');">
+					<li <% if( actived.indexOf(",outBox,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>getOutBox">
 							<i class="entypo-flow-parallel"></i>
 							<span class="title">发件箱</span>
 						</a>

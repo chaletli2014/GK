@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2008-2014 VIP.COM, All rights reserved.
- */
-
 package com.goodsquick.model;
 
 import java.io.Serializable;

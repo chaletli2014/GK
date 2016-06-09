@@ -384,14 +384,18 @@ alter table tbl_goods_house_device add index IDX_HOUSE_CODE_DEVICE_TYPE(house_co
 
 --普通消息表
 CREATE TABLE tbl_goods_message (
-id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
-source_user			varchar(200)	comment '消息发送者',
-target_user			varchar(200)	comment '消息接收者',
-message_content		varchar(2000)   comment '消息内容',
+id  				bigint(20) 			UNSIGNED NOT NULL AUTO_INCREMENT ,
+source_user			varchar(200)		comment '消息发送者',
+target_user			varchar(200)		comment '消息接收者',
+message_type		varchar(2)			comment '消息类型：0为普通文本讯息',
+message_title		varchar(200)		comment '消息标题',
+message_content		varchar(20000)   	comment '消息内容',
+repository_code		varchar(50)			comment '物库编码',
+status				varchar(2)			comment '讯息状态：0删除、1未读、2已读',
 create_user  		varchar(20),
-createdate			datetime,
+create_date			datetime,
 update_user			varchar(20),
-updatedate			datetime,
+update_date			datetime,
 PRIMARY KEY (id)
 )
 ENGINE=InnoDB

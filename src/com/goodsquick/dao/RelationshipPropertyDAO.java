@@ -6,6 +6,7 @@ import com.goodsquick.model.GoodsHouseModuleSP;
 import com.goodsquick.model.GoodsHouseSP;
 import com.goodsquick.model.GoodsHouseSP2nd;
 import com.goodsquick.model.GoodsRelationshipProperty;
+import com.goodsquick.model.WebUserInfo;
 
 public interface RelationshipPropertyDAO {
 
@@ -31,4 +32,12 @@ public interface RelationshipPropertyDAO {
 	public void saveModuleSP(GoodsHouseModuleSP houseModuleSP);
 	public void updateModuleSP(GoodsHouseModuleSP houseModuleSP);
 	public void removeModuleSP(GoodsHouseModuleSP houseModuleSP);
+	
+	public void relateModuleSP(int userId, int spRelationId, String currentUser);
+	/**
+	 * 根据物库编码获取已经关联的供应商列表
+	 * @param repositoryCode
+	 * @return
+	 */
+	public List<WebUserInfo> getModuleSPByRepositoryCode(String repositoryCode);
 }

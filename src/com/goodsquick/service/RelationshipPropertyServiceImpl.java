@@ -186,4 +186,21 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 		return relationshipPropertyDAO.getModuleSPById(spId);
 	}
 
+	@Override
+	public void relateModuleSP(int userId, int spRelationId, String currentUser) {
+		relationshipPropertyDAO.relateModuleSP(userId, spRelationId, currentUser);
+	}
+
+	@Override
+	public List<WebUserInfo> getModuleSPByRepositoryCode(String repositoryCode) {
+		try{
+			return relationshipPropertyDAO.getModuleSPByRepositoryCode(repositoryCode);
+		} catch(EmptyResultDataAccessException erd){
+			return null;
+		} catch(Exception e){
+			logger.error("fail to get the module sp,",e);
+			return null;
+		}
+	}
+
 }

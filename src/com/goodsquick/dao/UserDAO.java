@@ -91,4 +91,12 @@ public interface UserDAO {
 	public GoodsCompanyInfo getCompanyInfoByUserID(int userId) throws Exception;
 	
 	public void insertCompanyUserRelationship(int companyId, int userId, String loginName) throws Exception;
+	
+	/**
+	 * 根据用户名查找用户信息
+	 * @param name 用户名
+	 * @return 用户信息 
+	 * @throws Exception
+	 */
+	public WebUserInfo getUserProfileByUserName(String name) throws Exception;
 }

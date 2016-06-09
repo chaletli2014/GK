@@ -112,3 +112,6 @@ insert into tbl_goods_dictionary values(null,'template_chattel','template_securi
 insert into tbl_goods_dictionary values(null,'template_chattel','template_fireP','消防','动产模板-消防');
 insert into tbl_goods_dictionary values(null,'template_chattel','template_airC','空调','动产模板-空调');
 insert into tbl_goods_dictionary values(null,'template_chattel','template_waterP','给排水泵','动产模板-给排水泵');
+
+insert into tbl_goods_dictionary_type values(null,'物讯消息类型','message_type','物讯消息类型');
+insert into tbl_goods_dictionary values(null,'message_type','common','普通消息','普通消息');

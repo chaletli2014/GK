@@ -17,10 +17,12 @@ import com.goodsquick.mapper.GoodsHouseModuleSPRowMapper;
 import com.goodsquick.mapper.GoodsHouseSP2ndRowMapper;
 import com.goodsquick.mapper.GoodsHouseSPRowMapper;
 import com.goodsquick.mapper.GoodsRelationshipPropertyRowMapper;
+import com.goodsquick.mapper.WebUserInfoRowMapper;
 import com.goodsquick.model.GoodsHouseModuleSP;
 import com.goodsquick.model.GoodsHouseSP;
 import com.goodsquick.model.GoodsHouseSP2nd;
 import com.goodsquick.model.GoodsRelationshipProperty;
+import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.utils.GoodsJDBCTemplate;
 
 @Repository("relationshipPropertyDAO")
@@ -363,6 +365,32 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		params.add(spId);
 		
 		return dataBean.getJdbcTemplate().queryForObject(sql.toString(), params.toArray(), new GoodsHouseModuleSPRowMapper());
+	}
+
+	@Override
+	public void relateModuleSP(int userId, int spRelationId, String currentUser) {
+		StringBuilder sql = new StringBuilder(200);
+		sql.append(" update tbl_goods_house_module_sp ");
+        sql.append(" set sp_id = ?, update_date = now(), update_user = ?, relation_status = '2' ");
+		sql.append(" where id = ?");
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(userId);
+		params.add(currentUser);
+		params.add(spRelationId);
+		
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
+	}
+
+	@Override
+	public List<WebUserInfo> getModuleSPByRepositoryCode(String repositoryCode) {
+		StringBuilder sql = new StringBuilder(100);
+		List<String> params = new ArrayList<String>();
+		sql.append(" select u.* ");
+		sql.append(" from tbl_goods_house_module_sp sp, tbl_web_userinfo u");
+		sql.append(" where sp.status = '1' and sp.relation_status = '2' and sp.repository_code = ? and sp.sp_id = u.id");
+		params.add(repositoryCode);
+		return dataBean.getJdbcTemplate().query(sql.toString(), params.toArray(), new WebUserInfoRowMapper());
 	}
 
 }

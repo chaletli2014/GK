@@ -159,4 +159,23 @@ public class WebUserServiceImpl implements WebUserService {
 			throws Exception {
 		userDAO.insertCompanyUserRelationship(companyId, userId, loginName);
 	}
+
+	@Override
+	public WebUserInfo getUserProfileByUserName(String name) throws Exception {
+		try{
+			WebUserInfo userInfo = userDAO.getUserProfileByUserName(name);
+			if( null != userInfo ){
+				try{
+					userInfo.setCompany(userDAO.getCompanyInfoByUserID(userInfo.getId()));
+				}catch(EmptyResultDataAccessException dae){}
+			}
+            return userInfo;
+        } catch(EmptyResultDataAccessException erd){
+            logger.info("there is no web user found.");
+            return null;
+        } catch(Exception e){
+            logger.error("fail to get the web user info by name - " + name,e);
+            return null;
+        }
+	}
 }

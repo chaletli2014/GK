@@ -1,48 +1,26 @@
 package com.goodsquick.model;
 
-import java.util.Date;
+public class GoodsMessage extends BaseObject{
 
-public class GoodsMessage {
-
-	private int id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private long id;
 	private String sourceUser;
 	private String targetUser;
+	private String messageType;
+	private String messageTypeName;
+	private String messageTitle;
 	private String messageContent;
+	private String repositoryCode;
+	private String status;
 	
-	private Date createDate;
-	private String createUser;
-	private Date updateDate;
-	private String updateUser;
-	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
-	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public String getCreateUser() {
-		return createUser;
-	}
-	public void setCreateUser(String createUser) {
-		this.createUser = createUser;
-	}
-	public Date getUpdateDate() {
-		return updateDate;
-	}
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
-	public String getUpdateUser() {
-		return updateUser;
-	}
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
 	}
 	public String getSourceUser() {
 		return sourceUser;
@@ -61,5 +39,35 @@ public class GoodsMessage {
 	}
 	public void setMessageContent(String messageContent) {
 		this.messageContent = messageContent;
+	}
+	public String getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(String messageType) {
+		this.messageType = messageType;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getMessageTypeName() {
+		return messageTypeName;
+	}
+	public void setMessageTypeName(String messageTypeName) {
+		this.messageTypeName = messageTypeName;
+	}
+	public String getRepositoryCode() {
+		return repositoryCode;
+	}
+	public void setRepositoryCode(String repositoryCode) {
+		this.repositoryCode = repositoryCode;
+	}
+	public String getMessageTitle() {
+		return messageTitle;
+	}
+	public void setMessageTitle(String messageTitle) {
+		this.messageTitle = messageTitle;
 	}
 }

@@ -165,6 +165,42 @@ public class MessageServiceImpl implements MessageService {
 			return null;
 		}
 	}
+
+	@Override
+	public List<GoodsMessage> getInBoxMessageListByRepo(String repositoryCode,
+			String loginName) throws Exception {
+		try{
+			return messageDAO.getMessageListByRepo(repositoryCode, loginName, "inbox");
+		} catch(EmptyResultDataAccessException erd){
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get the MESSAGE list by repository code and login name,",e);
+            return Collections.emptyList();
+        }
+	}
+	
+	@Override
+	public List<GoodsMessage> getOutBoxMessageListByRepo(String repositoryCode,
+			String loginName) throws Exception {
+		try{
+			return messageDAO.getMessageListByRepo(repositoryCode, loginName,"outbox");
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get the MESSAGE list by repository code and login name,",e);
+			return Collections.emptyList();
+		}
+	}
+
+	@Override
+	public void createNewMessage(GoodsMessage msg) throws Exception {
+		messageDAO.createNewMessage(msg);
+	}
+
+	@Override
+	public GoodsMessage getMessageById(long messageId) throws Exception {
+		return messageDAO.getMessageById(messageId);
+	}
 	
 	
 }

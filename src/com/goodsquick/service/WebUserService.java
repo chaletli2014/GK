@@ -83,4 +83,13 @@ public interface WebUserService {
 	public void registerUserCompanyInfo(WebUserInfo userInfo, GoodsCompanyInfo companyInfo) throws Exception;
 	
 	public void registUser2Company(int userId, int companyId, String loginName) throws Exception;
+	
+	/**
+	 * 根据用户名查找用户信息
+	 * (用于物链关联用户时，查找用户)
+	 * @param name 用户名
+	 * @return 用户信息
+	 * @throws Exception
+	 */
+	public WebUserInfo getUserProfileByUserName(String name) throws Exception;
 }

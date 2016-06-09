@@ -148,4 +148,11 @@ public class UserDAOImpl implements UserDAO {
 		params.add(loginName);
 		GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
 	}
+	
+    public WebUserInfo getUserProfileByUserName(String name) throws Exception {
+        WebUserInfo userInfo = new WebUserInfo();
+        String sql = "select * from tbl_web_userinfo where name = ? and status = '1' ";
+        userInfo = dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{name}, new WebUserInfoRowMapper());
+        return userInfo;
+    }
 }

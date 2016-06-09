@@ -22,6 +22,7 @@ import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
 import com.goodsquick.service.OrdinaryHouseService;
 import com.goodsquick.service.RelationshipPropertyService;
+import com.goodsquick.service.WebUserService;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
 
@@ -41,6 +42,10 @@ public class ModuleSPController {
 	@Autowired
 	@Qualifier("dictionaryService")
 	private DictionaryService dictionaryService;
+	
+	@Autowired
+	@Qualifier("webUserService")
+	private WebUserService webUserService;
     
 	@RequestMapping("/saveOrUpdateModuleSP")
 	public String saveOrUpdateRepository(HttpServletRequest request){
@@ -148,12 +153,36 @@ public class ModuleSPController {
 		try {
 			String spId = request.getParameter("spId");
 			GoodsHouseModuleSP moduleSP = relationshipPropertyService.getModuleSPById(spId);
-			
 			result.put("moduleSP", moduleSP);
 			result.put("result", "Y");
 		} catch (Exception e) {
 			logger.error("getModuleSPInfoById: 根据ID获取组件商失败",e);
 			result.put("result", "N");
+			result.put("message", e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping("/handleSpRelation")
+	@ResponseBody
+	public Map<String,Object> handleSpRelation(HttpServletRequest request){
+		Map<String,Object> result = new HashMap<String,Object>();
+		try {
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			
+			String spId = request.getParameter("spId");
+			GoodsHouseModuleSP moduleSP = relationshipPropertyService.getModuleSPById(spId);
+			WebUserInfo spInfo = webUserService.getUserProfileByUserName(moduleSP.getSpName());
+			
+			if( null != spInfo ){
+				relationshipPropertyService.relateModuleSP(spInfo.getId(), moduleSP.getId(), currentUser.getLoginName());
+				result.put("result", "Y");
+			}else{
+				result.put("result", "N");
+			}
+		} catch (Exception e) {
+			logger.error("handleSpRelation: 关联供应商失败",e);
 			result.put("message", e.getMessage());
 		}
 		

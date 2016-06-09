@@ -29,5 +29,13 @@ public interface RelationshipPropertyService {
 	public GoodsHouseModuleSP getModuleSPById(String spId);
 	public void saveModuleSP(GoodsHouseModuleSP houseModuleSP);
 	public void removeModuleSP(GoodsHouseModuleSP houseModuleSP);
+	
+	public void relateModuleSP(int userId, int spRelationId, String currentUser);
+	/**
+	 * 根据物库编码获取已经关联的供应商列表
+	 * @param repositoryCode
+	 * @return
+	 */
+	public List<WebUserInfo> getModuleSPByRepositoryCode(String repositoryCode);
 
 }
