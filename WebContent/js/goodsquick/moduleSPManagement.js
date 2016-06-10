@@ -17,6 +17,7 @@ jQuery(document).ready(function($){
 		$("#modifyModuleType2").removeAttr("disabled");
 		$("#modifyModuleType2").selectBoxIt().data("selectBoxIt");
 		$("#modifyModuleType2").data("selectBox-selectBoxIt").refresh();
+		$("#spName").removeAttr("disabled");
 		
 		jQuery('#new_module_sp_div').modal('show', {backdrop: 'static'});
 	});

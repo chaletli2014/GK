@@ -15,16 +15,15 @@ import com.goodsquick.model.WebUserInfo;
 public class MessageDAOImpl extends BaseDAOImpl implements MessageDAO {
 	
 	private static final StringBuilder MESSAGE_SQL_SELECT = new StringBuilder("select ")
-						.append(" gm.id,sur.name as source_user,tur.name as target_user, gm.message_type, gd.dic_name as message_type_name ")
+						.append(" gm.id,sur.name as source_user, gm.target_user, gm.message_type, gd.dic_name as message_type_name ")
 						.append(" ,gm.message_title, gm.message_content, gm.repository_code, gm.status ")
 						.append(" ,gm.create_date, gm.create_user, gm.update_date, gm.update_user");
 	
-	private static final StringBuilder MESSAGE_SQL_FROM = new StringBuilder(" from tbl_goods_message gm, tbl_goods_dictionary gd, tbl_web_userinfo sur, tbl_web_userinfo tur ");
+	private static final StringBuilder MESSAGE_SQL_FROM = new StringBuilder(" from tbl_goods_message gm, tbl_goods_dictionary gd, tbl_web_userinfo sur ");
 	
 	private static final StringBuilder MESSAGE_SQL_COMMON_WHERE = new StringBuilder("")
         .append(" and gm.message_type = gd.dic_code ")
-        .append(" and gm.target_user = tur.login_name ")
-        .append(" and gm.source_user = sur.login_name ")
+        .append(" and gm.source_user = sur.id ")
         .append(" and gd.type_code = 'message_type' ");
 
 	@Override
@@ -102,21 +101,21 @@ public class MessageDAOImpl extends BaseDAOImpl implements MessageDAO {
 	}
 	
 	@Override
-	public List<GoodsMessage> getMessageListByRepo(String repositoryCode, String loginName, String boxType) throws Exception {
+	public List<GoodsMessage> getMessageListByRepo(String repositoryCode, int userId, String boxType) throws Exception {
 		List<GoodsMessage> messageList = new ArrayList<GoodsMessage>();
-		List<String> params = new ArrayList<String>();
+		List<Object> params = new ArrayList<Object>();
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(MESSAGE_SQL_SELECT);
         sql.append(MESSAGE_SQL_FROM);
         if( "inbox".equalsIgnoreCase(boxType) ){
-        	sql.append(" where gm.target_user = ? ");
+        	sql.append(" where find_in_set(?,gm.target_user) ");
         }else{
         	sql.append(" where gm.repository_code = ? ");
         	sql.append(" and gm.source_user = ? ");
         	params.add(repositoryCode);
         }
-        params.add(loginName);
+        params.add(userId);
         sql.append(MESSAGE_SQL_COMMON_WHERE);
         sql.append(" order by gm.create_date desc ");
         messageList = dataBean.getJdbcTemplate().query(sql.toString(), params.toArray(), new GoodsMessageRowMapper());

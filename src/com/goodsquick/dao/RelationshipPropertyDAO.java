@@ -40,4 +40,11 @@ public interface RelationshipPropertyDAO {
 	 * @return
 	 */
 	public List<WebUserInfo> getModuleSPByRepositoryCode(String repositoryCode);
+	
+	/**
+	 * 查找供应商是当前用户的下游用户信息
+	 * @param userId 当前用户
+	 * @return List<WebUserInfo>
+	 */
+	public List<WebUserInfo> getCustomerBySpId(int userId);
 }

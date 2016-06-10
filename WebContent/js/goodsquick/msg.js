@@ -12,6 +12,10 @@ jQuery(document).ready(function($){
 	$("#addTargetUser").click(function(){
 		showTargetUsers();
 	});
+	
+	$("#chooseTarget").click(function(){
+		chooseTargetUser();
+	});
 });
 
 function initDataTable(){
@@ -66,6 +70,7 @@ function checkInput(){
 
 function sendNewMsg(){
 	var targetUser = $("#targetUser").val();
+	var targetUserIds = $("#targetUserIds").val();
 	var msgTitle = $("#msgTitle").val();
 	
 	jQuery.ajax({
@@ -73,6 +78,7 @@ function sendNewMsg(){
 		data:{
 			msgType : 'common',
 			targetUser : targetUser,
+			targetUserIds : targetUserIds,
 			msgTitle : msgTitle,
 			msgContent : UE.getEditor('msgContent').getContent()
 		},
@@ -80,6 +86,22 @@ function sendNewMsg(){
 			jAlert("讯息发送成功", "提示");
 		}
 	});
+}
+
+function chooseTargetUser(){
+	var spCheckbox = $("input[name='spCheckbox']");
+	
+	var selectedUser='';
+	var selectedIds=',';
+	$.each(spCheckbox, function(i, checkbox) {
+		if(this.checked){
+			selectedUser = selectedUser + $(this).parent().parent().find("td:eq(1)").text() +',';
+			selectedIds = selectedIds + $(this).parent().parent().find("td:eq(0)").children().attr("cid") +',';
+		}
+	});
+	$("#targetUser").val(selectedUser.substr(0,selectedUser.length-1));
+	$("#targetUserIds").val(selectedIds);
+	jQuery('.close').click();
 }
 
 function showTargetUsers(){
@@ -93,7 +115,7 @@ function showTargetUsers(){
 	        	var tbody = "";
 	        	$.each(targetUsers,function(n,sp){
 	        		tbody = tbody + "<tr>";
-	        		tbody = tbody + "<td ><input type=\"checkbox\" class=\"cbr\"></td>";
+	        		tbody = tbody + "<td ><input cid=\""+sp.id+"\" type=\"checkbox\" name=\"spCheckbox\" class=\"cbr\"></td>";
 	        		tbody = tbody + "<td >"+sp.name+"</td>";
 	        		tbody = tbody + "</tr>";
 	        	});

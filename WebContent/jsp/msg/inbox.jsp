@@ -42,6 +42,9 @@
 									<th class="no-sorting">
 										<input type="checkbox" class="cbr">
 									</th>
+									<th class="no-sorting">
+										&nbsp;
+									</th>
 									<th width="20%">发件人</th>
 									<th width="35%">发送讯息</th>
 									<th width="15%">发送时间</th>
@@ -54,6 +57,11 @@
 								<tr>
 									<td>
 										<input type="checkbox" class="cbr">
+									</td>
+									<td>
+										<c:if test="${msg.status=='1'}">
+										<i class="linecons-mail"></i>
+										</c:if>
 									</td>
 									<td >${msg.sourceUser}</td>
 									<td >${msg.messageTitle}</td>

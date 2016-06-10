@@ -393,4 +393,16 @@ public class RelationshipPropertyDAOImpl extends BaseDAOImpl implements Relation
 		return dataBean.getJdbcTemplate().query(sql.toString(), params.toArray(), new WebUserInfoRowMapper());
 	}
 
+	@Override
+	public List<WebUserInfo> getCustomerBySpId(int userId) {
+		StringBuilder sql = new StringBuilder(100);
+		List<Object> params = new ArrayList<Object>();
+		sql.append(" select u.* ");
+		sql.append(" from tbl_goods_house_module_sp sp, tbl_goods_repository gr, tbl_web_userinfo u");
+		sql.append(" where sp.status = '1' and sp.relation_status = '2' and sp.sp_id = ? ");
+		sql.append(" and sp.repository_code = gr.repository_code and gr.create_user = u.login_name");
+		params.add(userId);
+		return dataBean.getJdbcTemplate().query(sql.toString(), params.toArray(), new WebUserInfoRowMapper());
+	}
+
 }

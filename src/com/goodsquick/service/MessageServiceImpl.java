@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.cxf.common.util.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,12 +18,14 @@ import com.goodsquick.dao.GoodsServiceDAO;
 import com.goodsquick.dao.MessageDAO;
 import com.goodsquick.dao.OrdinaryHouseDAO;
 import com.goodsquick.dao.RelationshipPropertyDAO;
+import com.goodsquick.dao.UserDAO;
 import com.goodsquick.model.GoodsConfiguration;
 import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRelatedRequest;
 import com.goodsquick.model.GoodsRelationshipProperty;
 import com.goodsquick.model.WebUserInfo;
+import com.goodsquick.utils.GoodsQuickStringUtils;
 
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
@@ -46,6 +49,10 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired
 	@Qualifier("relationshipPropertyDAO")
 	private RelationshipPropertyDAO relationshipPropertyDAO;
+	
+	@Autowired
+	@Qualifier("userDAO")
+	private UserDAO userDAO;
 	
 	Logger logger = Logger.getLogger(this.getClass());
 
@@ -168,9 +175,9 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public List<GoodsMessage> getInBoxMessageListByRepo(String repositoryCode,
-			String loginName) throws Exception {
+			int userId) throws Exception {
 		try{
-			return messageDAO.getMessageListByRepo(repositoryCode, loginName, "inbox");
+			return messageDAO.getMessageListByRepo(repositoryCode, userId, "inbox");
 		} catch(EmptyResultDataAccessException erd){
             return Collections.emptyList();
         } catch(Exception e){
@@ -181,15 +188,34 @@ public class MessageServiceImpl implements MessageService {
 	
 	@Override
 	public List<GoodsMessage> getOutBoxMessageListByRepo(String repositoryCode,
-			String loginName) throws Exception {
+			int userId) throws Exception {
+		List<GoodsMessage> outMessage = null;
 		try{
-			return messageDAO.getMessageListByRepo(repositoryCode, loginName,"outbox");
+			outMessage = messageDAO.getMessageListByRepo(repositoryCode, userId,"outbox");
+			StringBuilder targetUserName = new StringBuilder("");
+			if( !CollectionUtils.isEmpty(outMessage) ){
+				
+				for( GoodsMessage msg : outMessage){
+					List<String> queryParam = new ArrayList<String>();
+					StringBuilder queryCondition = new StringBuilder(" where 1=1 and id in (").append(GoodsQuickStringUtils.getInParameterByStr(msg.getTargetUser(), ",")).append(") ");
+					List<WebUserInfo> userInfos = userDAO.getAllUserByQueryInfo(queryCondition.toString(), queryParam.toArray());
+					if( !CollectionUtils.isEmpty(userInfos) ){
+						for( WebUserInfo user : userInfos ){
+							targetUserName.append(user.getName()).append(",");
+						}
+					}
+					if( null != targetUserName && targetUserName.length() > 0 ){
+						msg.setTargetUser(targetUserName.substring(0,targetUserName.length()-1));
+					}
+				}
+			}
 		} catch(EmptyResultDataAccessException erd){
 			return Collections.emptyList();
 		} catch(Exception e){
 			logger.error("fail to get the MESSAGE list by repository code and login name,",e);
 			return Collections.emptyList();
 		}
+		return outMessage;
 	}
 
 	@Override

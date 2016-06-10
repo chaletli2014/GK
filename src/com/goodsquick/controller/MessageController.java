@@ -1,5 +1,6 @@
 package com.goodsquick.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import com.goodsquick.model.GoodsRelatedRequest;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.MessageService;
 import com.goodsquick.service.RelationshipPropertyService;
+import com.goodsquick.service.WebUserService;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
 
@@ -34,6 +36,10 @@ public class MessageController {
 	@Autowired
 	@Qualifier("relationshipPropertyService")
 	private RelationshipPropertyService relationshipPropertyService;
+	
+	@Autowired
+	@Qualifier("webUserService")
+	private WebUserService webUserService;
 	
 	@RequestMapping("/myMessage")
     public ModelAndView myMessage(HttpServletRequest request){
@@ -112,7 +118,7 @@ public class MessageController {
         try {
         	WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
         	String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
-        	List<GoodsMessage> inBoxMessagelist = messageService.getInBoxMessageListByRepo(repositoryCode, currentUser.getLoginName());
+        	List<GoodsMessage> inBoxMessagelist = messageService.getInBoxMessageListByRepo(repositoryCode, currentUser.getId());
 			
 			view.addObject("messagelist", inBoxMessagelist);
 			view.addObject("actived", ",inBox,");
@@ -137,7 +143,7 @@ public class MessageController {
 		try {
 			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
 			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
-			List<GoodsMessage> messagelist = messageService.getOutBoxMessageListByRepo(repositoryCode, currentUser.getLoginName());
+			List<GoodsMessage> messagelist = messageService.getOutBoxMessageListByRepo(repositoryCode, currentUser.getId());
 			
 			view.addObject("messagelist", messagelist);
 			view.addObject("actived", ",outBox,");
@@ -165,7 +171,7 @@ public class MessageController {
 			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
 			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 			String messageType = request.getParameter("msgType");
-			String targetUser = request.getParameter("targetUser");
+			String targetUserIds = request.getParameter("targetUserIds");
 			String messageTitle = request.getParameter("msgTitle");
 			String messageContent = request.getParameter("msgContent");
 			
@@ -173,9 +179,9 @@ public class MessageController {
 			msg.setMessageType(messageType);
 			msg.setMessageTitle(messageTitle);
 			msg.setMessageContent(messageContent);
-			msg.setTargetUser(targetUser);
+			msg.setTargetUser(targetUserIds);
 			msg.setRepositoryCode(repositoryCode);
-			msg.setSourceUser(currentUser.getLoginName());
+			msg.setSourceUser(String.valueOf(currentUser.getId()));
 			
 			messageService.createNewMessage(msg);
 			
@@ -191,7 +197,12 @@ public class MessageController {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		try {
 			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
-			List<WebUserInfo> targetUsers = relationshipPropertyService.getModuleSPByRepositoryCode(repositoryCode);
+			List<WebUserInfo> targetUsers = new ArrayList<WebUserInfo>();
+			targetUsers.addAll(relationshipPropertyService.getModuleSPByRepositoryCode(repositoryCode));
+			
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			targetUsers.addAll(relationshipPropertyService.getCustomerBySpId(currentUser.getId()));
+			
 			resultMap.put("targetUsers", targetUsers);
 		} catch (Exception e) {
 			logger.error("fail to get the target users,",e);

@@ -1,5 +1,6 @@
 package com.goodsquick.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -193,12 +194,26 @@ public class RelationshipPropertyServiceImpl implements RelationshipPropertyServ
 
 	@Override
 	public List<WebUserInfo> getModuleSPByRepositoryCode(String repositoryCode) {
+		List<WebUserInfo> targetUsers = new ArrayList<WebUserInfo>();
 		try{
-			return relationshipPropertyDAO.getModuleSPByRepositoryCode(repositoryCode);
+			targetUsers.addAll(relationshipPropertyDAO.getModuleSPByRepositoryCode(repositoryCode));
 		} catch(EmptyResultDataAccessException erd){
 			return null;
 		} catch(Exception e){
 			logger.error("fail to get the module sp,",e);
+			return null;
+		}
+		return targetUsers;
+	}
+	
+	@Override
+	public List<WebUserInfo> getCustomerBySpId(int userId) {
+		try{
+			return relationshipPropertyDAO.getCustomerBySpId(userId);
+		} catch(EmptyResultDataAccessException erd){
+			return null;
+		} catch(Exception e){
+			logger.error("fail to get the customer by sp id,",e);
 			return null;
 		}
 	}

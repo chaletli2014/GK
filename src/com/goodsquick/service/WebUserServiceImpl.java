@@ -178,4 +178,21 @@ public class WebUserServiceImpl implements WebUserService {
             return null;
         }
 	}
+
+	@Override
+	public List<WebUserInfo> getUserProfileByIds(String ids) throws Exception {
+		try{
+			StringBuilder conditionSB = new StringBuilder(" where 1=1 and id in (?)");
+			List<String> params = new ArrayList<String>();
+			params.add(ids);
+			
+            return userDAO.getAllUserByQueryInfo(conditionSB.toString(),params.toArray());
+        } catch(EmptyResultDataAccessException erd){
+            logger.info("there is no user found.");
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get all the user,",e);
+            return Collections.emptyList();
+        }
+	}
 }
