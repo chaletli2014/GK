@@ -9,7 +9,7 @@
 	<div class="g-banner-wrap">
         <div class="g-banner">
             <div class="m-nav" style="">
-                <a class="logo" href="#"><img src="images/logo.png"></a>
+                <a class="logo" href="#"><img src="images/logo_new.png"></a>
                 <a href="./index.html"><em></em><b>首页</b></a>
                 <a href=""><em></em><b>物库市场</b></a>
                 <a href="javascript:void(0);" class="z-crt zi4">

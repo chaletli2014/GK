@@ -754,12 +754,13 @@ h2{
 
 .login_footer2{
 	background: #29363A;
-	height: 30px;
 	color: #DFDFDF;
-	padding:10px;
+	padding:5px 0;
+	font-size:12px;
+	line-height:20px;
 	text-align: center;
 }
-
+.login_footer2 div{}
 #hm_t_undefined {
 	display: none;
 }
