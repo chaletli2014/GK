@@ -18,7 +18,7 @@
             <div class="m-banner">
                 <div class="g-login" id="gLogin">
                     <div class="m-login m-login-1" id="mLogin">
-                        <div class="header"><h2>登录物库系统</h2><a id="aToReg">注册&gt;</a><%----%></div>
+                        <div class="header"><h2>登录物库系统</h2><a id="aToReg">注册</a><%----%></div>
                         <div class="main">
                         	<form action="dologin" name="loginForm" id="loginForm" method="post">
 	                            <p class="email"><input name="web_username" placeholder="账号 /电子邮箱" type="text" data-old=""></p>
