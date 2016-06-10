@@ -117,10 +117,10 @@ h2{
 
 .g-banner {
 	overflow-y: scroll;
-	background-size: cover;
 	height: 100%;
 	position: relative;
 	background: url(../images/banner-bg-reg.png) center center no-repeat;
+	background-size: cover;
 }
 
 .m-banner {
