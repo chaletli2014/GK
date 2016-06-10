@@ -17,7 +17,7 @@
 				<span class="index_title">欢迎你，</span><span>${currentUser.loginName}</span>
 			</div>
 			<div class="panel panel-default">
-				<div class="panel-body" style="padding-top:0px;">
+				<div class="panel-body" style="padding-top:0px; text-align:center;">
 					<ul class="index_ul">
 						<li>
 							<div class="index_li_title">资品库</div>
