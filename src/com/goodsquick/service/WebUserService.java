@@ -92,4 +92,12 @@ public interface WebUserService {
 	 * @throws Exception
 	 */
 	public WebUserInfo getUserProfileByUserName(String name) throws Exception;
+	/**
+	 * 根据用户Id查找用户信息
+	 * (用于物讯发送消息时，查找用户)
+	 * @param name 用户名
+	 * @return List<WebUserInfo> 用户信息
+	 * @throws Exception
+	 */
+	public List<WebUserInfo> getUserProfileByIds(String ids) throws Exception;
 }

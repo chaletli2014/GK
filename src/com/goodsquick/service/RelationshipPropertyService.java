@@ -34,8 +34,14 @@ public interface RelationshipPropertyService {
 	/**
 	 * 根据物库编码获取已经关联的供应商列表
 	 * @param repositoryCode
-	 * @return
+	 * @return List<WebUserInfo>
 	 */
 	public List<WebUserInfo> getModuleSPByRepositoryCode(String repositoryCode);
+	/**
+	 * 查找供应商是当前用户的下游用户信息
+	 * @param userId 当前用户
+	 * @return List<WebUserInfo>
+	 */
+	public List<WebUserInfo> getCustomerBySpId(int userId);
 
 }

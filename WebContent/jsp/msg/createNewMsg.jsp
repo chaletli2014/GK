@@ -50,6 +50,7 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label form_input_required" for="targetUser" style="padding-left:0px;">收件人</label>
 									<div class="col-sm-12">
+										<input type="hidden" id="targetUserIds">
 										<input type="text" class="form-control" id="targetUser" name="targetUser" readonly="readonly" data-validate="required" data-message-required="收件人不能为空">
 										<button id="addTargetUser" style="margin:10px 0px;padding:4px;">添加收件人</button>
 									</div>

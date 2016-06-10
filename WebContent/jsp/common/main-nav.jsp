@@ -57,11 +57,6 @@
 														<span>资品库</span>
 														<span class="nav_newrepository">＋新建</span>
 													</li>
-													<li class="menu-list-own">
-														<div>
-															<a href="<%=request.getParameter("basePath")%>mainIndex?repository_code=<%=userInfo.getLoginName()%>_0">初始资品库</a>
-														</div>
-													</li>
 												</ul>
 												<ul class="nav-down-menu req_menu">
 													<li class="menu-title">

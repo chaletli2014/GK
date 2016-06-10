@@ -27,9 +27,6 @@
 						<button style="margin-right:10px;" id="delMsgLink" class="btn btn-gray">
 							删除
 						</button>
-						<button style="margin-right:10px;" id="readMsgLink" class="btn btn-gray">
-							标记为已读
-						</button>
 						<span style="float:right;">
 							<input placeholder="输入你想要查找的关键字" name="searchKey" id="searchKey"/>
 							<button><i class="fa-search"></i></button>

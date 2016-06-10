@@ -22,21 +22,6 @@
 						<li>
 							<div class="index_li_title">资品库</div>
 							<div class="index_repository">
-								<div class="index_li_list">
-									<div>
-										<a href="<%=basePath%>mainIndex?repository_code=${currentUser.loginName}_0">
-										初始资品库
-										</a>
-									</div>
-									<div>
-										<i class="fa-envelope-o"></i>消息
-										<span class="label label-default pull-right">0</span>
-									</div>
-									<div>
-										<i class="fa-chain"></i>关联申请
-										<span class="label label-secondary pull-right">1</span>
-									</div>
-								</div>
 							<c:forEach items="${repositoryList1}" var="repos">
 								<div class="index_li_list">
 									<div>
