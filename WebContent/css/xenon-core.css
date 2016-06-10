@@ -3184,6 +3184,7 @@ body.chat-open #chat {
 .panel .panel-body {
   padding: 0;
   padding-top: 20px;
+  text-align:center;
   color: #979898;
 }
 .panel .panel-body.no-padding {

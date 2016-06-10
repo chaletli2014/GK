@@ -520,13 +520,13 @@ div.showDetailDiv .form-group{
 .index_ul li{
 	height: 360px;
 	width:360px;
-	display: block;
-	float:left;
-	border: 1px solid #aaa;
+	display: inline-block;
 	margin:10px;
 }
 .index_repository{
 	overflow-y: scroll;
+	border: 1px solid #aaa;
+	border-top:none;
 	height: 320px;
 }
 .index_li_title{
@@ -534,15 +534,16 @@ div.showDetailDiv .form-group{
 	padding-left:20px;
 	line-height:40px;
 	height:40px;
-	background:#29363A;
+	background:#00a4ef;
+	border:1px ##00a4ef solid;
 	color:white;
-	font-weight: bold;
 }
 .index_li_list{
     margin: 10px;
     display: block;
     width: 300px;
     float: left;
+    text-align:left;
 }
 .index_li_list div{
 	padding-left:4px;
@@ -553,7 +554,7 @@ div.showDetailDiv .form-group{
 	margin-right:8px;
 }
 .index_li_list>:first-child{
-	font-size:18px;
+	font-size:16px;
 	color:black;
 	margin:10px 0;
 }
