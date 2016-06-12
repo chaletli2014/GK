@@ -34,11 +34,11 @@
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>
 	<div class="page-container">
-		<jsp:include page="common/sidebar.jsp" flush="true">
+		<jsp:include page="common/new_sidebar.jsp" flush="true">
         	<jsp:param name="basePath" value="<%=basePath%>"/>
         </jsp:include>
 		<div class="main-content">
-			<jsp:include page="common/main-nav.jsp" flush="true">
+	        <jsp:include page="common/main-nav-new.jsp" flush="true">
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
 			<div class="row draggable-portlets">
