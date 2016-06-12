@@ -19,6 +19,18 @@ public class GoodsQuickStringUtils {
 		return result.substring(0, result.length()-1);
 	}
 	
+	public static String getInParameterByLongList(List<Long> args ){
+		StringBuilder result = new StringBuilder("");
+		if( CollectionUtils.isEmpty(args) ){
+			return "";
+		}else{
+			for( Long arg : args ){
+				result.append("'").append(arg).append("',");
+			}
+		}
+		return result.substring(0, result.length()-1);
+	}
+	
 	public static String getInParameterByStr(String args,String splitChar){
 		StringBuilder result = new StringBuilder("");
 		if( StringUtils.isBlank(args) ){

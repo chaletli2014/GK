@@ -15,7 +15,9 @@ public interface MessageDAO {
 	public void createNewMessage(String sourceUser, String targetUser, String content) throws Exception;
 	public GoodsMessage getMessageByHouseName(String sourceUser, String content) throws Exception;
 	
-	public List<GoodsMessage> getMessageListByRepo(String repositoryCode, int userId, String boxType) throws Exception;
+	public List<GoodsMessage> getMessageListByRepo(int userId, String boxType) throws Exception;
 	public void createNewMessage(GoodsMessage msg) throws Exception;
-	public GoodsMessage getMessageById(long messageId) throws Exception;
+	public List<GoodsMessage> getMessageById(long messageId) throws Exception;
+	
+	public void updateMessageStatus(long messageId, long userId, String status, String boxType);
 }

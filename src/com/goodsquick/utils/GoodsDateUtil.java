@@ -6,12 +6,18 @@ import java.util.Date;
 
 public class GoodsDateUtil {
 
-	private static String DATE_FORMAT_YYYYmmDD = "yyyyMMdd";
-	private static String DATE_FORMAT_YYYY_mm_DD = "yyyy-MM-dd";
-	private static String DATE_FORMAT_HH_mm_ss = "HH:mm:ss";
+	public static String DATE_FORMAT_YYYYmmDD = "yyyyMMdd";
+	public static String DATE_FORMAT_YYYY_mm_DD = "yyyy-MM-dd";
+	public static String DATE_FORMAT_HH_mm_ss = "HH:mm:ss";
+	public static String DATE_FORMAT_FULL = "yyyy-MM-dd HH:mm:ss";
 	
 	public static String getStringFormat(Date date){
 		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_YYYYmmDD);
+		return sdf.format(date);
+	}
+	
+	public static String getStringFormat(Date date,String dateFormat){
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		return sdf.format(date);
 	}
 	

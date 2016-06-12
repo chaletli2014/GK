@@ -13,7 +13,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 public class GoodsJDBCTemplate {
 
-	public static int executeSQL(DataBean dataBean, final StringBuilder sql, final List<String> params){
+	public static long executeSQLLong(DataBean dataBean, final StringBuilder sql, final List<Object> params){
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		
 		
@@ -23,12 +23,37 @@ public class GoodsJDBCTemplate {
                     Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(sql.toString(),Statement.RETURN_GENERATED_KEYS);
                 int i = 1;
-                for( String obj : params ){
-                	ps.setString(i++, obj);
+                for( Object obj : params ){
+                	if( obj.getClass() == String.class ){
+                		ps.setString(i++, String.valueOf(obj));
+                	}else if( obj.getClass() == Long.class ){
+                		ps.setLong(i++, Long.valueOf(obj.toString()));
+                	}else if( obj.getClass() == Integer.class ){
+                		ps.setInt(i++, Integer.valueOf(obj.toString()));
+                	}
                 }
                 return ps;
             }
         }, keyHolder);
+		return keyHolder.getKey().longValue();
+	}
+	
+	public static int executeSQL(DataBean dataBean, final StringBuilder sql, final List<String> params){
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		
+		
+		dataBean.getJdbcTemplate().update(new PreparedStatementCreator(){
+			@Override
+			public PreparedStatement createPreparedStatement(
+					Connection connection) throws SQLException {
+				PreparedStatement ps = connection.prepareStatement(sql.toString(),Statement.RETURN_GENERATED_KEYS);
+				int i = 1;
+				for( String obj : params ){
+					ps.setString(i++, obj);
+				}
+				return ps;
+			}
+		}, keyHolder);
 		return keyHolder.getKey().intValue();
 	}
 	

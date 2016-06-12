@@ -24,7 +24,7 @@
 			<div class="panel panel-default">
 				<div class="panel-body" style="padding-top:0px;">
 					<div>
-						<button style="margin-right:10px;" id="delMsgLink" class="btn btn-gray">
+						<button style="margin-right:10px;" id="delOutMsgLink" class="btn btn-gray">
 							删除
 						</button>
 						<span style="float:right;">
@@ -33,11 +33,11 @@
 						</span>
 					</div>
 					<div>
-						<table class="table table-bordered table-striped" id="inBoxTable">
+						<table class="table table-bordered table-striped" id="outBoxTable">
 							<thead>
 								<tr>
 									<th class="no-sorting">
-										<input type="checkbox" class="cbr">
+										
 									</th>
 									<th width="20%">收件人</th>
 									<th width="35%">发送讯息</th>
@@ -50,9 +50,9 @@
 							<c:forEach items="${messagelist}" var="msg">
 								<tr>
 									<td>
-										<input type="checkbox" class="cbr">
+										<input mid="${msg.id}" type="checkbox" class="cbr" name="outcheckbox">
 									</td>
-									<td >${msg.targetUser}</td>
+									<td >${msg.receiverNames}</td>
 									<td >${msg.messageTitle}</td>
 									<td >${msg.createDate}</td>
 									<td >${msg.messageTypeName}</td>
@@ -71,6 +71,7 @@
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>
+	<%@include file="viewMsg.jsp" %>
 	<jsp:include page="../common/bottomScript.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>
