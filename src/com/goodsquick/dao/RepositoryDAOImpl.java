@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.goodsquick.mapper.GoodsRepositoryRowMapper;
+import com.goodsquick.mapper.GoodsRepositoryUserRowMapper;
 import com.goodsquick.model.GoodsRepository;
 import com.goodsquick.model.GoodsRepositoryUser;
 import com.goodsquick.utils.GoodsJDBCTemplate;
@@ -71,8 +72,15 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 	@Override
 	public void updateRepositoryUser(GoodsRepositoryUser repositoryUser)
 			throws Exception {
-		// TODO Auto-generated method stub
-
+		StringBuilder sql = new StringBuilder(100);
+		sql.append("update tbl_goods_repository_user set status = '1',update_user=?, update_date=now() where repository_code = ? and user_code = ? ");
+		
+		List<Object> params = new ArrayList<Object>();
+		params.add(repositoryUser.getRepositoryCode());
+		params.add(repositoryUser.getUserCode());
+		params.add(repositoryUser.getUpdateUser());
+		
+		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
 	}
 	
 	@Override
@@ -113,6 +121,32 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 		params.add(goodsRepositoryFromPage.getId());
 		
 		dataBean.getJdbcTemplate().update(sql.toString(), params.toArray());
+	}
+
+	@Override
+	public List<GoodsRepositoryUser> getRepositoryUserByRepositoryCode(
+			String repositoryCode, String userCode) throws Exception {
+		StringBuilder sql = new StringBuilder("select gru.*, wu.name as user_name, wu.telephone  ");
+		sql.append(" from tbl_goods_repository_user gru, tbl_web_userinfo wu ");
+		sql.append(" where gru.repository_code = ? and gru.status='1' and gru.user_code = wu.login_name and gru.user_code != ?");
+		return dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode, userCode}, new GoodsRepositoryUserRowMapper());
+	}
+
+	@Override
+	public List<GoodsRepositoryUser> getRepositoryUserByUserId(String repositoryCode, String userId) throws Exception {
+		StringBuilder sql = new StringBuilder("select gru.*, wu.name as user_name, wu.telephone ");
+		sql.append(" from tbl_goods_repository_user gru, tbl_web_userinfo wu ");
+		sql.append(" where wu.id = ? and gru.status='1' and gru.user_code = wu.login_name ");
+		return dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{userId}, new GoodsRepositoryUserRowMapper());
+	}
+
+	@Override
+	public void removeRepositoryUser(GoodsRepositoryUser repositoryUser)
+			throws Exception {
+		List<Object> params = new ArrayList<Object>();
+		params.add(repositoryUser.getUpdateUser());
+		params.add(repositoryUser.getId());
+		super.deleteObj("tbl_goods_repository_user", params);
 	}
 
 }

@@ -225,6 +225,12 @@
 					<span class="title">物链管理</span>
 				</a>
 				<ul>
+					<li <% if( actived.indexOf(",repositoryUser,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>repositoryUser">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">库用户管理</span>
+						</a>
+					</li>
 					<li <% if( actived.indexOf(",moduleSPList,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?spTypeCode=sp_type_brand">
 							<i class="entypo-flow-parallel"></i>

@@ -15,4 +15,10 @@ public interface RepositoryService {
 	public GoodsRepository getRepositoryByCode(String repositoryCode) throws Exception;
 	public void updateRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 	public void removeRepository(GoodsRepository goodsRepositoryFromPage) throws Exception;
+	
+	public List<GoodsRepositoryUser> getRepositoryUserByRepositoryCode(String repositoryCode, String currentUser) throws Exception;
+	public List<GoodsRepositoryUser> getRepositoryUserByUserId(String repositoryCode, String userId) throws Exception;
+	
+	public void saveRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
+	public void removeRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 }

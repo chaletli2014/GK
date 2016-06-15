@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.cxf.common.util.CollectionUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -19,6 +20,8 @@ import com.goodsquick.utils.GoodsQuickAttributes;
 @Service("repositoryService")
 public class RepositoryServiceImpl implements RepositoryService {
 
+	Logger logger = Logger.getLogger(this.getClass());
+	
 	@Autowired
 	@Qualifier("repositoryDAO")
 	private RepositoryDAO repositoryDAO;
@@ -40,13 +43,6 @@ public class RepositoryServiceImpl implements RepositoryService {
 			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, newRepositoryCode);
 			goodsRepository.setRepositoryCode(newRepositoryCode);
 			repositoryDAO.saveRepository(goodsRepository);
-			
-			GoodsRepositoryUser repositoryUser = new GoodsRepositoryUser();
-			repositoryUser.setRepositoryCode(newRepositoryCode);
-			repositoryUser.setUserCode(goodsRepository.getCreateUser());
-			repositoryUser.setCreateUser(goodsRepository.getCreateUser());
-			repositoryUser.setUpdateUser(goodsRepository.getCreateUser());
-			repositoryDAO.saveRepositoryUser(repositoryUser);
 		}else{
 			repositoryDAO.updateRepository(goodsRepository);
 		}
@@ -78,8 +74,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	@Override
 	public void updateRepositoryUser(GoodsRepositoryUser repositoryUser)
 			throws Exception {
-		// TODO Auto-generated method stub
-
+		repositoryDAO.updateRepositoryUser(repositoryUser);
 	}
 	
 	@Override
@@ -98,6 +93,43 @@ public class RepositoryServiceImpl implements RepositoryService {
         } catch(Exception e){
             return new GoodsRepository();
         }
+	}
+
+	@Override
+	public List<GoodsRepositoryUser> getRepositoryUserByRepositoryCode(
+			String repositoryCode, String currentUser) throws Exception {
+		try{
+			return repositoryDAO.getRepositoryUserByRepositoryCode(repositoryCode, currentUser);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			return Collections.emptyList();
+		}
+	}
+	
+	@Override
+	public List<GoodsRepositoryUser> getRepositoryUserByUserId(String repositoryCode, String userId) throws Exception {
+		try{
+			return repositoryDAO.getRepositoryUserByUserId(repositoryCode, userId);
+		} catch(EmptyResultDataAccessException erd){
+			logger.warn("empty data");
+			return null;
+		} catch(Exception e){
+			logger.error("fail to get repository user,",e);
+			return null;
+		}
+	}
+
+	@Override
+	public void saveRepositoryUser(GoodsRepositoryUser repositoryUser)
+			throws Exception {
+		repositoryDAO.saveRepositoryUser(repositoryUser);
+	}
+
+	@Override
+	public void removeRepositoryUser(GoodsRepositoryUser repositoryUser)
+			throws Exception {
+		repositoryDAO.removeRepositoryUser(repositoryUser);
 	}
 
 }
