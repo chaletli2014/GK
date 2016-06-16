@@ -31,4 +31,17 @@ public interface RepositoryDAO {
 	public void saveRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 	public GoodsRepository getRepositoryByCode(String repositoryCode) throws Exception;
 	public void removeRepository(GoodsRepository goodsRepositoryFromPage) throws Exception;
+	
+	/**
+	 * 根据物库编码查询库用户
+	 * @param repositoryCode
+	 * @param currentUser currentUser
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GoodsRepositoryUser> getRepositoryUserByRepositoryCode(String repositoryCode, String currentUser) throws Exception;
+	
+	public List<GoodsRepositoryUser> getRepositoryUserByUserId(String repositoryCode, String userId) throws Exception;
+	
+	public void removeRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 }

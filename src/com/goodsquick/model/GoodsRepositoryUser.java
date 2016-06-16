@@ -10,6 +10,9 @@ public class GoodsRepositoryUser extends BaseObject{
 	private String priv;
 	private String status;
 	
+	private String userName;
+	private String telephone;
+	
 	public int getId() {
 		return id;
 	}
@@ -39,5 +42,17 @@ public class GoodsRepositoryUser extends BaseObject{
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 }

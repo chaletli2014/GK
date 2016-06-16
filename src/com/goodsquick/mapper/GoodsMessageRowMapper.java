@@ -15,14 +15,14 @@ public class GoodsMessageRowMapper implements RowMapper<GoodsMessage>{
 	public GoodsMessage mapRow(ResultSet rs, int arg1) throws SQLException {
 		GoodsMessage message = new GoodsMessage();
 		message.setId(rs.getLong("id"));
-		message.setSourceUser(rs.getString("source_user"));
-		message.setTargetUser(rs.getString("target_user"));
+		message.setSender(rs.getString("sender"));
+		message.setReceiverId(rs.getLong("receiver_id"));
 		message.setMessageType(rs.getString("message_type"));
 		message.setMessageTypeName(rs.getString("message_type_name"));
 		message.setMessageTitle(rs.getString("message_title"));
 		message.setMessageContent(rs.getString("message_content"));
-		message.setRepositoryCode(rs.getString("repository_code"));
-		message.setStatus(rs.getString("status"));
+		message.setStatusSender(rs.getString("status_se"));
+		message.setStatusReceiver(rs.getString("status_rec"));
 		Date createDate = rs.getDate("create_date");
 		if( GoodsDateUtil.isSameDay(createDate) ){
 			message.setCreateDate(rs.getTime("create_date"));
@@ -31,6 +31,8 @@ public class GoodsMessageRowMapper implements RowMapper<GoodsMessage>{
 			message.setCreateDate(rs.getDate("create_date"));
 			message.setUpdateDate(rs.getDate("update_date"));
 		}
+		message.setCreateDateFull(GoodsDateUtil.getStringFormat(rs.getTimestamp("create_date"),GoodsDateUtil.DATE_FORMAT_FULL));
+		message.setUpdateDateFull(GoodsDateUtil.getStringFormat(rs.getTimestamp("update_date"),GoodsDateUtil.DATE_FORMAT_FULL));
 		message.setCreateUser(rs.getString("create_user"));
 		message.setUpdateUser(rs.getString("update_user"));
 		return message;

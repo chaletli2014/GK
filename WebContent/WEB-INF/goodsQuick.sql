@@ -382,28 +382,6 @@ ROW_FORMAT=COMPACT
 alter table tbl_goods_ordinary_house add index IDX_HOUSE_CODE(house_code);
 alter table tbl_goods_house_device add index IDX_HOUSE_CODE_DEVICE_TYPE(house_code,device_type);
 
---普通消息表
-CREATE TABLE tbl_goods_message (
-id  				bigint(20) 			UNSIGNED NOT NULL AUTO_INCREMENT ,
-source_user			varchar(200)		comment '消息发送者',
-target_user			varchar(200)		comment '消息接收者',
-message_type		varchar(2)			comment '消息类型：0为普通文本讯息',
-message_title		varchar(200)		comment '消息标题',
-message_content		varchar(20000)   	comment '消息内容',
-repository_code		varchar(50)			comment '物库编码',
-status				varchar(2)			comment '讯息状态：0删除、1未读、2已读',
-create_user  		varchar(20),
-create_date			datetime,
-update_user			varchar(20),
-update_date			datetime,
-PRIMARY KEY (id)
-)
-ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=0
-ROW_FORMAT=COMPACT
-;
-
 --用户信息表
 CREATE TABLE tbl_web_userinfo (
 id  				bigint(20) 		UNSIGNED NOT NULL AUTO_INCREMENT ,
@@ -855,6 +833,44 @@ create_date						datetime,
 update_user						varchar(20),
 update_date						datetime,
 status  						varchar(2) 		DEFAULT NULL ,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+--物讯表
+CREATE TABLE tbl_goods_message (
+id  				bigint(20) 			UNSIGNED NOT NULL AUTO_INCREMENT ,
+message_type		varchar(20)			comment '消息类型：common为普通文本讯息',
+message_title		varchar(200)		comment '消息标题',
+message_content		varchar(20000)   	comment '消息内容',
+create_user  		varchar(20),
+create_date			datetime,
+update_user			varchar(20),
+update_date			datetime,
+PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
+AUTO_INCREMENT=0
+ROW_FORMAT=COMPACT
+;
+
+--物讯关系人表
+CREATE TABLE tbl_goods_message_detail (
+id  				bigint(20) 			UNSIGNED NOT NULL AUTO_INCREMENT ,
+message_id			bigint(20)			comment '物讯主键ID',
+sender_id			bigint(20)			comment '发件人',
+receiver_id			bigint(20)   		comment '收件人',
+status_se			varchar(2)			comment '发件人物讯状态 0删除、1有效',
+status_rec			varchar(2)			comment '收件人物讯状态 0删除、1未读、2已读',
+create_user  		varchar(20),
+create_date			datetime,
+update_user			varchar(20),
+update_date			datetime,
 PRIMARY KEY (id)
 )
 ENGINE=InnoDB

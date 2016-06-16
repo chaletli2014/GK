@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -117,8 +118,7 @@ public class MessageController {
         ModelAndView view = new ModelAndView();
         try {
         	WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-        	String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
-        	List<GoodsMessage> inBoxMessagelist = messageService.getInBoxMessageListByRepo(repositoryCode, currentUser.getId());
+        	List<GoodsMessage> inBoxMessagelist = messageService.getInBoxMessageListByRepo(currentUser.getId());
 			
 			view.addObject("messagelist", inBoxMessagelist);
 			view.addObject("actived", ",inBox,");
@@ -142,8 +142,7 @@ public class MessageController {
 		ModelAndView view = new ModelAndView();
 		try {
 			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
-			List<GoodsMessage> messagelist = messageService.getOutBoxMessageListByRepo(repositoryCode, currentUser.getId());
+			List<GoodsMessage> messagelist = messageService.getOutBoxMessageListByRepo(currentUser.getId());
 			
 			view.addObject("messagelist", messagelist);
 			view.addObject("actived", ",outBox,");
@@ -169,7 +168,6 @@ public class MessageController {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		try {
 			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 			String messageType = request.getParameter("msgType");
 			String targetUserIds = request.getParameter("targetUserIds");
 			String messageTitle = request.getParameter("msgTitle");
@@ -179,10 +177,23 @@ public class MessageController {
 			msg.setMessageType(messageType);
 			msg.setMessageTitle(messageTitle);
 			msg.setMessageContent(messageContent);
-			msg.setTargetUser(targetUserIds);
-			msg.setRepositoryCode(repositoryCode);
-			msg.setSourceUser(String.valueOf(currentUser.getId()));
 			
+			if( StringUtils.isNotBlank(targetUserIds) ){
+				String[] userIds = targetUserIds.split(",");
+				if( null != userIds ){
+					List<Long> targetUsers = new ArrayList<Long>();
+					for( String userId : userIds ){
+						if( StringUtils.isNotBlank(userId) ){
+							targetUsers.add(Long.valueOf(userId));
+						}
+					}
+					msg.setTargetUsers(targetUsers);
+				}
+			}
+			
+			msg.setSender(String.valueOf(currentUser.getId()));
+			msg.setCreateUser(currentUser.getLoginName());
+			msg.setUpdateUser(currentUser.getLoginName());
 			messageService.createNewMessage(msg);
 			
 		} catch (Exception e) {
@@ -204,6 +215,41 @@ public class MessageController {
 			targetUsers.addAll(relationshipPropertyService.getCustomerBySpId(currentUser.getId()));
 			
 			resultMap.put("targetUsers", targetUsers);
+		} catch (Exception e) {
+			logger.error("fail to get the target users,",e);
+		}
+		return resultMap;
+	}
+	
+	@RequestMapping("/getMsgInfo")
+	@ResponseBody
+	public Map<String,Object> getMsgInfo(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			String msgId = request.getParameter("msgId");
+			GoodsMessage msgObj = messageService.getMessageById(Long.parseLong(msgId));
+			messageService.updateMessageStatus(Long.valueOf(msgId), Long.parseLong(String.valueOf(currentUser.getId())), "2", "in");
+			resultMap.put("msgObj", msgObj);
+		} catch (Exception e) {
+			logger.error("fail to get the target users,",e);
+		}
+		return resultMap;
+	}
+	
+	@RequestMapping("/updateMsg")
+	@ResponseBody
+	public Map<String,Object> updateMsg(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			String msgIds = request.getParameter("msgIds");
+			String status = request.getParameter("status");
+			String boxType = request.getParameter("boxType");
+			
+			for( String msgId : msgIds.split(",") ){
+				messageService.updateMessageStatus(Long.valueOf(msgId), Long.parseLong(String.valueOf(currentUser.getId())), status, boxType);
+			}
 		} catch (Exception e) {
 			logger.error("fail to get the target users,",e);
 		}

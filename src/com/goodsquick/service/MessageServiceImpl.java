@@ -2,8 +2,12 @@ package com.goodsquick.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.common.util.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,45 +178,27 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<GoodsMessage> getInBoxMessageListByRepo(String repositoryCode,
-			int userId) throws Exception {
+	public List<GoodsMessage> getInBoxMessageListByRepo(int userId) throws Exception {
 		try{
-			return messageDAO.getMessageListByRepo(repositoryCode, userId, "inbox");
+			return messageDAO.getMessageListByRepo(userId, "inbox");
 		} catch(EmptyResultDataAccessException erd){
             return Collections.emptyList();
         } catch(Exception e){
-            logger.error("fail to get the MESSAGE list by repository code and login name,",e);
+            logger.error("fail to get the inbox MESSAGE list by user id,",e);
             return Collections.emptyList();
         }
 	}
 	
 	@Override
-	public List<GoodsMessage> getOutBoxMessageListByRepo(String repositoryCode,
-			int userId) throws Exception {
-		List<GoodsMessage> outMessage = null;
+	public List<GoodsMessage> getOutBoxMessageListByRepo(int userId) throws Exception {
+		List<GoodsMessage> outMessage = new ArrayList<GoodsMessage>();
 		try{
-			outMessage = messageDAO.getMessageListByRepo(repositoryCode, userId,"outbox");
-			StringBuilder targetUserName = new StringBuilder("");
-			if( !CollectionUtils.isEmpty(outMessage) ){
-				
-				for( GoodsMessage msg : outMessage){
-					List<String> queryParam = new ArrayList<String>();
-					StringBuilder queryCondition = new StringBuilder(" where 1=1 and id in (").append(GoodsQuickStringUtils.getInParameterByStr(msg.getTargetUser(), ",")).append(") ");
-					List<WebUserInfo> userInfos = userDAO.getAllUserByQueryInfo(queryCondition.toString(), queryParam.toArray());
-					if( !CollectionUtils.isEmpty(userInfos) ){
-						for( WebUserInfo user : userInfos ){
-							targetUserName.append(user.getName()).append(",");
-						}
-					}
-					if( null != targetUserName && targetUserName.length() > 0 ){
-						msg.setTargetUser(targetUserName.substring(0,targetUserName.length()-1));
-					}
-				}
-			}
+			List<GoodsMessage> dbOutMessage = messageDAO.getMessageListByRepo(userId,"outbox");
+			outMessage = populateMessage(dbOutMessage);
 		} catch(EmptyResultDataAccessException erd){
 			return Collections.emptyList();
 		} catch(Exception e){
-			logger.error("fail to get the MESSAGE list by repository code and login name,",e);
+			logger.error("fail to get the outbox MESSAGE list by user id,",e);
 			return Collections.emptyList();
 		}
 		return outMessage;
@@ -225,7 +211,63 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public GoodsMessage getMessageById(long messageId) throws Exception {
-		return messageDAO.getMessageById(messageId);
+		List<GoodsMessage> dbMsg = messageDAO.getMessageById(messageId);
+		List<GoodsMessage> returnMsg = populateMessage(dbMsg);
+		if( CollectionUtils.isEmpty(returnMsg) ){
+			return null;
+		}else{
+			return returnMsg.get(0);
+		}
+	}
+	
+	private List<GoodsMessage> populateMessage(List<GoodsMessage> dbMsg) throws Exception{
+		List<GoodsMessage> msgList = new ArrayList<GoodsMessage>();
+		Map<Long,GoodsMessage> msgMap = new HashMap<Long, GoodsMessage>();
+		if( !CollectionUtils.isEmpty(dbMsg) ){
+			for( GoodsMessage msg : dbMsg){
+				if( msgMap.containsKey(msg.getId()) ){
+					List<Long> targetUserList = msgMap.get(msg.getId()).getTargetUsers();
+					targetUserList.add(msg.getReceiverId());
+				}else{
+					List<Long> initList = new ArrayList<Long>();
+					initList.add(msg.getReceiverId());
+					msg.setTargetUsers(initList);
+					msgMap.put(msg.getId(), msg);
+				}
+			}
+			
+			Iterator<GoodsMessage> it = msgMap.values().iterator();
+			while( it.hasNext() ){
+				GoodsMessage message = it.next();
+				List<Long> targetUserList = message.getTargetUsers();
+				String targetUserName = getTargetUserName(targetUserList);
+				if( StringUtils.isNotBlank(targetUserName) ){
+					message.setReceiverNames(targetUserName);
+				}
+				msgList.add(message);
+			}
+		}
+		return msgList;
+	}
+	
+	private String getTargetUserName(List<Long> targetUserList) throws Exception{
+		StringBuilder targetUserNames = new StringBuilder("");
+		List<String> queryParam = new ArrayList<String>();
+		StringBuilder queryCondition = new StringBuilder(" where 1=1 and id in (")
+		.append(GoodsQuickStringUtils.getInParameterByLongList(targetUserList))
+		.append(") ");
+		List<WebUserInfo> userInfos = userDAO.getAllUserByQueryInfo(queryCondition.toString(), queryParam.toArray());
+		if( !CollectionUtils.isEmpty(userInfos) ){
+			for( WebUserInfo user : userInfos ){
+				targetUserNames.append(user.getName()).append(",");
+			}
+		}
+		return targetUserNames.substring(0,targetUserNames.length()-1);
+	}
+
+	@Override
+	public void updateMessageStatus(long messageId, long userId, String status, String boxType) {
+		messageDAO.updateMessageStatus(messageId, userId, status, boxType);
 	}
 	
 	

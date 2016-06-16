@@ -313,4 +313,19 @@ public class UserController {
     	request.getSession(true).setAttribute(GoodsQuickAttributes.WEB_LOGIN_MESSAGE,"注册成功，请登录");
     	return "redirect:login";
     }
+    
+    @RequestMapping("searchUserByName")
+    @ResponseBody
+    public Map<String,Object> searchUserByName(HttpServletRequest request){
+    	Map<String, Object> result = new HashMap<String, Object>();
+    	try{
+    		String name = request.getParameter("searchStr");
+    		WebUserInfo dbUser = webUserService.getUserProfileByUserName(name);
+			result.put("searchUser", dbUser);
+    	}catch(Exception e){
+    		logger.error(String.format("fail to get the user by name,%s",e.getMessage()),e);
+    	}
+		
+		return result;
+    }
 }

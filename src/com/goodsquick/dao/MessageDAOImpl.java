@@ -10,20 +10,23 @@ import com.goodsquick.mapper.GoodsRelatedRequestRowMapper;
 import com.goodsquick.model.GoodsMessage;
 import com.goodsquick.model.GoodsRelatedRequest;
 import com.goodsquick.model.WebUserInfo;
+import com.goodsquick.utils.GoodsJDBCTemplate;
 
 @Repository("messageDAO")
 public class MessageDAOImpl extends BaseDAOImpl implements MessageDAO {
 	
-	private static final StringBuilder MESSAGE_SQL_SELECT = new StringBuilder("select ")
-						.append(" gm.id,sur.name as source_user, gm.target_user, gm.message_type, gd.dic_name as message_type_name ")
-						.append(" ,gm.message_title, gm.message_content, gm.repository_code, gm.status ")
-						.append(" ,gm.create_date, gm.create_user, gm.update_date, gm.update_user");
+	private static final StringBuilder MESSAGE_SQL_SELECT = new StringBuilder(300)
+		.append(" select gm.id,sur.name as sender, md.receiver_id, gm.message_type, gd.dic_name as message_type_name ")
+		.append(" ,gm.message_title, gm.message_content, md.status_se, md.status_rec ")
+		.append(" ,gm.create_date, gm.create_user, gm.update_date, gm.update_user ");
 	
-	private static final StringBuilder MESSAGE_SQL_FROM = new StringBuilder(" from tbl_goods_message gm, tbl_goods_dictionary gd, tbl_web_userinfo sur ");
+	private static final StringBuilder MESSAGE_SQL_FROM 
+		= new StringBuilder(" from tbl_goods_message gm, tbl_goods_message_detail md, tbl_goods_dictionary gd, tbl_web_userinfo sur ");
 	
-	private static final StringBuilder MESSAGE_SQL_COMMON_WHERE = new StringBuilder("")
+	private static final StringBuilder MESSAGE_SQL_COMMON_WHERE = new StringBuilder(150)
+        .append(" and md.message_id = gm.id ")
+        .append(" and md.sender_id = sur.id ")
         .append(" and gm.message_type = gd.dic_code ")
-        .append(" and gm.source_user = sur.id ")
         .append(" and gd.type_code = 'message_type' ");
 
 	@Override
@@ -101,7 +104,7 @@ public class MessageDAOImpl extends BaseDAOImpl implements MessageDAO {
 	}
 	
 	@Override
-	public List<GoodsMessage> getMessageListByRepo(String repositoryCode, int userId, String boxType) throws Exception {
+	public List<GoodsMessage> getMessageListByRepo(int userId, String boxType) throws Exception {
 		List<GoodsMessage> messageList = new ArrayList<GoodsMessage>();
 		List<Object> params = new ArrayList<Object>();
 		
@@ -109,11 +112,9 @@ public class MessageDAOImpl extends BaseDAOImpl implements MessageDAO {
 		sql.append(MESSAGE_SQL_SELECT);
         sql.append(MESSAGE_SQL_FROM);
         if( "inbox".equalsIgnoreCase(boxType) ){
-        	sql.append(" where find_in_set(?,gm.target_user) ");
+        	sql.append(" where md.receiver_id = ? and md.status_rec != '0' ");
         }else{
-        	sql.append(" where gm.repository_code = ? ");
-        	sql.append(" and gm.source_user = ? ");
-        	params.add(repositoryCode);
+        	sql.append(" where md.sender_id = ? and md.status_se != '0' ");
         }
         params.add(userId);
         sql.append(MESSAGE_SQL_COMMON_WHERE);
@@ -124,30 +125,70 @@ public class MessageDAOImpl extends BaseDAOImpl implements MessageDAO {
 
 	@Override
 	public void createNewMessage(GoodsMessage msg) throws Exception {
-		List<String> params = new ArrayList<String>(5);
 		StringBuilder insertSQL = new StringBuilder(200);
-		insertSQL.append(" insert into tbl_goods_message( source_user,target_user,message_type,message_title,message_content,repository_code,status,create_user,create_date,update_user,update_date )");
-		insertSQL.append(" values (?,?,?,?,?,?,'1',?,now(),?,now() )");
+		insertSQL.append(" insert into tbl_goods_message( message_type,message_title,message_content,create_user,create_date,update_user,update_date )");
+		insertSQL.append(" values (?,?,?,?,now(),?,now() )");
 		
-		params.add(msg.getSourceUser());
-		params.add(msg.getTargetUser());
+		List<Object> params = new ArrayList<Object>();
 		params.add(msg.getMessageType());
 		params.add(msg.getMessageTitle());
 		params.add(msg.getMessageContent());
-		params.add(msg.getRepositoryCode());
 		params.add(msg.getCreateUser());
 		params.add(msg.getUpdateUser());
 		
-		dataBean.getJdbcTemplate().update(insertSQL.toString(), params.toArray());
+		long messageId = GoodsJDBCTemplate.executeSQLLong(dataBean, insertSQL, params);
+		
+		insertSQL = new StringBuilder(200);
+		insertSQL.append(" insert into tbl_goods_message_detail ");
+		insertSQL.append(" ( message_id,sender_id,receiver_id,status_se,status_rec ");
+		insertSQL.append(" ,create_user,create_date,update_user,update_date ) ");
+		insertSQL.append(" values (?,?,?,'1','1',?,now(),?,now() )");
+		
+		for( Long receiverId : msg.getTargetUsers() ){
+			params = new ArrayList<Object>(5);
+			params.add(messageId);
+			params.add(msg.getSender());
+			params.add(receiverId);
+			params.add(msg.getCreateUser());
+			params.add(msg.getUpdateUser());
+			dataBean.getJdbcTemplate().update(insertSQL.toString(), params.toArray());
+		}
 	}
 
 	@Override
-	public GoodsMessage getMessageById(long messageId) throws Exception {
+	public List<GoodsMessage> getMessageById(long messageId) throws Exception {
 		StringBuilder sql = new StringBuilder();
 		sql.append(MESSAGE_SQL_SELECT);
         sql.append(MESSAGE_SQL_FROM);
         sql.append(" where gm.id = ? ");
         sql.append(MESSAGE_SQL_COMMON_WHERE);
-		return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{messageId},new GoodsMessageRowMapper());
+		return dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{messageId},new GoodsMessageRowMapper());
+	}
+
+	@Override
+	public void updateMessageStatus(long messageId, long userId, String status, String boxType) {
+		List<Object> params = new ArrayList<Object>(4);
+		StringBuilder updateSQL = new StringBuilder(200);
+		updateSQL.append(" update tbl_goods_message_detail ");
+		updateSQL.append(" set update_date=now(),update_user=? ");
+		if( "in".equalsIgnoreCase(boxType) ){
+			updateSQL.append(",status_rec = ? ");
+		}else{
+			updateSQL.append(",status_se = ? ");
+		}
+		updateSQL.append(" where message_id=? ");
+		if( "in".equalsIgnoreCase(boxType) ){
+			updateSQL.append("and receiver_id = ? ");
+		}else{
+			updateSQL.append("and sender_id = ? ");
+		}
+		
+		
+		params.add(userId);
+		params.add(status);
+		params.add(messageId);
+		params.add(userId);
+		
+		dataBean.getJdbcTemplate().update(updateSQL.toString(), params.toArray());
 	}
 }

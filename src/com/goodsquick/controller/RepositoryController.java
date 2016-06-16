@@ -11,13 +11,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsRepository;
+import com.goodsquick.model.GoodsRepositoryUser;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.RepositoryService;
+import com.goodsquick.service.WebUserService;
 import com.goodsquick.utils.GoodsQuickAttributes;
 import com.goodsquick.utils.GoodsQuickUtils;
 
@@ -29,6 +32,10 @@ public class RepositoryController {
     @Autowired
     @Qualifier("repositoryService")
     private RepositoryService repositoryService;
+    
+    @Autowired
+    @Qualifier("webUserService")
+    private WebUserService webUserService;
     
 	@RequestMapping("/saveOrUpdateRepository")
 	@ResponseBody
@@ -138,6 +145,80 @@ public class RepositoryController {
 			resultMap.put("repository", repository);
 		} catch (Exception e) {
 			logger.error("fail to get repository by code,",e);
+		}
+		return resultMap;
+	}
+
+	@RequestMapping("/repositoryUser")
+	public ModelAndView repositoryUser(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("rep/repositoryUser");
+		
+		try {
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			
+			List<GoodsRepositoryUser> repositoryUserList = repositoryService.getRepositoryUserByRepositoryCode(repositoryCode,currentUser.getLoginName());
+			view.addObject("repositoryUserList", repositoryUserList);
+		} catch (Exception e) {
+			logger.error("fail to get the top level category,",e);
+		}
+		view.addObject("opened", ",serviceCustomer,");
+        view.addObject("actived", ",repositoryUser,");
+		return view;
+	}
+	
+	@RequestMapping("/saveRepositoryUser")
+	@ResponseBody
+	public Map<String,Object> saveRepositoryUser(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			
+			String selectedId = request.getParameter("selectedId");
+			WebUserInfo userInfo = webUserService.getUserProfileById(selectedId);
+			
+			List<GoodsRepositoryUser> dbRepoUser = repositoryService.getRepositoryUserByUserId(repositoryCode, selectedId);
+			
+			GoodsRepositoryUser repositoryUser = new GoodsRepositoryUser();
+			repositoryUser.setRepositoryCode(repositoryCode);
+			repositoryUser.setUserCode(userInfo.getLoginName());
+			repositoryUser.setCreateUser(currentUser.getLoginName());
+			repositoryUser.setUpdateUser(currentUser.getLoginName());
+			
+			if( CollectionUtils.isEmpty(dbRepoUser) ){
+				repositoryService.saveRepositoryUser(repositoryUser);
+				resultMap.put("result", "Y");
+			}else if( dbRepoUser.size() == 1 && "0".equalsIgnoreCase(dbRepoUser.get(0).getStatus()) ){
+				repositoryService.updateRepositoryUser(repositoryUser);
+				resultMap.put("result", "Y");
+			}else{
+				resultMap.put("result", "E");
+			}
+			
+		} catch (Exception e) {
+			logger.error("fail to save user to repository,",e);
+		}
+		return resultMap;
+	}
+	
+
+	@RequestMapping("/removeRepositoryUser")
+	@ResponseBody
+	public Map<String,Object> removeRepositoryUser(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			String repoUserId = request.getParameter("repoUserId");
+			GoodsRepositoryUser dbRepoUser = new GoodsRepositoryUser();
+			dbRepoUser.setId(Integer.valueOf(repoUserId));
+			dbRepoUser.setUpdateUser(currentUser.getLoginName());
+			repositoryService.removeRepositoryUser(dbRepoUser);
+			resultMap.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("fail to remove repository user,",e);
+			resultMap.put("result", "N");
 		}
 		return resultMap;
 	}
