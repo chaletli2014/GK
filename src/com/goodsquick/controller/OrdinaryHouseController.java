@@ -286,7 +286,7 @@ public class OrdinaryHouseController {
     		logger.error("fail to add or update ordinary house,",e);
     	}
     	
-    	return "redirect:ordinaryhouse";
+    	return "redirect:assetlist";
     }
     
 

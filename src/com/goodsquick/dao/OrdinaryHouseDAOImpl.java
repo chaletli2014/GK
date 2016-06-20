@@ -32,12 +32,20 @@ public class OrdinaryHouseDAOImpl extends BaseDAOImpl implements OrdinaryHouseDA
 	@Qualifier("dataBean")
 	private DataBean dataBean;
 	
+	private final static StringBuilder SQL_SELECTION = new StringBuilder("select ho.*,coalesce(gd.dic_name,ho.property_type) as property_type_desc ");
+	private final static StringBuilder SQL_FROM_OWN = new StringBuilder("from tbl_goods_ordinary_house_owned ho ");
+	private final static StringBuilder SQL_FROM = new StringBuilder("from tbl_goods_ordinary_house oh ");
+	private final static StringBuilder SQL_FROM_LEFT_JOIN = new StringBuilder("left join tbl_goods_dictionary gd on ho.property_type = gd.dic_code and gd.type_code='template_estate' ");
+	
 	@Override
 	public List<GoodsOrdinaryHouse> getOrdinaryHouseByUserCode(String userCode)
 			throws Exception {
 		List<GoodsOrdinaryHouse> ohList = new ArrayList<GoodsOrdinaryHouse>();
-        String sql = "select * from tbl_goods_ordinary_house where create_user = ? and status = '1' ";
-        ohList = dataBean.getJdbcTemplate().query(sql, new Object[]{userCode}, new OrdinaryHouseRowMapper());
+		StringBuilder sql = new StringBuilder(SQL_SELECTION);
+		sql.append(SQL_FROM_OWN);
+		sql.append(SQL_FROM_LEFT_JOIN);
+		sql.append("where ho.create_user = ? and ho.status = '1' ");
+        ohList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{userCode}, new OrdinaryHouseRowMapper());
         return ohList;
 	}
 	
@@ -45,8 +53,9 @@ public class OrdinaryHouseDAOImpl extends BaseDAOImpl implements OrdinaryHouseDA
 	public GoodsOrdinaryHouse getOrdinaryHouseByRepositoryCode(String repositoryCode)
 			throws Exception{
 		List<GoodsOrdinaryHouse> ohList = new ArrayList<GoodsOrdinaryHouse>();
-		StringBuilder sql = new StringBuilder("select ho.*,coalesce(gd.dic_name,ho.property_type) as property_type_desc from tbl_goods_ordinary_house_owned ho ");
-		sql.append(" left join tbl_goods_dictionary gd on ho.property_type = gd.dic_code and gd.type_code='template_estate' ");
+		StringBuilder sql = new StringBuilder(SQL_SELECTION);
+		sql.append(SQL_FROM_OWN);
+		sql.append(SQL_FROM_LEFT_JOIN);
 		sql.append(" where ho.repository_code = ? and ho.status = '1'  ");
 		ohList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new OrdinaryHouseRowMapper());
 		if( !CollectionUtils.isEmpty(ohList) ){
@@ -225,15 +234,21 @@ public class OrdinaryHouseDAOImpl extends BaseDAOImpl implements OrdinaryHouseDA
 	@Override
 	public GoodsOrdinaryHouse getGoodsOrdinaryHouseById(int ordinaryHouseId)
 			throws Exception {
-        String sql = "select * from tbl_goods_ordinary_house where id = ?";
-        return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{ordinaryHouseId}, new OrdinaryHouseRowMapper());
+		StringBuilder sql = new StringBuilder(SQL_SELECTION);
+		sql.append(SQL_FROM);
+		sql.append(SQL_FROM_LEFT_JOIN);
+		sql.append("where oh.id = ?");
+        return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{ordinaryHouseId}, new OrdinaryHouseRowMapper());
 	}
 	
 	@Override
 	public GoodsOrdinaryHouse getOwnedGoodsOrdinaryHouseById(int ordinaryHouseId)
 			throws Exception {
-		String sql = "select * from tbl_goods_ordinary_house_owned where id = ?";
-		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{ordinaryHouseId}, new OrdinaryHouseRowMapper());
+		StringBuilder sql = new StringBuilder(SQL_SELECTION);
+		sql.append(SQL_FROM_OWN);
+		sql.append(SQL_FROM_LEFT_JOIN);
+		sql.append("where ho.id = ?");
+		return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{ordinaryHouseId}, new OrdinaryHouseRowMapper());
 	}
 
 	@Override

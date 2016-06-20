@@ -28,12 +28,7 @@
 <nav class="navbar user-info-navbar" role="navigation" style="height:46px;">
 	<!-- Left links for user info navbar -->
 	<ul class="user-info-menu left-links list-inline list-unstyled">
-		<li class="hidden-sm hidden-xs">
-			<a href="#" data-toggle="sidebar">
-				<i class="fa-arrows-alt"></i>
-			</a>
-		</li>
-		<li class="dropdown hover-line">
+		<li class="dropdown hover-line" style="margin-left:28px;">
 			<a href="#" data-toggle="dropdown" class="repositoryNav">
 				<span class="">物库管理</span>
 			</a>
@@ -74,6 +69,7 @@
 				</li>
 			</ul>
 		</li>
+		<%--
 		<li class="dropdown hover-line">
 			<a href="#" data-toggle="dropdown">
 				<i class="fa-bell-o" title="消息管理"></i>
@@ -104,6 +100,7 @@
 				</li>
 			</ul>
 		</li>
+		 --%>
 	</ul>
 	<!-- Right links for user info navbar -->
 	<ul class="user-info-menu right-links list-inline list-unstyled">

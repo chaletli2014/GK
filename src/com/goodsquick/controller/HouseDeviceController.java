@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsHouseDevice;
-import com.goodsquick.model.GoodsHouseSubjectModule;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.GoodsHouseDeviceService;
 import com.goodsquick.service.LiftService;
@@ -29,6 +30,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Controller
@@ -82,6 +84,59 @@ public class HouseDeviceController {
 			e.printStackTrace();
 		}
 		return "redirect:houseDeviceList";
+	}
+	
+
+	@RequestMapping("/getassetdevicelist")
+    @ResponseBody
+    public String getassetdevicelist(HttpServletRequest request){
+		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+		JSONObject getObj = new JSONObject();
+		try {
+			String aoData = request.getParameter("aoData");
+			Gson gson = new Gson();
+			JsonParser parser = new JsonParser();
+			JsonElement el = parser.parse(aoData);
+			
+			JsonArray deviceArray = new JsonArray();
+			if(el.isJsonArray()){
+				deviceArray = el.getAsJsonArray();
+			}
+			
+			String sEcho = null;
+		    int iDisplayStart = 0; // 起始索引
+		    int iDisplayLength = 0; // 每页显示的行数
+		    
+			Iterator it = deviceArray.iterator();
+			while(it.hasNext()){
+				JsonElement element = (JsonElement)it.next();
+				//JsonElement转换为JavaBean对象
+				JsonObject obj = element.getAsJsonObject();
+				
+				if (obj.get("name").equals("sEcho")){
+					sEcho = obj.get("value").toString();
+				}
+		 
+		        if (obj.get("name").equals("iDisplayStart")){
+		        	iDisplayStart = obj.get("value").getAsInt();
+		        }
+		        							
+		        if (obj.get("name").equals("iDisplayLength")){
+		        	iDisplayLength = obj.get("value").getAsInt();
+		        }
+			}
+			
+		    getObj.put("sEcho", 1);// 不知道这个值有什么用,有知道的请告知一下
+			getObj.put("iTotalRecords", 2);//实际的行数
+		    getObj.put("iTotalDisplayRecords", 2);
+			List<GoodsHouseDevice> houseDevices = goodsHouseDeviceService.getAllDevice(repositoryCode);
+			
+			houseDevices = houseDevices.subList(iDisplayStart,iDisplayStart + iDisplayLength);
+			getObj.put("aaData", gson.toJson(houseDevices));
+		} catch (Exception e) {
+			logger.error("fail to get the house subject,",e);
+		}
+		return getObj.toString();
 	}
 	
 	@RequestMapping("/saveOrUpdateDevice")

@@ -76,7 +76,7 @@ public class HouseOtherController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:houseOtherList";
+		return "redirect:assetlist";
 	}
 	
 	@RequestMapping("/saveOrUpdateOther")

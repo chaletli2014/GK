@@ -427,9 +427,11 @@ function showModule(subjectId){
     });
 }
 function initSubjectTable(){
-	$("#subjectTable").dataTable({
-		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>"
-	});
+	if( $("#subjectTable") ){
+		$("#subjectTable").dataTable({
+			dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>"
+		});
+	}
 }
 function emptyModuleForm(){
 	$("#moduleType").selectBoxIt().data("selectBoxIt");

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,13 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDictionary;
+import com.goodsquick.model.GoodsHouseDevice;
+import com.goodsquick.model.GoodsHouseOther;
 import com.goodsquick.model.GoodsOrdinaryHouse;
-import com.goodsquick.model.WebUserInfo;
+import com.goodsquick.model.GoodsSubject;
 import com.goodsquick.service.DictionaryService;
-import com.goodsquick.service.GoodsProductLiftService;
-import com.goodsquick.service.GoodsProductService;
-import com.goodsquick.service.GoodsSourceFileService;
+import com.goodsquick.service.GoodsHouseDeviceService;
+import com.goodsquick.service.GoodsHouseOtherService;
 import com.goodsquick.service.OrdinaryHouseService;
+import com.goodsquick.service.SubjectAndModuleService;
 import com.goodsquick.utils.GoodsQuickAttributes;
 
 /**
@@ -42,6 +45,18 @@ public class AssetController {
 	@Qualifier("ordinaryHouseService")
 	private OrdinaryHouseService ordinaryHouseService;
 	
+	@Autowired
+	@Qualifier("subjectAndModuleService")
+	private SubjectAndModuleService subjectAndModuleService;
+	
+	@Autowired
+	@Qualifier("goodsHouseDeviceService")
+	private GoodsHouseDeviceService goodsHouseDeviceService;
+	
+	@Autowired
+	@Qualifier("goodsHouseOtherService")
+	private GoodsHouseOtherService goodsHouseOtherService;
+	
 	@RequestMapping("/newAssetPre")
 	public ModelAndView newAssetPre(HttpServletRequest request){
 		ModelAndView view = new ModelAndView();
@@ -56,6 +71,43 @@ public class AssetController {
 		}
 		
 		view.setViewName("asset/addAssetPre");
+		return view;
+	}
+	
+	@RequestMapping("/assetlist")
+	public ModelAndView assetlist(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.addObject("opened", ",productManagement,");
+		view.addObject("actived", ",assetlist,");
+		view.setViewName("asset/assetlist");
+		try {
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			
+			String contextPath = request.getSession().getServletContext().getContextPath();
+			GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
+			if( orHouse != null && StringUtils.isBlank(orHouse.getMainPic()) ){
+				orHouse.setMainPic(contextPath+GoodsQuickAttributes.DEFAULT_HOUSE_PIC);
+			}
+			view.addObject("orHouse", orHouse);
+			
+			List<GoodsSubject> subjectList1 = subjectAndModuleService.getSubjectByLevel("1", repositoryCode);
+			List<GoodsSubject> subjectList2 = subjectAndModuleService.getSubjectByLevel("2", repositoryCode);
+			List<GoodsSubject> subjectList3 = subjectAndModuleService.getSubjectByLevel("3", repositoryCode);
+			List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
+			
+			view.addObject("moduleTypes", moduleTypes);
+			view.addObject("subjectList1", subjectList1);
+			view.addObject("subjectList2", subjectList2);
+			view.addObject("subjectList3", subjectList3);
+			
+			List<GoodsHouseDevice> houseDevices = goodsHouseDeviceService.getAllDevice(repositoryCode);
+			view.addObject("houseDevices", houseDevices);
+			
+			List<GoodsHouseOther> houseOthers = goodsHouseOtherService.getAllOther(repositoryCode);
+			view.addObject("houseOthers", houseOthers);
+		}catch(Exception e){
+			logger.error("fail to get ordinaryhouse,",e);
+		}
 		return view;
 	}
 	

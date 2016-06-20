@@ -222,9 +222,9 @@ function populatePaintInfo(paintObj){
 	//basic
 	$("#paintId").val(paintObj.id);
 	$("#subjectId").val(paintObj.subjectId);
-	$("#subjectName").val(paintObj.subjectName);
+	$("#subjectName_other").val(paintObj.subjectName);
 	$("#moduleId").val(paintObj.moduleId);
-	$("#moduleName").val(paintObj.moduleName);
+	$("#moduleName_other").val(paintObj.moduleName);
 	var type1Code = paintObj.type1Code;
 	$("#type1codeSelection option").each(function() {
         if ($(this).val() == type1Code ) {

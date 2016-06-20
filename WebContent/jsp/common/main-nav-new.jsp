@@ -33,7 +33,7 @@
 </style> 
 <nav class="navbar user-info-navbar info-navbar-new" role="navigation">
 	<!-- Left links for user info navbar -->
-	<ul class="user-info-menu left-links list-inline list-unstyled" style="width:90%;">
+	<ul class="user-info-menu left-links list-inline list-unstyled" style="width:86%;">
 		<li class="hidden-sm hidden-xs">
 				<a href="#" data-toggle="sidebar">
 					<i class="fa-arrows-alt"></i>
@@ -54,7 +54,7 @@
 				<span class="">需品库管理</span>
 			</a>
 		</li>
-		<li class="dropdown" style="float:right">
+		<li class="dropdown" style="">
 			<a href="#" data-toggle="dropdown">
 				<i class="fa-bell-o" title="消息管理"></i>
 				<span class="badge badge-purple" id="messageTips"></span>

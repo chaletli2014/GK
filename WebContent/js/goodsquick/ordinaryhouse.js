@@ -105,7 +105,7 @@ jQuery(document).ready(function($){
 		$("#rightBody").fadeOut();
 		$("#rightBody").fadeIn();
 	});
-	$("#editHouseLink").click(function(){
+	$("body").delegate('#editHouseLink', 'click', function(){
 		jQuery('#newHouseDiv').modal('show', {backdrop: 'static'});
 	});
 	$("#bodyModuleType").change(function(){

@@ -127,9 +127,9 @@ function populateLiftMainInfo(deviceObj){
 function populateLiftBasicInfo(deviceObj){
 	$("#deviceId").val(deviceObj.id);
 	$("#subjectId").val(deviceObj.subjectId);
-	$("#subjectName").val(deviceObj.subjectName);
+	$("#subjectName_device").val(deviceObj.subjectName);
 	$("#moduleId").val(deviceObj.moduleId);
-	$("#moduleName").val(deviceObj.moduleName);
+	$("#moduleName_device").val(deviceObj.moduleName);
 	var deviceTypeValue = deviceObj.liftType;
 	$("#deviceType option").each(function() {
         if ($(this).val() == deviceTypeValue ) {
@@ -343,6 +343,6 @@ function initDeviceTable(){
 function emptyDeviceForm(){
 	$("#moduleType").selectBoxIt().data("selectBoxIt");
 	$("#moduleType").data("selectBox-selectBoxIt").refresh();
-	$("#moduleName").val('');
+	$("#moduleName_housedevice").val('');
 	$("#moduleDesc").val('');
 }

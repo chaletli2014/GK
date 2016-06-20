@@ -436,7 +436,9 @@ div.showDetailDiv .form-group{
 }
 .subject_tip{
 	background: #dddddd;
-	padding:8px;
+	padding-right:8px;
+	padding-top:10px;
+	padding-bottom:4px;
 	padding-left:20px;
 	margin-left:20px;
 }

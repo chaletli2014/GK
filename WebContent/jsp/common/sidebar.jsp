@@ -20,6 +20,7 @@
 	String manageName = "资品管理";
 	String newRepoName = "添加资品";
 	String manageLink = basePath+"ordinaryhouse";
+	String manageLink2 = basePath+"assetlist";
 	String repoPreName = "资品";
 	String newLink = basePath+"newAssetPre";
 	
@@ -129,6 +130,13 @@
 			</li>
 			<%} %>
 			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
+				<a href="<%=manageLink2%>">
+					<i class="linecons-database"></i>
+					<span class="title"><%=manageName %></span>
+				</a>
+			</li>
+			<%--
+			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-database"></i>
 					<span class="title"><%=manageName %></span>
@@ -219,6 +227,7 @@
 					</li>
 				</ul>
 			</li>
+			 --%>
 			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-globe"></i>
