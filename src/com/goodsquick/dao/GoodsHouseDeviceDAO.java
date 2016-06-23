@@ -13,4 +13,13 @@ public interface GoodsHouseDeviceDAO {
 	public GoodsHouseDevice getDeviceInfoById(int deviceId) throws Exception;
 	
 	public void deleteHouseDevice(GoodsHouseDevice obj) throws Exception;
+	
+	/**
+	 * 根据物库编码和设备分类获取设备列表
+	 * @param repositoryCode
+	 * @param eqTypeCode
+	 * @return
+	 * @throws Exception
+	 */
+	public List<GoodsHouseDevice> getDeviceByEqTypeCode(String repositoryCode, String eqTypeCode) throws Exception;
 }

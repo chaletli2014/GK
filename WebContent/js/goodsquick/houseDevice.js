@@ -1,5 +1,6 @@
 var newTrCount;
 var newTrNum = new Array();
+var deviceTable;
 
 jQuery(document).ready(function($){
 	initDeviceTable();
@@ -56,6 +57,11 @@ jQuery(document).ready(function($){
 	
 	$("body").delegate('.newTrCancle', 'click', function(){
 		$(this).parent().parent().remove();
+	});
+	
+	$("body").delegate('.asset_a_device', 'click', function(){
+		$("#eqTypeCode_h").val($(this).attr("aid"));
+		refreshTables();
 	});
 });
 
@@ -157,7 +163,12 @@ function createNewDeviceTr(){
 	
 	var newTr = "<tr class=\"newDeviceTr\">";
 	var deviceTypeList = "<select id=\"deviceTypeSelection"+newTrCount+"\" name =\"deviceTypeSelection\"><option value=\"\">--请选择--</option>";
-	deviceTypeList = deviceTypeList + "<option value=\"dt\">电梯</option>";
+	
+	var deviceTypeArray = eval($("#assetDeviceTypeArray").val());
+	$.each(deviceTypeArray,function(n,value) {
+        deviceTypeList = deviceTypeList + "<option value=\""+value.dicCode+"\">"+value.dicName+"</option>";
+	});
+	
 	deviceTypeList = deviceTypeList + "</select>";
 	
 	newTr = newTr + "<td>"+deviceTypeList+"</td>";
@@ -335,11 +346,63 @@ function showModule(subjectId){
     });
 }
 
-function initDeviceTable(){
-	$("#deviceTable").dataTable({
-		dom: "t" + "<'row'<'col-xs-3'i><'col-xs-9'p>>"
-	});
+function refreshTables(){
+	deviceTable.fnClearTable(0);
+	deviceTable.fnDraw(); //重新加载数据  
 }
+
+function initDeviceTable(){
+	deviceTable = $("#deviceTable").dataTable({
+	        "bProcessing": false, // 是否显示取数据时的那个等待提示
+	        "bServerSide": true,//这个用来指明是通过服务端来取数据
+	        "sAjaxSource": basePath+"getassetdevicelist",//这个是请求的地址
+	        "fnServerData": retrieveData, // 获取数据的处理函数
+	        "sAjaxDataProp": "aaData",
+	        "bLengthChange": false,
+	        "searching": false,
+	        "fnServerParams" : function(aoData) {  
+                aoData.push({
+                    "name":"eqTypeCode","value":$("#eqTypeCode_h").val()
+                });  
+            },
+	        "aoColumns": [
+	            {"mDataProp":"eqTypeName"},
+	             {"mDataProp":"name"},
+	             {"mDataProp":"eqDesc"},
+	             {"mDataProp":"subjectName"},
+	             {"mDataProp":"id"}
+	        ],
+	        aoColumnDefs : [ 
+				{ 
+					"aTargets" :　[3], "mRender" : function(data, type, full){
+						return full.subjectName + "-" + full.moduleName;
+					}
+				},
+	            { "aTargets" :　[4], "mRender" : function(data, type, full){
+		        		var editlink = "<a id='"+full.id+"' dtype='"+full.eqTypeCode+"' class='btn btn-secondary btn-sm btn-icon icon-left modifyDevice'>编辑</a>";
+		        		var dellink = "<a id='"+full.id+"' dtype='"+full.eqTypeCode+"' class='btn btn-danger btn-sm btn-icon icon-left removeDevice'>删除</a>";
+		        		return editlink + dellink;
+	        		} 
+	            }
+			]
+    });
+}
+function retrieveData( sSource111,aoData111, fnCallback111) {
+    $.ajax({
+        url : sSource111,//这个就是请求地址对应sAjaxSource
+        data : {"aoData":JSON.stringify(aoData111)},//这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数
+        type : 'post',
+        dataType : 'json',
+        dataSrc: "aaData",
+        async : false,
+        success : function(result) {
+            fnCallback111(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+        },
+        error : function(msg) {
+        }
+    });
+}
+
 function emptyDeviceForm(){
 	$("#moduleType").selectBoxIt().data("selectBoxIt");
 	$("#moduleType").data("selectBox-selectBoxIt").refresh();

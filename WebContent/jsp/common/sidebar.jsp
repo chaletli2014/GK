@@ -130,116 +130,57 @@
 			</li>
 			<%} %>
 			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
-				<a href="<%=manageLink2%>">
-					<i class="linecons-database"></i>
-					<span class="title"><%=manageName %></span>
-				</a>
-			</li>
-			<%--
-			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-database"></i>
 					<span class="title"><%=manageName %></span>
 				</a>
 				<ul>
-					<li <% if( actived.indexOf(",newProduct,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=newLink%>">
+					<%
+						if(!"2".equalsIgnoreCase(currentRepository.getRepositoryType())){
+					%>
+					<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=manageLink%>">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title"><%=newRepoName%></span>
+							<span class="title">基本信息</span>
 						</a>
 					</li>
-					<li <% if( opened.indexOf(",subjectModule,")>-1 
-								|| actived.indexOf(",houseDevice,")>-1 
-								|| actived.indexOf(",houseOther,")>-1
-								|| actived.indexOf(",ordinaryhouse,")>-1 
-								|| actived.indexOf(",productlist,")>-1 ){ %>class="active opened"<%} %>>
-						<a>
+					<li <% if( actived.indexOf(",subjectModule,")>-1 
+							|| actived.indexOf(",subject1,")>-1
+							|| actived.indexOf(",subject2,")>-1
+							|| actived.indexOf(",subject3,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>subjectList?level=1">
 							<i class="entypo-flow-parallel"></i>
-							<span class="title">列表</span>
+							<span class="title">主体构件</span>
 						</a>
-						<ul>
-							<%
-								if(!"2".equalsIgnoreCase(currentRepository.getRepositoryType())){
-							%>
-							<li <% if( opened.indexOf(",subjectModule,")>-1 
-								|| actived.indexOf(",houseDevice,")>-1 
-								|| actived.indexOf(",houseOther,")>-1
-								|| actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active opened"<%} %>>
-							<a href="<%=manageLink%>">
-								<i class="entypo-flow-parallel"></i>
-								<span class="title">不动产</span>
-							</a>
-							<ul>
-								<li <% if( actived.indexOf(",ordinaryhouse,")>-1 ){ %>class="active"<%} %>>
-									<a href="<%=manageLink%>">
-										<i class="entypo-flow-parallel"></i>
-										<span class="title">基本信息</span>
-									</a>
-								</li>
-								<li <% if( opened.indexOf(",subjectModule,")>-1 ){ %>class="active opened"<%} %>>
-									<a href="#" onclick="javascript:void(0)">
-										<i class="entypo-flow-parallel"></i>
-										<span class="title">主体构件</span>
-									</a>
-									<ul>
-										<li <% if( actived.indexOf(",subject1,")>-1 ){ %>class="active"<%} %>>
-											<a href="<%=request.getParameter("basePath")%>subjectList?level=1">
-												<i class="entypo-flow-parallel"></i>
-												<span class="title">一级主体</span>
-											</a>
-										</li>
-										<li <% if( actived.indexOf(",subject2,")>-1 ){ %>class="active"<%} %>>
-											<a href="<%=request.getParameter("basePath")%>subjectList?level=2">
-												<i class="entypo-flow-parallel"></i>
-												<span class="title">二级主体</span>
-											</a>
-										</li>
-										<li <% if( actived.indexOf(",subject3,")>-1 ){ %>class="active"<%} %>>
-											<a href="<%=request.getParameter("basePath")%>subjectList?level=3">
-												<i class="entypo-flow-parallel"></i>
-												<span class="title">三级主体</span>
-											</a>
-										</li>
-									</ul>
-								</li>
-								<li <% if( actived.indexOf(",houseDevice,")>-1 ){ %>class="active"<%} %>>
-									<a href="<%=request.getParameter("basePath")%>houseDeviceList">
-										<i class="entypo-flow-parallel"></i>
-										<span class="title">设施设备</span>
-									</a>
-								</li>
-								<li <% if( actived.indexOf(",houseOther,")>-1 ){ %>class="active"<%} %>>
-									<a href="<%=request.getParameter("basePath")%>houseOtherList">
-										<i class="entypo-flow-parallel"></i>
-										<span class="title">材料&nbsp;&&nbsp;装饰</span>
-									</a>
-								</li>
-							</ul>
-						</li>
-						<%} %>
-						<li <% if( actived.indexOf(",productlist,")>-1 ){%>class="active"<%} %>>
-							<a href="<%=request.getParameter("basePath")%>productlist">
-								<i class="entypo-flow-parallel"></i>
-								<span class="title">动产</span>
-							</a>
-						</li>
-						</ul>
 					</li>
+					<li <% if( actived.indexOf(",houseDevice,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseDeviceList">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">设施设备</span>
+						</a>
+					</li>
+					<li <% if( actived.indexOf(",houseOther,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>houseOtherList">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">材料&nbsp;&&nbsp;装饰</span>
+						</a>
+					</li>
+				<%}else{ %>
+				<li <% if( actived.indexOf(",productlist,")>-1 ){%>class="active"<%} %>>
+					<a href="<%=request.getParameter("basePath")%>productlist">
+						<i class="entypo-flow-parallel"></i>
+						<span class="title">动产</span>
+					</a>
+				</li>
+				<%} %>
 				</ul>
 			</li>
-			 --%>
 			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-globe"></i>
 					<span class="title">物链管理</span>
 				</a>
 				<ul>
-					<li <% if( actived.indexOf(",repositoryUser,")>-1 ){ %>class="active"<%} %>>
-						<a href="<%=request.getParameter("basePath")%>repositoryUser">
-							<i class="entypo-flow-parallel"></i>
-							<span class="title">库用户管理</span>
-						</a>
-					</li>
 					<li <% if( actived.indexOf(",moduleSPList,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=request.getParameter("basePath")%>moduleSPManagement?spTypeCode=sp_type_brand">
 							<i class="entypo-flow-parallel"></i>
@@ -285,6 +226,26 @@
 						</a>
 					</li>
 				</ul>
+			</li>
+			<li <% if( opened.indexOf(",userManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
+				<a>
+					<i class="linecons-user"></i>
+					<span class="title">用户管理</span>
+				</a>
+				<ul>
+					<li <% if( actived.indexOf(",repositoryUser,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=request.getParameter("basePath")%>repositoryUser">
+							<i class="entypo-flow-parallel"></i>
+							<span class="title">库用户管理</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li <% if( opened.indexOf(",applicationManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
+				<a href="javascript:void(0)" onclick="jAlert('应用建设中...','提示');">
+					<i class="fa-windows"></i>
+					<span class="title">应用管理</span>
+				</a>
 			</li>
 			<%--
 			<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="opened active firstLI"<%}else{%>class="firstLI"<%} %>>

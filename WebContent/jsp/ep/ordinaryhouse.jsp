@@ -77,16 +77,8 @@ jQuery(document).ready(function($){
 					<ul id="subjectTree" class="ztree"></ul>
 				</div>
 				<div class="zTreeDemoBackground left">
-					<div class="treeNodeTitle">构件</div>
-					<ul id="moduleTree" class="ztree"></ul>
-				</div>
-				<div class="zTreeDemoBackground left">
 					<div class="treeNodeTitle">设施设备</div>
 					<ul id="deviceTree" class="ztree"></ul>
-				</div>
-				<div class="zTreeDemoBackground left">
-					<div class="treeNodeTitle">材料装饰</div>
-					<ul id="otherTree" class="ztree"></ul>
 				</div>
 			</div>
 			

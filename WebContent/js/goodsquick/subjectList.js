@@ -6,7 +6,15 @@ var subject2Name;
 var newTrNum = new Array();
 
 jQuery(document).ready(function($){
+	assetNavHandle($(this));
+	
 	initSubjectTable();
+	
+	showDisplayDiv();
+	
+	$(".asset_a_subject").click (function(){
+		window.location.href=basePath+"subjectList?level="+$(this).attr("aid");
+	});
 	
 	$("#newSubject").click (function(){
 		createNewSubjectTr();
@@ -105,6 +113,16 @@ jQuery(document).ready(function($){
 	    });
 	});
 });
+
+function showDisplayDiv(){
+	var level = $("#subjectLevel_h").val();
+	$("#subject_div").slideDown(500);
+	$("#asset_a_subject"+level).parent().addClass("active");
+}
+
+function assetNavHandle(nav){
+	$("#nav_ul").children().removeClass("active");
+}
 
 function createNewSubjectTr(){
 	if( newTrCount && newTrCount != 0 ){

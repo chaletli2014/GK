@@ -8,9 +8,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.cxf.common.util.CollectionUtils;
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -19,8 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goodsquick.model.GoodsDeviceLift;
+import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
 import com.goodsquick.model.WebUserInfo;
+import com.goodsquick.service.DictionaryService;
 import com.goodsquick.service.GoodsHouseDeviceService;
 import com.goodsquick.service.LiftService;
 import com.goodsquick.service.OrdinaryHouseService;
@@ -30,7 +35,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @Controller
@@ -46,6 +50,10 @@ public class HouseDeviceController {
 	private GoodsHouseDeviceService goodsHouseDeviceService;
 	
 	@Autowired
+	@Qualifier("dictionaryService")
+	private DictionaryService dictionaryService;
+	
+	@Autowired
 	@Qualifier("liftService")
 	private LiftService liftService;
 
@@ -53,11 +61,13 @@ public class HouseDeviceController {
 	public ModelAndView houseDeviceList(HttpServletRequest request){
 		ModelAndView view = new ModelAndView();
 		view.setViewName("houseDevice/houseDeviceList");
-		
-		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 		try {
-			List<GoodsHouseDevice> houseDevices = goodsHouseDeviceService.getAllDevice(repositoryCode);
-			view.addObject("houseDevices", houseDevices);
+			List<GoodsDictionary> assetDeviceTypes = dictionaryService.getDictionaryByType("device_type");
+			view.addObject("assetDeviceTypes", assetDeviceTypes);
+			
+			Gson gson = new Gson();
+			String assetDeviceTypeArray = gson.toJson(assetDeviceTypes);
+			view.addObject("assetDeviceTypeArray", assetDeviceTypeArray);
 			
 			view.addObject("opened", ",productManagement,");
 			view.addObject("actived", ",houseDevice,");
@@ -93,45 +103,57 @@ public class HouseDeviceController {
 		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
 		JSONObject getObj = new JSONObject();
 		try {
-			String aoData = request.getParameter("aoData");
-			Gson gson = new Gson();
-			JsonParser parser = new JsonParser();
-			JsonElement el = parser.parse(aoData);
-			
-			JsonArray deviceArray = new JsonArray();
-			if(el.isJsonArray()){
-				deviceArray = el.getAsJsonArray();
-			}
+			JSONArray jsonarray = JSONArray.fromObject(request.getParameter("aoData"));
 			
 			String sEcho = null;
-		    int iDisplayStart = 0; // 起始索引
-		    int iDisplayLength = 0; // 每页显示的行数
-		    
-			Iterator it = deviceArray.iterator();
-			while(it.hasNext()){
-				JsonElement element = (JsonElement)it.next();
-				//JsonElement转换为JavaBean对象
-				JsonObject obj = element.getAsJsonObject();
-				
-				if (obj.get("name").equals("sEcho")){
-					sEcho = obj.get("value").toString();
-				}
-		 
-		        if (obj.get("name").equals("iDisplayStart")){
-		        	iDisplayStart = obj.get("value").getAsInt();
-		        }
-		        							
-		        if (obj.get("name").equals("iDisplayLength")){
-		        	iDisplayLength = obj.get("value").getAsInt();
-		        }
+	        int iDisplayStart = 0; // 起始索引
+	        int iDisplayLength = 0; // 每页显示的行数
+	        String eqTypeCode = "";
+	     
+	        for (int i = 0; i < jsonarray.size(); i++) {
+	            JSONObject obj = (JSONObject) jsonarray.get(i);
+	            if ("sEcho".equals(obj.get("name"))){
+	            	sEcho = obj.get("value").toString();
+	            }
+	     
+	            if ("iDisplayStart".equals(obj.get("name"))){
+	            	iDisplayStart = obj.getInt("value");
+	            }
+	     
+	            if ("iDisplayLength".equals(obj.get("name"))){
+	            	iDisplayLength = obj.getInt("value");
+	            }
+	            
+	            if ( "eqTypeCode".equals(obj.get("name")) ){
+	            	eqTypeCode = obj.getString("value");
+	            }
+	        }
+	        
+			getObj.put("sEcho", sEcho);// 不知道这个值有什么用,有知道的请告知一下
+			
+			List<GoodsHouseDevice> houseDevices = new ArrayList<GoodsHouseDevice>();
+			if( StringUtils.isBlank(eqTypeCode) || "all".equalsIgnoreCase(eqTypeCode) ){
+				houseDevices.addAll(goodsHouseDeviceService.getAllDevice(repositoryCode));
+			}else{
+				houseDevices.addAll(goodsHouseDeviceService.getDeviceByEqTypeCode(repositoryCode, eqTypeCode));
 			}
 			
-		    getObj.put("sEcho", 1);// 不知道这个值有什么用,有知道的请告知一下
-			getObj.put("iTotalRecords", 2);//实际的行数
-		    getObj.put("iTotalDisplayRecords", 2);
-			List<GoodsHouseDevice> houseDevices = goodsHouseDeviceService.getAllDevice(repositoryCode);
+			int totalRecords = 0;
+			int totalDisplayRecords = 0;
+			if( !CollectionUtils.isEmpty(houseDevices) ){
+				if( houseDevices.size() <= iDisplayStart + iDisplayLength ){
+					houseDevices = houseDevices.subList(iDisplayStart,houseDevices.size());
+				}else{
+					houseDevices = houseDevices.subList(iDisplayStart,iDisplayStart + iDisplayLength);
+				}
+				
+				totalRecords = houseDevices.size();
+				totalDisplayRecords = houseDevices.size();
+			}
+			getObj.put("iTotalRecords", totalRecords);//实际的行数
+		    getObj.put("iTotalDisplayRecords", totalDisplayRecords);
 			
-			houseDevices = houseDevices.subList(iDisplayStart,iDisplayStart + iDisplayLength);
+		    Gson gson = new Gson();
 			getObj.put("aaData", gson.toJson(houseDevices));
 		} catch (Exception e) {
 			logger.error("fail to get the house subject,",e);

@@ -38,7 +38,26 @@
 			<jsp:include page="../common/main-nav.jsp" flush="true">
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
-			<div class="page-title">
+	        <div class="two_nav">
+				<ul class="nav_ul">
+					<li class="dropdown <%if( "1".equalsIgnoreCase(level) ){ %>hover-line active<%}%>">
+						<a aid="1" class="asset_a_subject" href="javascript:void(0)" data-toggle="dropdown">
+							<span class="">一级主体</span>
+						</a>
+					</li>
+					<li class="dropdown <%if( "2".equalsIgnoreCase(level) ){ %>hover-line active<%}%>">
+						<a aid="2" class="asset_a_subject" href="javascript:void(0)" data-toggle="dropdown">
+							<span class="">二级主体</span>
+						</a>
+					</li>
+					<li class="dropdown <%if( "3".equalsIgnoreCase(level) ){ %>hover-line active<%}%>">
+						<a aid="3" class="asset_a_subject" href="javascript:void(0)" data-toggle="dropdown">
+							<span class="">三级主体</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="panel panel-default asset_div" id="subject_div" style="display:none;">
 				<input type="hidden" id="subjectLevel_h" value="<%=level%>"/>
 				<input type="hidden" id="parentId_h" value="<%=parentId%>"/>
 				<div>
@@ -50,8 +69,6 @@
 					</button>
 					<span class="subject_tip"><%=subjectTip %></span>
 				</div>
-			</div>
-			<div class="panel panel-default">
 				<div class="panel-body" style="padding-top:0px;">
 					<table class="table table-hover" id="subjectTable">
 						<thead>

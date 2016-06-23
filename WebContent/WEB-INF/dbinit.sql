@@ -115,3 +115,22 @@ insert into tbl_goods_dictionary values(null,'template_chattel','template_waterP
 
 insert into tbl_goods_dictionary_type values(null,'物讯消息类型','message_type','物讯消息类型');
 insert into tbl_goods_dictionary values(null,'message_type','common','普通消息','普通消息');
+
+delete from tbl_goods_dictionary where type_code='device_type';
+insert into tbl_goods_dictionary values(null,'device_type','dt_lift','电梯','电梯');
+insert into tbl_goods_dictionary values(null,'device_type','dt_waterp','水泵','水泵（多级泵、增压泵、排水泵及控制柜）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_security','安防系统','安防系统（可视门口机、周界报警点、红外线探头、无线巡更点、电脑、硬盘、显示屏）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_firec','消防系统','消防系统（消防栓、消防栓箱、消防栓箱组件、灭火器、灭火器箱、火警报警控制器、喷淋头）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_electricI','电气设备','电气设备（低压电缆分支箱、电能计量柜）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_doorW','门窗','门窗（单元门、单元门锁、防火卷帘门、防火门、闭门器）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_lamps','灯具','灯具（高杆灯、草坪灯、楼道灯、声控灯头、声控面板）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_ee','小区儿童娱乐器材','小区儿童娱乐器材（滑梯、秋千、跷跷板、童骑木马、组合攀爬）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_bodya','小区健身器材','小区健身器材（健骑器、上肢牵拉器、扭腰器、大转盘、滑行器、腰背锻炼器、云中漫步器）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_garbage','垃圾箱（桶）','垃圾箱（桶）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_aib','公告指示牌','公告指示牌（道路指示牌、电子显示屏）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_roadGate','道闸','道闸（小区进出口、车库进出口）');
+insert into tbl_goods_dictionary values(null,'device_type','dt_roofTank','屋顶水箱','屋顶水箱');
+insert into tbl_goods_dictionary values(null,'device_type','dt_restSeat','休息座椅','休息座椅');
+insert into tbl_goods_dictionary values(null,'device_type','dt_bicycleShed','自行车棚','自行车棚');
+insert into tbl_goods_dictionary values(null,'device_type','dt_newsbox','书报箱','书报箱');
+insert into tbl_goods_dictionary values(null,'device_type','dt_restSeat','休息座椅','休息座椅');

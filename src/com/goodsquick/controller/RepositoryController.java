@@ -163,7 +163,7 @@ public class RepositoryController {
 		} catch (Exception e) {
 			logger.error("fail to get the top level category,",e);
 		}
-		view.addObject("opened", ",serviceCustomer,");
+		view.addObject("opened", ",userManagement,");
         view.addObject("actived", ",repositoryUser,");
 		return view;
 	}

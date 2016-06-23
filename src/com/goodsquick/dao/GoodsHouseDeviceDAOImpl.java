@@ -98,8 +98,29 @@ public class GoodsHouseDeviceDAOImpl extends BaseDAOImpl implements GoodsHouseDe
 
 	@Override
 	public void deleteHouseDevice(GoodsHouseDevice obj) throws Exception {
-		// TODO Auto-generated method stub
+		List<Object> params = new ArrayList<Object>();
+		params.add(obj.getUpdateUser());
+		params.add(obj.getId());
+		super.deleteObj("tbl_goods_house_device", params);
 		
+	}
+
+	@Override
+	public List<GoodsHouseDevice> getDeviceByEqTypeCode(String repositoryCode,
+			String eqTypeCode) throws Exception {
+		List<GoodsHouseDevice> ohDeviceList = new ArrayList<GoodsHouseDevice>();
+		StringBuilder sql = new StringBuilder(500);
+		sql.append(" select hd.id,hd.eq_type as eq_type_code,gd.dic_name as eq_type_name, hd.name");
+		sql.append(" ,hd.brand,hd.style,hd.eq_desc,hd.subjectId,hd.moduleId");
+		sql.append(" ,hd.create_user,hd.create_date,hd.update_user,hd.update_date,hd.status");
+		sql.append(" ,hs.subject_name as subjectName,sm.module_name as moduleName ");
+		sql.append(" from tbl_goods_house_device hd ");
+		sql.append(" left join tbl_goods_house_subject hs on hd.subjectId = hs.id ");
+		sql.append(" left join tbl_goods_house_subject_module sm on hd.moduleId = sm.id ");
+		sql.append(" left join tbl_goods_dictionary gd on hd.eq_type = gd.dic_code ");
+		sql.append(" where hs.repository_code = ? and hd.eq_type=? and hd.status = '1'");
+		ohDeviceList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode, eqTypeCode}, new GoodsHouseDeviceRowMapper());
+		return ohDeviceList;
 	}
 
 }

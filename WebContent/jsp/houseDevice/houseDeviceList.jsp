@@ -17,7 +17,23 @@
 			<jsp:include page="../common/main-nav.jsp" flush="true">
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
-			<div class="page-title">
+	        <div class="two_nav" style="overflow-x: scroll;">
+				<ul class="nav_ul">
+					<li class="dropdown hover-line active">
+						<a aid="all" class="asset_a_device" href="javascript:void(0)" data-toggle="dropdown">
+							<span class="">全部</span>
+						</a>
+					</li>
+					<c:forEach items="${assetDeviceTypes}" var="assetDevice">
+						<li class="dropdown">
+							<a aid="${assetDevice.dicCode}" class="asset_a_device" href="javascript:void(0)" data-toggle="dropdown">
+								<span class="">${assetDevice.dicName}</span>
+							</a>
+						</li>
+					</c:forEach>
+				</ul>
+			</div>
+			<div class="panel panel-default">
 				<div>
 					<button id="newDevice" class="btn btn-info">
 						<li class="fa-plus-square">添加设施设备</li>
@@ -26,9 +42,9 @@
 						<span>保存</span>
 					</button>
 				</div>
-			</div>
-			<div class="panel panel-default">
 				<div class="panel-body" style="padding-top:0px;">
+					<input id="eqTypeCode_h" type="hidden"/>
+					<input id="assetDeviceTypeArray" type="hidden" value='${assetDeviceTypeArray}'/>
 					<table class="table table-hover" id="deviceTable">
 						<thead>
 							<tr>
@@ -40,22 +56,6 @@
 							</tr>
 						</thead>
 						<tbody class="middle-align">
-							<c:forEach items="${houseDevices}" var="houseDevice">
-								<tr>
-									<td class="dataEditable" title="${houseDevice.eqTypeName}">${houseDevice.eqTypeName}</td>
-									<td class="dataEditable" title="${houseDevice.name}">${houseDevice.name}</td>
-									<td class="dataEditable" title="${houseDevice.eqDesc}">${houseDevice.eqDesc}</td>
-									<td>${houseDevice.subjectName}-${houseDevice.moduleName}</td>
-									<td>
-										<a id="${houseDevice.id}" dtype="${houseDevice.eqTypeCode}" class="btn btn-secondary btn-sm btn-icon icon-left modifyDevice">
-											编辑
-										</a>
-										<a id="${houseDevice.id}" dtype="${houseDevice.eqTypeCode}" class="btn btn-danger btn-sm btn-icon icon-left removeDevice">
-											删除
-										</a>
-									</td>
-								</tr>
-							</c:forEach>
 						</tbody>
 					</table>
 				</div>

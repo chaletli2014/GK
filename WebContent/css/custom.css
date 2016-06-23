@@ -599,3 +599,26 @@ div.showDetailDiv .form-group{
     color: white;
     font-size: 12px;
 }
+
+.user-info-navbar{margin-bottom:20px;}
+.two_nav{width:100%;height:60px; margin-bottom:20px; background:#fff;}
+.two_nav h3{width:95%; height:50px; margin:0 auto; border-bottom:1px #ccc solid; 
+	line-height:50px; font-size:16px; font-weight:800;}
+.two_nav ul{width:95%; height:40px; line-height:40px; margin:0 auto; margin-top:10px;}
+.two_nav li{float:left; padding:0 15px;cursor: pointer;}
+.two_nav li a{color:inherit;}
+.two_nav li:hover{border-bottom:2px #00a4ef solid; color:#00a4ef;}
+.two_nav li.active{ border-bottom:2px #00a4ef solid; color:#00a4ef;}
+.asset_div{
+	background: #fff;
+	padding:30px;
+}
+.add_item{
+	width:200px;
+	margin:10px 0; 
+	text-align:center; 
+	background:url(../images/icon/add.png) no-repeat 35px center;
+	display: inline-block;
+}
+.add_item a{display:inline-block; width:80%; text-indent:14px; padding:8px 0; border:1px #999 dashed; color:#999;}
+.add_item a:hover{color:#000; border-color:#000;}
