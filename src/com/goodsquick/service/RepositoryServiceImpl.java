@@ -13,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.goodsquick.dao.RepositoryDAO;
+import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRepository;
 import com.goodsquick.model.GoodsRepositoryUser;
 import com.goodsquick.utils.GoodsQuickAttributes;
@@ -43,6 +44,14 @@ public class RepositoryServiceImpl implements RepositoryService {
 			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, newRepositoryCode);
 			goodsRepository.setRepositoryCode(newRepositoryCode);
 			repositoryDAO.saveRepository(goodsRepository);
+			
+			GoodsRepositoryUser repositoryUser = new GoodsRepositoryUser();
+			repositoryUser.setRepositoryCode(newRepositoryCode);
+			repositoryUser.setUserCode(goodsRepository.getCreateUser());
+			repositoryUser.setCreateUser(goodsRepository.getCreateUser());
+			repositoryUser.setUpdateUser(goodsRepository.getCreateUser());
+			repositoryUser.setPriv("w");
+			repositoryDAO.saveRepositoryUser(repositoryUser);
 		}else{
 			repositoryDAO.updateRepository(goodsRepository);
 		}
@@ -61,9 +70,9 @@ public class RepositoryServiceImpl implements RepositoryService {
 	}
 	
 	@Override
-	public List<GoodsRepository> getRepositoryByLoginNameAndType(String loginName, String type) throws Exception {
+	public List<GoodsRepository> getRepositoryByLoginNameAndType(String loginName, String type, boolean excludeSelf) throws Exception {
 		try{
-			return repositoryDAO.getRepositoryByLoginNameAndType(loginName,type,true);
+			return repositoryDAO.getRepositoryByLoginNameAndType(loginName,type,true,excludeSelf);
 		} catch(EmptyResultDataAccessException erd){
 			return Collections.emptyList();
 		} catch(Exception e){
@@ -132,4 +141,27 @@ public class RepositoryServiceImpl implements RepositoryService {
 		repositoryDAO.removeRepositoryUser(repositoryUser);
 	}
 
+	@Override
+	public List<GoodsOrdinaryHouse> getRepositoryAssetByLoginNameAndType(
+			String loginName, String type, boolean excludeSelf)
+			throws Exception {
+		try{
+			List<GoodsRepository> communityRepos = repositoryDAO.getRepositoryByLoginNameAndType(loginName,type,true,excludeSelf);
+			StringBuilder repositoryCodes = new StringBuilder("");
+			if( !CollectionUtils.isEmpty(communityRepos) ){
+				for( GoodsRepository repos : communityRepos ){
+					repositoryCodes.append("'").append(repos.getRepositoryCode()).append("'").append(",");
+				}
+				return repositoryDAO.getRepositoryAssetByRepositoryList(repositoryCodes.substring(0, repositoryCodes.length()-1));
+			}else{
+				return null;
+			}
+		} catch(EmptyResultDataAccessException erd){
+			logger.warn("empty data");
+			return null;
+		} catch(Exception e){
+			logger.error("fail to get community asset,",e);
+			return null;
+		}
+	}
 }

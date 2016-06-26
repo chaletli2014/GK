@@ -5,6 +5,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="common/login_header.jsp"%>
 <script type="text/javascript" src="<%=basePath%>/js/goodsquick/registerUser.js"></script>
+<style>
+.radio-inline, .checkbox-inline {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: normal;
+    cursor: pointer;
+    margin-right:20px;
+}
+label.radio-inline input[type="radio"] {
+	display: inline-block;
+    width: 20px;
+}
+</style>
 <body>
 	<div class="g-banner-wrap">
         <div class="g-banner">
@@ -51,6 +64,14 @@
                             <p class="mobile"><input id="telephone" name="telephone" placeholder="手机号码" type="text" maxlength="11"><span>手机号码</span></p>
                             <p class="pass"><input placeholder="管理员密码" type="password" id="password" name="password"></p>
                             <p class="pass"><input placeholder="确认密码 " type="password" id="password2" name="password2"></p>
+                            <p>
+								<label class="radio-inline">
+									<input type="radio" name="userType" value="common" checked>普通用户
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="userType" value="group1">管理用户
+								</label>
+							</p>
                             <%--
                             <p class="mscode2">
                                 <span><input id="codeInput" placeholder="短信验证码" type="text" maxlength="6"></span>

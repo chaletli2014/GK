@@ -23,19 +23,20 @@
 	String manageLink2 = basePath+"assetlist";
 	String repoPreName = "资品";
 	String newLink = basePath+"newAssetPre";
-	
-	if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
-		repoPreName = "需品";
-		manageName = "需品管理";
-		newRepoName = "添加需品";
-		manageLink = basePath+"productlist";
-		newLink = basePath+"newProductPre";
-	}else if("2".equalsIgnoreCase(currentRepository.getRepositoryType())){
-		repoPreName = "产品";
-		manageName = "产品管理";
-		newRepoName = "添加产品";
-		manageLink = basePath+"productlist";
-		newLink = basePath+"newGoodsProductPre";
+	if( null != currentRepository ){
+		if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
+			repoPreName = "需品";
+			manageName = "需品管理";
+			newRepoName = "添加需品";
+			manageLink = basePath+"productlist";
+			newLink = basePath+"newProductPre";
+		}else if("2".equalsIgnoreCase(currentRepository.getRepositoryType())){
+			repoPreName = "产品";
+			manageName = "产品管理";
+			newRepoName = "添加产品";
+			manageLink = basePath+"productlist";
+			newLink = basePath+"newGoodsProductPre";
+		}
 	}
 %>
 <div class="sidebar-menu toggle-others">
@@ -61,7 +62,7 @@
 		<div class="sidebar_title">
 			<a href="<%=request.getParameter("basePath")%>mainIndex">
 				<span>
-					<%=currentRepository.getId()==0?"初始资品库":currentRepository.getRepositoryName()%>
+					<%=null == currentRepository?"":currentRepository.getRepositoryName()%>
 				</span>
 			</a>
 		</div>

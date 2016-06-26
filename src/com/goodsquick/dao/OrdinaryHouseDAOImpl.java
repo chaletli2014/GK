@@ -32,10 +32,10 @@ public class OrdinaryHouseDAOImpl extends BaseDAOImpl implements OrdinaryHouseDA
 	@Qualifier("dataBean")
 	private DataBean dataBean;
 	
-	private final static StringBuilder SQL_SELECTION = new StringBuilder("select ho.*,coalesce(gd.dic_name,ho.property_type) as property_type_desc ");
-	private final static StringBuilder SQL_FROM_OWN = new StringBuilder("from tbl_goods_ordinary_house_owned ho ");
-	private final static StringBuilder SQL_FROM = new StringBuilder("from tbl_goods_ordinary_house oh ");
-	private final static StringBuilder SQL_FROM_LEFT_JOIN = new StringBuilder("left join tbl_goods_dictionary gd on ho.property_type = gd.dic_code and gd.type_code='template_estate' ");
+	public static final StringBuilder SQL_SELECTION = new StringBuilder("select ho.*,coalesce(gd.dic_name,ho.property_type) as property_type_desc ");
+	public static final StringBuilder SQL_FROM_OWN = new StringBuilder("from tbl_goods_ordinary_house_owned ho ");
+	public static final StringBuilder SQL_FROM = new StringBuilder("from tbl_goods_ordinary_house oh ");
+	public static final StringBuilder SQL_FROM_LEFT_JOIN = new StringBuilder("left join tbl_goods_dictionary gd on ho.property_type = gd.dic_code and gd.type_code='template_estate' ");
 	
 	@Override
 	public List<GoodsOrdinaryHouse> getOrdinaryHouseByUserCode(String userCode)

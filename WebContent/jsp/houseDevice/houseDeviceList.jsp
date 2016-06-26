@@ -33,7 +33,7 @@
 					</c:forEach>
 				</ul>
 			</div>
-			<div class="panel panel-default">
+			<div class="panel panel-default" id="deviceDiv">
 				<div>
 					<button id="newDevice" class="btn btn-info">
 						<li class="fa-plus-square">添加设施设备</li>

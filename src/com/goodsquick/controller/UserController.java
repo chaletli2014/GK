@@ -140,6 +140,7 @@ public class UserController {
             	}
         	}else{
             	String level = request.getParameter("level");
+            	String userType = request.getParameter("userType");
             	
             	WebUserInfo userprofile = new WebUserInfo();
             	userprofile.setLoginName(loginName);
@@ -153,6 +154,7 @@ public class UserController {
             	userprofile.setTelephone(telephone);
             	userprofile.setHasHouse(GoodsQuickAttributes.GOODS_STATUS_ON);
         		userprofile.setHasService(GoodsQuickAttributes.GOODS_STATUS_ON);
+        		userprofile.setUserType(userType);
             	
         		userId = String.valueOf(webUserService.addUserInfo(userprofile));
         	}
@@ -304,6 +306,7 @@ public class UserController {
         	userInfo.setName(request.getParameter("realName"));
         	userInfo.setPassword(GoodsQuickMD5Utils.MD5(password));
         	userInfo.setTelephone(request.getParameter("telephone"));
+        	userInfo.setUserType(request.getParameter("userType"));
         	
         	webUserService.registerUserCompanyInfo(userInfo, newCompany);
     	} catch (Exception e) {

@@ -878,3 +878,5 @@ DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=0
 ROW_FORMAT=COMPACT
 ;
+
+alter table tbl_web_userinfo add column user_type varchar(20) not null default 'common' comment '用户类型';

@@ -35,14 +35,9 @@ jQuery(document).ready(function($){
 					<c:if test="${null==orHouse}">
 						<div>
 							<span>您还没有添加任何资品,赶紧添加吧！</span>
-						</div>
-						<div>
-							<a href="<%=basePath%>newProductPre">
-								<button class="btn btn-purple btn-icon btn-icon-standalone">
-									<i class="fa-cog"></i>
-									<span>新增资品</span>
-								</button>
-							</a>
+							<div class="add_item">
+								<a href="<%=basePath%>newAssetPre">新增资品</a>
+							</div>
 						</div>
 					</c:if>
 					<c:if test="${orHouse!=null}">
@@ -68,20 +63,19 @@ jQuery(document).ready(function($){
 						<div style="width:35%;float:left;">
 							<img width="300px" height="160px" src="${orHouse.mainPic}" />
 						</div>
+						<div class="content_wrap">
+							<div class="zTreeDemoBackground left">
+								<div class="treeNodeTitle">主体</div>
+								<ul id="subjectTree" class="ztree"></ul>
+							</div>
+							<div class="zTreeDemoBackground left">
+								<div class="treeNodeTitle">设施设备</div>
+								<ul id="deviceTree" class="ztree"></ul>
+							</div>
+						</div>
 					</c:if>
 				</div>
 			</div>
-			<div class="content_wrap">
-				<div class="zTreeDemoBackground left">
-					<div class="treeNodeTitle">主体</div>
-					<ul id="subjectTree" class="ztree"></ul>
-				</div>
-				<div class="zTreeDemoBackground left">
-					<div class="treeNodeTitle">设施设备</div>
-					<ul id="deviceTree" class="ztree"></ul>
-				</div>
-			</div>
-			
 			<%@include file="../common/footer.jsp" %>
 		</div>
 	</div>

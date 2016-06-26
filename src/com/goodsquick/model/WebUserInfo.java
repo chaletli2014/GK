@@ -20,6 +20,8 @@ public class WebUserInfo {
     
     private GoodsCompanyInfo company;
     
+    private String userType;
+    
 	public int getId() {
         return id;
     }
@@ -103,5 +105,11 @@ public class WebUserInfo {
 	}
 	public void setCompany(GoodsCompanyInfo company) {
 		this.company = company;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 }

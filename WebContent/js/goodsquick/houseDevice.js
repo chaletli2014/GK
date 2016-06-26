@@ -60,6 +60,10 @@ jQuery(document).ready(function($){
 	});
 	
 	$("body").delegate('.asset_a_device', 'click', function(){
+		$("#deviceDiv").css("display","none");
+		$("#deviceDiv").slideDown(500);
+		$(this).parent().parent().children().removeClass("hover-line active");
+		$(this).parent().addClass("hover-line active");
 		$("#eqTypeCode_h").val($(this).attr("aid"));
 		refreshTables();
 	});

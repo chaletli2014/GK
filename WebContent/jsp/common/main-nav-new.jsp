@@ -54,6 +54,7 @@
 				<span class="">需品库管理</span>
 			</a>
 		</li>
+		<%--
 		<li class="dropdown" style="">
 			<a href="#" data-toggle="dropdown">
 				<i class="fa-bell-o" title="消息管理"></i>
@@ -84,6 +85,7 @@
 				</li>
 			</ul>
 		</li>
+		 --%>
 	</ul>
 	<!-- Right links for user info navbar -->
 	<ul class="user-info-menu right-links list-inline list-unstyled">

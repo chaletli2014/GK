@@ -54,14 +54,15 @@ public class UserDAOImpl implements UserDAO {
 	public int addUserInfo(WebUserInfo userInfo) throws Exception {
 		final StringBuilder sql = new StringBuilder(200);
 		sql.append(" insert into tbl_web_userinfo( ");
-		sql.append(" id,name,login_name,password,telephone,level,createdate,updatedate,last_login_time,status,has_house,has_service) ");
-		sql.append(" values(null,?,?,?,?,?,now(),now(),now(),'1','on','on') ");
+		sql.append(" id,name,login_name,password,telephone,level,createdate,updatedate,last_login_time,status,has_house,has_service, user_type) ");
+		sql.append(" values(null,?,?,?,?,?,now(),now(),now(),'1','on','on',?) ");
 		List<String> params = new ArrayList<String>();
 		params.add(userInfo.getName());
 		params.add(userInfo.getLoginName());
         params.add(userInfo.getPassword());
         params.add(userInfo.getTelephone());
         params.add(userInfo.getLevel());
+        params.add(userInfo.getUserType());
 		return GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
 	}
 	

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRepository;
 import com.goodsquick.model.GoodsRepositoryUser;
 import com.goodsquick.model.WebUserInfo;
@@ -121,9 +122,9 @@ public class RepositoryController {
 		try {
 			
 			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
-			List<GoodsRepository> repositoryList1 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"1");
-			List<GoodsRepository> repositoryList2 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"2");
-			List<GoodsRepository> repositoryList3 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"3");
+			List<GoodsRepository> repositoryList1 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"1",false);
+			List<GoodsRepository> repositoryList2 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"2",false);
+			List<GoodsRepository> repositoryList3 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"3",false);
 			
 			resultMap.put("repositoryList1", repositoryList1);
 			resultMap.put("repositoryList2", repositoryList2);
@@ -186,6 +187,7 @@ public class RepositoryController {
 			repositoryUser.setUserCode(userInfo.getLoginName());
 			repositoryUser.setCreateUser(currentUser.getLoginName());
 			repositoryUser.setUpdateUser(currentUser.getLoginName());
+			repositoryUser.setPriv("r");
 			
 			if( CollectionUtils.isEmpty(dbRepoUser) ){
 				repositoryService.saveRepositoryUser(repositoryUser);
@@ -218,6 +220,22 @@ public class RepositoryController {
 			resultMap.put("result", "Y");
 		} catch (Exception e) {
 			logger.error("fail to remove repository user,",e);
+			resultMap.put("result", "N");
+		}
+		return resultMap;
+	}
+	
+	@RequestMapping("/getCommunityRepos")
+	@ResponseBody
+	public Map<String,Object> getCommunityRepos(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+			List<GoodsOrdinaryHouse> communityAssetList = repositoryService.getRepositoryAssetByLoginNameAndType(currentUser.getLoginName(),"1",true);
+			resultMap.put("communityAssetList", communityAssetList);
+			resultMap.put("result", "Y");
+		} catch (Exception e) {
+			logger.error("fail to get the community repositorys,",e);
 			resultMap.put("result", "N");
 		}
 		return resultMap;

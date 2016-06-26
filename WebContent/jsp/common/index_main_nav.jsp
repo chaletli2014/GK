@@ -7,17 +7,22 @@
 <%@page import="com.goodsquick.model.WebUserInfo"%>
 <%@page import="java.util.List"%>
 <%
+	String basePath  = request.getParameter("basePath");
 	WebUserInfo userInfo = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String overViewLink = basePath+"index";
+	if( "group1".equalsIgnoreCase(userInfo.getUserType()) ){
+		overViewLink = basePath+"communityIndex";
+	}
 %>
 <nav class="navbar user-info-navbar" role="navigation" style="height:50px;background:#29363A;">
 	<ul class="user-info-menu left-links list-inline list-unstyled index_menu_ul">
 		<li>
-			<a href="<%=request.getParameter("basePath") %>index" class="logo-expanded">
-				<img src="<%=request.getParameter("basePath")%>images/logo_new.png" alt="" width="80px" height="26px"/>
+			<a href="<%=basePath%>index" class="logo-expanded">
+				<img src="<%=basePath%>images/logo_new.png" alt="" width="80px" height="26px"/>
 			</a>
 		</li>
 		<li class="hidden-sm hidden-xs" style="padding-top:6px;font-size:16px;">
-			<a href="<%=request.getParameter("basePath") %>index" data-toggle="sidebar">
+			<a href="<%=overViewLink%>">
 				总览
 			</a>
 		</li>
@@ -62,6 +67,7 @@
 				</li>
 			</ul>
 		</li>
+		<%--
 		<li class="dropdown hover-line" style="padding-top:6px;font-size:16px;">
 			<a href="#" data-toggle="dropdown">
 				<i class="fa-bell-o" title="消息管理"></i>
@@ -85,13 +91,14 @@
 					</ul>
 				</li>
 				<li class="external">
-					<a href="<%=request.getParameter("basePath")%>myMessage">
+					<a href="<%=basePath%>myMessage">
 						<span>查看所有消息</span>
 						<i class="fa-link-ext"></i>
 					</a>
 				</li>
 			</ul>
 		</li>
+		 --%>
 	</ul>
 	<!-- Right links for user info navbar -->
 	<ul class="user-info-menu right-links list-inline list-unstyled index_menu_ul">
@@ -103,13 +110,13 @@
 			</a>
 			<ul class="dropdown-menu user-profile-menu list-unstyled">
 				<li>
-					<a href="<%=request.getParameter("basePath")%>editprofile?userId=<%=userInfo.getId()%>">
+					<a href="<%=basePath%>editprofile?userId=<%=userInfo.getId()%>">
 						<i class="fa-user"></i>
 						用户资料
 					</a>
 				</li>
 				<li class="last">
-					<a href="<%=request.getParameter("basePath")%>logout">
+					<a href="<%=basePath%>logout">
 						<i class="fa-lock"></i>
 						注销
 					</a>

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.goodsquick.mapper.GoodsRepositoryRowMapper;
 import com.goodsquick.mapper.GoodsRepositoryUserRowMapper;
+import com.goodsquick.mapper.OrdinaryHouseRowMapper;
+import com.goodsquick.model.GoodsOrdinaryHouse;
 import com.goodsquick.model.GoodsRepository;
 import com.goodsquick.model.GoodsRepositoryUser;
 import com.goodsquick.utils.GoodsJDBCTemplate;
@@ -61,12 +63,20 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 	}
 	
 	@Override
-	public List<GoodsRepository> getRepositoryByLoginNameAndType(String loginName, String type, boolean hideDeleted) throws Exception {
+	public List<GoodsRepository> getRepositoryByLoginNameAndType(String loginName, String type, boolean hideDeleted, boolean excludeSelf) throws Exception {
 		StringBuilder sql = new StringBuilder("select gr.* from tbl_goods_repository gr, tbl_goods_repository_user gru where gr.repository_type = ? and gru.user_code = ? and gru.repository_code = gr.repository_code");
+		List<Object> params = new ArrayList<Object>();
+		params.add(type);
+		params.add(loginName);
+		
 		if( hideDeleted ){
 			sql.append(" and gr.status = '1' and gru.status = '1' ");
 		}
-		return dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{type,loginName}, new GoodsRepositoryRowMapper());
+		if( excludeSelf ){
+			sql.append(" and gru.create_user != ? ");
+			params.add(loginName);
+		}
+		return dataBean.getJdbcTemplate().query(sql.toString(), params.toArray(), new GoodsRepositoryRowMapper());
 	}
 
 	@Override
@@ -147,6 +157,18 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 		params.add(repositoryUser.getUpdateUser());
 		params.add(repositoryUser.getId());
 		super.deleteObj("tbl_goods_repository_user", params);
+	}
+
+	@Override
+	public List<GoodsOrdinaryHouse> getRepositoryAssetByRepositoryList(
+			String repositoryCodes) throws Exception {
+		List<GoodsOrdinaryHouse> ohList = new ArrayList<GoodsOrdinaryHouse>();
+		StringBuilder sql = new StringBuilder(OrdinaryHouseDAOImpl.SQL_SELECTION);
+		sql.append(OrdinaryHouseDAOImpl.SQL_FROM_OWN);
+		sql.append(OrdinaryHouseDAOImpl.SQL_FROM_LEFT_JOIN);
+		sql.append("where ho.status = '1' and ho.repository_code in (").append(repositoryCodes).append(")");
+        ohList = dataBean.getJdbcTemplate().query(sql.toString(), new OrdinaryHouseRowMapper());
+        return ohList;
 	}
 
 }

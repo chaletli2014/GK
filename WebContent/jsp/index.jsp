@@ -19,28 +19,36 @@
 			<div class="panel panel-default">
 				<div class="panel-body" style="padding-top:0px; text-align:center;">
 					<ul class="index_ul">
+						<c:if test="${ 'group1' == currentUser.userType }">
+							<li>
+								<div class="index_li_title">社区物库</div>
+								<div class="index_repository">
+								<c:forEach items="${communityRepositoryList}" var="repos">
+									<div class="index_li_list">
+										<div>
+											<a href="<%=basePath%>mainIndex?repository_code=${repos.repositoryCode}">
+											${repos.repositoryName}
+											</a>
+										</div>
+										<div>
+											<i class="fa-envelope-o"></i>消息
+											<span class="label label-default pull-right">0</span>
+										</div>
+										<div>
+											<i class="fa-chain"></i>关联申请
+											<span class="label label-default pull-right">0</span>
+										</div>
+									</div>
+								</c:forEach>
+								</div>
+							</li>
+						</c:if>
 						<li>
 							<div class="index_li_title">资品库</div>
 							<div class="index_repository">
-							<c:forEach items="${repositoryList1}" var="repos">
-								<div class="index_li_list">
-									<div>
-										<a href="<%=basePath%>mainIndex?repository_code=${repos.repositoryCode}">
-										${repos.repositoryName}
-										</a>
-									</div>
-									<div>
-										<i class="fa-envelope-o"></i>消息
-										<span class="label label-default pull-right">0</span>
-									</div>
-									<div>
-										<i class="fa-chain"></i>关联申请
-										<span class="label label-default pull-right">0</span>
-									</div>
-								</div>
-							</c:forEach>
 							</div>
 						</li>
+						<c:if test="${ 'group1' != currentUser.userType }">
 						<li>
 							<div class="index_li_title">产品库</div>
 							<div class="index_repository">
@@ -63,6 +71,7 @@
 							</c:forEach>
 							</div>
 						</li>
+						</c:if>
 						<li>
 							<div class="index_li_title">需品库</div>
 							<div class="index_repository">

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.goodsquick.model.WebUserInfo;
+import com.goodsquick.utils.GoodsJDBCTemplate;
 
 
 public class WebUserInfoRowMapper implements RowMapper<WebUserInfo>{
@@ -23,6 +24,9 @@ public class WebUserInfoRowMapper implements RowMapper<WebUserInfo>{
         dbUser.setCreatedate(rs.getDate("createdate"));
         dbUser.setUpdatedate(rs.getDate("updatedate"));
         dbUser.setLastLoginDate(rs.getDate("last_login_time"));
+        if( GoodsJDBCTemplate.isExistColumn(rs, "user_type") ){
+        	dbUser.setUserType(rs.getString("user_type"));
+        }
         return dbUser;
     }
     
