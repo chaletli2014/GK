@@ -5,7 +5,7 @@ package com.goodsquick.model;
  * @author chalet
  *
  */
-public class GoodsChartObj1 {
+public class GoodsChartObj1 implements Comparable{
 	
 	private String xName;
 	private int yValue;
@@ -28,5 +28,9 @@ public class GoodsChartObj1 {
 	}
 	public void setyValue2(double yValue2) {
 		this.yValue2 = yValue2;
+	}
+	@Override
+	public int compareTo(Object o) {
+		return this.xName.compareTo(((GoodsChartObj1)o).getxName());
 	}
 }

@@ -5,6 +5,7 @@
 <%
 	String opened = request.getParameter("opened");
 	String actived = request.getParameter("actived");
+	String basePath = request.getParameter("basePath");
 	
 	if( null == opened || "".equals(opened) ){
 		opened = "*";
@@ -40,7 +41,7 @@
 		<a href="<%=basePath %>communityIndex">
 		<div class="sidebar_title">
 			<span>
-				社区物库概览
+				<%=webUser.getName() %> 物库
 			</span>
 		</div>
 		</a>
@@ -48,7 +49,7 @@
 			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-database"></i>
-					<span class="title">社区物库</span>
+					<span class="title">物业管理</span>
 				</a>
 				<ul id="communityRepo_ul">
 					<c:forEach items="${communityRepoList}" var="repos">
@@ -87,18 +88,21 @@
 					</li>
 				</ul>
 			</li>
-			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
+			<li <% if( opened.indexOf(",dataManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-database"></i>
-					<span class="title">智慧社区</span>
+					<span class="title">数据管理</span>
 				</a>
 				<ul id="main-menu" class="main-menu">
-					<li class="active"><a href="#">小区分布图</a></li>
-					<li><a href="#">小区房龄分布图</a></li>
-					<li><a href="#">电梯分布图</a></li>
-					<li><a href="#">电梯密度分布图</a></li>
-					<li><a href="#">车位密度分布图</a></li>
-					<li><a href="#">消防栓密度分布图</a></li>
+					<li <% if( actived.indexOf(",locationDis,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=basePath%>locationDis">位置分布图</a>
+					</li>
+					<li <% if( actived.indexOf(",assetYearDis,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=basePath%>assetYearDis">房龄分布图</a>
+					</li>
+					<li <% if( actived.indexOf(",densityDis,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=basePath%>densityDis">密度分布图</a>
+					</li>
 				</ul>
 			</li>
 		</ul>

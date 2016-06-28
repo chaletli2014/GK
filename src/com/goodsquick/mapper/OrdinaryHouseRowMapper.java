@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.goodsquick.model.GoodsOrdinaryHouse;
+import com.goodsquick.utils.GoodsJDBCTemplate;
 
 public class OrdinaryHouseRowMapper implements RowMapper<GoodsOrdinaryHouse>{
     @Override
@@ -63,6 +64,19 @@ public class OrdinaryHouseRowMapper implements RowMapper<GoodsOrdinaryHouse>{
     	dbGoodsOrHouse.setUpdateDate(rs.getDate("update_date"));
     	dbGoodsOrHouse.setUpdateUser(rs.getString("update_user"));
     	dbGoodsOrHouse.setLastLoginTime(rs.getDate("last_login_time"));
+    	if( GoodsJDBCTemplate.isExistColumn(rs, "lift_num") ){
+    		dbGoodsOrHouse.setLiftNum(rs.getInt("lift_num"));
+    	}
+    	if( GoodsJDBCTemplate.isExistColumn(rs, "parking_vg_num") ){
+    		dbGoodsOrHouse.setParkingVgNum(rs.getInt("parking_vg_num"));
+    	}
+    	if( GoodsJDBCTemplate.isExistColumn(rs, "parking_ug_num") ){
+    		dbGoodsOrHouse.setParkingUgNum(rs.getInt("parking_ug_num"));
+    	}
+    	if( GoodsJDBCTemplate.isExistColumn(rs, "fire_pump_num") ){
+    		dbGoodsOrHouse.setFirePumpNum(rs.getInt("fire_pump_num"));
+    	}
+    	
         return dbGoodsOrHouse;
     }
     

@@ -41,7 +41,11 @@
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>
 	<div class="page-container">
-	<%@include file="common/sidebar_community.jsp" %>
+	<jsp:include page="common/sidebar_community.jsp" flush="true">
+    	<jsp:param name="basePath" value="<%=basePath%>"/>
+    	<jsp:param name="opened" value="${opened}"/>
+    	<jsp:param name="actived" value="${actived}"/>
+    </jsp:include>
 		<div class="main-content">
 	        <jsp:include page="common/main-nav.jsp" flush="true">
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
@@ -77,7 +81,7 @@
 				<div class="col-md-12">
 					<div class="panel panel-color">
 						<div class="panel-heading panel-heading-thin">
-							不动产分布图
+							位置分布图
 						</div>
 						<div class="panel-body" style="padding-top:4px;">
 							<div id="overviewMap"></div>
@@ -87,7 +91,7 @@
 				<div class="col-md-12">
 					<div class="panel panel-color">
 						<div class="panel-heading panel-heading-thin">
-							住宅小区房龄分布图
+							房龄分布图
 						</div>
 						<div class="panel-body" style="padding-top:4px;">
 							<div id="assetYear" style="height: 440px; width: 100%;"></div>

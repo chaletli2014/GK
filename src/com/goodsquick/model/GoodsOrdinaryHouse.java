@@ -218,6 +218,17 @@ public class GoodsOrdinaryHouse {
 	
 	private int mainPicId;
 	
+	/**
+	 * 电梯数
+	 */
+	private int liftNum;
+	/**地上停车位*/
+	private int parkingVgNum;
+	/**地下停车位*/
+	private int parkingUgNum;
+	/**消防栓总数*/
+	private int firePumpNum;
+	
 	public int getId() {
 		return id;
 	}
@@ -553,6 +564,30 @@ public class GoodsOrdinaryHouse {
 	}
 	public void setPropertyTypeDesc(String propertyTypeDesc) {
 		this.propertyTypeDesc = propertyTypeDesc;
+	}
+	public int getLiftNum() {
+		return liftNum;
+	}
+	public void setLiftNum(int liftNum) {
+		this.liftNum = liftNum;
+	}
+	public int getParkingVgNum() {
+		return parkingVgNum;
+	}
+	public void setParkingVgNum(int parkingVgNum) {
+		this.parkingVgNum = parkingVgNum;
+	}
+	public int getParkingUgNum() {
+		return parkingUgNum;
+	}
+	public void setParkingUgNum(int parkingUgNum) {
+		this.parkingUgNum = parkingUgNum;
+	}
+	public int getFirePumpNum() {
+		return firePumpNum;
+	}
+	public void setFirePumpNum(int firePumpNum) {
+		this.firePumpNum = firePumpNum;
 	}
 	
 }

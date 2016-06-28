@@ -50,30 +50,49 @@ function addMarker(map,assetName, location,centerAndZoom){
 }
 
 function initAssetYear(){
+	var sourceArray = new Array();
 	jQuery.ajax({
-		url: basePath+"getCommunityRepos",
+		url: basePath+"getAssetYears",
 		success: function(response){
-			var communityAssetList = response.communityAssetList;
-			$.each(communityAssetList,function(n,communityAsset){
-				addMarker(map, communityAsset.buildingName, communityAsset.location, false);
+			var assetYearList = response.assetYearList;
+			$.each(assetYearList,function(n,assetYear){
+				var dataSource = new Object();
+				if( assetYear.xName == '05-10' ){
+					dataSource.year = '5-10';
+				}else{
+					dataSource.year = assetYear.xName;
+				}
+				dataSource.num = assetYear.yValue;
+				sourceArray.push(dataSource);
 			});
-		}
-	});
-	
-	$("#assetYear").dxChart({
-		dataSource: [
-			{day: "1年", sales: 3},
-			{day: "5年", sales: 2},
-			{day: "10年", sales: 3},
-			{day: "15年", sales: 4},
-			{day: "20年", sales: 6}
-		],
-		series: {
-			argumentField: "day",
-			valueField: "sales",
-			name: "房龄",
-			type: "bar",
-			color: '#68b828'
+			
+			$("#assetYear").dxChart({
+				dataSource: sourceArray,
+				series: {
+					argumentField: "year",
+					valueField: "num",
+					name: "房龄",
+					type: "bar",
+					color: '#68b828'
+				},
+				valueAxis: [{
+			        grid: {
+			            visible: true
+			        }
+			    }, {
+			        name: "total",
+			        position: "left",
+			        grid: {
+			            visible: true
+			        },
+			        title: {
+			            text: "小区数量"
+			        },
+			        label: {
+			            format: "largeNumber"
+			        }
+			    }],
+			});
 		}
 	});
 }

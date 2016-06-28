@@ -880,3 +880,13 @@ ROW_FORMAT=COMPACT
 ;
 
 alter table tbl_web_userinfo add column user_type varchar(20) not null default 'common' comment '用户类型';
+
+alter table tbl_goods_ordinary_house add column lift_num int NULL DEFAULT 0 comment '电梯数';
+alter table tbl_goods_ordinary_house add column parking_vg_num int NULL DEFAULT 0 comment '地上停车位';
+alter table tbl_goods_ordinary_house add column parking_ug_num int NULL DEFAULT 0 comment '地下停车位';
+alter table tbl_goods_ordinary_house add column fire_pump_num int NULL DEFAULT 0 comment '消防水泵数';
+
+alter table tbl_goods_ordinary_house_owned add column lift_num int NULL DEFAULT 0 comment '电梯数';
+alter table tbl_goods_ordinary_house_owned add column parking_vg_num int NULL DEFAULT 0 comment '地上停车位';
+alter table tbl_goods_ordinary_house_owned add column parking_ug_num int NULL DEFAULT 0 comment '地下停车位';
+alter table tbl_goods_ordinary_house_owned add column fire_pump_num int NULL DEFAULT 0 comment '消防水泵数';
