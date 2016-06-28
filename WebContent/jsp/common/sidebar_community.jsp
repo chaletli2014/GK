@@ -46,21 +46,11 @@
 		</div>
 		</a>
 		<ul id="main-menu" class="main-menu">
-			<li <% if( opened.indexOf(",productManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
-				<a href="#" onclick="javascript:void(0)">
+			<li <% if( actived.indexOf(",assetGroupOverview,")>-1 ){ %>class="active"<%} %>>
+				<a href="<%=basePath%>assetGroupOverview">
 					<i class="linecons-database"></i>
 					<span class="title">物业管理</span>
 				</a>
-				<ul id="communityRepo_ul">
-					<c:forEach items="${communityRepoList}" var="repos">
-						<li>
-							<a href="<%=basePath%>mainIndex?repository_code=${repos.repositoryCode}" onclick="javascript:void(0)">
-								<i class="linecons-database"></i>
-								<span class="title">${repos.repositoryName}</span>
-							</a>
-						</li>
-					</c:forEach>
-				</ul>
 			</li>
 			<li <% if( opened.indexOf(",msgManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a>

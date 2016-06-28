@@ -176,6 +176,7 @@
 				<%} %>
 				</ul>
 			</li>
+			<% if( "common".equalsIgnoreCase(webUser.getUserType()) ) {%>
 			<li <% if( opened.indexOf(",serviceCustomer,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a href="#" onclick="javascript:void(0)">
 					<i class="linecons-globe"></i>
@@ -248,6 +249,7 @@
 					<span class="title">应用管理</span>
 				</a>
 			</li>
+			<%} %>
 			<%--
 			<li <% if( actived.indexOf(",wb,")>-1 ){ %>class="opened active firstLI"<%}else{%>class="firstLI"<%} %>>
 				<a>
