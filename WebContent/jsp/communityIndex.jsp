@@ -71,7 +71,7 @@
 									</li>
 									<li>
 										<span class="info_title">电梯数量</span>
-										<span class="info_detail"><a href="javascript:void(0)" class="color_red">0</a></span>
+										<span class="info_detail"><a href="javascript:void(0)" class="color_red">${liftTotalNum}</a></span>
 									</li>
 								</ul>
 							</div>

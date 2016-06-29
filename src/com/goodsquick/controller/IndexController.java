@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.goodsquick.model.GoodsChartObj1;
 import com.goodsquick.model.GoodsCompanyInfo;
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseFile;
@@ -23,6 +24,7 @@ import com.goodsquick.model.GoodsRepository;
 import com.goodsquick.model.GoodsServiceDetail;
 import com.goodsquick.model.WebUserInfo;
 import com.goodsquick.service.DictionaryService;
+import com.goodsquick.service.GoodsDataService;
 import com.goodsquick.service.GoodsProductLiftService;
 import com.goodsquick.service.GoodsRadarService;
 import com.goodsquick.service.GoodsServiceService;
@@ -61,6 +63,10 @@ public class IndexController {
 	@Autowired
 	@Qualifier("goodsServiceService")
 	private GoodsServiceService goodsServiceService;
+	
+	@Autowired
+	@Qualifier("goodsDataService")
+	private GoodsDataService goodsDataService;
 
     @RequestMapping("/mainIndex")
     public ModelAndView mainIndex(HttpServletRequest request){
@@ -173,6 +179,15 @@ public class IndexController {
     	try {
     		List<GoodsRepository> communityRepoList = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"1",true);
     		view.addObject("communityRepoList", communityRepoList);
+    		
+    		List<GoodsChartObj1> densityList = goodsDataService.getDensityData(currentUser.getLoginName(), "lift_num");
+    		int liftTotalNum = 0;
+    		
+    		for( GoodsChartObj1 obj : densityList ){
+    			liftTotalNum = liftTotalNum + obj.getyValue();
+    		}
+    		view.addObject("liftTotalNum", liftTotalNum);
+    		
     		view.addObject("currentUser", currentUser);
     		view.addObject("actived", ",index,");
     	} catch (Exception e) {

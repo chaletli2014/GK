@@ -64,7 +64,7 @@ jQuery(document).ready(function($){
 							<img width="300px" height="160px" src="${orHouse.mainPic}" />
 						</div>
 						<div class="content_wrap">
-							<div class="zTreeDemoBackground left">
+							<div class="zTreeDemoBackground left" style="clear:both;margin-right:70px;">
 								<div class="treeNodeTitle">主体</div>
 								<ul id="subjectTree" class="ztree"></ul>
 							</div>
