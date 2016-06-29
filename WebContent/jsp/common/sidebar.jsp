@@ -61,7 +61,7 @@
 		</header>
 		<div class="sidebar_title">
 			<a href="<%=request.getParameter("basePath")%>mainIndex">
-				<span>
+				<span style="display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;margin-left:0px;width:220px;" title="<%=currentRepository.getRepositoryName()%>">
 					<%=null == currentRepository?"":currentRepository.getRepositoryName()%>
 				</span>
 			</a>
