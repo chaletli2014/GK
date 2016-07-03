@@ -23,7 +23,7 @@
 		<header class="logo-env">
 			<!-- logo -->
 			<div class="logo">
-				<a href="<%=basePath %>index" class="logo-expanded">
+				<a class="logo-expanded">
 					<img src="<%=basePath%>images/logo_new.png" alt="" width="80px" height="26px"/>
 				</a>
 			</div>
