@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@include file="common/header.jsp"%>
+<script type="text/javascript" src="<%=basePath%>/js/echarts/echarts.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/goodsquick/daChart.js"></script>
 <script type="text/javascript" src="<%=basePath%>/js/goodsquick/communityIndex.js"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BVcqwEMHD74riuQUuyi6rvtdl3bu7aaM"></script>
-<script type="text/javascript" src="<%=basePath%>/js/devexpress-web-14.1/js/globalize.min.js"></script>
-<script type="text/javascript" src="<%=basePath%>/js/devexpress-web-14.1/js/dx.chartjs.js"></script>
 <style>
 .index_device li{
   float: left;
@@ -94,7 +94,7 @@
 							房龄分布图
 						</div>
 						<div class="panel-body" style="padding-top:4px;">
-							<div id="assetYear" style="height: 440px; width: 100%;"></div>
+							<div id="mainBar" style="height: 440px; width: 100%;"></div>
 						</div>
 					</div>
 				</div>

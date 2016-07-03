@@ -148,16 +148,10 @@ public class IndexController {
     	String viewName = "index";
     	WebUserInfo currentUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	try {
-    		List<GoodsRepository> communityRepositoryList = new ArrayList<GoodsRepository>();
-    		
-    		if( "group1".equalsIgnoreCase(currentUser.getUserType()) ){
-    			communityRepositoryList = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"1",true);
-    		}
     		List<GoodsRepository> repositoryList1 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"1",false);
 			List<GoodsRepository> repositoryList2 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"2",false);
 			List<GoodsRepository> repositoryList3 = repositoryService.getRepositoryByLoginNameAndType(currentUser.getLoginName(),"3",false);
 			
-			view.addObject("communityRepositoryList", communityRepositoryList);
 			view.addObject("repositoryList1", repositoryList1);
 			view.addObject("repositoryList2", repositoryList2);
 			view.addObject("repositoryList3", repositoryList3);

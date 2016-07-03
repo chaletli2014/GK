@@ -37,7 +37,7 @@ jQuery(document).ready(function($){
 				deviceType : $(this).attr("dtype")
 			},
 			success: function(response){
-				populateLiftBasicInfo(response.deviceObj);
+				populateBasicInfo(response.deviceObj);
 				jQuery('#houseDeviceDiv').modal('show', {backdrop: 'static'});
 				$("#houseDeviceDiv").on("shown.bs.modal",function(e){
 					populateLiftMainInfo(response.deviceObj);
@@ -134,7 +134,7 @@ function populateLiftMainInfo(deviceObj){
 	});
 }
 
-function populateLiftBasicInfo(deviceObj){
+function populateBasicInfo(deviceObj){
 	$("#deviceId").val(deviceObj.id);
 	$("#subjectId").val(deviceObj.subjectId);
 	$("#subjectName_device").val(deviceObj.subjectName);
@@ -383,9 +383,9 @@ function initDeviceTable(){
 					}
 				},
 	            { "aTargets" :　[4], "mRender" : function(data, type, full){
-		        		var editlink = "<a id='"+full.id+"' dtype='"+full.eqTypeCode+"' class='btn btn-secondary btn-sm btn-icon icon-left modifyDevice'>编辑</a>";
+//		        		var editlink = "<a id='"+full.id+"' dtype='"+full.eqTypeCode+"' class='btn btn-secondary btn-sm btn-icon icon-left modifyDevice'>编辑</a>";
 		        		var dellink = "<a id='"+full.id+"' dtype='"+full.eqTypeCode+"' class='btn btn-danger btn-sm btn-icon icon-left removeDevice'>删除</a>";
-		        		return editlink + dellink;
+		        		return dellink;
 	        		} 
 	            }
 			]

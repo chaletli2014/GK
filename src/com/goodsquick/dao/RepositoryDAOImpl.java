@@ -171,4 +171,17 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
         return ohList;
 	}
 
+	@Override
+	public String getOwnedRepositoryNum(String loginName) throws Exception {
+		String sql = "select repository_code from tbl_goods_repository gr where gr.create_user = ? order by create_time desc";
+		return dataBean.getJdbcTemplate().queryForObject(sql, new Object[]{loginName}, String.class);
+	}
+
+	@Override
+	public List<GoodsRepository> getRepositoryByName(String repositoryName)
+			throws Exception {
+		StringBuilder sql = new StringBuilder("select gr.* from tbl_goods_repository gr where gr.repository_name = ?");
+		return dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryName}, new GoodsRepositoryRowMapper());
+	}
+
 }

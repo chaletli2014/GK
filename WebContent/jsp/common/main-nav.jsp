@@ -27,6 +27,7 @@
 %>
 <nav class="navbar user-info-navbar" role="navigation" style="height:46px;">
 	<!-- Left links for user info navbar -->
+	<%if( !"group1".equalsIgnoreCase(userInfo.getUserType()) ) {%>
 	<ul class="user-info-menu left-links list-inline list-unstyled">
 		<li class="dropdown hover-line" style="margin-left:28px;">
 			<a href="#" data-toggle="dropdown" class="repositoryNav">
@@ -69,39 +70,8 @@
 				</li>
 			</ul>
 		</li>
-		<%--
-		<li class="dropdown hover-line">
-			<a href="#" data-toggle="dropdown">
-				<i class="fa-bell-o" title="消息管理"></i>
-				<span class="badge badge-purple" id="messageTips"></span>
-			</a>
-			<ul class="dropdown-menu notifications">
-				<li class="top">
-					<p class="small" id="messageCount"></p>
-				</li>
-				<li>
-					<ul class="dropdown-menu-list list-unstyled ps-scrollbar" id="newMessageList">
-						<li class="active notification-success">
-							<a href="#">
-								<i class="fa-user"></i>
-								<span class="line">
-									<strong>测试用户1 申请成为您的 品牌商</strong>
-								</span>
-								<span class="line small time">30秒前</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="external">
-					<a href="<%=request.getParameter("basePath")%>myMessage">
-						<span>查看所有消息</span>
-						<i class="fa-link-ext"></i>
-					</a>
-				</li>
-			</ul>
-		</li>
-		 --%>
 	</ul>
+	<%} %>
 	<!-- Right links for user info navbar -->
 	<ul class="user-info-menu right-links list-inline list-unstyled">
 		<li class="dropdown user-profile">

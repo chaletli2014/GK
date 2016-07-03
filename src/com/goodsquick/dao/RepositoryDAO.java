@@ -19,6 +19,14 @@ public interface RepositoryDAO {
 	 * @throws Exception
 	 */
 	public List<GoodsRepository> getRepositoryByLoginName(String loginName, boolean hideDeleted) throws Exception;
+	
+	/**
+	 * 根据登录名获取拥有的最大物库编码
+	 * @param loginName 登录名
+	 * @return 最大的物库编码
+	 * @throws Exception
+	 */
+	public String getOwnedRepositoryNum( String loginName ) throws Exception;
 	/**
 	 * 根据当前登录用户名和物库类型获取物库列表
 	 * @param loginName
@@ -48,4 +56,6 @@ public interface RepositoryDAO {
 	public void removeRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 	
 	public List<GoodsOrdinaryHouse> getRepositoryAssetByRepositoryList(String repositoryCodes) throws Exception;
+	
+	public List<GoodsRepository> getRepositoryByName(String repositoryName) throws Exception;
 }

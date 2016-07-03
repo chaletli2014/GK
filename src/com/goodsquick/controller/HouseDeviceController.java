@@ -205,12 +205,8 @@ public class HouseDeviceController {
     	Map<String,Object> result = new HashMap<String,Object>();
     	try {
     		int deviceId = GoodsQuickUtils.parseIntegerFromString(request.getParameter("deviceId"));
-    		String deviceType = request.getParameter("deviceType");
-    		
-    		if( "dt".equalsIgnoreCase(deviceType) ){
-    			GoodsDeviceLift deviceObj = liftService.getGoodsDeviceLiftById(deviceId);
-    			result.put("deviceObj", deviceObj);
-    		}
+    		GoodsHouseDevice houseDevice = goodsHouseDeviceService.getDeviceInfoById(deviceId);
+			result.put("deviceObj", houseDevice);
     		result.put("result", "Y");
     	} catch (Exception e) {
     		logger.error("saveHouseDevice: 根据ID和类型获取设施设备失败",e);

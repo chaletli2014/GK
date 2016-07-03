@@ -24,4 +24,5 @@ public interface RepositoryService {
 	public void removeRepositoryUser(GoodsRepositoryUser repositoryUser) throws Exception;
 	
 	public List<GoodsOrdinaryHouse> getRepositoryAssetByLoginNameAndType(String loginName,String type, boolean excludeSelf) throws Exception;
+	public List<GoodsRepository> getRepositoryByName(String repositoryName) throws Exception;
 }

@@ -156,6 +156,24 @@ jQuery(document).ready(function($){
 		});
 	});
 	
+	$("body").delegate('#repositoryName', 'blur', function(){
+		jQuery.ajax({
+			url: basePath+"getRepositoryByName",
+			data : {
+				repositoryName : $(this).val()
+			},
+			success: function(response){
+				var result = response.result;
+				if( result == 'Y' ){
+					jAlert("该物库已经存在，请重新命名","提示");
+					$("#addNewRepositoryBtn").attr("disabled",true);
+				}else{
+					$("#addNewRepositoryBtn").attr("disabled",false);
+				}
+			}
+		});
+	});
+	
 	$("<span style='color:red;display:inline;font-size:24px;height:10px;line-height:10px;'>*</span>").appendTo(".form_input_required");
 });
 

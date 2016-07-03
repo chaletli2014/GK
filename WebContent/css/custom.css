@@ -612,12 +612,13 @@ div.showDetailDiv .form-group{
 	background: #fff;
 	padding:30px;
 }
-.add_item{
+.add_item, .sidebar-menu .main-menu ul li.add_item{
 	width:200px;
 	margin:10px 0; 
 	text-align:center; 
 	background:url(../images/icon/add.png) no-repeat 35px center;
 	display: inline-block;
 }
-.add_item a{display:inline-block; width:80%; text-indent:14px; padding:8px 0; border:1px #999 dashed; color:#999;}
+.add_item a, .sidebar-menu .main-menu ul li.add_item a{display:inline-block; width:80%; text-indent:14px; padding:8px 0; border:1px #999 dashed; color:#999;}
 .add_item a:hover{color:#000; border-color:#000;}
+.sidebar-menu .main-menu ul li.add_item a:hover{color:#fff; border-color:#fff;}

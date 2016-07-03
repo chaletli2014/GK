@@ -55,9 +55,12 @@ public class LoginController {
             }else{
             	List<GoodsRepository> repositoryList = repositoryService.getRepositoryByLoginName(webUser.getLoginName());
             	request.getSession(true).setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_LIST, repositoryList);
-            	
                 request.getSession(true).setAttribute(GoodsQuickAttributes.WEB_LOGIN_USER, webUser);
-                return "redirect:index";
+                if( "group1".equalsIgnoreCase(webUser.getUserType()) ){
+                	return "redirect:communityIndex";
+                }else{
+                	return "redirect:index";
+                }
             }
         }catch(Exception e){
             logger.error("fail to login",e);

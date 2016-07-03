@@ -6,12 +6,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -93,6 +93,25 @@ public class RepositoryController {
 		} catch (Exception e) {
 			logger.error("fail to remove repository,",e);
 			resultMap.put("result", "N");
+		}
+		return resultMap;
+	}
+	
+	@RequestMapping("/getRepositoryByName")
+	@ResponseBody
+	public Map<String,Object> getRepositoryByName(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		try {
+			String repositoryName = request.getParameter("repositoryName");
+			List<GoodsRepository> repos = repositoryService.getRepositoryByName(repositoryName);
+			if( CollectionUtils.isNotEmpty(repos) ){
+				resultMap.put("result", "Y");
+			}else{
+				resultMap.put("result", "N");
+			}
+		} catch (Exception e) {
+			logger.error("fail to remove repository,",e);
+			resultMap.put("result", "E");
 		}
 		return resultMap;
 	}

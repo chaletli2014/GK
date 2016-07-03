@@ -890,3 +890,11 @@ alter table tbl_goods_ordinary_house_owned add column lift_num int NULL DEFAULT 
 alter table tbl_goods_ordinary_house_owned add column parking_vg_num int NULL DEFAULT 0 comment '地上停车位';
 alter table tbl_goods_ordinary_house_owned add column parking_ug_num int NULL DEFAULT 0 comment '地下停车位';
 alter table tbl_goods_ordinary_house_owned add column fire_pump_num int NULL DEFAULT 0 comment '消防水泵数';
+
+alter table tbl_goods_house_device add column manufacturer varchar(100) NULL DEFAULT '' comment '生产厂家';
+alter table tbl_goods_house_device add column velocity double NULL DEFAULT 0.00 comment '速度/功率';
+alter table tbl_goods_house_device add column num int NULL DEFAULT 0 comment '数量';
+alter table tbl_goods_house_device add column enable_time datetime NULL DEFAULT NULL comment '启用时间';
+alter table tbl_goods_house_device add column maintenance_unit varchar(100) NULL DEFAULT '' comment '维保单位';
+alter table tbl_goods_house_device add column telephone varchar(100) NULL DEFAULT '' comment '联系电话';
+alter table tbl_goods_house_device add column remark varchar(1000) NULL DEFAULT '' comment '备注';

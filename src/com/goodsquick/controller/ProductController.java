@@ -56,7 +56,7 @@ public class ProductController {
 	public ModelAndView newGoodsProductPre(HttpServletRequest request){
 		ModelAndView view = new ModelAndView();
 		try {
-			List<GoodsDictionary> productTypes = dictionaryService.getDictionaryByType("productType1");
+			List<GoodsDictionary> productTypes = dictionaryService.getDictionaryByType("template_chattel");
 			
 			view.addObject("productTypes", productTypes);
 			view.addObject("opened", ",productManagement,");

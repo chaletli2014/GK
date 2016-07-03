@@ -18,6 +18,19 @@ import com.goodsquick.model.GoodsHouseDevice;
 @Repository("goodsHouseDeviceDAO")
 public class GoodsHouseDeviceDAOImpl extends BaseDAOImpl implements GoodsHouseDeviceDAO {
 
+	private static final StringBuilder SQL_SELECTION = new StringBuilder("select ")
+		.append("hd.id,hd.eq_type as eq_type_code,gd.dic_name as eq_type_name, hd.name ")
+		.append(",hd.brand,hd.style,hd.eq_desc,hd.subjectId,hd.moduleId ")
+		.append(",hd.create_user,hd.create_date,hd.update_user,hd.update_date,hd.status ")
+		.append(",hs.subject_name as subjectName,sm.module_name as moduleName ")
+		.append(",hd.manufacturer, hd.velocity, hd.num, hd.enable_time, hd.maintenance_unit, hd.telephone, hd.remark ");
+		
+	private static final StringBuilder SQL_FROM = new StringBuilder("")
+		.append(" from tbl_goods_house_device hd ")
+		.append(" left join tbl_goods_house_subject hs on hd.subjectId = hs.id ")
+		.append(" left join tbl_goods_house_subject_module sm on hd.moduleId = sm.id ")
+		.append(" left join tbl_goods_dictionary gd on hd.eq_type = gd.dic_code ");
+	
 	@Override
 	public int saveHouseDevice(final GoodsHouseDevice houseDevice) throws Exception {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -77,14 +90,8 @@ public class GoodsHouseDeviceDAOImpl extends BaseDAOImpl implements GoodsHouseDe
 	public List<GoodsHouseDevice> getAllHouseDeviceByRepositoryCode(String repositoryCode) throws Exception {
 		List<GoodsHouseDevice> ohDeviceList = new ArrayList<GoodsHouseDevice>();
 		StringBuilder sql = new StringBuilder(500);
-		sql.append(" select hd.id,hd.eq_type as eq_type_code,gd.dic_name as eq_type_name, hd.name");
-		sql.append(" ,hd.brand,hd.style,hd.eq_desc,hd.subjectId,hd.moduleId");
-		sql.append(" ,hd.create_user,hd.create_date,hd.update_user,hd.update_date,hd.status");
-		sql.append(" ,hs.subject_name as subjectName,sm.module_name as moduleName ");
-		sql.append(" from tbl_goods_house_device hd ");
-		sql.append(" left join tbl_goods_house_subject hs on hd.subjectId = hs.id ");
-		sql.append(" left join tbl_goods_house_subject_module sm on hd.moduleId = sm.id ");
-		sql.append(" left join tbl_goods_dictionary gd on hd.eq_type = gd.dic_code ");
+		sql.append(SQL_SELECTION);
+		sql.append(SQL_FROM);
 		sql.append(" where hs.repository_code = ? and hd.status = '1'");
 		ohDeviceList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode}, new GoodsHouseDeviceRowMapper());
 		return ohDeviceList;
@@ -92,8 +99,11 @@ public class GoodsHouseDeviceDAOImpl extends BaseDAOImpl implements GoodsHouseDe
 
 	@Override
 	public GoodsHouseDevice getDeviceInfoById(int deviceId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sql = new StringBuilder(500);
+		sql.append(SQL_SELECTION);
+		sql.append(SQL_FROM);
+		sql.append(" where hd.id=?");
+		return dataBean.getJdbcTemplate().queryForObject(sql.toString(), new Object[]{deviceId}, new GoodsHouseDeviceRowMapper());
 	}
 
 	@Override
@@ -110,14 +120,8 @@ public class GoodsHouseDeviceDAOImpl extends BaseDAOImpl implements GoodsHouseDe
 			String eqTypeCode) throws Exception {
 		List<GoodsHouseDevice> ohDeviceList = new ArrayList<GoodsHouseDevice>();
 		StringBuilder sql = new StringBuilder(500);
-		sql.append(" select hd.id,hd.eq_type as eq_type_code,gd.dic_name as eq_type_name, hd.name");
-		sql.append(" ,hd.brand,hd.style,hd.eq_desc,hd.subjectId,hd.moduleId");
-		sql.append(" ,hd.create_user,hd.create_date,hd.update_user,hd.update_date,hd.status");
-		sql.append(" ,hs.subject_name as subjectName,sm.module_name as moduleName ");
-		sql.append(" from tbl_goods_house_device hd ");
-		sql.append(" left join tbl_goods_house_subject hs on hd.subjectId = hs.id ");
-		sql.append(" left join tbl_goods_house_subject_module sm on hd.moduleId = sm.id ");
-		sql.append(" left join tbl_goods_dictionary gd on hd.eq_type = gd.dic_code ");
+		sql.append(SQL_SELECTION);
+		sql.append(SQL_FROM);
 		sql.append(" where hs.repository_code = ? and hd.eq_type=? and hd.status = '1'");
 		ohDeviceList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{repositoryCode, eqTypeCode}, new GoodsHouseDeviceRowMapper());
 		return ohDeviceList;

@@ -27,6 +27,13 @@ public class GoodsHouseDeviceRowMapper implements RowMapper<GoodsHouseDevice>{
     	dbGoodsHouseDevice.setUpdateUser(rs.getString("update_user"));
     	dbGoodsHouseDevice.setUpdateDate(rs.getDate("update_date"));
     	dbGoodsHouseDevice.setStatus(rs.getString("status"));
+    	dbGoodsHouseDevice.setManufacturer(rs.getString("manufacturer"));
+    	dbGoodsHouseDevice.setVelocity(rs.getDouble("velocity"));
+    	dbGoodsHouseDevice.setNum(rs.getInt("num"));
+    	dbGoodsHouseDevice.setEnableTime(rs.getDate("enable_time"));
+    	dbGoodsHouseDevice.setMaintenanceUnit(rs.getString("maintenance_unit"));
+    	dbGoodsHouseDevice.setTelephone(rs.getString("telephone"));
+    	dbGoodsHouseDevice.setRemark(rs.getString("remark"));
         return dbGoodsHouseDevice;
     }
     

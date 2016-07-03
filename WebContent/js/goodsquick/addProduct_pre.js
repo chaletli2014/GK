@@ -68,7 +68,6 @@ jQuery(document).ready(function($){
 		var productDom = $("#productDom").val();
 		var productQA = $("#productQA").val();
 		var productPrice = $("#productPrice").val();
-		var remark = $("#remark").val();
 		var productId = $("#productId").val();
 		if( productName == '' ){
 			jAlert("产品名称不能为空","提醒");
@@ -89,9 +88,7 @@ jQuery(document).ready(function($){
 				itemCode : itemCode,
 				productDom : productDom,
 				productQA : productQA,
-				productPrice : productPrice,
-				remark : remark,
-				isMain : isMain
+				productPrice : productPrice
 			},
 			success: function(response){
 				var result = response.result;

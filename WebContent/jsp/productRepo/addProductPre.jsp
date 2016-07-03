@@ -39,31 +39,21 @@
 						<div class="modal-dialog" style="width:100%">
 							<div class="modal-content product_block">
 								<div class="modal-header">
-									<h4 class="modal-title">动产模板</h4>
+									<h4 class="modal-title">产品模板</h4>
 								</div>
 								<div class="product_level">
+								<c:forEach items="${productTypes}" var="productType">
 									<div class="product_pre_model">
-										<a class="product_link" title="template_lift">电梯</a>
+										<a class="product_link" title="${productType.dicCode}">${productType.dicName}</a>
 									</div>
-									<div class="product_pre_model">
-										<a class="product_link" title="template_security">安防</a>
-									</div>
-									<div class="product_pre_model">
-										<a class="product_link" title="template_fireP">消防</a>
-									</div>
-									<div class="product_pre_model">
-										<a class="product_link" title="template_airC">空调</a>
-									</div>
-									<div class="product_pre_model">
-										<a class="product_link" title="template_waterP">给排水泵</a>
-									</div>
+								</c:forEach>
 								</div>
 							</div>
+							<%-- 
 							<div class="modal-content product_block">
 								<div class="modal-header">
 									<h4 class="modal-title">不动产模板</h4>
 								</div>
-								<%-- 
 								<div class="product_level">
 									<div class="product_pre_model">
 										<a class="product_link" title="template_house_oh">普通住宅</a>
@@ -72,8 +62,8 @@
 										<a class="product_link" title="template_house_ob">写字楼</a>
 									</div>
 								</div>
-								 --%>
 							</div>
+							 --%>
 						</div>
 					</div>
 				</div>

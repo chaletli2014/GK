@@ -1,11 +1,12 @@
 package com.goodsquick.service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.cxf.common.util.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,16 +32,8 @@ public class RepositoryServiceImpl implements RepositoryService {
 	public List<GoodsRepository> saveOrUpdateRepository(HttpServletRequest request, GoodsRepository goodsRepository)
 			throws Exception {
 		if( 0 == goodsRepository.getId() ){
-			int repositoryNum = 0;
-			try{
-				List<GoodsRepository> repositoryList = repositoryDAO.getRepositoryByLoginName(goodsRepository.getCreateUser(),false);
-				if( !CollectionUtils.isEmpty(repositoryList) ){
-					repositoryNum = repositoryList.size();
-				}
-			}catch(Exception e){}
-			
-			repositoryNum++;
-			String newRepositoryCode = goodsRepository.getCreateUser()+"_"+repositoryNum;
+			long currentTime = new Date().getTime();
+			String newRepositoryCode = goodsRepository.getCreateUser()+"_"+currentTime;
 			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, newRepositoryCode);
 			goodsRepository.setRepositoryCode(newRepositoryCode);
 			repositoryDAO.saveRepository(goodsRepository);
@@ -98,8 +91,10 @@ public class RepositoryServiceImpl implements RepositoryService {
 		try{
 			return repositoryDAO.getRepositoryByCode(repositoryCode);
 		} catch(EmptyResultDataAccessException erd){
+			logger.warn("repository is not found by code");
             return new GoodsRepository();
         } catch(Exception e){
+        	logger.error("error is found,",e);
             return new GoodsRepository();
         }
 	}
@@ -161,6 +156,20 @@ public class RepositoryServiceImpl implements RepositoryService {
 			return null;
 		} catch(Exception e){
 			logger.error("fail to get community asset,",e);
+			return null;
+		}
+	}
+
+	@Override
+	public List<GoodsRepository> getRepositoryByName(String repositoryName)
+			throws Exception {
+		try{
+			return repositoryDAO.getRepositoryByName(repositoryName);
+		} catch(EmptyResultDataAccessException erd){
+			logger.warn("empty data");
+			return null;
+		} catch(Exception e){
+			logger.error("fail to get repository by name,",e);
 			return null;
 		}
 	}

@@ -8,7 +8,7 @@
        	<jsp:param name="basePath" value="<%=basePath%>"/>
     </jsp:include>
 	<div class="page-container">
-		<jsp:include page="../common/sidebar.jsp" flush="true">
+		<jsp:include page="<%=sideBar%>" flush="true">
         	<jsp:param name="basePath" value="<%=basePath%>"/>
         	<jsp:param name="opened" value="${opened}"/>
         	<jsp:param name="actived" value="${actived}"/>

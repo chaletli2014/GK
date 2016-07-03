@@ -48,26 +48,7 @@
 									<div class="form-group">
 										<label class="col-sm-2 control-label" for="deviceType">设备类别</label>
 										<div class="col-sm-6">
-											<script type="text/javascript">
-												jQuery(document).ready(function($)
-												{
-													$("#deviceType").selectBoxIt().on('open', function()
-													{
-														$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
-													});
-												});
-											</script>
-											<select class="form-control" id="deviceType" name="deviceType">
-												<option value="">请选择</option>
-												<option value="yy">曳引式客梯</option>
-											</select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label" for="deviceCode">编码</label>
-										<div class="col-sm-6">
-											<input type="text" class="form-control" id="deviceCode" name="deviceCode" 
-											data-validate="required" data-message-required="编码不能为空">
+											<input type="text" class="form-control" id="eqTypeName" name="eqTypeName" disabled="disabled">
 										</div>
 									</div>
 									<div class="form-group">
@@ -84,13 +65,21 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-2 control-label" for="deliveryDate">交付日期</label>
-										<div class="col-sm-4">
-											<input type="text" class="form-control" id="deliveryDate" name="deliveryDate">
+										<label class="col-sm-2 control-label" for="deviceBrand">设备品牌</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="deviceBrand" name="deviceBrand">
 										</div>
-										<label class="col-sm-2 control-label" for="purchasePrice">采购价格</label>
-										<div class="col-sm-4">
-											<input type="text" class="form-control" id="purchasePrice" name="purchasePrice">
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="deviceStyle">设备型号</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="deviceStyle" name="deviceStyle">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="deviceDesc">生产厂家</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="deviceDesc" name="deviceDesc">
 										</div>
 									</div>
 									<div class="form-group">

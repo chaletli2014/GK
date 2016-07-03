@@ -5,6 +5,7 @@ var opts = {
   enableMessage:true,//设置允许信息窗发送短息
 }
 var map;
+var loadVector;
 
 jQuery(document).ready(function($){
 	if( $("#overviewMap").length>0 ){
@@ -46,6 +47,8 @@ function initDensityMap(){
 	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
 	addMarker(map,"高行镇人民政府","东靖路1801号", true);
 	
+	var myIcon = new BMap.Icon("http://mat1.gtimg.com/news/2014/zt/mh17/you/images/loading.gif", new BMap.Size(150, 150));
+	loadVector = new BMap.Marker(new BMap.Point(121.612872,31.29787), { icon: myIcon });
 	initDensityList(map,"");
 }
 
@@ -63,6 +66,8 @@ function initCommunityRepositoryList(map){
 
 function initDensityList(map, type){
 	map.clearOverlays();
+	map.addOverlay(loadVector);
+	loadVector.show();
 	jQuery.ajax({
 		url: basePath+"getDensity",
 		data:{
@@ -82,6 +87,7 @@ function initDensityList(map, type){
 			map.addOverlay(heatmapOverlay);
 			heatmapOverlay.setDataSet({data:points,max:10});
 			heatmapOverlay.show();
+			loadVector.hide();
 		}
 	});
 }

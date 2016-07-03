@@ -4,7 +4,8 @@
 <%@page import="com.goodsquick.model.WebUserInfo,org.springframework.security.core.context.SecurityContextHolder" %>
 <%
 	GoodsRepository currentRepository = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
-	
+	String currentRepositoryName = "";	
+
 	String opened = request.getParameter("opened");
 	String actived = request.getParameter("actived");
 	
@@ -24,6 +25,8 @@
 	String repoPreName = "资品";
 	String newLink = basePath+"newAssetPre";
 	if( null != currentRepository ){
+		currentRepositoryName = currentRepository.getRepositoryName();
+		
 		if("3".equalsIgnoreCase(currentRepository.getRepositoryType())){
 			repoPreName = "需品";
 			manageName = "需品管理";
@@ -61,8 +64,8 @@
 		</header>
 		<div class="sidebar_title">
 			<a href="<%=request.getParameter("basePath")%>mainIndex">
-				<span style="display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;margin-left:0px;width:200px;" title="<%=currentRepository.getRepositoryName()%>">
-					<%=null == currentRepository?"":currentRepository.getRepositoryName()%>
+				<span style="display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;margin-left:0px;width:200px;" title="<%=currentRepositoryName%>">
+					<%=currentRepositoryName%>
 				</span>
 			</a>
 		</div>
@@ -167,10 +170,13 @@
 						</a>
 					</li>
 				<%}else{ %>
+				<li class="add_item">
+					<a href="<%=request.getParameter("basePath")%>newGoodsProductPre">添加产品</a>
+				</li>
 				<li <% if( actived.indexOf(",productlist,")>-1 ){%>class="active"<%} %>>
 					<a href="<%=request.getParameter("basePath")%>productlist">
 						<i class="entypo-flow-parallel"></i>
-						<span class="title">动产</span>
+						<span class="title">产品列表</span>
 					</a>
 				</li>
 				<%} %>

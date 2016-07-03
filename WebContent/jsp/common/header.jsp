@@ -1,3 +1,5 @@
+<%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%@page import="com.goodsquick.model.WebUserInfo"%>
 <%@page import="com.goodsquick.model.GoodsRepository"%>
 <%@page import="com.goodsquick.utils.GoodsQuickAttributes"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -16,6 +18,12 @@
 		repoPreName = "需品";
 	}else if( null != currentRepository && "2".equalsIgnoreCase(currentRepository.getRepositoryType())){
 		repoPreName = "产品";
+	}
+	
+	String sideBar = "../common/sidebar.jsp";
+	WebUserInfo webUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	if( null != webUser && "group1".equalsIgnoreCase(webUser.getUserType()) ){
+		sideBar = "../common/sidebar_community.jsp";
 	}
 %>
 <head>
