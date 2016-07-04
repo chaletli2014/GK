@@ -39,9 +39,9 @@
 										<div class="col-sm-6">
 											<div class="input-group">
 												<span class="input-group-addon">主体</span>
-												<input type="text" class="form-control" id="subjectName" name="subjectName" disabled="disabled">
+												<input type="text" class="form-control" id="subjectName_device" name="subjectName" disabled="disabled">
 												<span class="input-group-addon">构件</span>
-												<input type="text" class="form-control" id="moduleName" name="moduleName" disabled="disabled">
+												<input type="text" class="form-control" id="moduleName_device" name="moduleName" disabled="disabled">
 											</div>
 										</div>
 									</div>
@@ -77,15 +77,45 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-2 control-label" for="deviceDesc">生产厂家</label>
+										<label class="col-sm-2 control-label" for="manufacturer">生产厂家</label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="deviceDesc" name="deviceDesc">
+											<input type="text" class="form-control" id="manufacturer" name="manufacturer">
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-sm-2 control-label" for="deviceUser">使用人</label>
+										<label class="col-sm-2 control-label" for="velocity">速度/功率</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="velocity" name="velocity">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="num">数量</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="num" name="num">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="enableTime">启用时间</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="enableTime" name="enableTime">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="maintenanceUnit">维保单位</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="maintenanceUnit" name="maintenanceUnit">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="telephone">联系电话</label>
+										<div class="col-sm-6">
+											<input type="text" class="form-control" id="telephone" name="telephone">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="remark">备注</label>
 										<div class="col-sm-4">
-											<input type="text" class="form-control" id="deviceUser" name="deviceUser">
+											<input type="text" class="form-control" id="remark" name="remark">
 										</div>
 									</div>
 								</div>
@@ -93,9 +123,11 @@
 						</div>
 					</div>
 					<div class="tab-pane" id="tab_main">
+					<%--
 						<jsp:include page="houseDeviceMain.jsp" flush="true">
 				        	<jsp:param name="basePath" value="<%=basePath%>"/>
 				        </jsp:include>
+					 --%>
 					</div>
 					</form>
 					<div class="tab-pane" id="tab_source">
@@ -105,7 +137,7 @@
 					</div>
 					<!-- Tabs Pager -->
 					<div style="float: right;margin-top:20px;">
-						<a id="saveLiftBtn">
+						<a id="saveDeviceBasicBtn">
 							<button class="btn btn-success btn-icon btn-icon-standalone">
 								<i class="fa-check-square-o"></i>
 								<span>保存</span>

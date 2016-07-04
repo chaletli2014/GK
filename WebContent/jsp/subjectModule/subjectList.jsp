@@ -88,7 +88,7 @@
 									<%if( "2".equalsIgnoreCase(level) ){%>
 									<td>${subject.subject1Name}</td>
 									<%}else if( "3".equalsIgnoreCase(level) ){%>
-									<td>${subject.subject1Name}&nbsp;-&nbsp;${subject.subject2Name}</td>
+									<td>${subject.subject2Name}</td>
 									<%} %>
 									<td class="dataEditable" title="${subject.name}">${subject.name}</td>
 									<td class="dataEditable" title="${subject.desc}">${subject.desc}</td>

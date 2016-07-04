@@ -68,8 +68,9 @@ public class GoodsHouseDeviceDAOImpl extends BaseDAOImpl implements GoodsHouseDe
 			throws Exception {
 		StringBuilder sql = new StringBuilder(200);
 		sql.append("update tbl_goods_house_device ");
-        sql.append("set name = ?, brand = ?, style = ?, eq_desc = ?, subjectId = ?, moduleId = ?");
-        sql.append(",update_date = ?,update_user = ? where id = ? ");
+        sql.append("set name = ?, brand = ?, style = ?, eq_desc = ? ");
+        sql.append(", manufacturer = ?, velocity = ?, num = ?, enable_time = ?, maintenance_unit = ?, telephone = ? , remark = ? ");
+        sql.append(",update_date = now(),update_user = ? where id = ? ");
 		
 		List<Object> params = new ArrayList<Object>();
 		
@@ -77,9 +78,13 @@ public class GoodsHouseDeviceDAOImpl extends BaseDAOImpl implements GoodsHouseDe
 		params.add(houseDevice.getBrand());
 		params.add(houseDevice.getStyle());
 		params.add(houseDevice.getEqDesc());
-		params.add(houseDevice.getSubjectId());
-		params.add(houseDevice.getModuleId());
-		params.add(houseDevice.getUpdateDate());
+		params.add(houseDevice.getManufacturer());
+		params.add(houseDevice.getVelocity());
+		params.add(houseDevice.getNum());
+		params.add(houseDevice.getEnableTime());
+		params.add(houseDevice.getMaintenanceUnit());
+		params.add(houseDevice.getTelephone());
+		params.add(houseDevice.getRemark());
 		params.add(houseDevice.getUpdateUser());
 		params.add(houseDevice.getId());
 		

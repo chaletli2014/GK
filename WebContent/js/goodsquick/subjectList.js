@@ -395,7 +395,7 @@ function showSubjectInfo(subjectId){
 				if( subjectObj.level == '2' ){
 					$("#parentNameModify").val(subjectObj.subject1Name);
 				}else if( subjectObj.level == '3' ){
-					$("#parentNameModify").val(subjectObj.subject1Name+"-"+subjectObj.subject2Name);
+					$("#parentNameModify").val(subjectObj.subject2Name);
 				}
 				$("#subjectIdModify").val(subjectId);
 				jQuery('#subjectModifyDiv').modal('show', {backdrop: 'static'});
@@ -407,15 +407,7 @@ function showSubjectInfo(subjectId){
 }
 
 function populateParent(level, subjectLevel, rowIndex){
-	if( subjectLevel == '2' ){
-		subject1Name = level.selectedOptions[0].innerHTML;
-	}else if( subjectLevel == '3' ){
-		subject2Name = level.selectedOptions[0].innerHTML;
-	}
-	var parentName = subject1Name;
-	if( subject2Name ){
-		parentName = parentName + subject2Name;
-	}
+	var parentName = level.selectedOptions[0].innerHTML;
 	$("#subjectName"+rowIndex).val(parentName+'-');
 	$("#parentId_h").val(level.value);
 }

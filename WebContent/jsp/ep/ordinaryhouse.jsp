@@ -41,7 +41,7 @@ jQuery(document).ready(function($){
 						</div>
 					</c:if>
 					<c:if test="${orHouse!=null}">
-						<div style="width:560px;float:left;">
+						<div style="width:610px;float:left;">
 							<blockquote class="blockquote blockquote-info" style="height:160px;font-size:14px;">
 								<p>
 									<strong>资品信息</strong>&nbsp;&nbsp;
@@ -64,9 +64,13 @@ jQuery(document).ready(function($){
 							<img width="300px" height="160px" src="${orHouse.mainPic}" />
 						</div>
 						<div class="content_wrap">
-							<div class="zTreeDemoBackground left" style="clear:both;margin-right:70px;">
+							<div class="zTreeDemoBackground left" style="clear:both;">
 								<div class="treeNodeTitle">主体</div>
 								<ul id="subjectTree" class="ztree"></ul>
+							</div>
+							<div class="zTreeDemoBackground left">
+								<div class="treeNodeTitle">构件</div>
+								<ul id="moduleTree" class="ztree"></ul>
 							</div>
 							<div class="zTreeDemoBackground left">
 								<div class="treeNodeTitle">设施设备</div>

@@ -4,13 +4,6 @@ var deviceTable;
 
 jQuery(document).ready(function($){
 	initDeviceTable();
-	populateDropdownByDic("lift_type","deviceType");
-	populateDropdownByDic("lift_brand","deviceBrand");
-	populateDropdownByDic("lift_purpose","devicePurpose");
-	populateDropdownByDic("lift_style","deviceStyle");
-	populateDropdownByDic("lift_QA","deviceQA");
-	populateDropdownByDic("lift_mainPower","mainPower");
-	populateDropdownByDic("lift_lifeTime","lifeTime");
 	
 	$("#newDevice").click (function(){
 		createNewDeviceTr();
@@ -19,7 +12,7 @@ jQuery(document).ready(function($){
 	$("#saveDevice").click (function(){
 		saveDevice();
 	});
-	$("#saveLiftBtn").click(function(){
+	$("#saveDeviceBasicBtn").click(function(){
 		saveDeviceInfo();
 		return false;
 	});
@@ -140,22 +133,18 @@ function populateBasicInfo(deviceObj){
 	$("#subjectName_device").val(deviceObj.subjectName);
 	$("#moduleId").val(deviceObj.moduleId);
 	$("#moduleName_device").val(deviceObj.moduleName);
-	var deviceTypeValue = deviceObj.liftType;
-	$("#deviceType option").each(function() {
-        if ($(this).val() == deviceTypeValue ) {
-            $(this).attr("selected", "selected");
-        }
-        $("#deviceType").selectBoxIt().data("selectBoxIt");
-		$("#deviceType").data("selectBox-selectBoxIt").refresh();
-    });
-	
-	$("#deviceCode").val(deviceObj.liftCode);
-	$("#deviceName").val(deviceObj.liftName);
-	$("#deviceDesc").val(deviceObj.liftDesc);
-	$("#deliveryDate").val(deviceObj.deliveryDate);
-	$("#deviceQA").val(deviceObj.liftQA);
-	$("#purchasePrice").val(deviceObj.purchasePrice);
-	$("#deviceUser").val(deviceObj.userName);
+	$("#eqTypeName").val(deviceObj.eqTypeName);
+	$("#deviceName").val(deviceObj.name);
+	$("#deviceDesc").val(deviceObj.eqDesc);
+	$("#deviceBrand").val(deviceObj.brand);
+	$("#deviceStyle").val(deviceObj.style);
+	$("#manufacturer").val(deviceObj.manufacturer);
+	$("#velocity").val(deviceObj.velocity);
+	$("#num").val(deviceObj.num);
+	$("#enableTime").val(deviceObj.enableTime);
+	$("#maintenanceUnit").val(deviceObj.maintenanceUnit);
+	$("#telephone").val(deviceObj.telephone);
+	$("#remark").val(deviceObj.remark);
 }
 
 function createNewDeviceTr(){
@@ -261,58 +250,28 @@ function saveDevice(){
 }
 
 function saveDeviceInfo(){
-	var liftObj = new Object();
-	liftObj.id = $("#deviceId").val();
-	liftObj.subjectId = $("#subjectId").val();
-	liftObj.moduleId = $("#moduleId").val();
-	liftObj.liftType = $("#deviceType").val();
-	liftObj.liftCode = $("#deviceCode").val();
-	liftObj.liftName = $("#deviceName").val();
-	liftObj.liftDesc = $("#deviceDesc").val();
-	if( $("#deliveryDate").val() != '' ){
-		liftObj.deliveryDate = $("#deliveryDate").val();
+	var deviceObj = new Object();
+	deviceObj.id = $("#deviceId").val();
+	deviceObj.subjectId = $("#subjectId").val();
+	deviceObj.moduleId = $("#moduleId").val();
+	deviceObj.eqTypeCode = $("#deviceType").val();
+	deviceObj.name = $("#deviceName").val();
+	deviceObj.eqDesc = $("#deviceDesc").val();
+	deviceObj.brand = $("#deviceBrand").val();
+	deviceObj.style = $("#deviceStyle").val();
+	deviceObj.manufacturer = $("#manufacturer").val();
+	deviceObj.velocity = $("#velocity").val();
+	deviceObj.num = $("#num").val();
+	if( $("#enableTime").val() != '' ){
+		deviceObj.enableTime = $("#enableTime").val();
 	}
-	liftObj.liftQA = $("#deviceQA").val();
-	if( $("#purchasePrice").val() != '' ){
-		liftObj.purchasePrice = $("#purchasePrice").val();
-	}
-	liftObj.userName = $("#deviceUser").val();
-	liftObj.brandCode = $("#deviceBrand").val();
-	liftObj.liftPurpose = $("#devicePurpose").val();
-	liftObj.liftStyle = $("#deviceStyle").val();
-	if( $("#deviceCT").val() != '' ){
-		liftObj.liftCT = $("#deviceCT").val();
-	}
-	if( $("#deviceNS").val() != '' ){
-		liftObj.liftNS = $("#deviceNS").val();
-	}
-	if( $("#carSize").val() != '' ){
-		liftObj.carSize = $("#carSize").val();
-	}
-	if( $("#carHeight").val() != '' ){
-		liftObj.carHeight = $("#carHeight").val();
-	}
-	
-	if( $("#doorSize").val() != '' ){
-		liftObj.doorSize = $("#doorSize").val();
-	}
-	
-	if( $("#mainPower").val() != '' ){
-		liftObj.mainPower = $("#mainPower").val();
-	}
-	
-	if( $("#madeDate").val() != '' ){
-		liftObj.madeDate = $("#madeDate").val();
-	}
-	
-	if( $("#lifeTime").val() != '' ){
-		liftObj.lifeTime = $("#lifeTime").val();
-	}
+	deviceObj.maintenanceUnit = $("#maintenanceUnit").val();
+	deviceObj.telephone = $("#telephone").val();
+	deviceObj.remark = $("#remark").val();
 	jQuery.ajax({
 		url: basePath+"modifyDevice",
 		data : {
-			deviceObj : JSON.stringify(liftObj),
-			deviceType : "dt"
+			deviceObj : JSON.stringify(deviceObj)
 		},
 		success: function(response){
 			var result = response.result;
@@ -383,9 +342,9 @@ function initDeviceTable(){
 					}
 				},
 	            { "aTargets" :　[4], "mRender" : function(data, type, full){
-//		        		var editlink = "<a id='"+full.id+"' dtype='"+full.eqTypeCode+"' class='btn btn-secondary btn-sm btn-icon icon-left modifyDevice'>编辑</a>";
+		        		var editlink = "<a id='"+full.id+"' dtype='"+full.eqTypeCode+"' class='btn btn-secondary btn-sm btn-icon icon-left modifyDevice'>编辑</a>";
 		        		var dellink = "<a id='"+full.id+"' dtype='"+full.eqTypeCode+"' class='btn btn-danger btn-sm btn-icon icon-left removeDevice'>删除</a>";
-		        		return dellink;
+		        		return editlink + dellink;
 	        		} 
 	            }
 			]

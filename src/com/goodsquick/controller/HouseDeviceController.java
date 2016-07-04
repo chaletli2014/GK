@@ -1,5 +1,6 @@
 package com.goodsquick.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.goodsquick.model.GoodsDeviceLift;
 import com.goodsquick.model.GoodsDictionary;
 import com.goodsquick.model.GoodsHouseDevice;
 import com.goodsquick.model.WebUserInfo;
@@ -36,6 +36,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 
 @Controller
 public class HouseDeviceController {
@@ -153,7 +157,32 @@ public class HouseDeviceController {
 			getObj.put("iTotalRecords", totalRecords);//实际的行数
 		    getObj.put("iTotalDisplayRecords", totalDisplayRecords);
 			
-		    Gson gson = new Gson();
+		    GsonBuilder gsonBuilder = new GsonBuilder().registerTypeAdapter(String.class, new TypeAdapter<String>() {  
+	            @Override  
+	            public void write(JsonWriter out, String value) throws IOException {  
+	                if (value == null) {  
+	                    out.value("");
+	                } else {  
+	                    out.value(value);  
+	                }  
+	            }  
+	            @Override  
+	            public String read(JsonReader in) throws IOException {  
+	                if (in.peek() == JsonToken.NULL) {  
+	                    in.nextNull();  
+	                    return null;  
+	                }  
+	                // return in.nextString();  
+	                String str = in.nextString();  
+	                if (str.equals("")) { // 反序列化时将 "" 转为 null  
+	                    return null;  
+	                } else {  
+	                    return str;  
+	                }  
+	            }  
+	        }); 
+		    
+		    Gson gson = gsonBuilder.create();
 			getObj.put("aaData", gson.toJson(houseDevices));
 		} catch (Exception e) {
 			logger.error("fail to get the house subject,",e);
@@ -223,18 +252,18 @@ public class HouseDeviceController {
     	Map<String,String> result = new HashMap<String,String>();
     	try {
     		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+    		String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
     		
-    		String deviceType = request.getParameter("deviceType");
     		String deviceObj = request.getParameter("deviceObj");
     		
     		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").serializeNulls().create();
     		JsonParser parser = new JsonParser();
     		JsonElement el = parser.parse(deviceObj);
     		
-    		if( "dt".equalsIgnoreCase(deviceType) ){
-    			GoodsDeviceLift lift = gson.fromJson(el, GoodsDeviceLift.class);
-    			liftService.saveOrUpdateDeviceLift(lift, currentUser);
-    		}
+    		GoodsHouseDevice houseDevice = gson.fromJson(el, GoodsHouseDevice.class);
+    		List<GoodsHouseDevice> deviceList = new ArrayList<GoodsHouseDevice>();
+    		deviceList.add(houseDevice);
+			goodsHouseDeviceService.saveOrUpdateHouseDevice(deviceList, currentUser.getLoginName(), repositoryCode);
 			
     		result.put("result", "Y");
     	} catch (Exception e) {
