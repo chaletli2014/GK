@@ -90,6 +90,9 @@
 					<li <% if( actived.indexOf(",assetYearDis,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=basePath%>assetYearDis">房龄分布图</a>
 					</li>
+					<li <% if( actived.indexOf(",liftYearDis,")>-1 ){ %>class="active"<%} %>>
+						<a href="<%=basePath%>liftYearDis">梯龄分布图</a>
+					</li>
 					<li <% if( actived.indexOf(",densityDis,")>-1 ){ %>class="active"<%} %>>
 						<a href="<%=basePath%>densityDis">密度分布图</a>
 					</li>

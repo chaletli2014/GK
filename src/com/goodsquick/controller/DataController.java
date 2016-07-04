@@ -57,6 +57,15 @@ public class DataController {
 		return view;
 	}
 	
+	@RequestMapping("/liftYearDis")
+	public ModelAndView liftYearDis(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("da/liftYearDis");
+		view.addObject("opened", ",dataManagement,");
+		view.addObject("actived", ",liftYearDis,");
+		return view;
+	}
+	
 	@RequestMapping("/densityDis")
 	public ModelAndView densityDis(HttpServletRequest request){
 		ModelAndView view = new ModelAndView();
@@ -75,6 +84,18 @@ public class DataController {
 		
 		chartObjList = goodsDataService.getAssetYearData(currentUser.getLoginName());
 		resultMap.put("assetYearList", chartObjList);
+		return resultMap;
+	}
+	
+	@RequestMapping("/getLiftYears")
+	@ResponseBody
+	public Map<String,Object> getLiftYears(HttpServletRequest request){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		List<GoodsChartObj1> chartObjList = new ArrayList<GoodsChartObj1>();
+		WebUserInfo currentUser = (WebUserInfo)request.getSession().getAttribute(GoodsQuickAttributes.WEB_LOGIN_USER);
+		
+		chartObjList = goodsDataService.getLiftYearData(currentUser.getLoginName());
+		resultMap.put("liftYearList", chartObjList);
 		return resultMap;
 	}
 	

@@ -32,6 +32,18 @@ public class GoodsDataServiceImpl implements GoodsDataService {
             return Collections.emptyList();
         }
 	}
+	
+	@Override
+	public List<GoodsChartObj1> getLiftYearData(String userCode) {
+		try{
+			return goodsDataDAO.getLiftYearData(userCode);
+		} catch(EmptyResultDataAccessException erd){
+			return Collections.emptyList();
+		} catch(Exception e){
+			logger.error("fail to get the asset year list by userCode,",e);
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	public List<GoodsChartObj1> getDensityData(String userCode,

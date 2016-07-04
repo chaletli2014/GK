@@ -2,9 +2,12 @@ jQuery(document).ready(function($){
 	if( $("#mainBar") ){
 		initAssetYear();
 	}
+	if( $("#liftYearBar") ){
+		initliftYearBar();
+	}
 });
 
-function initAssetYear2(xData,yData,pointData){
+function initAssetYear2(containId,legendTitle,xData,yData,pointData){
 	// 配置echarts包所在的路径，是放置所有包的路径
 	require.config({
 		paths : {
@@ -15,13 +18,13 @@ function initAssetYear2(xData,yData,pointData){
 	require( [ 'echarts', 'echarts/chart/bar', 'echarts/chart/line', 'echarts/chart/map', 'echarts/chart/pie' ]
 	, function(ec) {//回调函数，即引用包后的操作，通过require获得echarts接口后（或者命名空间上）实例化图表，echarts接口仅有一个方法init
 	//--- 折柱 ---
-	var myChart = ec.init(document.getElementById('mainBar'));//容器对象，初始化接口、图表所在节点
+	var myChart = ec.init(document.getElementById(containId));//容器对象，初始化接口、图表所在节点
 	var option1 = {//图表操作属性
 		tooltip : {
 			trigger : 'axis'
 		},
 		legend : {
-			data : ['小区数量']//图例说明
+			data : [legendTitle]//图例说明
 		},
 		toolbox : {
 			show : true,
@@ -156,7 +159,7 @@ function initAssetYear2(xData,yData,pointData){
 		],
 		series : [//图例对应的数据
 			{
-				name : '小区数量',
+				name : legendTitle,
 				type : 'bar',
 				data : yData,
 				markPoint : {
@@ -205,7 +208,45 @@ function initAssetYear(){
 				pointDataArray.push(pointData);
 				count++;
 			});
-			initAssetYear2(xData,yData,pointDataArray);
+			initAssetYear2('mainBar','小区数量',xData,yData,pointDataArray);
+		}
+	});
+}
+
+function initliftYearBar(){
+	var sourceArray = new Array();
+	jQuery.ajax({
+		url: basePath+"getLiftYears",
+		success: function(response){
+			var liftYearList = response.liftYearList;
+			var xData = new Array();
+			var yData = new Array();
+			var pointDataArray = new Array();
+			var count = 0;
+			$.each(liftYearList,function(n,assetYear){
+				var dataSource = new Object();
+				var pointData = new Object();
+				if( assetYear.xName == '05-10' ){
+					dataSource.year = '6-10';
+				}else if( assetYear.xName == '10-15' ){
+					dataSource.year = '11-15';
+				}else if( assetYear.xName == '15-20' ){
+					dataSource.year = '16-20';
+				}else{
+					dataSource.year = assetYear.xName;
+				}
+				dataSource.num = assetYear.yValue;
+				xData.push(dataSource.year);
+				yData.push(dataSource.num);
+				
+				pointData.value = assetYear.yValue;
+				pointData.xAxis = count;
+				pointData.yAxis = assetYear.yValue + 1;
+				pointData.symbolSize = 18;
+				pointDataArray.push(pointData);
+				count++;
+			});
+			initAssetYear2('liftYearBar','电梯数量',xData,yData,pointDataArray);
 		}
 	});
 }
