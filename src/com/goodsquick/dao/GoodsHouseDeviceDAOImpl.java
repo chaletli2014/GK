@@ -132,4 +132,28 @@ public class GoodsHouseDeviceDAOImpl extends BaseDAOImpl implements GoodsHouseDe
 		return ohDeviceList;
 	}
 
+	@Override
+	public List<GoodsHouseDevice> getDeviceBySubjectId(int subjectId)
+			throws Exception {
+		List<GoodsHouseDevice> ohDeviceList = new ArrayList<GoodsHouseDevice>();
+		StringBuilder sql = new StringBuilder(500);
+		sql.append(SQL_SELECTION);
+		sql.append(SQL_FROM);
+		sql.append(" where FIND_IN_SET(hd.subjectId, queryChildrenSubjectInfo(?)) and hd.status = '1'");
+		ohDeviceList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{subjectId}, new GoodsHouseDeviceRowMapper());
+		return ohDeviceList;
+	}
+
+	@Override
+	public List<GoodsHouseDevice> getDeviceByModuleId(int moduleId)
+			throws Exception {
+		List<GoodsHouseDevice> ohDeviceList = new ArrayList<GoodsHouseDevice>();
+		StringBuilder sql = new StringBuilder(500);
+		sql.append(SQL_SELECTION);
+		sql.append(SQL_FROM);
+		sql.append(" where hd.moduleId=? and hd.status = '1'");
+		ohDeviceList = dataBean.getJdbcTemplate().query(sql.toString(), new Object[]{moduleId}, new GoodsHouseDeviceRowMapper());
+		return ohDeviceList;
+	}
+
 }

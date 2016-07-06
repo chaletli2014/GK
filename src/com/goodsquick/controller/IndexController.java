@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.common.util.CollectionUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,79 +68,88 @@ public class IndexController {
 	@Autowired
 	@Qualifier("goodsDataService")
 	private GoodsDataService goodsDataService;
+	
+	private Logger logger = Logger.getLogger(this.getClass());
+	
+	@RequestMapping("/goodsMainIndex")
+    public ModelAndView goodsMainIndex(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		try{
+			String repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+			view.setViewName("goodsMainIndex");
+			
+			GoodsOrdinaryHouse house = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
+			List<GoodsProductLift> lifts = goodsProductLiftService.getGoodsProductLiftByRepositoryCode(repositoryCode);
+			List<GoodsCompanyInfo> companyInfos = goodsRadarService.getCompanyInfoByRepositoryCode(repositoryCode);
+			int radarCompanySize = 0;
+			if( !CollectionUtils.isEmpty(companyInfos) ){
+				radarCompanySize = companyInfos.size();
+			}
+			view.addObject("house", house);
+			view.addObject("lifts", lifts);
+			if( !CollectionUtils.isEmpty(companyInfos) ){
+				view.addObject("radarCompany", companyInfos.subList(0, 2>radarCompanySize?radarCompanySize:2));
+			}
+			view.addObject("actived", ",index,");
+		}catch(Exception e){
+			logger.error("fail to get info in goodsMainIndex",e);
+		}
+		return view;
+	}
+	
+	@RequestMapping("/productMainIndex")
+	public ModelAndView productMainIndex(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("productMainIndex");
+		view.addObject("actived", ",index,");
+		return view;
+	}
+	
+	@RequestMapping("/requirementMainIndex")
+	public ModelAndView requirementMainIndex(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("requirementMainIndex");
+		view.addObject("actived", ",index,");
+		return view;
+	}
 
     @RequestMapping("/mainIndex")
-    public ModelAndView mainIndex(HttpServletRequest request){
-        ModelAndView view = new ModelAndView();
-        String viewName = "mainIndex";
+    public String mainIndex(HttpServletRequest request){
         WebUserInfo currentUser = (WebUserInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
         String repositoryCode = request.getParameter(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
         if( null == repositoryCode ){
         	repositoryCode = (String)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE);
+        }else{
+        	request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, repositoryCode);
         }
-        if( null == repositoryCode ){
-        	repositoryCode = currentUser.getLoginName()+"_0";
-        }
-        request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_CODE, repositoryCode);
         
         try {
-			GoodsRepository currentRepository = repositoryService.getRepositoryByCode(repositoryCode);
-			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ, currentRepository);
-			
-			String repositoryType = currentRepository.getRepositoryType();
-			
-			if( null != currentUser && "common".equalsIgnoreCase(currentUser.getUserType()) ){
-	        	if( null == repositoryType 
-	        			|| "1".equalsIgnoreCase(repositoryType) ){
-	        		viewName = "goodsMainIndex";
-	        		
-	        		GoodsOrdinaryHouse house = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
-	        		List<GoodsProductLift> lifts = goodsProductLiftService.getGoodsProductLiftByRepositoryCode(repositoryCode);
-	        		List<GoodsCompanyInfo> companyInfos = goodsRadarService.getCompanyInfoByRepositoryCode(repositoryCode);
-	        		int radarCompanySize = 0;
-	        		if( !CollectionUtils.isEmpty(companyInfos) ){
-	        			radarCompanySize = companyInfos.size();
-	        		}
-	        		view.addObject("house", house);
-	        		view.addObject("lifts", lifts);
-	        		if( !CollectionUtils.isEmpty(companyInfos) ){
-	        			view.addObject("radarCompany", companyInfos.subList(0, 2>radarCompanySize?radarCompanySize:2));
-	        		}
-	        	}else if( "2".equalsIgnoreCase(repositoryType) ){
-	        		viewName = "productMainIndex";
-	        	}else{
-	        		viewName = "requirementMainIndex";
-	        	}
-	        	view.addObject("actived", ",index,");
-	        }else if( null != currentUser && "group1".equalsIgnoreCase(currentUser.getUserType())){
-	        	String contextPath = request.getSession().getServletContext().getContextPath();
-	        	GoodsOrdinaryHouse orHouse = ordinaryHouseService.getOrdinaryHouseByRepositoryCode(repositoryCode);
-	        	if( orHouse != null && StringUtils.isBlank(orHouse.getMainPic()) ){
-	        		orHouse.setMainPic(contextPath+GoodsQuickAttributes.DEFAULT_HOUSE_PIC);
-	        	}
-	        	view.addObject("orHouse", orHouse);
-	        	
-	        	List<GoodsServiceDetail> serviceDetails = goodsServiceService.getGoodsServiceDetailsByUserCode(currentUser.getLoginName());
-	    		view.addObject("serviceDetails", serviceDetails);
-	    		
-	    		List<GoodsDictionary> moduleTypes = dictionaryService.getDictionaryByType("subjectModule");
-	    		view.addObject("moduleTypes", moduleTypes);
-	    		
-	    		List<GoodsHouseFile> houseFiles = goodsSourceFileService.getGoodsHouseFileByRepositoryCode(repositoryCode);
-	    		view.addObject("houseFiles", houseFiles);
-	    		
-	        	view.addObject("opened", ",productManagement,");
-				view.addObject("actived", ",ordinaryhouse,");
-				
-	        	viewName = "ep/ordinaryhouse";
+        	GoodsRepository currentRepository = repositoryService.getRepositoryByCode(repositoryCode);
+	        if( null == currentRepository || currentRepository.getId() == 0 ){
+	        	return "redirect:pageNotFound";
+	        }else{
+	        	request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ, currentRepository);
+        	
+    			String repositoryType = currentRepository.getRepositoryType();
+    			
+    			if( null != currentUser && "common".equalsIgnoreCase(currentUser.getUserType()) ){
+    	        	if( null == repositoryType 
+    	        			|| "1".equalsIgnoreCase(repositoryType) ){
+    	        		return "redirect:ordinaryhouse";
+    	        	}else if( "2".equalsIgnoreCase(repositoryType) ){
+    	        		return "redirect:productMainIndex";
+    	        	}else{
+    	        		return "redirect:requirementMainIndex";
+    	        	}
+    	        }else if( null != currentUser && "group1".equalsIgnoreCase(currentUser.getUserType())){
+    	        	return "redirect:ordinaryhouse";
+    	        }
 	        }
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("fail to redirect in mainIndex,",e);
 		}
-        
-        view.setViewName(viewName);
-        return view;
+        return "redirect:index";
     }
     
     @RequestMapping("/index")
@@ -191,4 +201,12 @@ public class IndexController {
     	view.setViewName(viewName);
     	return view;
     }
+    
+
+	@RequestMapping("/pageNotFound")
+	public ModelAndView pageNotFound(HttpServletRequest request){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("404");
+		return view;
+	}
 }

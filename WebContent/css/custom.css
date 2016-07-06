@@ -419,7 +419,7 @@ div.showDetailDiv .form-group{
 }
 .sidebar_title:hover{
 	color:#fff;
-	background:#666 url(../images/icon/index_hover.png) no-repeat 15px center;
+	background:#666 url(../images/icon/index_hover.png) no-repeat 4px center;
 }
 .sidebar_title span{
 	color:#ffffff;

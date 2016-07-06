@@ -286,9 +286,9 @@ public class HouseDeviceController {
 			List<GoodsHouseDevice> devicesList = new ArrayList<GoodsHouseDevice>();
 			
 			if( subjectId != 0 ){
-				devicesList = goodsHouseDeviceService.getHouseDeviceBySubjectId(subjectId);
+				devicesList = goodsHouseDeviceService.getDeviceBySubjectId(subjectId);
 			}else if( moduleId != 0 ){
-				devicesList = goodsHouseDeviceService.getHouseDeviceByModuleId(moduleId);
+				devicesList = goodsHouseDeviceService.getDeviceByModuleId(moduleId);
 			}
 			resultMap.put("devices", devicesList);
 		} catch (Exception e) {

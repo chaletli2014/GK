@@ -38,4 +38,7 @@ public interface GoodsHouseDeviceService {
 	 * @throws Exception
 	 */
 	public List<GoodsHouseDevice> getDeviceByEqTypeCode(String repositoryCode, String eqTypeCode) throws Exception;
+	
+	public List<GoodsHouseDevice> getDeviceBySubjectId(int subjectId) throws Exception;
+	public List<GoodsHouseDevice> getDeviceByModuleId(int moduleId) throws Exception;
 }

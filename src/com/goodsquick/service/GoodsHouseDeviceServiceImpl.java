@@ -145,4 +145,34 @@ public class GoodsHouseDeviceServiceImpl implements GoodsHouseDeviceService {
         }
 	}
 
+	@Override
+	public List<GoodsHouseDevice> getDeviceBySubjectId(int subjectId)
+			throws Exception {
+		List<GoodsHouseDevice> devices = new ArrayList<GoodsHouseDevice>();
+		try{
+			devices.addAll(goodsHouseDeviceDAO.getDeviceBySubjectId(subjectId));
+			return devices;
+		} catch(EmptyResultDataAccessException erd){
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get the device by subject id,",e);
+            return Collections.emptyList();
+        }
+	}
+
+	@Override
+	public List<GoodsHouseDevice> getDeviceByModuleId(int moduleId)
+			throws Exception {
+		List<GoodsHouseDevice> devices = new ArrayList<GoodsHouseDevice>();
+		try{
+			devices.addAll(goodsHouseDeviceDAO.getDeviceByModuleId(moduleId));
+			return devices;
+		} catch(EmptyResultDataAccessException erd){
+            return Collections.emptyList();
+        } catch(Exception e){
+            logger.error("fail to get the device by module id,",e);
+            return Collections.emptyList();
+        }
+	}
+
 }

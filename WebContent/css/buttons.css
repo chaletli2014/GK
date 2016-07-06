@@ -11,6 +11,10 @@
 	background: #37474f;
 	color: #fff;
 }
+.bg-4 {
+	background: #fff;
+	color: #37474f;
+}
 
 /* Common button styles */
 .button {

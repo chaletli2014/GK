@@ -249,8 +249,8 @@
 					</li>
 				</ul>
 			</li>
-			<li <% if( opened.indexOf(",applicationManagement,")>-1 ){ %>class="active opened firstLI"<%}else{%>class="firstLI"<%} %>>
-				<a href="javascript:void(0)" onclick="jAlert('应用建设中...','提示');">
+			<li <% if( actived.indexOf(",applicationManagement,")>-1 ){ %>class="active"<%} %>>
+				<a href="<%=request.getParameter("basePath")%>applicationManagement">
 					<i class="fa-windows"></i>
 					<span class="title">应用管理</span>
 				</a>
