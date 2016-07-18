@@ -211,17 +211,17 @@ function saveDevice(){
 		}
 		
 		if( deviceObj.name == '' ){
-			jAlert("主体名称不能为空","提醒");
+			jAlert("设备名称不能为空","提醒");
 			return false;
 		}
 		
 		if( deviceObj.subjectId == '' ){
-			jAlert("主体不能为空","提醒");
+			jAlert("主体必须选择","提醒");
 			return false;
 		}
 		
 		if( deviceObj.moduleId == '' ){
-			jAlert("构件不能为空","提醒");
+			jAlert("构件必须选择","提醒");
 			return false;
 		}
 		
@@ -364,6 +364,20 @@ function retrieveData( sSource111,aoData111, fnCallback111) {
         error : function(msg) {
         }
     });
+}
+
+function move_right(){
+ if(dh_li.scrollLeft<=(3000-800)){
+	 dh_li.scrollLeft+=122;
+ }
+}
+function move_begin(){
+	dh_li.scrollLeft=0;
+}
+function move_left(){
+ if(dh_li.scrollLeft>=0){
+	 dh_li.scrollLeft-=122;
+ }
 }
 
 function emptyDeviceForm(){

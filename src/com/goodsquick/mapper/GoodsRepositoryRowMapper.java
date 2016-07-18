@@ -22,6 +22,7 @@ public class GoodsRepositoryRowMapper implements RowMapper<GoodsRepository>{
 		dbGoodsRepository.setUpdateDate(rs.getDate("update_date"));
 		dbGoodsRepository.setCreateUser(rs.getString("create_user"));
 		dbGoodsRepository.setUpdateUser(rs.getString("update_user"));
+		dbGoodsRepository.setReposCategory(rs.getString("repos_category"));
     	
         return dbGoodsRepository;
 	}

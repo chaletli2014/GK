@@ -24,8 +24,8 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 		
 		sql.append(" insert into tbl_goods_repository(");
 		sql.append(" id,repository_name,repository_code,repository_desc,repository_type ");
-		sql.append(" ,create_date,create_user,update_date,update_user,status ) ");
-		sql.append(" values(null,?,?,?,?,now(),?,now(),?,'1')");
+		sql.append(" ,create_date,create_user,update_date,update_user,status,repos_category ) ");
+		sql.append(" values(null,?,?,?,?,now(),?,now(),?,'1',?)");
 		
 		params.add(goodsRepository.getRepositoryName());
 		params.add(goodsRepository.getRepositoryCode());
@@ -33,6 +33,7 @@ public class RepositoryDAOImpl extends BaseDAOImpl implements RepositoryDAO {
 		params.add(goodsRepository.getRepositoryType());
 		params.add(goodsRepository.getCreateUser());
 		params.add(goodsRepository.getUpdateUser());
+		params.add(goodsRepository.getReposCategory());
 		
 		GoodsJDBCTemplate.executeSQL(dataBean, sql, params);
 	}

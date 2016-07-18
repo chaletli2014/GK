@@ -1,5 +1,6 @@
 package com.goodsquick.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,8 +70,17 @@ public class AssetController {
 	public ModelAndView newAssetPre(HttpServletRequest request){
 		ModelAndView view = new ModelAndView();
 		try {
-			List<GoodsDictionary> productTypes = dictionaryService.getDictionaryByType("template_estate");
+			GoodsRepository currentRepos = (GoodsRepository)request.getSession().getAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_OBJ);
+			List<GoodsDictionary> productTypes = new ArrayList<GoodsDictionary>();
 			
+			if( null != currentRepos ){
+				if( "estate".equals(currentRepos.getReposCategory()) ){
+					productTypes = dictionaryService.getDictionaryByType("template_estate");
+				}else if( "chattel".equals(currentRepos.getReposCategory()) ){
+					productTypes = dictionaryService.getDictionaryByType("template_chattel");
+				}
+			}
+			view.addObject("currentRepos", currentRepos);
 			view.addObject("productTypes", productTypes);
 			view.addObject("opened", ",productManagement,");
 			view.addObject("actived", ",newProduct,");

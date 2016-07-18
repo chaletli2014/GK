@@ -12,42 +12,36 @@
 			<div class="modal-body">
 				<div class="content">
 					<div class="panel-body">
+					<form role="form" class="form-horizontal">
 						<div class="form-group">
 							<span id="returnMessage" style="color:red;"></span>
 						</div>
-						<%--
 						<div class="form-group">
-							<label class="col-sm-4 control-label" for="field-1">物库类型</label>
-							<div class="col-sm-10">
-								<script type="text/javascript">
-									jQuery(document).ready(function($)
-									{
-										$("#repositoryType").selectBoxIt().on('open', function()
-										{
-											$(this).data('selectBoxSelectBoxIt').list.perfectScrollbar();
-										});
-									});
-								</script>
-								<select class="form-control" id="repositoryType" name="repositoryType">
-									<option value="1">资品库</option>
-									<option value="2">货品库</option>
-									<option value="3">产品库</option>
-								</select>
-							</div>
-						</div>
-						 --%>
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="field-1">物库名称</label>
+							<label class="col-sm-2 control-label" for="repositoryName">物库名称</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="repositoryName" name="repositoryName" data-validate="required" data-message-required="名称不能为空">
 							</div>
 						</div>
+						<div class="form-group-separator"></div>
 						<div class="form-group">
-							<label class="col-sm-4 control-label" for="field-1">物库描述</label>
+							<label class="col-sm-2 control-label" for="repositoryDesc">物库描述</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="repositoryDesc" name="repositoryDesc">
 							</div>
 						</div>
+						<div class="form-group-separator"></div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="reposCategory">物库分类</label>
+							<div class="col-sm-10">
+								<label class="radio-inline">
+									<input type="radio" name="reposCategory" value="chattel" checked>动产
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="reposCategory" value="estate">不动产
+								</label>
+							</div>
+						</div>
+						</form>
 					</div>
 				</div>
 			</div>

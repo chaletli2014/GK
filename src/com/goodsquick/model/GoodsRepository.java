@@ -11,6 +11,17 @@ public class GoodsRepository extends BaseObject{
 	private String repositoryType;
 	private String status;
 	
+	/**
+	 * 字段指明是动产还是不动产
+	 */
+	private String reposCategory;
+	
+	public String getReposCategory() {
+		return reposCategory;
+	}
+	public void setReposCategory(String reposCategory) {
+		this.reposCategory = reposCategory;
+	}
 	public int getId() {
 		return id;
 	}

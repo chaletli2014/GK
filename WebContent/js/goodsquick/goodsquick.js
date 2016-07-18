@@ -120,6 +120,14 @@ jQuery(document).ready(function($){
 		var repoName = $("#repositoryName").val();
 		var repoDesc = $("#repositoryDesc").val();
 		var repoType = $("#repositoryType").val();
+		var reposCategory = "";
+		
+		$("input[name='reposCategory']").each(function(){
+			if( $(this).get(0).checked){
+				reposCategory = $(this).val();
+			}
+		});
+		
 		var repoId = $("#repositoryId").val();
 		if( repoName == '' ){
 			jAlert("物库名称不能为空","提醒");
@@ -135,7 +143,8 @@ jQuery(document).ready(function($){
 				repositoryId : repoId,
 				repositoryName : repoName,
 				repositoryDesc : repoDesc,
-				repositoryType : repoType
+				repositoryType : repoType,
+				reposCategory : reposCategory,
 			},
 			success: function(response){
 				var result = response.result;

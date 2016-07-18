@@ -3,6 +3,8 @@
 <html lang="en">
 <%@include file="../common/header.jsp"%>
 <script type="text/javascript" src="<%=basePath%>js/goodsquick/houseDevice.js"></script>
+<script>
+</script>
 <body class="page-body">
 	<jsp:include page="../common/settings_pane.jsp" flush="true">
        	<jsp:param name="basePath" value="<%=basePath%>"/>
@@ -17,21 +19,30 @@
 			<jsp:include page="../common/main-nav.jsp" flush="true">
 	        	<jsp:param name="basePath" value="<%=basePath%>"/>
 	        </jsp:include>
-	        <div class="two_nav" style="overflow-x: scroll;">
-				<ul class="nav_ul">
-					<li class="dropdown hover-line active">
-						<a aid="all" class="asset_a_device" href="javascript:void(0)" data-toggle="dropdown">
-							<span class="">全部</span>
-						</a>
-					</li>
-					<c:forEach items="${assetDeviceTypes}" var="assetDevice">
-						<li class="dropdown">
-							<a aid="${assetDevice.dicCode}" class="asset_a_device" href="javascript:void(0)" data-toggle="dropdown">
-								<span class="">${assetDevice.dicName}</span>
+        	<div class="scroller_div">
+				 <ul>
+				 <li id="left_" class="dh_li" onclick="move_begin();">«</li>
+				  <li id="dh_li">
+				   <div id="scrollDiv" style="width:3000px;">
+				    <ul>
+				     	<li class="dropdown hover-line active">
+							<a aid="all" class="asset_a_device" href="javascript:void(0)" data-toggle="dropdown">
+								<span class="">全部</span>
 							</a>
 						</li>
-					</c:forEach>
-				</ul>
+						<c:forEach items="${assetDeviceTypes}" var="assetDevice">
+							<li class="dropdown" title="${assetDevice.dicName}">
+								<a aid="${assetDevice.dicCode}" class="asset_a_device" href="javascript:void(0)" data-toggle="dropdown">
+									<span class="">${assetDevice.dicName}</span>
+								</a>
+							</li>
+						</c:forEach>
+				    </ul>
+				   </div>
+				  </li>
+				  <li id="left_" class="dh_li" onclick="move_left();">☜</li>
+				  <li id="right_" class="dh_li" onclick="move_right();">☞</li>
+				 </ul> 
 			</div>
 			<div class="panel panel-default" id="deviceDiv">
 				<div>
@@ -39,7 +50,7 @@
 						<li class="fa-plus-square">添加设施设备</li>
 					</button>
 					<button id="saveDevice" class="btn btn-info">
-						<span>保存</span>
+						<li>保存</li>
 					</button>
 				</div>
 				<div class="panel-body" style="padding-top:0px;">

@@ -103,8 +103,16 @@ insert into tbl_goods_dictionary values(null,'moduleType1_food','moduletype2_foo
 insert into tbl_goods_dictionary values(null,'houseRadar','house_radar_supplier','供应商','物链雷达的tab分类-供应商');
 
 insert into tbl_goods_dictionary_type values(null,'不动产产品/资品模板','template_estate','不动产产品/资品模板');
-insert into tbl_goods_dictionary values(null,'template_estate','template_house_oh','普通住宅','不动产模板-普通住宅');
-insert into tbl_goods_dictionary values(null,'template_estate','template_house_ob','写字楼','不动产模板-写字楼');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_oh','住宅小区','不动产模板-住宅小区');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_ob','商务楼宇','不动产模板-商务楼宇');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_os','店铺物业','不动产模板-店铺物业');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_school','学校物业','不动产模板-学校物业');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_hospital','医院物业','不动产模板-医院物业');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_ab','演艺场馆','不动产模板-演艺场馆');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_stadium','体育场馆','不动产模板-体育场馆');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_rb','路桥设施','不动产模板-路桥设施');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_up','地下管线','不动产模板-地下管线');
+insert into tbl_goods_dictionary values(null,'template_estate','template_house_villa','独家别墅','不动产模板-独家别墅');
 
 insert into tbl_goods_dictionary_type values(null,'动产产品/资品模板','template_chattel','动产产品/资品模板');
 insert into tbl_goods_dictionary values(null,'template_chattel','template_lift','电梯','动产模板-电梯');
@@ -574,3 +582,12 @@ update tbl_goods_ordinary_house_owned set lift_num=0,parking_vg_num=0,parking_ug
 update tbl_goods_ordinary_house_owned set lift_num=0,parking_vg_num=0,parking_ug_num=0,fire_pump_num=0 where building_name = '东沟四村（东房）';
 update tbl_goods_ordinary_house_owned set lift_num=0,parking_vg_num=0,parking_ug_num=0,fire_pump_num=0 where building_name = '森兰雅苑2（A6-1、A7-1）';
 update tbl_goods_ordinary_house_owned set lift_num=0,parking_vg_num=0,parking_ug_num=0,fire_pump_num=0 where building_name = '绿城麓园';
+
+
+insert into tbl_goods_dictionary values(null,'subjectModule','sm_pumpHouse','泵房','泵房');
+insert into tbl_goods_dictionary values(null,'subjectModule','sm_commonField','公共场地','公共场地');
+insert into tbl_goods_dictionary values(null,'subjectModule','sm_commonRoad','公共道路','公共道路');
+insert into tbl_goods_dictionary values(null,'subjectModule','sm_underPark','地下车库','地下车库');
+insert into tbl_goods_dictionary values(null,'subjectModule','sm_catchBasin','雨水井','雨水井');
+insert into tbl_goods_dictionary values(null,'subjectModule','sm_feedWell','给水井','给水井');
+insert into tbl_goods_dictionary values(null,'subjectModule','sm_bilgeWell','污水井','污水井');

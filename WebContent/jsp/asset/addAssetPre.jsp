@@ -38,18 +38,29 @@
 					<div id="product_pre_div">
 						<div class="modal-dialog" style="width:100%">
 							<div class="modal-content product_block">
-								<div class="modal-header">
-									<h4 class="modal-title">不动产模板</h4>
-								</div>
-								<div class="product_level">
-									<div class="product_pre_model">
-										<a class="product_link" title="template_house_oh">普通住宅</a>
+							<c:choose>
+								<c:when test="${null != currentRepos && currentRepos.reposCategory == 'estate'}">
+									<div class="modal-header">
+										<h4 class="modal-title">不动产模板</h4>
 									</div>
-								</div>
-							</div>
-							<div class="modal-content product_block">
-								<div class="modal-header">
-									<h4 class="modal-title">动产模板</h4>
+								</c:when>
+								<c:when test="${null != currentRepos && currentRepos.reposCategory == 'chattel'}">
+									<div class="modal-header">
+										<h4 class="modal-title">动产模板</h4>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="modal-header">
+										<h4 class="modal-title">当前库没有匹配的物库模板</h4>
+									</div>
+								</c:otherwise>
+							</c:choose>
+								<div class="product_level">
+								<c:forEach items="${productTypes}" var="templateType">
+									<div class="product_pre_model">
+										<a class="product_link ${templateType.dicCode}" title="${templateType.dicCode}">${templateType.dicName}</a>
+									</div>
+								</c:forEach>
 								</div>
 							</div>
 						</div>

@@ -55,6 +55,11 @@
 							<span class="">三级主体</span>
 						</a>
 					</li>
+					<li>
+						<a aid="3" class="asset_a_subject" href="javascript:void(0)" data-toggle="dropdown">
+							<span class="">一键创建</span>
+						</a>
+					</li>
 				</ul>
 			</div>
 			<div class="panel panel-default asset_div" id="subject_div" style="display:none;">

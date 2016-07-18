@@ -51,6 +51,7 @@ public class RepositoryController {
 			String repositoryName = request.getParameter("repositoryName");
 			String repositoryDesc = request.getParameter("repositoryDesc");
 			String repositoryType = request.getParameter("repositoryType");
+			String reposCategory = request.getParameter("reposCategory");
 			
 			goodsRepositoryFromPage.setId(GoodsQuickUtils.parseIntegerFromString(repositoryId));
 			goodsRepositoryFromPage.setRepositoryName(repositoryName);
@@ -58,6 +59,7 @@ public class RepositoryController {
 			goodsRepositoryFromPage.setRepositoryType(repositoryType);
 			goodsRepositoryFromPage.setCreateUser(currentUser.getLoginName());
 			goodsRepositoryFromPage.setUpdateUser(currentUser.getLoginName());
+			goodsRepositoryFromPage.setReposCategory(reposCategory);
 			
 			List<GoodsRepository> repositoryList = repositoryService.saveOrUpdateRepository(request, goodsRepositoryFromPage);
 			request.getSession().setAttribute(GoodsQuickAttributes.WEB_SESSION_REPOSITORY_LIST, repositoryList);

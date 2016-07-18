@@ -898,3 +898,5 @@ alter table tbl_goods_house_device add column enable_time datetime NULL DEFAULT 
 alter table tbl_goods_house_device add column maintenance_unit varchar(100) NULL DEFAULT '' comment '维保单位';
 alter table tbl_goods_house_device add column telephone varchar(100) NULL DEFAULT '' comment '联系电话';
 alter table tbl_goods_house_device add column remark varchar(1000) NULL DEFAULT '' comment '备注';
+
+alter table tbl_goods_repository add column repos_category varchar(20) NULL default 'estate' comment '物库种类：动产、不动产';
